@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Kai's Practice</title>
+<style>
+  :root{--bg:#f6f3ec;--card:#fffdf8;--ink:#232019;--muted:#6f6758;--line:#e3dcce;--accent:#8a5a2b;--accent-soft:#f0e3d2}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#17150f;--card:#221f18;--ink:#f2ece0;--muted:#a79c88;--line:#38332a;--accent:#e0b07a;--accent-soft:#33291d}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);min-height:100vh;
+    font:16px/1.5 ui-rounded,"SF Pro Rounded",-apple-system,"Segoe UI",sans-serif;
+    display:flex;align-items:center;justify-content:center;padding:24px 16px}
+  .wrap{width:100%;max-width:420px}
+  h1{font-size:22px;margin:0 0 4px}
+  p.sub{color:var(--muted);font-size:14px;margin:0 0 24px}
+  a{display:block;background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:20px;margin-bottom:14px;text-decoration:none;color:inherit;transition:.12s;
+    box-shadow:0 1px 2px rgba(35,32,25,.06),0 8px 24px rgba(35,32,25,.07)}
+  a:hover{border-color:var(--accent);transform:translateY(-1px)}
+  b{display:block;font-size:19px;color:var(--accent);margin-bottom:3px}
+  span{font-size:13.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Kai's Practice</h1>
+    <p class="sub">Pick one.</p>
+    <a href="./spelling/"><b>🔤 Spelling</b><span>Hear the word, type it — weekly spelling list</span></a>
+    <a href="./history/"><b>🏛 History Words</b><span>Read it and know what it means — no spelling</span></a>
+  </div>
+</body>
+</html>
