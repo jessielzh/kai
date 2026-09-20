@@ -101,17 +101,6 @@
   .rate button:hover{transform:translateY(-1px)}
   .rate small{display:block;font-weight:500;font-size:12px;opacity:.75;margin-top:2px}
   .keys{text-align:center;color:var(--muted);font-size:12px;margin-top:14px}
-  .voice{display:flex;align-items:center;gap:10px;margin-top:16px;flex-wrap:wrap}
-  .voice select{
-    flex:1;min-width:150px;font:inherit;font-size:14px;font-weight:600;color:var(--ink);
-    background:transparent;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;
-  }
-  .voice select:focus{outline:none;border-color:var(--accent)}
-  .voice button{
-    appearance:none;background:var(--accent-soft);border:none;color:var(--accent);
-    border-radius:999px;padding:10px 16px;font:inherit;font-weight:700;font-size:14px;cursor:pointer;
-  }
-  .voicenote{color:var(--muted);font-size:12.5px;margin:8px 0 0}
 
   /* ---- done ---- */
   .score{font-size:56px;font-weight:800;text-align:center;letter-spacing:-.02em}
@@ -173,12 +162,6 @@
         <button class="mode" id="mRead" aria-pressed="true"><b>🗣 Read</b></button>
         <button class="mode" id="mUnd" aria-pressed="false"><b>💡 Understand</b></button>
       </div>
-      <p class="label" style="margin:18px 0 6px">American voice</p>
-      <div class="voice">
-        <select id="voiceSel"></select>
-        <button id="voiceTest" type="button">🔊 Test</button>
-      </div>
-      <p class="voicenote" id="voiceNote"></p>
     </div>
 
     <button class="btn wide" id="start">Start →</button>
@@ -305,50 +288,21 @@ const SPEAK_FIRST = true;    // Understand mode says the word when it appears
 const $ = id => document.getElementById(id);
 
 /* ---------- speech ----------
-   American English only. The old code iterated the DEVICE's voice list and
-   took the first entry that matched any preference, so the preference order
-   never applied and the result differed per device — a Mac landed on
-   Samantha (US), an iPad on Daniel (en-GB) or Aaron. Now we filter to en-US
-   first, then walk PREF in order, so every device says it the same way. */
-const VOICE_STORE = "kai-history-voice-v1";
-/* best-sounding US voices first; Samantha is the long-time macOS/iOS default */
-const PREF = ["Samantha","Ava","Allison","Susan","Nicky","Zoe","Google US English",
-              "Microsoft Aria","Microsoft Jenny","Microsoft Zira","Alex","Aaron"];
-let voice = null, usVoices = [];
-
-const isUS = v => /^en[-_]US/i.test(v.lang);
+   Samantha (en-US), the same voice on every device. The old code iterated
+   the DEVICE's voice list and took the first entry matching any preference,
+   so the preference order never applied and each device landed somewhere
+   different — Samantha on a Mac, an en-GB voice on an iPad. */
+let voice = null;
 function pickVoice(){
   const all = speechSynthesis.getVoices();
-  usVoices = all.filter(isUS);
-  const pool = usVoices.length ? usVoices : all.filter(v => /^en(-|_)/i.test(v.lang));
-  if(!pool.length) return;                       // voices not loaded yet
-  let saved = null;
-  try{ saved = localStorage.getItem(VOICE_STORE); }catch(e){}
-  voice = (saved && pool.find(v => v.name === saved))   // what Jessie picked
-       || PREF.reduce((hit, p) => hit || pool.find(v => v.name.includes(p)), null)
-       || pool[0];
-  drawVoices();
+  const us  = all.filter(v => /^en[-_]US/i.test(v.lang));
+  if(!all.length) return;                        // voices not loaded yet
+  voice = us.find(v => v.name.includes("Samantha"))   // what we actually want
+       || us[0]                                       // no Samantha — any US voice
+       || all.find(v => /^en(-|_)/i.test(v.lang));    // no US voice — any English
 }
 pickVoice();
 speechSynthesis.onvoiceschanged = pickVoice;
-
-function drawVoices(){
-  const sel = $("voiceSel"), note = $("voiceNote");
-  if(!sel) return;
-  const pool = usVoices.length ? usVoices : speechSynthesis.getVoices().filter(v => /^en(-|_)/i.test(v.lang));
-  sel.innerHTML = "";
-  pool.forEach(v => {
-    const o = document.createElement("option");
-    o.value = v.name;
-    o.textContent = v.name + (isUS(v) ? "" : "  ⚠️ " + v.lang);
-    sel.appendChild(o);
-  });
-  if(voice) sel.value = voice.name;
-  note.textContent = !pool.length ? "No English voice on this device."
-    : usVoices.length ? "Now using " + (voice ? voice.name : "—") + " · US English. Kai's iPad and this computer should match."
-    : "⚠️ No US English voice here — using " + (voice ? voice.name + " (" + voice.lang + ")" : "—") +
-      ", so it won't match the American phonetics. Add one in Settings → Accessibility → Spoken Content → Voices.";
-}
 
 function say(text, rate){
   try{
@@ -427,15 +381,6 @@ function setMode(m){
 }
 $("mRead").onclick = () => setMode("read");
 $("mUnd").onclick  = () => setMode("und");
-
-$("voiceSel").onchange = e => {
-  const pool = usVoices.length ? usVoices : speechSynthesis.getVoices();
-  voice = pool.find(v => v.name === e.target.value) || voice;
-  try{ localStorage.setItem(VOICE_STORE, voice.name); }catch(e2){}
-  drawVoices();
-  say("civilization", 0.8);
-};
-$("voiceTest").onclick = () => say("civilization", 0.8);
 
 function log(){ try{ return JSON.parse(localStorage.getItem(STORE)) || []; }catch(e){ return []; } }
 function saveRun(run){
@@ -639,7 +584,7 @@ document.addEventListener("keydown", e => {
 });
 $("card").onclick = () => { if(phase === 0) reveal(); };
 
-drawWeeks(); drawPreview(); setMode("read"); showHistory(); drawVoices();
+drawWeeks(); drawPreview(); setMode("read"); showHistory();
 </script>
 </body>
 </html>
