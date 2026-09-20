@@ -75,6 +75,7 @@
   }
   .cue{font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:18px}
   .word{font-size:clamp(34px,8.5vw,54px);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin:0}
+  .ipa{margin-top:10px;font-size:clamp(16px,4vw,21px);color:var(--accent);font-weight:600;letter-spacing:.01em}
   .chunks{margin-top:8px;font-size:clamp(15px,3.6vw,19px);color:var(--muted);letter-spacing:.06em}
   .hint{margin-top:6px;font-size:14px;color:var(--accent);font-weight:600}
   .zh{margin-top:16px;font-size:clamp(22px,5.5vw,30px);font-weight:700}
@@ -107,6 +108,8 @@
   .misslist{list-style:none;padding:0;margin:0 0 18px}
   .misslist li{padding:11px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:baseline}
   .misslist b{font-size:17px}
+  .misslist .mw{display:block}
+  .misslist .ipa{margin:0 0 0 6px;font-size:13px;font-weight:600;color:var(--accent);opacity:.85;letter-spacing:0}
   .misslist span{color:var(--muted);font-size:14px;text-align:right}
   .history{color:var(--muted);font-size:13px;margin-top:4px}
   .prev{list-style:none;padding:0;margin:0}
@@ -119,6 +122,7 @@
   .prev .hdr{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
   .prev b{font-size:17px}
   .prev .cn{font-weight:700;color:var(--accent)}
+  .prev .ipa{margin:0;font-size:13px;font-weight:600;color:var(--accent);opacity:.85;letter-spacing:0}
   .prev .def{display:block;color:var(--muted);font-size:13px;line-height:1.4;margin-top:2px}
   .prev .wk{padding:12px 6px 4px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
     color:var(--muted);font-weight:700;border-top:1px solid var(--line);cursor:default}
@@ -178,6 +182,7 @@
     <div class="card" id="card">
       <p class="cue" id="cue"></p>
       <p class="word" id="word"></p>
+      <p class="ipa" id="ipa" hidden></p>
       <p class="chunks" id="chunks" hidden></p>
       <p class="hint" id="hint" hidden></p>
       <p class="zh" id="zh" hidden></p>
@@ -216,63 +221,63 @@
    ========================================================= */
 const WEEKS = [
  { n:1, title:"地理 · 时间工具", words:[
-  {w:"civilization", zh:"文明", en:"a big society with cities, writing and rulers", ch:"civ·i·li·za·tion"},
-  {w:"ancient", zh:"古代的", en:"from a very long time ago", ch:"an·cient", hint:"AIN-shunt"},
-  {w:"plateau", zh:"高原", en:"a wide, flat area of high land", ch:"pla·teau", hint:"pla-TOH"},
-  {w:"continent", zh:"大洲", en:"one of the earth's seven huge pieces of land", ch:"con·ti·nent"},
-  {w:"fertile", zh:"肥沃的", en:"land where crops grow well — where civilizations start", ch:"fer·tile", hint:"FUR-tul"},
-  {w:"map", zh:"地图", en:"a drawing that shows where places are"},
-  {w:"isolated", zh:"与世隔绝的", en:"far away and cut off from other people", ch:"i·so·lat·ed"},
-  {w:"landform", zh:"地形", en:"a natural shape of the land — mountain, valley, desert", ch:"land·form"},
-  {w:"chronological", zh:"按时间顺序的", en:"put in the order things happened", ch:"chron·o·log·i·cal", hint:"kron-uh-LOJ-i-kul"},
-  {w:"timeline", zh:"时间线", en:"a line that shows events in time order", ch:"time·line"}
+  {w:"civilization", ipa:"/ˌsɪvələˈzeɪʃən/", zh:"文明", en:"a big society with cities, writing and rulers", ch:"civ·i·li·za·tion"},
+  {w:"ancient", ipa:"/ˈeɪnʃənt/", zh:"古代的", en:"from a very long time ago", ch:"an·cient", hint:"AIN-shunt"},
+  {w:"plateau", ipa:"/plæˈtoʊ/", zh:"高原", en:"a wide, flat area of high land", ch:"pla·teau", hint:"pla-TOH"},
+  {w:"continent", ipa:"/ˈkɑːntənənt/", zh:"大洲", en:"one of the earth's seven huge pieces of land", ch:"con·ti·nent"},
+  {w:"fertile", ipa:"/ˈfɜːrtl/", zh:"肥沃的", en:"land where crops grow well — where civilizations start", ch:"fer·tile", hint:"FUR-tul"},
+  {w:"map", ipa:"/mæp/", zh:"地图", en:"a drawing that shows where places are"},
+  {w:"isolated", ipa:"/ˈaɪsəleɪtɪd/", zh:"与世隔绝的", en:"far away and cut off from other people", ch:"i·so·lat·ed"},
+  {w:"landform", ipa:"/ˈlændfɔːrm/", zh:"地形", en:"a natural shape of the land — mountain, valley, desert", ch:"land·form"},
+  {w:"chronological", ipa:"/ˌkrɑːnəˈlɑːdʒɪkəl/", zh:"按时间顺序的", en:"put in the order things happened", ch:"chron·o·log·i·cal", hint:"kron-uh-LOJ-i-kul"},
+  {w:"timeline", ipa:"/ˈtaɪmlaɪn/", zh:"时间线", en:"a line that shows events in time order", ch:"time·line"}
  ]},
  { n:2, title:"商朝 · 占卜与王权", words:[
-  {w:"divination", zh:"占卜", en:"asking the gods about the future — the Shang burned bones to do it", ch:"div·i·na·tion", hint:"div-ih-NAY-shun"},
-  {w:"evidence", zh:"证据", en:"things we find that show what really happened", ch:"ev·i·dence"},
-  {w:"flood", zh:"洪水", en:"when a river rises and covers the land"},
-  {w:"oracle", zh:"神谕", en:"an answer from the gods — the Shang carved theirs on oracle bones", ch:"or·a·cle", hint:"OR-uh-kul"},
-  {w:"legend", zh:"传说", en:"an old story about the past that may not be all true", ch:"leg·end"},
-  {w:"reign", zh:"统治期", en:"the time when a king or emperor rules", hint:"sounds like RAIN"},
-  {w:"tyrant", zh:"暴君", en:"a cruel ruler who treats people badly", ch:"ty·rant", hint:"TY-runt"},
-  {w:"dynasty", zh:"朝代", en:"one family ruling a country for many years", ch:"dy·nas·ty", hint:"DY-nuh-stee"},
-  {w:"emperor", zh:"皇帝", en:"the ruler of a whole empire", ch:"em·per·or"},
-  {w:"prosper", zh:"繁荣", en:"to grow rich and do well", ch:"pros·per"}
+  {w:"divination", ipa:"/ˌdɪvəˈneɪʃən/", zh:"占卜", en:"asking the gods about the future — the Shang burned bones to do it", ch:"div·i·na·tion", hint:"div-ih-NAY-shun"},
+  {w:"evidence", ipa:"/ˈevɪdəns/", zh:"证据", en:"things we find that show what really happened", ch:"ev·i·dence"},
+  {w:"flood", ipa:"/flʌd/", zh:"洪水", en:"when a river rises and covers the land"},
+  {w:"oracle", ipa:"/ˈɔːrəkəl/", zh:"神谕", en:"an answer from the gods — the Shang carved theirs on oracle bones", ch:"or·a·cle", hint:"OR-uh-kul"},
+  {w:"legend", ipa:"/ˈledʒənd/", zh:"传说", en:"an old story about the past that may not be all true", ch:"leg·end"},
+  {w:"reign", ipa:"/reɪn/", zh:"统治期", en:"the time when a king or emperor rules", hint:"sounds like RAIN"},
+  {w:"tyrant", ipa:"/ˈtaɪrənt/", zh:"暴君", en:"a cruel ruler who treats people badly", ch:"ty·rant", hint:"TY-runt"},
+  {w:"dynasty", ipa:"/ˈdaɪnəsti/", zh:"朝代", en:"one family ruling a country for many years", ch:"dy·nas·ty", hint:"DY-nuh-stee"},
+  {w:"emperor", ipa:"/ˈempərər/", zh:"皇帝", en:"the ruler of a whole empire", ch:"em·per·or"},
+  {w:"prosper", ipa:"/ˈprɑːspər/", zh:"繁荣", en:"to grow rich and do well", ch:"pros·per"}
  ]},
  { n:3, title:"周朝 · 孔子与思想", words:[
-  {w:"philosophy", zh:"哲学", en:"ideas about how people should live", ch:"phi·los·o·phy", hint:"fi-LOSS-uh-fee"},
-  {w:"influential", zh:"有影响力的", en:"able to change what other people think or do", ch:"in·flu·en·tial", hint:"in-floo-EN-shul"},
-  {w:"filial piety", zh:"孝", en:"respecting and caring for your parents and elders", ch:"fil·i·al pi·e·ty", hint:"FIL-ee-ul PY-uh-tee"},
-  {w:"hierarchy", zh:"等级制度", en:"people placed in levels, from top to bottom", ch:"hi·er·ar·chy", hint:"HY-er-ar-kee"},
-  {w:"ethics", zh:"道德准则", en:"rules about right and wrong behaviour", ch:"eth·ics"},
-  {w:"currency", zh:"货币", en:"the money a country uses", ch:"cur·ren·cy"},
-  {w:"harmony", zh:"和谐", en:"everyone getting along peacefully", ch:"har·mo·ny"},
-  {w:"duty", zh:"责任", en:"what you are supposed to do for others", ch:"du·ty"},
-  {w:"morality", zh:"品德", en:"knowing what is right and doing it", ch:"mo·ral·i·ty"},
-  {w:"benevolence", zh:"仁", en:"kindness to other people — Confucius' most important idea", ch:"be·nev·o·lence", hint:"buh-NEV-uh-lunce"}
+  {w:"philosophy", ipa:"/fəˈlɑːsəfi/", zh:"哲学", en:"ideas about how people should live", ch:"phi·los·o·phy", hint:"fi-LOSS-uh-fee"},
+  {w:"influential", ipa:"/ˌɪnfluˈenʃəl/", zh:"有影响力的", en:"able to change what other people think or do", ch:"in·flu·en·tial", hint:"in-floo-EN-shul"},
+  {w:"filial piety", ipa:"/ˈfɪliəl ˈpaɪəti/", zh:"孝", en:"respecting and caring for your parents and elders", ch:"fil·i·al pi·e·ty", hint:"FIL-ee-ul PY-uh-tee"},
+  {w:"hierarchy", ipa:"/ˈhaɪərɑːrki/", zh:"等级制度", en:"people placed in levels, from top to bottom", ch:"hi·er·ar·chy", hint:"HY-er-ar-kee"},
+  {w:"ethics", ipa:"/ˈeθɪks/", zh:"道德准则", en:"rules about right and wrong behaviour", ch:"eth·ics"},
+  {w:"currency", ipa:"/ˈkɜːrənsi/", zh:"货币", en:"the money a country uses", ch:"cur·ren·cy"},
+  {w:"harmony", ipa:"/ˈhɑːrməni/", zh:"和谐", en:"everyone getting along peacefully", ch:"har·mo·ny"},
+  {w:"duty", ipa:"/ˈduːti/", zh:"责任", en:"what you are supposed to do for others", ch:"du·ty"},
+  {w:"morality", ipa:"/məˈræləti/", zh:"品德", en:"knowing what is right and doing it", ch:"mo·ral·i·ty"},
+  {w:"benevolence", ipa:"/bəˈnevələns/", zh:"仁", en:"kindness to other people — Confucius' most important idea", ch:"be·nev·o·lence", hint:"buh-NEV-uh-lunce"}
  ]},
  { n:4, title:"秦始皇 · 统一", words:[
-  {w:"emperor", zh:"皇帝", en:"the ruler of an empire — Qin Shi Huang was China's first", ch:"em·per·or"},
-  {w:"unification", zh:"统一", en:"joining many separate states into one country", ch:"u·ni·fi·ca·tion"},
-  {w:"Terracotta Army", zh:"兵马俑", en:"thousands of clay soldiers buried to guard Qin Shi Huang", ch:"ter·ra·cot·ta ar·my", hint:"terr-uh-COTT-uh"},
-  {w:"standardization", zh:"标准化", en:"making everything the same — writing, money, cart wheels", ch:"stan·dard·i·za·tion"},
-  {w:"construction", zh:"建造", en:"building big things like walls, roads and canals", ch:"con·struc·tion"},
-  {w:"economy", zh:"经济", en:"how a country makes, sells and uses goods and money", ch:"e·con·o·my", hint:"ih-CON-uh-mee"},
-  {w:"immortality", zh:"长生不老", en:"living forever — Qin Shi Huang spent his life looking for it", ch:"im·mor·tal·i·ty"},
-  {w:"alliances", zh:"联盟", en:"states promising to help each other", ch:"al·li·anc·es", hint:"uh-LY-un-sez"},
-  {w:"centralization", zh:"中央集权", en:"all the power held by one ruler in the capital", ch:"cen·tral·i·za·tion"},
-  {w:"currency", zh:"货币", en:"the money a country uses — Qin made one coin for everyone", ch:"cur·ren·cy"}
+  {w:"emperor", ipa:"/ˈempərər/", zh:"皇帝", en:"the ruler of an empire — Qin Shi Huang was China's first", ch:"em·per·or"},
+  {w:"unification", ipa:"/ˌjuːnɪfɪˈkeɪʃən/", zh:"统一", en:"joining many separate states into one country", ch:"u·ni·fi·ca·tion"},
+  {w:"Terracotta Army", ipa:"/ˌterəˈkɑːtə ˈɑːrmi/", zh:"兵马俑", en:"thousands of clay soldiers buried to guard Qin Shi Huang", ch:"ter·ra·cot·ta ar·my", hint:"terr-uh-COTT-uh"},
+  {w:"standardization", ipa:"/ˌstændərdəˈzeɪʃən/", zh:"标准化", en:"making everything the same — writing, money, cart wheels", ch:"stan·dard·i·za·tion"},
+  {w:"construction", ipa:"/kənˈstrʌkʃən/", zh:"建造", en:"building big things like walls, roads and canals", ch:"con·struc·tion"},
+  {w:"economy", ipa:"/ɪˈkɑːnəmi/", zh:"经济", en:"how a country makes, sells and uses goods and money", ch:"e·con·o·my", hint:"ih-CON-uh-mee"},
+  {w:"immortality", ipa:"/ˌɪmɔːrˈtæləti/", zh:"长生不老", en:"living forever — Qin Shi Huang spent his life looking for it", ch:"im·mor·tal·i·ty"},
+  {w:"alliances", ipa:"/əˈlaɪənsɪz/", zh:"联盟", en:"states promising to help each other", ch:"al·li·anc·es", hint:"uh-LY-un-sez"},
+  {w:"centralization", ipa:"/ˌsentrələˈzeɪʃən/", zh:"中央集权", en:"all the power held by one ruler in the capital", ch:"cen·tral·i·za·tion"},
+  {w:"currency", ipa:"/ˈkɜːrənsi/", zh:"货币", en:"the money a country uses — Qin made one coin for everyone", ch:"cur·ren·cy"}
  ]},
  { n:5, title:"长城 · 遗产", words:[
-  {w:"barrier", zh:"屏障", en:"something that blocks the way — the Great Wall was one", ch:"bar·ri·er"},
-  {w:"signal", zh:"信号", en:"a sign sent to warn people — wall towers sent smoke signals", ch:"sig·nal"},
-  {w:"UNESCO", zh:"联合国教科文组织", en:"the UN group that protects World Heritage sites", ch:"U·NES·CO", hint:"yoo-NESS-koh", say:"you nesco"},
-  {w:"chariot", zh:"战车", en:"a cart pulled by horses, used in battle", ch:"char·i·ot", hint:"CHAIR-ee-ut"},
-  {w:"conquer", zh:"征服", en:"to beat another people and take over their land", ch:"con·quer", hint:"KON-ker"},
-  {w:"mausoleum", zh:"陵墓", en:"a huge tomb built for a ruler", ch:"mau·so·le·um", hint:"maw-suh-LEE-um"},
-  {w:"sacrifice", zh:"牺牲", en:"to give up something important for a bigger goal", ch:"sac·ri·fice"},
-  {w:"inhumane", zh:"不人道的", en:"cruel, with no kindness for people", ch:"in·hu·mane"},
-  {w:"legacy", zh:"遗产", en:"what is left behind for people who come later", ch:"leg·a·cy"}
+  {w:"barrier", ipa:"/ˈbæriər/", zh:"屏障", en:"something that blocks the way — the Great Wall was one", ch:"bar·ri·er"},
+  {w:"signal", ipa:"/ˈsɪɡnəl/", zh:"信号", en:"a sign sent to warn people — wall towers sent smoke signals", ch:"sig·nal"},
+  {w:"UNESCO", ipa:"/juːˈneskoʊ/", zh:"联合国教科文组织", en:"the UN group that protects World Heritage sites", ch:"U·NES·CO", hint:"yoo-NESS-koh", say:"you nesco"},
+  {w:"chariot", ipa:"/ˈtʃæriət/", zh:"战车", en:"a cart pulled by horses, used in battle", ch:"char·i·ot", hint:"CHAIR-ee-ut"},
+  {w:"conquer", ipa:"/ˈkɑːŋkər/", zh:"征服", en:"to beat another people and take over their land", ch:"con·quer", hint:"KON-ker"},
+  {w:"mausoleum", ipa:"/ˌmɔːsəˈliːəm/", zh:"陵墓", en:"a huge tomb built for a ruler", ch:"mau·so·le·um", hint:"maw-suh-LEE-um"},
+  {w:"sacrifice", ipa:"/ˈsækrɪfaɪs/", zh:"牺牲", en:"to give up something important for a bigger goal", ch:"sac·ri·fice"},
+  {w:"inhumane", ipa:"/ˌɪnhjuːˈmeɪn/", zh:"不人道的", en:"cruel, with no kindness for people", ch:"in·hu·mane"},
+  {w:"legacy", ipa:"/ˈleɡəsi/", zh:"遗产", en:"what is left behind for people who come later", ch:"leg·a·cy"}
  ]}
 ];
 
@@ -353,7 +358,9 @@ function drawPreview(){
     wk.words.forEach((it, n) => {
       const li = document.createElement("li");
       li.innerHTML = "<span class='num'>" + (n + 1) + "</span><span class='body'>" +
-        "<span class='hdr'><b>" + it.w + "</b><span class='cn'>" + it.zh + "</span></span>" +
+        "<span class='hdr'><b>" + it.w + "</b>" +
+        (it.ipa ? "<span class='ipa'>" + it.ipa + "</span>" : "") +
+        "<span class='cn'>" + it.zh + "</span></span>" +
         "<span class='def'>" + it.en + "</span></span>";
       li.onclick = () => speakWord(it);
       ul.appendChild(li);
@@ -462,6 +469,8 @@ function step(){
   $("rate").hidden = true;
   $("blank").hidden = true;
   $("word").textContent = it.w;
+  $("ipa").hidden = !it.ipa;
+  if(it.ipa) $("ipa").textContent = it.ipa;
   $("chunks").hidden = !(mode === "read" && it.ch);
   if(it.ch) $("chunks").textContent = it.ch;
   $("hint").hidden = !(mode === "read" && it.hint);
@@ -536,7 +545,8 @@ function finish(){
   const ul = $("misslist"); ul.innerHTML = "";
   miss.forEach(r => {
     const li = document.createElement("li");
-    li.innerHTML = "<b>" + r.item.w + "</b><span>" + r.item.zh + " · " + r.item.en + "</span>";
+    li.innerHTML = "<span class='mw'><b>" + r.item.w + "</b>" +
+      (r.item.ipa ? "<span class='ipa'>" + r.item.ipa + "</span>" : "") + "</span><span>" + r.item.zh + " · " + r.item.en + "</span>";
     ul.appendChild(li);
   });
   $("again").hidden = !miss.length;
