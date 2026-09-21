@@ -318,9 +318,11 @@ input.bad{border-color:var(--warn)}
 
 <script>
 /* ============================================================
-   WORD BANK — one entry per weekly test. Append the new week to the
-   END; never edit or delete an old one, because each week's progress
-   and stars are stored under its own `week` string.
+   WORD BANK — one entry per weekly test, in date order.
+   `week` is the date shown on the chip; `key` (optional) is where that
+   list's progress and stars live in localStorage. They are separate so a
+   mislabelled date can be corrected without wiping what Kai already did:
+   fix `week`, and pin `key` to the old label. Never change a `key`.
    w = word   m = short kid meaning   c = syllable chunks (optional)
    Levels run shortest words first — he types slowly, so early wins
    matter more than covering the list fast. ~4-5 words each: warm up
@@ -399,11 +401,57 @@ const WEEKS = [
     ],
   },
 
-  /* Week 6 sheet. The last fifteen are marked ▶ — most carried over from
-     Sep 4. "rhythm (meter)" is tested as rhythm alone, as on Aug 28. */
+  /* Week 4-5 sheet, tested Sep 18. The last eleven are marked ▶ — carried
+     over from Sep 4, so they are the ones he should already know. `key` is
+     not plain "Sep 18": that label belonged to the Week 6 list below until
+     the date was corrected, and its saved progress must not leak in here. */
   {
     week: "Sep 18",
     date: "2026-09-18",
+    key:  "Sep 18 w4-5",
+    words: [
+      { w:"figurative language", m:"words that mean something other than what they say", c:"fig·ur·a·tive" },
+      { w:"shelter",      m:"a place that keeps you safe from weather or danger", c:"shel·ter" },
+      { w:"brick",        m:"a hard block of baked clay for building walls" },
+      { w:"cage",         m:"a box of bars that keeps an animal in" },
+      { w:"inspire",      m:"to give someone the idea or wish to do something", c:"in·spire" },
+      { w:"chaos",        m:"a total mess with no order — starts with ch, sounds like k", c:"cha·os" },
+      { w:"orchestra",    m:"a big group of musicians playing together",      c:"or·ches·tra" },
+      { w:"caution",      m:"the care you take so nothing goes wrong",        c:"cau·tion" },
+      { w:"simile",       m:"comparing two things using \"like\" or \"as\"", c:"sim·i·le" },
+      { w:"metaphor",     m:"comparing two things by saying one IS the other", c:"met·a·phor" },
+      { w:"attitude",     m:"the way you think and act about something",      c:"at·ti·tude" },
+      { w:"elaborate",    m:"to explain with more details",                   c:"e·lab·o·rate" },
+      { w:"free verse",   m:"a poem with no rhyme and no set beat" },
+      { w:"evidence",     m:"proof from the text that shows you're right",    c:"ev·i·dence" },
+      { w:"repetition",   m:"saying something again and again",               c:"rep·e·ti·tion" },
+      { w:"prose",        m:"ordinary writing in sentences, not poetry" },
+      { w:"onomatopoeia", m:"a word that sounds like its noise — buzz, splash", c:"on·o·mat·o·poe·ia" },
+      { w:"alliteration", m:"words next to each other starting with the same sound", c:"al·lit·er·a·tion" },
+      { w:"rhyme",        m:"words that end with the same sound" },
+      { w:"rhythm",       m:"the beat of a poem — its meter",            c:"rhy·thm" },
+      { w:"imagery",      m:"words that make a picture in your mind",         c:"im·age·ry" },
+      { w:"theme",        m:"the big idea of a story" },
+      { w:"characteristics", m:"what someone or something is like",           c:"char·ac·ter·is·tics" },
+    ],
+    levels: [
+      { n:1, name:"Short & Sweet",  emoji:"🌱", ws:["cage","brick","chaos","rhyme","theme"] },
+      { n:2, name:"Six Letters",    emoji:"🌿", ws:["prose","simile","rhythm","inspire"] },
+      { n:3, name:"Getting Longer", emoji:"🌳", ws:["shelter","caution","imagery","attitude"] },
+      { n:4, name:"Climbing Up",    emoji:"🌲", ws:["metaphor","evidence","orchestra","elaborate"] },
+      { n:5, name:"Big Words",      emoji:"⛰️", ws:["free verse","repetition","alliteration"] },
+      { n:6, name:"Champion Words", emoji:"🏔️", ws:["onomatopoeia","characteristics","figurative language"] },
+    ],
+  },
+
+  /* Week 6 sheet — the test is Sep 24, not Sep 18; it was filed under the
+     wrong date at first, so `key` keeps the progress saved back then.
+     The last fifteen are marked ▶ — most carried over from Sep 4.
+     "rhythm (meter)" is tested as rhythm alone, as on Aug 28. */
+  {
+    week: "Sep 24",
+    date: "2026-09-24",
+    key:  "Sep 18",
     words: [
       { w:"figurative language", m:"words that mean something other than what they say", c:"fig·ur·a·tive" },
       { w:"persuade",     m:"to get someone to agree with you or do something", c:"per·suade" },
@@ -515,7 +563,7 @@ function defaultWeek(){
 function setWeek(name){
   const wk = WEEKS.find(w => w.week === name) || WEEKS[WEEKS.length-1];
   WEEK = wk.week; TEST_DATE = wk.date; WORDS = wk.words; LEVELS = wk.levels;
-  KEY = "kai-spelling:v2:" + WEEK;
+  KEY = "kai-spelling:v2:" + (wk.key || WEEK);
   try{ localStorage.setItem(LAST, WEEK); }catch(e){}
   load();
 }
