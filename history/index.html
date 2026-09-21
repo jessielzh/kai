@@ -30,16 +30,19 @@
   .sub{color:var(--muted);font-size:14px;margin:0 0 24px}
   .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px}
   .label{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;font-weight:600}
-  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  /* 等宽网格：周数一多，pill 按标题长短各长各短，一行排不齐。
+     固定列宽后每张卡一样大，以后加周也不会乱。 */
+  .chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
   .chip{
-    appearance:none;font:inherit;font-weight:600;cursor:pointer;
+    appearance:none;font:inherit;font-weight:600;cursor:pointer;text-align:center;
     background:transparent;color:var(--ink);border:1.5px solid var(--line);
-    border-radius:999px;padding:10px 16px;transition:.12s;
+    border-radius:14px;padding:12px 10px;transition:.12s;
   }
   .chip:hover{border-color:var(--accent)}
   .chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
-  .chip small{display:block;font-weight:400;font-size:11px;color:var(--muted);margin-top:1px}
+  .chip small{display:block;font-weight:400;font-size:11px;color:var(--muted);margin-top:2px;line-height:1.45}
   .chip[aria-pressed="true"] small{color:var(--accent);opacity:.8}
+  .chip .num{font-size:11px;opacity:.7}
   .modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .mode{
     appearance:none;font:inherit;cursor:pointer;text-align:left;
@@ -215,9 +218,10 @@
 
 <script>
 /* =========================================================
-   Word list — from Kai's Week 1–5 History Key Vocabulary sheets.
+   Word list — from Kai's Week 1–6 History Key Vocabulary sheets.
    Meanings rewritten short + kid-language + tied to the unit
-   (ancient China: geography → Shang → Zhou/Confucius → Qin → Great Wall).
+   (ancient China: geography → Shang → Zhou/Confucius → Qin → Great Wall
+   → culture, trade and the sea).
    ========================================================= */
 const WEEKS = [
  { n:1, title:"地理 · 时间工具", words:[
@@ -278,6 +282,17 @@ const WEEKS = [
   {w:"sacrifice", ipa:"/ˈsækrɪfaɪs/", zh:"牺牲", en:"to give up something important for a bigger goal", ch:"sac·ri·fice"},
   {w:"inhumane", ipa:"/ˌɪnhjuːˈmeɪn/", zh:"不人道的", en:"cruel, with no kindness for people", ch:"in·hu·mane"},
   {w:"legacy", ipa:"/ˈleɡəsi/", zh:"遗产", en:"what is left behind for people who come later", ch:"leg·a·cy"}
+ ]},
+ { n:6, title:"文化成就 · 贸易与航海", words:[
+  {w:"culture", ipa:"/ˈkʌltʃər/", zh:"文化", en:"the way a people live — their food, beliefs, art and festivals", ch:"cul·ture"},
+  {w:"acupuncture", ipa:"/ˈækjupʌŋktʃər/", zh:"针灸", en:"Chinese medicine that puts thin needles into the skin to treat pain", ch:"ac·u·punc·ture", hint:"AK-yoo-punk-cher"},
+  {w:"porcelain", ipa:"/ˈpɔːrsəlɪn/", zh:"瓷器", en:"hard white pottery — China's most famous export, so fine we call it china", ch:"por·ce·lain", hint:"POR-suh-lin"},
+  {w:"impact", ipa:"/ˈɪmpækt/", zh:"影响；冲击", en:"a strong effect one thing has on another", ch:"im·pact"},
+  {w:"achievement", ipa:"/əˈtʃiːvmənt/", zh:"成就", en:"something difficult that people managed to do well", ch:"a·chieve·ment", hint:"uh-CHEEV-munt"},
+  {w:"corruption", ipa:"/kəˈrʌpʃən/", zh:"贪污", en:"officials cheating and taking money — it rotted dynasties from the inside", ch:"cor·rup·tion"},
+  {w:"trade", ipa:"/treɪd/", zh:"贸易", en:"buying and selling goods — silk and tea went west along the Silk Road"},
+  {w:"tradition", ipa:"/trəˈdɪʃən/", zh:"传统", en:"something people have done the same way for a very long time", ch:"tra·di·tion"},
+  {w:"maritime", ipa:"/ˈmærətaɪm/", zh:"海上的", en:"to do with the sea — Zheng He led huge maritime voyages", ch:"mar·i·time", hint:"MARR-ih-time"}
  ]}
 ];
 
@@ -320,56 +335,33 @@ const speakWord = it => say(it.say || it.w, 0.8);
 let picked = new Set([1]);
 let mode = "read";
 
-function uniqueTotal(){
-  const s = new Set();
-  WEEKS.forEach(w => w.words.forEach(x => s.add(x.w)));
-  return s.size;
-}
 function drawWeeks(){
   const box = $("weeks");
-  const isAll = picked.size === WEEKS.length;   // 单选：一次只练一周，或"全部"
   box.innerHTML = "";
   WEEKS.forEach(wk => {
     const b = document.createElement("button");
     b.className = "chip";
     b.setAttribute("role", "radio");
-    b.setAttribute("aria-pressed", !isAll && picked.has(wk.n));
-    b.innerHTML = "Week " + wk.n + "<small>" + wk.title + " · " + wk.words.length + "</small>";
+    b.setAttribute("aria-pressed", picked.has(wk.n));
+    b.innerHTML = "Week " + wk.n + "<small>" + wk.title + "<br><span class='num'>" + wk.words.length + " words</span></small>";
     b.onclick = () => { picked = new Set([wk.n]); drawWeeks(); drawPreview(); showHistory(); };
     box.appendChild(b);
   });
-  const all = document.createElement("button");
-  all.className = "chip";
-  all.setAttribute("role", "radio");
-  all.setAttribute("aria-pressed", isAll);
-  all.innerHTML = "All weeks<small>five weeks mixed · " + uniqueTotal() + "</small>";
-  all.onclick = () => { picked = new Set(WEEKS.map(w => w.n)); drawWeeks(); drawPreview(); showHistory(); };
-  box.appendChild(all);
 }
 function drawPreview(){
   const ul = $("preview");
-  const wks = WEEKS.filter(w => picked.has(w.n));
-  const total = wks.reduce((n, w) => n + w.words.length, 0);
-  $("prevTitle").textContent = (wks.length === 1 ? "Week " + wks[0].n + " · " + wks[0].title : "All five weeks")
-                             + " · " + total + " words";
+  const wk = WEEKS.find(w => picked.has(w.n));
+  $("prevTitle").textContent = "Week " + wk.n + " · " + wk.title + " · " + wk.words.length + " words";
   ul.innerHTML = "";
-  wks.forEach(wk => {
-    if(wks.length > 1){
-      const h = document.createElement("li");
-      h.className = "wk";
-      h.textContent = "Week " + wk.n + " · " + wk.title;
-      ul.appendChild(h);
-    }
-    wk.words.forEach((it, n) => {
-      const li = document.createElement("li");
-      li.innerHTML = "<span class='num'>" + (n + 1) + "</span><span class='body'>" +
-        "<span class='hdr'><b>" + it.w + "</b>" +
-        (it.ipa ? "<span class='ipa'>" + it.ipa + "</span>" : "") +
-        "<span class='cn'>" + it.zh + "</span></span>" +
-        "<span class='def'>" + it.en + "</span></span>";
-      li.onclick = () => speakWord(it);
-      ul.appendChild(li);
-    });
+  wk.words.forEach((it, n) => {
+    const li = document.createElement("li");
+    li.innerHTML = "<span class='num'>" + (n + 1) + "</span><span class='body'>" +
+      "<span class='hdr'><b>" + it.w + "</b>" +
+      (it.ipa ? "<span class='ipa'>" + it.ipa + "</span>" : "") +
+      "<span class='cn'>" + it.zh + "</span></span>" +
+      "<span class='def'>" + it.en + "</span></span>";
+    li.onclick = () => speakWord(it);
+    ul.appendChild(li);
   });
 }
 
@@ -406,8 +398,7 @@ function grade(p){
   return              {g:"Redo", s:"⭐",     say:"Start with the ones you missed."};
 }
 
-const KEY_ALL = WEEKS.map(w => w.n).join(",");
-function keyLabel(key){ return key === KEY_ALL ? "All five weeks" : "Week " + key; }
+function keyLabel(key){ return "Week " + key; }
 
 /* 一个 week 的成绩单：Read + Understand + 总评 */
 function reportHTML(key){
@@ -428,7 +419,7 @@ function reportHTML(key){
 }
 
 function showHistory(){
-  const keys = WEEKS.map(w => String(w.n)).concat([KEY_ALL]);
+  const keys = WEEKS.map(w => String(w.n));
   const html = keys.map(reportHTML).filter(Boolean).join("<div style='height:18px'></div>");
   $("report").innerHTML = html;
   $("reportPanel").hidden = !html;
