@@ -1,0 +1,909 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Kai's 1000 Words</title>
+<style>
+  :root{
+    --bg:#f8f4ee; --card:#fffdf9; --ink:#241a1a; --muted:#7a6a64;
+    --line:#eadfd6; --accent:#9a0a13; --accent-soft:#f6e3e1;
+    --good:#2f7d52; --again:#c2610c; --again-soft:#fbeadb; --shadow:0 1px 2px rgba(36,26,26,.06),0 8px 24px rgba(36,26,26,.07);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#170f0f; --card:#221818; --ink:#f5ecea; --muted:#b09c98;
+      --line:#3b2b2a; --accent:#f08e8e; --accent-soft:#3d1d1f;
+      --good:#6fcf97; --again:#f0a45c; --again-soft:#3a2a1c; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink); min-height:100vh;
+    font:16px/1.5 ui-rounded,"SF Pro Rounded",-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB",sans-serif;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:24px 16px 48px}
+  h1{font-size:22px;margin:0 0 2px;letter-spacing:-.01em}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 24px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px}
+  .label{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;font-weight:600}
+  .chips{display:grid;gap:10px}
+  .chips.books{grid-template-columns:repeat(4,1fr)}
+  .chips.units{grid-template-columns:repeat(auto-fill,minmax(92px,1fr));margin-top:14px}
+  .chips.parts{grid-template-columns:repeat(2,1fr);margin-top:14px}
+  .chip{
+    appearance:none;font:inherit;font-weight:600;cursor:pointer;text-align:center;
+    background:transparent;color:var(--ink);border:1.5px solid var(--line);
+    border-radius:14px;padding:10px 6px;transition:.12s;
+  }
+  .chip:hover:not(:disabled){border-color:var(--accent)}
+  .chip:disabled{cursor:default;opacity:.45;border-style:dashed}
+  .chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+  .chip small{display:block;font-weight:400;font-size:11px;color:var(--muted);margin-top:1px;line-height:1.4}
+  .chip[aria-pressed="true"] small{color:var(--accent);opacity:.8}
+  .modes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .mode{
+    appearance:none;font:inherit;cursor:pointer;text-align:center;
+    background:transparent;color:var(--ink);border:1.5px solid var(--line);
+    border-radius:14px;padding:14px 6px;transition:.12s;
+  }
+  .mode:hover{border-color:var(--accent)}
+  .mode[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
+  .mode b{display:block;font-size:17px}
+  .mode[aria-pressed="true"] b{color:var(--accent)}
+  .btn{
+    appearance:none;font:inherit;font-weight:700;cursor:pointer;
+    background:var(--accent);color:var(--bg);border:none;border-radius:14px;
+    padding:15px 22px;font-size:17px;transition:.12s;
+  }
+  .btn:hover{filter:brightness(1.08)}
+  .btn:disabled{opacity:.4;cursor:default;filter:none}
+  .btn.ghost{background:transparent;color:var(--muted);border:1.5px solid var(--line);font-weight:600;font-size:15px;padding:12px 18px}
+  .btn.ghost:hover{color:var(--ink);border-color:var(--accent)}
+  .btn.wide{width:100%}
+
+  /* ---- session ---- */
+  .top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .bar{flex:1;height:7px;background:var(--line);border-radius:99px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .25s}
+  .count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .x{appearance:none;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:0 4px;line-height:1}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:22px;
+    box-shadow:var(--shadow);padding:48px 22px 30px;min-height:min(62vh,440px);
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;  /* top-anchored: the word stays put when the answer appears below it */
+  }
+  .cue{font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 18px}
+  .cue.good{color:var(--good)} .cue.bad{color:var(--again)}
+  .word{font-size:clamp(34px,8.5vw,54px);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin:0}
+  .ipa{margin:10px 0 0;font-size:clamp(16px,4vw,21px);color:var(--accent);font-weight:600;letter-spacing:.01em}
+  .zh{margin:16px 0 0;font-size:clamp(22px,5.5vw,30px);font-weight:700}
+  .en{margin:8px 0 0;font-size:clamp(16px,4vw,20px);color:var(--muted);max-width:min(100%,58ch);line-height:1.45;text-wrap:balance}
+  .en .pos{font-style:italic;opacity:.8;margin-right:4px}
+  .ex{margin:14px 0 0;font-size:clamp(15px,3.6vw,18px);font-style:italic;max-width:min(100%,56ch);line-height:1.5;text-wrap:balance}  /* wide enough for most book sentences on one line; balance evens out the ones that still wrap */
+  .ex b{font-style:normal;color:var(--accent)}
+  .ex .gap{display:inline-block;min-width:3.2em;border-bottom:2px solid var(--accent);font-style:normal}
+  .timer{
+    margin-top:26px;width:64px;height:64px;border-radius:50%;
+    border:3px solid var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;
+  }
+  .timer.pulse{animation:pop .9s ease-in-out infinite}
+  @keyframes pop{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+  .blank{margin-top:22px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .speaker{appearance:none;background:var(--accent-soft);border:none;color:var(--accent);
+    border-radius:999px;padding:11px 18px;font:inherit;font-weight:700;font-size:15px;cursor:pointer}
+  .rate{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+  .rate button{
+    appearance:none;font:inherit;font-weight:700;font-size:17px;cursor:pointer;
+    border-radius:16px;padding:18px 12px;border:2px solid;transition:.12s;background:transparent;
+  }
+  .rate .ok{color:var(--good);border-color:var(--good)}
+  .rate .no{color:var(--again);border-color:var(--again)}
+  .rate button:hover{transform:translateY(-1px)}
+  /* the button he picked fills in, the other fades, and a face pops up for a second */
+  .rate .ok.picked{background:var(--good);color:var(--card)}
+  .rate .no.picked{background:var(--again);color:var(--card)}
+  .rate button.faded{opacity:.3}
+  .card{position:relative}
+  .burst{position:absolute;left:50%;top:50%;font-size:110px;line-height:1;pointer-events:none;
+    transform:translate(-50%,-50%) scale(.3);opacity:0;animation:burst 1s ease-out forwards;
+    filter:drop-shadow(0 6px 18px rgba(0,0,0,.18))}
+  @keyframes burst{
+    0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}
+    30%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}
+    50%{transform:translate(-50%,-50%) scale(1)}
+    85%{opacity:1}
+    100%{opacity:0;transform:translate(-50%,-60%) scale(1)}
+  }
+  .rate small{display:block;font-weight:500;font-size:12px;opacity:.75;margin-top:2px}
+  .keys{text-align:center;color:var(--muted);font-size:12px;margin-top:14px}
+
+  /* ---- spell (same layout as the spelling trainer) ---- */
+  .scard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow)}
+  .stage{text-align:center;padding:10px 0 4px;min-height:104px;display:flex;flex-direction:column;justify-content:center;gap:10px}
+  .sword{font-size:46px;font-weight:700;letter-spacing:-.02em;word-break:break-word;line-height:1.15;margin:0}
+  .veil{font-size:44px;color:var(--line);letter-spacing:.14em;margin:0}
+  .smean{font-size:17px;color:var(--muted);max-width:min(100%,58ch);margin:0 auto;text-wrap:balance}
+  #answer{
+    width:100%;font-family:inherit;font-size:36px;font-weight:600;line-height:1.2;
+    color:inherit;text-align:center;letter-spacing:.01em;
+    background:var(--bg);border:2px solid var(--line);border-radius:14px;
+    padding:22px 16px;margin:20px 0 16px;outline:none;
+  }
+  @media (max-width:480px){ #answer{font-size:30px;padding:18px 12px} }
+  #answer:focus{border-color:var(--accent)}
+  #answer.bad{border-color:var(--again)}
+  #answer.good{border-color:var(--good);color:var(--good)}
+  .tools{display:flex;gap:10px;flex-wrap:wrap}
+  .mini{appearance:none;font:inherit;color:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);
+    border-radius:999px;padding:10px 16px;font-size:16px;min-height:44px}
+  .mini:hover{border-color:var(--accent)}
+  .fb{margin-top:6px}
+  .verdict{font-size:22px;font-weight:700;margin:0 0 14px}
+  .verdict.good{color:var(--good)} .verdict.miss{color:var(--again)}
+  .fbrow{display:flex;align-items:center;gap:12px;margin-bottom:8px;font-size:15px;color:var(--muted)}
+  .fbrow .lbl{width:82px;flex:none;text-align:right}
+  .cells{display:flex;gap:3px;flex-wrap:wrap;font:600 26px/1 ui-monospace,Menlo,monospace}
+  .c{min-width:.72em;padding:5px 3px;border-radius:5px;text-align:center}
+  .c.ok{color:var(--ink)}
+  .c.bad{background:var(--again-soft);color:var(--again)}
+  .c.gap{background:var(--again-soft);color:var(--again);opacity:.55}
+  .note{font-size:15px;color:var(--muted);margin:10px 0 16px}
+  .note.retry{color:var(--again);font-weight:600;font-size:17px;margin-bottom:10px}
+
+  /* ---- done ---- */
+  .score{font-size:56px;font-weight:800;text-align:center;letter-spacing:-.02em;margin:0}
+  .scoresub{text-align:center;color:var(--muted);margin:2px 0 20px}
+  .misslist{list-style:none;padding:0;margin:0 0 18px}
+  .misslist li{padding:11px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+  .misslist b{font-size:17px}
+  .misslist .mw{display:block}
+  .misslist .ipa{margin:0 0 0 6px;font-size:13px;font-weight:600;color:var(--accent);opacity:.85;letter-spacing:0}
+  .misslist .typed{display:block;font-size:13px;color:var(--again);text-decoration:line-through}
+  .misslist span{color:var(--muted);font-size:14px;text-align:right}
+  .prev{list-style:none;padding:0;margin:0}
+  .prev li{display:flex;gap:12px;align-items:baseline;padding:8px 6px;border-top:1px solid var(--line);
+    border-radius:10px;cursor:pointer;transition:.1s}
+  .prev li:first-child{border-top:none}
+  .prev li:hover{background:var(--accent-soft)}
+  .prev .num{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums;min-width:26px}
+  .prev .body{flex:1}
+  .prev .hdr{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+  .prev b{font-size:17px}
+  .prev .cn{font-weight:700;color:var(--accent)}
+  .prev .ipa{margin:0;font-size:13px;font-weight:600;color:var(--accent);opacity:.85;letter-spacing:0}
+  .prev .def{display:block;color:var(--muted);font-size:13px;line-height:1.4;margin-top:2px}
+  .empty{color:var(--muted);font-size:14px;margin:14px 0 0;text-align:center}
+  .grade{text-align:center;font-size:19px;font-weight:800;color:var(--accent);margin:6px 0 0;letter-spacing:.02em}
+  .rcname{font-weight:700;font-size:15px;margin:0 0 8px}
+  .rc{list-style:none;padding:0;margin:0}
+  .rc li{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:15px}
+  .rc li:first-child{border-top:none}
+  .rc .val{font-variant-numeric:tabular-nums;font-weight:700;text-align:right}
+  .rc .dim{color:var(--muted);font-weight:500}
+  .rc .tot{border-top:2px solid var(--line);font-weight:800;padding-top:11px}
+  .rc .tot .val{color:var(--accent)}
+  .rcnote{color:var(--muted);font-size:12.5px;margin:10px 0 0}
+  [hidden]{display:none !important}
+  @media (max-width:420px){
+    .chips.books{grid-template-columns:repeat(2,1fr)}
+    .mode b{font-size:15px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ================= SETUP ================= -->
+  <section id="setup">
+    <h1>Kai's 1000 Words</h1>
+    <p class="sub">Read it, know what it means, then spell it.</p>
+
+    <div class="panel">
+      <p class="label">Pick a book and unit</p>
+      <div class="chips books" id="books"></div>
+      <div class="chips units" id="units"></div>
+      <div class="chips parts" id="parts"></div>
+      <p class="label" id="prevTitle" style="margin:18px 0 6px"></p>
+      <ul class="prev" id="preview"></ul>
+      <p class="empty" id="emptyNote" hidden></p>
+      <p class="rcnote" id="prevNote">Look them over first — tap any word to hear it.</p>
+    </div>
+
+    <div class="panel">
+      <p class="label">What to practice</p>
+      <div class="modes">
+        <button class="mode" data-m="read"><b>🗣 Read</b></button>
+        <button class="mode" data-m="und"><b>💡 Understand</b></button>
+        <button class="mode" data-m="spell"><b>✏️ Spell</b></button>
+      </div>
+      <div class="chips parts" id="spellHow" hidden>
+        <button class="chip" data-s="warm">✍️ Warm up<small>see it, type it</small></button>
+        <button class="chip" data-s="test">📝 Test<small>hear it, type it</small></button>
+      </div>
+    </div>
+
+    <button class="btn wide" id="start">Start →</button>
+    <div class="panel" id="reportPanel" style="margin-top:16px" hidden>
+      <p class="label">Report card</p>
+      <div id="report"></div>
+    </div>
+  </section>
+
+  <!-- ================= SESSION ================= -->
+  <section id="session" hidden>
+    <div class="top">
+      <button class="x" id="quit" title="Quit">✕</button>
+      <div class="bar"><i id="barFill"></i></div>
+      <div class="count" id="count"></div>
+    </div>
+
+    <div class="card" id="card">
+      <p class="cue" id="cue"></p>
+      <p class="word" id="word"></p>
+      <p class="ipa" id="ipa" hidden></p>
+      <p class="zh" id="zh" hidden></p>
+      <p class="en" id="en" hidden></p>
+      <p class="ex" id="ex" hidden></p>
+      <div class="timer" id="timer" hidden>5</div>
+      <div class="blank" id="blank" hidden>
+        <button class="speaker" id="replay">🔊 Word</button>
+      </div>
+    </div>
+
+    <div class="scard" id="spellCard" hidden>
+      <div class="stage">
+        <p class="sword" id="sWord"></p>
+        <p class="smean" id="sMean"></p>
+      </div>
+      <form id="spellbox" autocomplete="off">
+        <input id="answer" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+               enterkeyhint="go" aria-label="Type the word">
+      </form>
+      <div class="tools" id="tools">
+        <button class="mini" id="sAgain" type="button">🔊 Again</button>
+        <button class="mini" id="sSlow" type="button">🐢 Slower</button>
+        <button class="mini" id="sLater" type="button">⏭ Later</button>
+      </div>
+      <div class="fb" id="fb" hidden></div>
+    </div>
+
+    <div class="rate" id="rate" hidden>
+      <button class="ok" id="rOk"></button>
+      <button class="no" id="rNo"></button>
+    </div>
+    <p class="keys" id="keys"></p>
+  </section>
+
+  <!-- ================= DONE ================= -->
+  <section id="done" hidden>
+    <div class="panel">
+      <p class="score" id="score"></p>
+      <p class="grade" id="grade"></p>
+      <p class="scoresub" id="scoresub"></p>
+      <ul class="misslist" id="misslist"></ul>
+      <button class="btn wide" id="again" hidden>Practice the missed words →</button>
+      <button class="btn wide" id="toTest" hidden>Now take the test →</button>
+    </div>
+    <div class="panel" id="doneReport"></div>
+    <button class="btn ghost wide" id="home">Back to start</button>
+  </section>
+
+</div>
+
+<script>
+/* =========================================================
+   Word lists — BMC "1000 Basic English Words" books 1–4.
+   Each book has 12 units; each unit is Part A + Part B, 10 words each.
+   w   word            n   number in the book
+   ipa pronunciation   pos part of speech
+   zh  中文             en  meaning (from the book)
+   ex  example sentence from the book; *stars* mark the word as it appears
+   To add a unit: add { n:4, A:[...], B:[...] } to that book's units.
+   ========================================================= */
+const BOOKS = [
+ { id:"1000-1", units:[] },
+ { id:"1000-2", units:[] },
+ { id:"1000-3", units:[] },
+ { id:"1000-4", units:[
+  { n:1,
+   A:[
+    {n:721, w:"awful", ipa:"/ˈɔːfl/", pos:"adj.", zh:"糟糕的", en:"very bad", ex:"Sam was not proud of the *awful* smell coming from his shoes."},
+    {n:722, w:"crazy", ipa:"/ˈkreɪzi/", pos:"adj.", zh:"奇怪的", en:"very strange", ex:"Susan's hair looks really *crazy*, and she has an interview today!"},
+    {n:723, w:"huge", ipa:"/hjuːdʒ/", pos:"adj.", zh:"巨大的", en:"very large", ex:"I will give you a million dollars if you eat this *huge* hamburger."},
+    {n:724, w:"moment", ipa:"/ˈmoʊmənt/", pos:"n.", zh:"时刻", en:"a short period of time", ex:"I mixed the vegetables and then fried them for a few *moments*."},
+    {n:725, w:"odd", ipa:"/ɑːd/", pos:"adj.", zh:"奇怪的", en:"strange or different", ex:"Lewis's choice of hair color is quite *odd*."},
+    {n:726, w:"pour", ipa:"/pɔːr/", pos:"v.", zh:"倒", en:"to fill a container with something to drink", ex:"Please *pour* some water for me. I do not want any ice."},
+    {n:727, w:"regret", ipa:"/rɪˈɡret/", pos:"v.", zh:"后悔", en:"to feel sorry about something that you did or did not do", ex:"She *regrets* missing the last bus home. It was a big mistake."},
+    {n:728, w:"steal", ipa:"/stiːl/", pos:"v.", zh:"偷", en:"to take something without someone saying you can", ex:"We do not share our food with our cat, but she tries to *steal* it."},
+    {n:729, w:"thief", ipa:"/θiːf/", pos:"n.", zh:"小偷", en:"someone who steals", ex:"Lucy saw a *thief* trying to climb into her neighbor's window."},
+    {n:730, w:"tough", ipa:"/tʌf/", pos:"adj.", zh:"强壮的", en:"strong", ex:"Max was the *toughest* man in our village."}
+   ],
+   B:[
+    {n:731, w:"chance", ipa:"/tʃæns/", pos:"n.", zh:"机会", en:"an opportunity to do something", ex:"Mia and Phil got the *chance* to go on a European adventure."},
+    {n:732, w:"extra", ipa:"/ˈekstrə/", pos:"adj.", zh:"额外的", en:"more than is usual", ex:"I have added *extra* cheese to make the pasta taste better."},
+    {n:733, w:"hall", ipa:"/hɔːl/", pos:"n.", zh:"大厅", en:"a large open space in a building", ex:"It was possible to have a large party in the grand *hall*."},
+    {n:734, w:"immediately", ipa:"/ɪˈmiːdiətli/", pos:"adv.", zh:"立刻", en:"right away", ex:"The workers came *immediately* after the accident."},
+    {n:735, w:"intend", ipa:"/ɪnˈtend/", pos:"v.", zh:"打算", en:"to want or plan to do", ex:"For good health, she *intends* to eat several carrots every day."},
+    {n:736, w:"mention", ipa:"/ˈmenʃn/", pos:"v.", zh:"提到", en:"to talk or write about something, often quickly", ex:"Jude forgot to *mention* that he had to leave class early."},
+    {n:737, w:"reaction", ipa:"/riˈækʃn/", pos:"n.", zh:"反应", en:"the way someone acts or feels after something happens", ex:"It was a mistake to tell Jim the news. His *reaction* was very bad."},
+    {n:738, w:"score", ipa:"/skɔːr/", pos:"v.", zh:"得分", en:"to win a point in a game", ex:"Jose *scored* the winning goal at last night's game."},
+    {n:739, w:"search", ipa:"/sɜːrtʃ/", pos:"v.", zh:"搜寻", en:"to look for", ex:"Alex *searched* the sky for the cause of the noise."},
+    {n:740, w:"worse", ipa:"/wɜːrs/", pos:"adj.", zh:"更糟的", en:"more terrible than other things", ex:"There is nothing *worse* than cleaning the floor."}
+   ]},
+  { n:2,
+   A:[
+    {n:741, w:"bit", ipa:"/bɪt/", pos:"n.", zh:"一点儿", en:"a small piece or amount", ex:"I broke the chocolate into *bits* so I could share it with my friends."},
+    {n:742, w:"common", ipa:"/ˈkɑːmən/", pos:"adj.", zh:"普通的", en:"usual; happening or seen often", ex:"Colds are quite *common* in the winter."},
+    {n:743, w:"diet", ipa:"/ˈdaɪət/", pos:"n.", zh:"日常饮食", en:"the food that someone usually eats", ex:"I intend to have a healthier *diet* by eating more fruit."},
+    {n:744, w:"evidence", ipa:"/ˈevɪdəns/", pos:"n.", zh:"证据", en:"something that shows something else is true", ex:"The police found *evidence* that Chris was the thief."},
+    {n:745, w:"fit", ipa:"/fɪt/", pos:"adj.", zh:"健康的", en:"strong and healthy", ex:"They stay *fit* by running whenever possible."},
+    {n:746, w:"limit", ipa:"/ˈlɪmɪt/", pos:"v.", zh:"限制", en:"to keep at a low level or keep from getting larger", ex:"She has little money and must *limit* how much she spends."},
+    {n:747, w:"physical", ipa:"/ˈfɪzɪkl/", pos:"adj.", zh:"身体的", en:"of the body", ex:"Playing sports is a good way to get *physical* exercise."},
+    {n:748, w:"poison", ipa:"/ˈpɔɪzn/", pos:"n.", zh:"毒药", en:"something that can make you sick if eaten or drunk", ex:"The symbol on the bottle says that it is *poison*."},
+    {n:749, w:"sale", ipa:"/seɪl/", pos:"n.", zh:"销售", en:"the act of selling something for money", ex:"There is a nice house for *sale* in my neighborhood."},
+    {n:750, w:"type", ipa:"/taɪp/", pos:"n.", zh:"种类", en:"a kind or variety", ex:"Bakeries usually sell several different *types* of bread."}
+   ],
+   B:[
+    {n:751, w:"amount", ipa:"/əˈmaʊnt/", pos:"n.", zh:"数量", en:"how much there is of something", ex:"Make sure to use the right *amount* of oil to fry the food."},
+    {n:752, w:"cure", ipa:"/kjʊər/", pos:"n.", zh:"治疗方法", en:"something that makes sick people better", ex:"The new *cure* made John feel better almost immediately."},
+    {n:753, w:"disease", ipa:"/dɪˈziːz/", pos:"n.", zh:"疾病", en:"a sickness", ex:"A *disease* made the tree's leaves turn brown."},
+    {n:754, w:"medical", ipa:"/ˈmedɪkl/", pos:"adj.", zh:"医疗的", en:"of medicine; treating people who are sick or hurt", ex:"If you often have awful headaches, you should get *medical* help."},
+    {n:755, w:"necessary", ipa:"/ˈnesəseri/", pos:"adj.", zh:"必要的", en:"needed", ex:"When getting ready for a trip, take only what is *necessary*."},
+    {n:756, w:"produce", ipa:"/prəˈdjuːs/", pos:"v.", zh:"产生", en:"to make or cause", ex:"Cars *produce* a lot of problems for the environment."},
+    {n:757, w:"reduce", ipa:"/rɪˈdjuːs/", pos:"v.", zh:"降低", en:"to make smaller in size, number, or amount", ex:"The store has *reduced* its prices on everything."},
+    {n:758, w:"serious", ipa:"/ˈsɪəriəs/", pos:"adj.", zh:"严重的", en:"having important or dangerous possible results", ex:"We saw a *serious* car accident this afternoon."},
+    {n:759, w:"source", ipa:"/sɔːrs/", pos:"n.", zh:"源头", en:"a person or thing that gives what is wanted or needed", ex:"This river is the main *source* of water for many animals."},
+    {n:760, w:"supply", ipa:"/səˈplaɪ/", pos:"v.", zh:"提供", en:"to give someone something so they can use it", ex:"My father *supplies* carrots to a restaurant in our town."}
+   ]},
+  { n:3,
+   A:[
+    {n:761, w:"castle", ipa:"/ˈkæsl/", pos:"n.", zh:"城堡", en:"a large home where a king or queen usually lives", ex:"Jim learned that it was common to find huge *castles* in the past."},
+    {n:762, w:"decision", ipa:"/dɪˈsɪʒn/", pos:"n.", zh:"决定", en:"a choice", ex:"Tim made the *decision* to eat the carrots to be healthier."},
+    {n:763, w:"empire", ipa:"/ˈempaɪər/", pos:"n.", zh:"帝国", en:"a kingdom", ex:"The Roman *Empire* included several hundred towns and cities."},
+    {n:764, w:"explore", ipa:"/ɪkˈsplɔːr/", pos:"v.", zh:"探索", en:"to look at something in a careful way to learn about it", ex:"The woman, who is alone, loves to *explore* nature."},
+    {n:765, w:"flight", ipa:"/flaɪt/", pos:"n.", zh:"空中航行", en:"a trip on an airplane", ex:"Max and Shelly shared a *flight* to Mexico City last summer."},
+    {n:766, w:"guard", ipa:"/ɡɑːrd/", pos:"v.", zh:"守卫", en:"to watch in order to protect", ex:"Our dog Rover is *guarding* the house at the moment."},
+    {n:767, w:"incredible", ipa:"/ɪnˈkredəbl/", pos:"adj.", zh:"非常棒的", en:"very good", ex:"This book mentions how *incredible* the beaches are in Hawaii."},
+    {n:768, w:"serve", ipa:"/sɜːrv/", pos:"v.", zh:"供应", en:"to give someone food in a restaurant or at home", ex:"They *serve* many types of food at this restaurant."},
+    {n:769, w:"skin", ipa:"/skɪn/", pos:"n.", zh:"皮肤", en:"the outer part that covers humans and animals", ex:"For beautiful *skin*, a healthy diet and good habits are necessary."},
+    {n:770, w:"southern", ipa:"/ˈsʌðərn/", pos:"adj.", zh:"南方的", en:"being in or toward the south", ex:"The man regretted not visiting *southern* California last summer."}
+   ],
+   B:[
+    {n:771, w:"admire", ipa:"/ədˈmaɪər/", pos:"v.", zh:"敬佩", en:"to like and think good things about others", ex:"I *admire* my mother more than anyone else."},
+    {n:772, w:"ancient", ipa:"/ˈeɪnʃənt/", pos:"adj.", zh:"古老的", en:"very old", ex:"This city in Peru is evidence of an *ancient* culture."},
+    {n:773, w:"attractive", ipa:"/əˈtræktɪv/", pos:"adj.", zh:"吸引人的", en:"looking or sounding nice", ex:"Jess is looking for an *attractive* dress for her party."},
+    {n:774, w:"giant", ipa:"/ˈdʒaɪənt/", pos:"adj.", zh:"巨大的", en:"very large", ex:"They had the chance to ride on a *giant* elephant at the zoo."},
+    {n:775, w:"pack", ipa:"/pæk/", pos:"v.", zh:"收拾行李", en:"to put items into a bag or suitcase to take somewhere", ex:"She needs to limit the items she is *packing* in her suitcase."},
+    {n:776, w:"prefer", ipa:"/prɪˈfɜːr/", pos:"v.", zh:"更喜欢", en:"to like something more than something else", ex:"Gabby *prefers* to eat fresh fruit instead of junk food."},
+    {n:777, w:"rent", ipa:"/rent/", pos:"v.", zh:"租用", en:"to pay money to use a thing that belongs to someone else", ex:"They *rent* a nice house for a small amount of money."},
+    {n:778, w:"respect", ipa:"/rɪˈspekt/", pos:"v.", zh:"尊重", en:"to think someone is special and important", ex:"It is necessary to *respect* your teachers by listening during class."},
+    {n:779, w:"view", ipa:"/vjuː/", pos:"v.", zh:"看", en:"to look at or watch something", ex:"Ron *viewed* the odd artwork in the museum."},
+    {n:780, w:"wave", ipa:"/weɪv/", pos:"v.", zh:"挥手", en:"to move your hand to say hello or goodbye", ex:"He *waved* goodbye to his parents before going back to college."}
+   ]}
+ ]}
+];
+const UNITS_PER_BOOK = 12;
+
+const RUNS  = "kai-bmc1000-runs-v1";    // one row per finished session
+const WORDS = "kai-bmc1000-words-v1";   // latest result per word per mode
+const PREFS = "kai-bmc1000-prefs-v1";   // last picked book / unit / part / mode
+const PAUSE = 5;             // seconds of thinking time (Read / Understand)
+const SHUFFLE = true;
+const MODES = { read:"🗣 Read", und:"💡 Understand", spell:"✏️ Spell" };
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+/* ---------- speech ---------- */
+let voice = null;
+function pickVoice(){
+  const all = speechSynthesis.getVoices();
+  const us  = all.filter(v => /^en[-_]US/i.test(v.lang));
+  if(!all.length) return;
+  voice = us.find(v => v.name.includes("Samantha")) || us[0] || all.find(v => /^en(-|_)/i.test(v.lang));
+}
+try{ pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }catch(e){}
+
+/* say("word") or say(["word", "sentence", "word"]) — plays in order */
+function say(parts, rate){
+  try{
+    speechSynthesis.cancel();
+    [].concat(parts).forEach(text => {
+      const u = new SpeechSynthesisUtterance(text);
+      if(voice) u.voice = voice;
+      u.lang = voice ? voice.lang : "en-US";
+      u.rate = rate || 0.85;
+      speechSynthesis.speak(u);
+    });
+  }catch(e){ /* no speech on this device — the rest still works */ }
+}
+const speakWord = it => say(it.w, 0.8);
+
+/* example sentence, word bolded — or blanked for Spell. A book form like
+   "moments" / "guarding" keeps its ending: "____s", "____ing". */
+function exHTML(it, blank){
+  return esc(it.ex).replace(/\*([^*]+)\*/, (_, form) => {
+    if(!blank) return "<b>" + form + "</b>";
+    const tail = form.toLowerCase().startsWith(it.w.toLowerCase()) ? form.slice(it.w.length) : "";
+    return "<span class='gap'>&nbsp;</span>" + tail;
+  });
+}
+
+/* ---------- storage (every access guarded) ---------- */
+function load(k, d){ try{ return JSON.parse(localStorage.getItem(k)) || d; }catch(e){ return d; } }
+function store(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+
+/* ---------- setup screen ---------- */
+const prefs = load(PREFS, {});
+let bookId = prefs.book || "1000-4";
+let unitN  = prefs.unit || 1;
+let part   = prefs.part === "B" ? "B" : "A";
+let mode   = prefs.mode || "read";
+let spellHow = prefs.spell === "test" ? "test" : "warm";   // Spell: warm up first, then test
+
+const book = () => BOOKS.find(b => b.id === bookId);
+const unit = () => book().units.find(u => u.n === unitN);
+function savePrefs(){ store(PREFS, {book:bookId, unit:unitN, part:part, mode:mode, spell:spellHow}); }
+
+function drawBooks(){
+  const box = $("books"); box.innerHTML = "";
+  BOOKS.forEach(b => {
+    const btn = document.createElement("button");
+    btn.className = "chip";
+    btn.setAttribute("aria-pressed", b.id === bookId);
+    btn.innerHTML = b.id + "<small>" + (b.units.length ? b.units.length + " of " + UNITS_PER_BOOK + " units" : "no units yet") + "</small>";
+    btn.onclick = () => {
+      bookId = b.id;
+      unitN = b.units.length ? b.units[0].n : 1;
+      refresh();
+    };
+    box.appendChild(btn);
+  });
+}
+function drawUnits(){
+  const box = $("units"); box.innerHTML = "";
+  for(let n = 1; n <= UNITS_PER_BOOK; n++){
+    const u = book().units.find(x => x.n === n);
+    const btn = document.createElement("button");
+    btn.className = "chip";
+    btn.disabled = !u;
+    btn.setAttribute("aria-pressed", !!u && n === unitN);
+    btn.innerHTML = "Unit " + n + "<small>" + (u ? (u.A.length + u.B.length) + " words" : "coming") + "</small>";
+    if(u) btn.onclick = () => { unitN = n; refresh(); };
+    box.appendChild(btn);
+  }
+}
+function drawParts(){
+  const box = $("parts"); box.innerHTML = "";
+  const u = unit();
+  box.hidden = !u;
+  if(!u) return;
+  [["A","Part A",u.A.length],["B","Part B",u.B.length]].forEach(([k,label,count]) => {
+    const btn = document.createElement("button");
+    btn.className = "chip";
+    btn.setAttribute("aria-pressed", k === part);
+    btn.innerHTML = label + "<small>" + count + " words</small>";
+    btn.onclick = () => { part = k; refresh(); };
+    box.appendChild(btn);
+  });
+}
+function drawPreview(){
+  const ul = $("preview"); ul.innerHTML = "";
+  const u = unit();
+  $("start").disabled = !u;
+  $("emptyNote").hidden = !!u;
+  $("prevNote").hidden = !u;
+  if(!u){
+    $("prevTitle").textContent = "";
+    $("emptyNote").textContent = "📷 No words for " + bookId + " yet — take photos of the word lists and they'll be added.";
+    return;
+  }
+  $("prevTitle").textContent = bookId + " · Unit " + u.n + " · Part " + part;
+  u[part].forEach(it => {
+      const li = document.createElement("li");
+      li.innerHTML = "<span class='num'>" + it.n + "</span><span class='body'>" +
+        "<span class='hdr'><b>" + esc(it.w) + "</b><span class='ipa'>" + esc(it.ipa) + "</span>" +
+        "<span class='cn'>" + esc(it.zh) + "</span></span>" +
+        "<span class='def'><i>" + esc(it.pos) + "</i> " + esc(it.en) + "</span></span>";
+      li.onclick = () => speakWord(it);
+      ul.appendChild(li);
+  });
+}
+function drawModes(){
+  document.querySelectorAll(".mode").forEach(b => b.setAttribute("aria-pressed", b.dataset.m === mode));
+  $("spellHow").hidden = mode !== "spell";
+  document.querySelectorAll("[data-s]").forEach(b => b.setAttribute("aria-pressed", b.dataset.s === spellHow));
+}
+document.querySelectorAll(".mode").forEach(b => b.onclick = () => { mode = b.dataset.m; refresh(); });
+document.querySelectorAll("[data-s]").forEach(b => b.onclick = () => { spellHow = b.dataset.s; refresh(); });
+
+function refresh(){
+  savePrefs(); drawBooks(); drawUnits(); drawParts(); drawPreview(); drawModes(); showHistory();
+}
+
+/* ---------- report card ----------
+   Results are kept per word, so Part A on Monday + Part B on Tuesday
+   add up to the whole unit. Extra practice of missed words isn't recorded. */
+const wkey = (bid, it) => bid + "|" + it.n;
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const fmtDate = ts => { const d = new Date(ts); return MONTHS[d.getMonth()] + " " + d.getDate(); };
+
+function grade(p){
+  if(p >= 97) return {g:"A+", s:"⭐⭐⭐⭐⭐", say:"Perfect — this one is in the bag."};
+  if(p >= 90) return {g:"A",  s:"⭐⭐⭐⭐⭐", say:"Great work, almost all right."};
+  if(p >= 80) return {g:"B",  s:"⭐⭐⭐⭐",   say:"Solid — a few still to fix."};
+  if(p >= 70) return {g:"C",  s:"⭐⭐⭐",     say:"You passed. One more round makes it stick."};
+  if(p >= 60) return {g:"D",  s:"⭐⭐",       say:"Worth going through again."};
+  return              {g:"Redo", s:"⭐",     say:"Start with the ones you missed."};
+}
+
+function unitReport(bid, u){
+  const words = u.A.concat(u.B), rec = load(WORDS, {}), runs = load(RUNS, []);
+  const stats = {};
+  Object.keys(MODES).forEach(m => {
+    const got = words.map(it => (rec[wkey(bid, it)] || {})[m]).filter(Boolean);
+    const last = runs.find(r => r.book === bid && r.unit === u.n && r.mode === m && !r.retry);
+    stats[m] = { tried: got.length, right: got.filter(r => r.ok).length, total: words.length, last: last };
+  });
+  if(!Object.values(stats).some(s => s.tried)) return "";
+  const row = m => {
+    const s = stats[m];
+    if(!s.tried) return "<li><span>" + MODES[m] + "</span><span class='val dim'>not yet</span></li>";
+    const p = Math.round(s.right / s.tried * 100);
+    const extra = s.tried < s.total ? s.tried + " of " + s.total + " tried" : (s.last ? "last done " + fmtDate(s.last.ts) : "");
+    return "<li><span>" + MODES[m] + "</span><span class='val'>" + s.right + " / " + s.tried + " · " + p + "%" +
+           (extra ? " <span class='dim'>" + extra + "</span>" : "") + "</span></li>";
+  };
+  let out = "<p class='rcname'>" + bid + " · Unit " + u.n + "</p><ul class='rc'>" + Object.keys(MODES).map(row).join("");
+  const full = Object.values(stats).every(s => s.tried === s.total);
+  if(full){
+    const avg = Math.round(Object.values(stats).reduce((a, s) => a + s.right / s.total * 100, 0) / 3), g = grade(avg);
+    out += "<li class='tot'><span>Unit grade</span><span class='val'>" + g.s + " " + g.g + " · " + avg + "%</span></li>";
+  }else{
+    out += "<li class='tot'><span class='dim'>Unit grade</span><span class='val dim'>all 3 modes, all words, to unlock</span></li>";
+  }
+  return out + "</ul>";
+}
+
+function showHistory(){
+  const html = [];
+  BOOKS.forEach(b => b.units.forEach(u => { const h = unitReport(b.id, u); if(h) html.push(h); }));
+  $("report").innerHTML = html.join("<div style='height:18px'></div>");
+  $("reportPanel").hidden = !html.length;
+}
+
+/* ---------- session ---------- */
+let queue = [], i = 0, phase = 0, timer = null, results = [], isRetry = false;
+
+function buildQueue(){
+  const u = unit();
+  let list = u[part].slice();
+  if(SHUFFLE){
+    for(let k = list.length - 1; k > 0; k--){
+      const j = Math.floor(Math.random() * (k + 1));
+      [list[k], list[j]] = [list[j], list[k]];
+    }
+  }
+  return list;
+}
+
+function show(which){ ["setup","session","done"].forEach(s => $(s).hidden = (s !== which)); }
+function stopAll(){ clearInterval(timer); try{ speechSynthesis.cancel(); }catch(e){} }
+
+$("start").onclick = () => {
+  if(!unit()) return;
+  queue = buildQueue(); i = 0; results = []; isRetry = false;
+  show("session"); step();
+};
+$("quit").onclick = () => { stopAll(); show("setup"); };
+$("home").onclick = () => { show("setup"); showHistory(); window.scrollTo(0, 0); };
+
+function setText(id, text){ const el = $(id); el.hidden = !text; if(text) el.textContent = text; }
+
+function step(){
+  clearInterval(timer);
+  document.querySelectorAll(".burst").forEach(e => e.remove());   // leftovers if he quit mid-animation
+  ["rOk","rNo"].forEach(id => $(id).classList.remove("picked", "faded"));
+  const it = queue[i];
+  phase = 0;
+  $("barFill").style.width = (i / queue.length * 100) + "%";
+  $("count").textContent = (i + 1) + " / " + queue.length;
+  $("rate").hidden = true;
+  $("cue").className = "cue";
+  $("card").hidden = mode === "spell";
+  $("keys").hidden = mode === "spell";
+  $("spellCard").hidden = mode !== "spell";
+  ["ipa","zh","en","ex","word"].forEach(id => $(id).hidden = true);
+
+  if(mode === "spell") return stepSpell(it);
+
+  $("blank").hidden = true;
+  $("keys").textContent = "space = skip the wait · 1 = got it · 2 = practice again";
+  setText("word", it.w);
+  setText("ipa", it.ipa);
+  if(mode === "read"){
+    $("cue").textContent = "READ IT OUT LOUD";
+    setText("zh", it.zh);
+    $("en").hidden = false;                  // meaning only — no example sentence in Read
+    $("en").innerHTML = "<span class='pos'>" + esc(it.pos) + "</span>" + esc(it.en);
+  }else{
+    $("cue").textContent = "WHAT DOES IT MEAN?";
+    $("ex").hidden = false;
+    $("ex").innerHTML = exHTML(it, false);   // sentence gives context, meaning stays hidden
+    speakWord(it);
+  }
+  countdown();
+}
+
+function showMeaning(it){
+  $("en").hidden = false;
+  $("en").innerHTML = "<span class='pos'>" + esc(it.pos) + "</span>" + esc(it.en);
+  $("ex").hidden = false;
+  $("ex").innerHTML = exHTML(it, false);
+}
+
+function countdown(){
+  let left = PAUSE;
+  const t = $("timer");
+  t.hidden = false; t.classList.add("pulse"); t.textContent = left;
+  timer = setInterval(() => {
+    left--;
+    if(left <= 0){ clearInterval(timer); reveal(); }
+    else t.textContent = left;
+  }, 1000);
+}
+
+function reveal(){
+  clearInterval(timer);
+  phase = 1;
+  const it = queue[i];
+  $("timer").hidden = true; $("timer").classList.remove("pulse");
+  $("blank").hidden = false;
+
+  if(mode === "read"){
+    $("cue").textContent = "NOW LISTEN";
+    speakWord(it);
+    $("rOk").innerHTML = "👍 Read it well<small>smooth, no stumble</small>";
+    $("rNo").innerHTML = "🔁 Practice again<small>wrong or stuck</small>";
+  }else{
+    $("cue").textContent = "ANSWER";
+    setText("zh", it.zh);
+    showMeaning(it);
+    speakWord(it);
+    $("rOk").innerHTML = "✅ I knew it<small>said the meaning</small>";
+    $("rNo").innerHTML = "❌ Didn't know<small>couldn't remember</small>";
+  }
+  $("rate").hidden = false;
+}
+
+/* ---- spell ----
+   Same as the spelling trainer: just the word (Warm up) or • • • (Test),
+   the English meaning, and the sound. Feedback goes under the box.
+   A miss stays on the word until it's typed right; only the first try counts.
+   In Test, a missed word also comes back cold a few words later. */
+let missedHere = false;   // already got this appearance of the word wrong
+function stepSpell(it){
+  missedHere = false;
+  const warm = spellHow === "warm";
+  $("sWord").className = warm ? "sword" : "veil";
+  $("sWord").textContent = warm ? it.w : "• • •";
+  $("sMean").textContent = it.en;
+  $("fb").hidden = true; $("fb").innerHTML = "";
+  $("tools").hidden = false;
+  $("sLater").hidden = false;
+  $("sLater").textContent = spellHow === "test" ? "⏭ Later" : "⏭ Skip";
+  const box = $("answer");
+  box.value = ""; box.className = ""; box.readOnly = false;
+  speakWord(it);
+  box.focus();
+}
+
+const norm = s => s.trim().toLowerCase().replace(/[’']/g, "'").replace(/\s+/g, " ");
+
+/* edit-distance alignment, so a left-out letter doesn't make everything after it look wrong */
+function align(a, b){                       // a = typed, b = correct
+  const n = a.length, m = b.length;
+  const dp = Array.from({length:n + 1}, () => new Array(m + 1).fill(0));
+  for(let x = 0; x <= n; x++) dp[x][0] = x;
+  for(let y = 0; y <= m; y++) dp[0][y] = y;
+  for(let x = 1; x <= n; x++) for(let y = 1; y <= m; y++)
+    dp[x][y] = a[x-1] === b[y-1] ? dp[x-1][y-1] : 1 + Math.min(dp[x-1][y-1], dp[x-1][y], dp[x][y-1]);
+  const ops = []; let x = n, y = m;
+  while(x > 0 || y > 0){
+    if(x > 0 && y > 0 && a[x-1] === b[y-1] && dp[x][y] === dp[x-1][y-1]){ ops.push({t:"ok", a:a[x-1], b:b[y-1]}); x--; y--; }
+    else if(x > 0 && y > 0 && dp[x][y] === dp[x-1][y-1] + 1){ ops.push({t:"sub", a:a[x-1], b:b[y-1]}); x--; y--; }
+    else if(y > 0 && dp[x][y] === dp[x][y-1] + 1){ ops.push({t:"miss", a:null, b:b[y-1]}); y--; }
+    else { ops.push({t:"extra", a:a[x-1], b:null}); x--; }
+  }
+  return ops.reverse();
+}
+const cell = (ch, cls) => ch === null ? "<span class='c gap'>·</span>" : "<span class='c " + cls + "'>" + esc(ch) + "</span>";
+
+function diffHTML(typed, word){
+  const ops = align(typed, word.toLowerCase());
+  const top = ops.map(o => o.t === "ok" ? cell(o.a, "ok") : o.t === "miss"  ? cell(null) : cell(o.a, "bad")).join("");
+  const bot = ops.map(o => o.t === "ok" ? cell(o.b, "ok") : o.t === "extra" ? cell(null) : cell(o.b, "bad")).join("");
+  const wrong = ops.filter(o => o.t !== "ok");
+  let note = "";
+  if(wrong.length === 1){
+    const o = wrong[0];
+    note = o.t === "miss"  ? "You missed the <b>" + esc(o.b) + "</b>."
+         : o.t === "extra" ? "There's an extra <b>" + esc(o.a) + "</b>."
+         :                   "It's <b>" + esc(o.b) + "</b>, not <b>" + esc(o.a) + "</b>.";
+  }else if(wrong.length <= 3) note = "Look at the orange letters.";
+  return "<div class='fbrow'><span class='lbl'>You typed</span><span class='cells'>" + top + "</span></div>" +
+         "<div class='fbrow'><span class='lbl'>Correct</span><span class='cells'>" + bot + "</span></div>" +
+         (note ? "<div class='note'>" + note + "</div>" : "");
+}
+
+function checkSpell(){
+  const it = queue[i], box = $("answer");
+  const typed = norm(box.value);
+  if(!typed) return;
+  const ok = typed === norm(it.w);
+  const first = !missedHere;
+  if(first && !results.some(r => r.item === it)) results.push({ item: it, ok: ok, typed: ok ? "" : typed });
+  const fb = $("fb");
+  fb.hidden = false;
+  if(ok){
+    phase = 1;
+    box.readOnly = true; box.className = "good";
+    $("tools").hidden = true;
+    fb.innerHTML = "<p class='verdict good'>✓ " + esc(it.w) + "</p>" +
+      (first ? "" : "<p class='note'>Fixed it" + (spellHow === "test" ? " — you'll see this one again later." : " 👍") + "</p>");
+    timer = setTimeout(next, first ? 1000 : 1300);
+  }else{
+    if(first && spellHow === "test" && !queue.slice(i + 1).includes(it))
+      queue.splice(Math.min(i + 4, queue.length), 0, it);      // re-ask 3 words later
+    missedHere = true;
+    $("sLater").hidden = true;             // once missed, fix it now — no putting it off
+    $("count").textContent = (i + 1) + " / " + queue.length;
+    fb.innerHTML = "<p class='verdict miss'>" + (first ? "Not quite" : "Almost — look again") + "</p>" +
+      diffHTML(typed, it.w) + "<p class='note retry'>Now type it again, correctly 👇</p>";
+    box.value = ""; box.className = "bad";
+    speakWord(it);
+    box.focus();
+  }
+}
+
+$("spellbox").onsubmit = e => {
+  e.preventDefault();
+  if(phase === 0) checkSpell(); else next();
+};
+$("sAgain").onclick = () => { speakWord(queue[i]); $("answer").focus(); };
+$("sSlow").onclick  = () => { say(queue[i].w, 0.55); $("answer").focus(); };
+/* Test: Later puts the word at the back of the queue — skipping postpones, it
+   never excuses (same rule as the spelling app). Nothing is scored until he spells it.
+   Warm up: Skip drops the word — no need to copy words he already knows. */
+$("sLater").onclick = () => {
+  if(phase !== 0 || missedHere) return;
+  if(spellHow === "test") queue.push(queue[i]);
+  next();
+};
+
+$("replay").onclick = () => speakWord(queue[i]);
+$("rOk").onclick = () => rate(true);
+$("rNo").onclick = () => rate(false);
+
+const HAPPY = ["😄","🤩","😎","🥳","👏"], SERIOUS = ["🧐","😐","🤔","😤"];
+function rate(ok){
+  if(phase !== 1) return;                  // already picked — ignore double taps / key repeats
+  phase = 2;
+  $(ok ? "rOk" : "rNo").classList.add("picked");
+  $(ok ? "rNo" : "rOk").classList.add("faded");
+  const face = document.createElement("div");
+  face.className = "burst";
+  const set = ok ? HAPPY : SERIOUS;
+  face.textContent = set[Math.floor(Math.random() * set.length)];
+  $("card").appendChild(face);
+  results.push({ item: queue[i], ok: ok });
+  timer = setTimeout(() => {
+    face.remove();
+    $("rOk").classList.remove("picked", "faded");
+    $("rNo").classList.remove("picked", "faded");
+    next();
+  }, 1000);
+}
+function next(){
+  clearTimeout(timer);
+  i++;
+  if(i < queue.length) step(); else finish();
+}
+
+function finish(){
+  stopAll();
+  $("toTest").hidden = true;
+  if(mode === "spell" && spellHow === "warm") return finishWarm();
+  const right = results.filter(r => r.ok).length;
+  const miss  = results.filter(r => !r.ok);
+  const p = Math.round(right / results.length * 100), g = grade(p);
+  $("score").textContent = right + " / " + results.length;
+  $("grade").textContent = g.s + "  " + g.g + " · " + p + "%";
+  const missLine = { read:" Read these again:", und:" Remember these meanings:", spell:" Spell these again:" }[mode];
+  $("scoresub").textContent = (isRetry ? "Extra practice done — not counted in the report card." : g.say) +
+    (miss.length ? missLine : " 🎉");
+  const ul = $("misslist"); ul.innerHTML = "";
+  miss.forEach(r => {
+    const li = document.createElement("li");
+    li.innerHTML = "<span class='mw'><b>" + esc(r.item.w) + "</b><span class='ipa'>" + esc(r.item.ipa) + "</span>" +
+      (r.typed ? "<span class='typed'>" + esc(r.typed) + "</span>" : "") + "</span>" +
+      "<span>" + esc(r.item.zh) + " · " + esc(r.item.en) + "</span>";
+    ul.appendChild(li);
+  });
+  $("again").hidden = !miss.length;
+  $("again").onclick = () => {
+    queue = miss.map(r => r.item); i = 0; results = []; isRetry = true;
+    show("session"); step();
+  };
+
+  if(!isRetry){
+    const now = Date.now(), rec = load(WORDS, {});
+    results.forEach(r => {
+      const k = wkey(bookId, r.item);
+      rec[k] = rec[k] || {};
+      rec[k][mode] = { ok: r.ok, ts: now };
+    });
+    store(WORDS, rec);
+  }
+  const runs = load(RUNS, []);
+  runs.unshift({ ts: Date.now(), book: bookId, unit: unitN, part: part, mode: mode,
+                 right: right, total: results.length, retry: isRetry });
+  store(RUNS, runs.slice(0, 200));
+
+  const rc = unitReport(bookId, unit());
+  $("doneReport").innerHTML = rc;
+  $("doneReport").hidden = !rc;
+  showHistory();
+  show("done");
+  window.scrollTo(0, 0);
+}
+
+function finishWarm(){
+  const miss = results.filter(r => !r.ok);
+  $("score").textContent = "✍️ Warm-up done";
+  $("grade").textContent = "";
+  $("scoresub").textContent = !results.length ? "Skipped them all — ready for the test?"
+    : miss.length
+    ? "Got " + (results.length - miss.length) + " of " + results.length + " right the first time. Watch these in the test:"
+    : "Every word right the first time. 🎉";
+  const ul = $("misslist"); ul.innerHTML = "";
+  miss.forEach(r => {
+    const li = document.createElement("li");
+    li.innerHTML = "<span class='mw'><b>" + esc(r.item.w) + "</b><span class='typed'>" + esc(r.typed) + "</span></span>" +
+      "<span>" + esc(r.item.en) + "</span>";
+    ul.appendChild(li);
+  });
+  $("again").hidden = true;
+  $("toTest").hidden = false;
+  $("toTest").onclick = () => {
+    spellHow = "test"; savePrefs(); drawModes();
+    queue = buildQueue(); i = 0; results = []; isRetry = false;
+    show("session"); step();
+  };
+  $("doneReport").hidden = true;
+  show("done");
+  window.scrollTo(0, 0);
+}
+
+/* ---------- keyboard (Read / Understand; Spell uses the form) ---------- */
+document.addEventListener("keydown", e => {
+  if($("session").hidden || mode === "spell") return;
+  if(e.key === " " || e.key === "Enter"){
+    e.preventDefault();
+    if(phase === 0) reveal(); else speakWord(queue[i]);
+  }
+  if(phase === 1 && e.key === "1") rate(true);
+  if(phase === 1 && e.key === "2") rate(false);
+});
+$("card").onclick = e => { if(mode !== "spell" && phase === 0 && !e.target.closest("button")) reveal(); };
+
+refresh();
+</script>
+</body>
+</html>
