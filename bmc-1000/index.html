@@ -403,7 +403,7 @@ const BOOKS = [
    B:[
     {n:791, w:"adult", ipa:"/əˈdʌlt/", pos:"n.", zh:"成人", en:"someone who is fully grown", ex:"The *adult* I respect the most is my mother."},
     {n:792, w:"classic", ipa:"/ˈklæsɪk/", pos:"adj.", zh:"古典的", en:"of good quality and popular for a long time", ex:"Jason enjoys driving *classic* cars. He owns several of them."},
-    {n:793, w:"desert", ipa:"/dɪˈzɜːrt/", pos:"v.", zh:"抛弃", en:"to leave a place so it is empty", ex:"They *deserted* the building after the terrible fire."},
+    {n:793, w:"desert", tts:"dessert", ipa:"/dɪˈzɜːrt/", pos:"v.", zh:"抛弃", en:"to leave a place so it is empty", ex:"They *deserted* the building after the terrible fire."},
     {n:794, w:"discover", ipa:"/dɪˈskʌvər/", pos:"v.", zh:"发现", en:"to find", ex:"She is trying to *discover* a cure for a serious disease."},
     {n:795, w:"female", ipa:"/ˈfiːmeɪl/", pos:"adj.", zh:"女性的", en:"being a girl or woman", ex:"Mrs. Jennings prefers to visit a *female* doctor."},
     {n:796, w:"flow", ipa:"/floʊ/", pos:"v.", zh:"流", en:"to move like water", ex:"This river *flows* from east to west."},
@@ -446,7 +446,7 @@ const BOOKS = [
     {n:825, w:"goods", ipa:"/gʊdz/", pos:"n.", zh:"商品", en:"things which are made and sold", ex:"She found many *goods* at the local market."},
     {n:826, w:"increase", ipa:"/ɪnˈkriːs/", pos:"v.", zh:"增加", en:"to make bigger or more", ex:"As time passed, the tree *increased* in size."},
     {n:827, w:"penny", ipa:"/ˈpeni/", pos:"n.", zh:"美分硬币", en:"a coin equal to one cent in the US", ex:"She has saved a lot of *pennies* to buy a new toy."},
-    {n:828, w:"separate", ipa:"/ˈsepəreɪt/", pos:"v.", zh:"分离", en:"not to be joined", ex:"Kelly *separated* the bottles into different types for recycling."},
+    {n:828, w:"separate", tts:"separait", ipa:"/ˈsepəreɪt/", pos:"v.", zh:"分离", en:"not to be joined", ex:"Kelly *separated* the bottles into different types for recycling."},
     {n:829, w:"total", ipa:"/ˈtoʊtl/", pos:"n.", zh:"总数", en:"the number of everything counted", ex:"There is a *total* of three fruits: two oranges and one apple."},
     {n:830, w:"wrap", ipa:"/ræp/", pos:"v.", zh:"包裹", en:"to cover with something", ex:"Marisa promised to *wrap* Katy's gift before the party."}
    ],
@@ -648,7 +648,9 @@ function say(parts, rate){
     });
   }catch(e){ /* no speech on this device — the rest still works */ }
 }
-const speakWord = it => say(it.w, 0.8);
+/* tts: spoken form when the voice would pick the wrong reading (desert v. → "dessert", separate v. → "separait") */
+const spoken = it => it.tts || it.w;
+const speakWord = it => say(spoken(it), 0.8);
 
 /* example sentence, word bolded — or blanked for Spell. A book form like
    "moments" / "guarding" keeps its ending: "____s", "____ing". */
@@ -1002,7 +1004,7 @@ $("spellbox").onsubmit = e => {
   if(phase === 0) checkSpell(); else next();
 };
 $("sAgain").onclick = () => { speakWord(queue[i]); $("answer").focus(); };
-$("sSlow").onclick  = () => { say(queue[i].w, 0.55); $("answer").focus(); };
+$("sSlow").onclick  = () => { say(spoken(queue[i]), 0.55); $("answer").focus(); };
 /* Test: Later puts the word at the back of the queue — skipping postpones, it
    never excuses (same rule as the spelling app). Nothing is scored until he spells it.
    Warm up: Skip drops the word — no need to copy words he already knows. */
