@@ -225,7 +225,7 @@
       </div>
       <div class="chips parts" id="spellHow" hidden>
         <button class="chip" data-s="warm">✍️ Warm up<small>see it, type it</small></button>
-        <button class="chip" data-s="test">📝 Test<small>hear it, type it</small></button>
+        <button class="chip" data-s="test">📝 Test<small>hear it, one try each</small></button>
       </div>
     </div>
 
@@ -912,9 +912,12 @@ function reveal(){
 /* ---- spell ----
    Same as the spelling trainer: just the word (Warm up) or • • • (Test),
    the English meaning, and the sound. Feedback goes under the box.
-   A miss stays on the word until it's typed right; only the first try counts.
-   In Test, a missed word also comes back cold a few words later. */
+   Warm up / extra practice: a miss stays on the word until it's typed right.
+   Test is a full mock test, like "Test all" in the spelling trainer: every word
+   once, scored on the first try. A miss shows the right spelling and moves on;
+   Skip counts as wrong; stopping early (✕) isn't recorded. */
 let missedHere = false;   // already got this appearance of the word wrong
+const exam = () => mode === "spell" && spellHow === "test" && !isRetry;
 function stepSpell(it){
   missedHere = false;
   const warm = spellHow === "warm";
@@ -924,7 +927,8 @@ function stepSpell(it){
   $("fb").hidden = true; $("fb").innerHTML = "";
   $("tools").hidden = false;
   $("sLater").hidden = false;
-  $("sLater").textContent = spellHow === "test" ? "⏭ Later" : "⏭ Skip";
+  $("sLater").textContent = "⏭ Skip";
+  $("quit").title = exam() ? "Stop (not counted)" : "Quit";
   const box = $("answer");
   box.value = ""; box.className = ""; box.readOnly = false;
   speakWord(it);
@@ -983,11 +987,19 @@ function checkSpell(){
     box.readOnly = true; box.className = "good";
     $("tools").hidden = true;
     fb.innerHTML = "<p class='verdict good'>✓ " + esc(it.w) + "</p>" +
-      (first ? "" : "<p class='note'>Fixed it" + (spellHow === "test" ? " — you'll see this one again later." : " 👍") + "</p>");
+      (first ? "" : "<p class='note'>Fixed it 👍</p>");
     timer = setTimeout(next, first ? 1000 : 1300);
+  }else if(exam()){
+    // One-shot: show the right spelling, then on to the next word.
+    phase = 1;
+    box.readOnly = true; box.className = "bad";
+    $("tools").hidden = true;
+    fb.innerHTML = "<p class='verdict miss'>Not quite</p>" + diffHTML(typed, it.w) +
+      "<button class='btn wide' id='sNext' type='button'>Next →</button>";
+    $("sNext").onclick = next;
+    speakWord(it);
+    box.focus();
   }else{
-    if(first && spellHow === "test" && !queue.slice(i + 1).includes(it))
-      queue.splice(Math.min(i + 4, queue.length), 0, it);      // re-ask 3 words later
     missedHere = true;
     $("sLater").hidden = true;             // once missed, fix it now — no putting it off
     $("count").textContent = (i + 1) + " / " + queue.length;
@@ -1005,12 +1017,12 @@ $("spellbox").onsubmit = e => {
 };
 $("sAgain").onclick = () => { speakWord(queue[i]); $("answer").focus(); };
 $("sSlow").onclick  = () => { say(spoken(queue[i]), 0.55); $("answer").focus(); };
-/* Test: Later puts the word at the back of the queue — skipping postpones, it
-   never excuses (same rule as the spelling app). Nothing is scored until he spells it.
-   Warm up: Skip drops the word — no need to copy words he already knows. */
+/* Test: a skipped word counts as wrong and doesn't come back — it's a real test.
+   Warm up / extra practice: Skip just drops the word. */
 $("sLater").onclick = () => {
   if(phase !== 0 || missedHere) return;
-  if(spellHow === "test") queue.push(queue[i]);
+  if(exam() && !results.some(r => r.item === queue[i]))
+    results.push({ item: queue[i], ok: false, typed: "", skipped: true });
   next();
 };
 
@@ -1059,7 +1071,7 @@ function finish(){
   miss.forEach(r => {
     const li = document.createElement("li");
     li.innerHTML = "<span class='mw'><b>" + esc(r.item.w) + "</b><span class='ipa'>" + esc(r.item.ipa) + "</span>" +
-      (r.typed ? "<span class='typed'>" + esc(r.typed) + "</span>" : "") + "</span>" +
+      (r.skipped ? "<span class='typed'>skipped</span>" : r.typed ? "<span class='typed'>" + esc(r.typed) + "</span>" : "") + "</span>" +
       "<span>" + esc(r.item.zh) + " · " + esc(r.item.en) + "</span>";
     ul.appendChild(li);
   });
