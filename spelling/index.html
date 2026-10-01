@@ -74,6 +74,8 @@ table{width:100%;border-collapse:collapse;font-size:16px}
 td{padding:11px 0;border-bottom:1px solid var(--line);vertical-align:middle}
 tr:last-child td{border-bottom:none}
 .wd{font-weight:600;line-height:1.25}
+.wd .cn{font-weight:700;color:var(--accent);margin-left:8px}
+.wd .ipa{font-size:13px;font-weight:600;color:var(--accent);opacity:.85;margin-left:8px}
 .mn{color:var(--muted);font-size:14px;line-height:1.35;margin-top:2px;
     max-width:38ch}
 .tick{color:var(--accent);font-weight:700;margin-left:5px}
@@ -164,6 +166,7 @@ td.acc{width:92px;padding-left:14px;text-align:right;vertical-align:middle}
   display:flex;flex-direction:column;justify-content:center;gap:10px}
 .word{font-size:46px;font-weight:700;letter-spacing:-.02em;word-break:break-word;line-height:1.15}
 .chunks{font-size:19px;color:var(--muted);letter-spacing:.04em}
+.zh{font-size:22px;font-weight:700;color:var(--accent)}
 .mean{font-size:17px;color:var(--muted);max-width:34ch;margin:0 auto}
 .hintbox{background:var(--accent-soft);border-radius:12px;padding:12px 16px;
   text-align:center;max-width:none;color:var(--ink);font-size:17px}
@@ -204,6 +207,16 @@ input.bad{border-color:var(--warn)}
 /* ---------- done ---------- */
 #done .card{text-align:center;padding:40px 24px}
 #done .big{font-size:52px;margin-bottom:10px}
+.score{font-size:56px;font-weight:800;letter-spacing:-.02em;color:var(--accent);line-height:1.1}
+.misslist{list-style:none;text-align:left;margin:0 0 20px;border-top:1px solid var(--line)}
+.misslist li{display:flex;justify-content:space-between;gap:12px;align-items:baseline;
+  padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+.misslist b{font-size:17px}
+.lasttest{font-size:15px;color:var(--muted);margin:-4px 4px 0}
+.lasttest b{color:var(--accent);font-size:17px}
+.misslist .cn{color:var(--accent);font-weight:700;margin-left:6px}
+.misslist span.typed{color:var(--warn);text-align:right}
+.misslist h3{font-size:14px;color:var(--muted);font-weight:600;padding:10px 0 4px;border:none}
 </style>
 </head>
 <body>
@@ -249,10 +262,15 @@ input.bad{border-color:var(--warn)}
     <div class="stack" id="levels" data-view-panel="levels"></div>
 
     <div class="stack" data-view-panel="all" hidden>
-      <button class="btn primary" id="test-all">✍️ Test all <span data-count></span>
-        <small id="test-sub">Hear the word, type it — no peeking</small></button>
       <button class="btn" id="practice-all">📖 Practice all <span data-count></span>
         <small>See the word and copy it</small></button>
+      <button class="btn primary" id="test-all">✍️ Test all <span data-count></span>
+        <small>Every word once, from scratch — score at the end</small></button>
+      <p class="lasttest" id="lasttest" hidden></p>
+      <div id="fixbox" hidden>
+        <p class="legend" style="text-align:left;margin:8px 0 2px" id="fixhead"></p>
+        <div id="fixes" class="stack" style="margin-bottom:0"></div>
+      </div>
     </div>
 
     <details class="more">
@@ -295,7 +313,7 @@ input.bad{border-color:var(--warn)}
         <button class="mini" id="again">🔊 Again</button>
         <button class="mini" id="slow">🐢 Slower</button>
         <button class="mini" id="hint">💡 Hint</button>
-        <button class="mini" id="skip">⏭ Later</button>
+        <button class="mini" id="skip">⏭ Skip</button>
       </div>
 
       <div class="fb" id="fb" style="display:none"></div>
@@ -310,6 +328,7 @@ input.bad{border-color:var(--warn)}
       <h1 id="done-title"></h1>
       <p class="sub" style="margin:12px 0 20px" id="done-sub"></p>
       <div id="done-break" class="breakbox" hidden></div>
+      <ul class="misslist" id="done-list" hidden></ul>
       <div class="stack" id="done-actions"></div>
     </div>
   </section>
@@ -491,6 +510,51 @@ const WEEKS = [
   },
 ];
 
+/* Chinese meaning for the word list, shared by every week since most words
+   carry over. A new word needs a line here too. */
+const ZH = {
+  "line":"诗行", "stanza":"诗节", "alliteration":"头韵", "rhyme":"押韵",
+  "rhythm":"节奏；韵律", "imagery":"意象", "onomatopoeia":"拟声词", "infer":"推断",
+  "splattered":"溅满的", "depend":"依靠；取决于", "glazed":"上了釉的；裹着糖霜的",
+  "wheelbarrow":"独轮手推车", "gist":"要点；大意", "characteristics":"特征；特点",
+  "contrast":"对比", "theme":"主题", "repetition":"重复", "details":"细节",
+  "purchase":"购买", "community":"社区", "deliver":"递送；送达",
+  "figurative language":"比喻性语言；修辞", "anonymous":"匿名的；作者不详的",
+  "create":"创造", "free verse":"自由诗", "evidence":"证据", "fearful":"害怕的",
+  "in depth":"深入地；详细地", "prose":"散文", "pretend":"假装", "chomp":"大声地咬嚼",
+  "chores":"家务活", "iambic meter":"抑扬格", "shelter":"庇护所；避难处", "brick":"砖",
+  "cage":"笼子", "inspire":"启发；激励", "chaos":"混乱", "orchestra":"管弦乐队",
+  "caution":"小心；谨慎", "simile":"明喻", "metaphor":"暗喻", "attitude":"态度",
+  "elaborate":"详细说明", "persuade":"说服", "empathy":"同理心；感同身受",
+  "compassion":"同情心；怜悯", "reflect":"反思", "slobber":"流口水", "groceries":"食品杂货",
+  "miracle":"奇迹", "prompt":"写作题目；提示", "response":"回答；回应",
+  "flattered":"（被夸得）很高兴的；受宠若惊的",
+};
+/* US IPA, same style as the History list. A new word needs a line here too. */
+const IPA = {
+  "line":"/laɪn/", "stanza":"/ˈstænzə/", "alliteration":"/əˌlɪtəˈreɪʃən/", "rhyme":"/raɪm/",
+  "rhythm":"/ˈrɪðəm/", "imagery":"/ˈɪmɪdʒəri/", "onomatopoeia":"/ˌɑːnəˌmætəˈpiːə/",
+  "infer":"/ɪnˈfɜːr/", "splattered":"/ˈsplætərd/", "depend":"/dɪˈpend/", "glazed":"/ɡleɪzd/",
+  "wheelbarrow":"/ˈwiːlˌbæroʊ/", "gist":"/dʒɪst/", "characteristics":"/ˌkærəktəˈrɪstɪks/",
+  "contrast":"/kənˈtræst/", "theme":"/θiːm/", "repetition":"/ˌrepəˈtɪʃən/",
+  "details":"/ˈdiːteɪlz/", "purchase":"/ˈpɜːrtʃəs/", "community":"/kəˈmjuːnəti/",
+  "deliver":"/dɪˈlɪvər/", "figurative language":"/ˈfɪɡjərətɪv ˈlæŋɡwɪdʒ/",
+  "anonymous":"/əˈnɑːnəməs/", "create":"/kriˈeɪt/", "free verse":"/ˌfriː ˈvɜːrs/",
+  "evidence":"/ˈevɪdəns/", "fearful":"/ˈfɪrfəl/", "in depth":"/ɪn ˈdepθ/", "prose":"/proʊz/",
+  "pretend":"/prɪˈtend/", "chomp":"/tʃɑːmp/", "chores":"/tʃɔːrz/",
+  "iambic meter":"/aɪˈæmbɪk ˈmiːtər/", "shelter":"/ˈʃeltər/", "brick":"/brɪk/",
+  "cage":"/keɪdʒ/", "inspire":"/ɪnˈspaɪər/", "chaos":"/ˈkeɪɑːs/", "orchestra":"/ˈɔːrkɪstrə/",
+  "caution":"/ˈkɔːʃən/", "simile":"/ˈsɪməli/", "metaphor":"/ˈmetəfɔːr/",
+  "attitude":"/ˈætɪtuːd/", "elaborate":"/ɪˈlæbəreɪt/", "persuade":"/pərˈsweɪd/",
+  "empathy":"/ˈempəθi/", "compassion":"/kəmˈpæʃən/", "reflect":"/rɪˈflekt/",
+  "slobber":"/ˈslɑːbər/", "groceries":"/ˈɡroʊsəriz/", "miracle":"/ˈmɪrəkəl/",
+  "prompt":"/prɑːmpt/", "response":"/rɪˈspɑːns/", "flattered":"/ˈflætərd/",
+};
+WEEKS.forEach(wk => wk.words.forEach(o => {
+  o.zh  = o.zh  || ZH[o.w]  || "";
+  o.ipa = o.ipa || IPA[o.w] || "";
+}));
+
 /* The active week. Everything below reads these, not WEEKS directly. */
 let WEEK, TEST_DATE, WORDS, LEVELS;
 
@@ -504,7 +568,13 @@ const wordsOf = n => LEVELS[n-1].ws.map(byWord);
 const letters    = o => o.w.replace(/ /g,"").length;
 const soloOrder  = () => WORDS.slice()
   .sort((a,b) => letters(a)-letters(b) || a.w.length-b.w.length);
-const soloAfter  = w => { const o = soloOrder(); return o[o.findIndex(x=>x.w===w)+1] || null; };
+/* The list a One-by-one word was opened from: null = the One tab (shortest
+   first), or the Test all "to fix" list. "Next word" walks the same list. */
+let soloFrom = null;
+const soloAfter  = w => {
+  const o = soloFrom ? soloFrom.map(byWord) : soloOrder();
+  return o[o.findIndex(x=>x.w===w)+1] || null;
+};
 /* Where "Start one by one" picks up: the first word not yet learned. */
 const soloFirst  = () => soloOrder().find(o => stats[o.w].score < GOAL) || soloOrder()[0];
 
@@ -523,6 +593,10 @@ let stars = {};      // per level: best star count, 0-3
    best — it's meant to show how he'd spell it today. */
 let wordStars = {};
 let view  = "levels";// which home view he last used
+let lastAll = null;  // last Test all score: {right, total, date}
+/* Words he missed in Test all, listed under it for one-by-one practice.
+   Every finished run replaces it; a run stopped early changes nothing. */
+let toFix = [];
 
 const fresh = () => ({score:0, tries:0, hits:0, errs:[], skips:0});
 
@@ -533,16 +607,18 @@ function load(){
   stars = d.stars || {};
   wordStars = d.wordStars || {};
   view  = d.view  || "levels";
+  lastAll = d.lastAll || null;
+  toFix   = (d.toFix || []).filter(byWord);   // drop anything not on this week's list
   WORDS.forEach(o=>{ stats[o.w] = stats[o.w] || fresh(); });
 }
 function save(){
-  try{ localStorage.setItem(KEY, JSON.stringify({stats, stars, wordStars, view})); }catch(e){}
+  try{ localStorage.setItem(KEY, JSON.stringify({stats, stars, wordStars, view, lastAll, toFix})); }catch(e){}
 }
 /* Must drop the stored copy BEFORE rebuilding — calling load() here would just
    read last week's data straight back in and save() would re-persist it. */
 function wipe(){
   try{ localStorage.removeItem(KEY); }catch(e){}
-  stats = {}; stars = {}; wordStars = {};
+  stats = {}; stars = {}; wordStars = {}; lastAll = null; toFix = [];
   WORDS.forEach(o=>{ stats[o.w] = fresh(); });
   save();
 }
@@ -758,14 +834,9 @@ function renderLevels(){
     b.onclick = ()=> startLevel(+b.dataset.level, b.dataset.go));
 }
 
-function renderSolos(){
-  const order = soloOrder();
-  const nxt   = soloFirst();
-
-  $("#solos").innerHTML = order.map((o,i)=>{
-    const done = stats[o.w].score >= GOAL;
+function soloRow(o, i, isNext, done){
     const got  = wordStars[o.w];        // undefined until he has spelled it blind
-    return `<div class="solo ${o===nxt?"next":""} ${done?"done":""}">
+    return `<div class="solo ${isNext?"next":""} ${done?"done":""}">
       <span class="n">${i+1}</span>
       <span class="txt">
         <span class="nm">${o.w}${done?`<span class="tick">✓</span>`:""}</span>
@@ -777,16 +848,37 @@ function renderSolos(){
         <button class="mini go" data-solo="${o.w}" data-sgo="test" title="Spell it">✍️</button>
       </span>
     </div>`;
-  }).join("");
+}
+
+function renderSolos(){
+  const order = soloOrder();
+  const nxt   = soloFirst();
+
+  $("#solos").innerHTML = order.map((o,i)=>
+    soloRow(o, i, o===nxt, stats[o.w].score >= GOAL)).join("");
 
   $$("#solos [data-solo]").forEach(b =>
-    b.onclick = ()=> startSolo(b.dataset.solo, b.dataset.sgo));
+    b.onclick = ()=>{ soloFrom = null; startSolo(b.dataset.solo, b.dataset.sgo); });
 
   const left = order.filter(o => stats[o.w].score < GOAL).length;
   $("#solo-go").innerHTML = left < order.length
     ? `▶️ Keep going: ${nxt.w}<small>${left} word${left===1?"":"s"} still to nail</small>`
     : `▶️ Start one by one<small>${order.length} words, shortest first</small>`;
-  $("#solo-go").onclick = ()=> startSolo(soloFirst().w, "practice");
+  $("#solo-go").onclick = ()=>{ soloFrom = null; startSolo(soloFirst().w, "practice"); };
+}
+
+/* Under Test all: the words he got wrong last time. A word counts as fixed
+   once he spells it right first try (⭐⭐⭐) in One-by-one. */
+function renderFixes(){
+  const list  = toFix.map(byWord);
+  const fixed = o => wordStars[o.w] === 3;
+  const nxt   = list.find(o => !fixed(o));
+  const left  = list.filter(o => !fixed(o)).length;
+  $("#fixbox").hidden = !list.length;
+  $("#fixhead").innerHTML = `<b>Missed in Test all</b> · ${left ? `${left} still to fix` : "all fixed ✓"} — tap one to practise`;
+  $("#fixes").innerHTML = list.map((o,i)=> soloRow(o, i, o===nxt, fixed(o))).join("");
+  $$("#fixes [data-solo]").forEach(b =>
+    b.onclick = ()=>{ soloFrom = toFix.slice(); startSolo(b.dataset.solo, b.dataset.sgo); });
 }
 
 function renderHome(){
@@ -800,10 +892,15 @@ function renderHome(){
 
   renderLevels();
   renderSolos();
+  renderFixes();
 
-  $("#test-sub").textContent = need
-    ? `${need} word${need===1?"":"s"} still to nail`
-    : "All done — go again to keep it sharp";
+  const lt = $("#lasttest");
+  lt.hidden = !lastAll;
+  if(lastAll){
+    const day = new Date(lastAll.date+"T00:00:00")
+      .toLocaleDateString("en-US", {weekday:"short", month:"short", day:"numeric"});
+    lt.innerHTML = `Last test: <b>${lastAll.right} / ${lastAll.total}</b> · ${Math.round(100*lastAll.right/lastAll.total)}% · ${day}`;
+  }
 
   $("#tally").innerHTML =
     `<span><b>${done}</b> done</span>
@@ -819,7 +916,7 @@ function renderHome(){
     // Misspellings still recorded — moved to a hover tooltip instead of the row.
     const tip = s.errs.length ? ` title="typed: ${s.errs.join(", ")}"` : "";
     return `<tr${tip}>
-      <td><div class="wd">${o.w}${tick}${canSpeak ? `<button class="play" data-say="${o.w}"
+      <td><div class="wd">${o.w}${tick}${o.ipa ? `<span class="ipa">${o.ipa}</span>` : ""}${o.zh ? `<span class="cn">${o.zh}</span>` : ""}${canSpeak ? `<button class="play" data-say="${o.w}"
             aria-label="Say ${o.w}">🔊</button>` : ""}</div><div class="mn">${o.m}</div></td>
       <td class="acc">
         <div class="meter ${cls}"><i style="width:${pct || 0}%"></i></div>
@@ -853,12 +950,15 @@ let asks={}, gotAt={};
    miss count — skipping every word leaves zero misses, which used to read as
    a flawless level. */
 let solved=new Set();
+/* "Test all" is a mock test: every word once, from scratch, scored on the
+   first blind try. results[w] = {ok, typed}, set on that first try only. */
+let allTest=false, results={};
 
 /* A level runs in two passes over the SAME few words:
    warm up by copying them, then spell them blind. The repetition is the point —
    he asked to get familiar with a handful rather than face the whole list cold. */
 function startLevel(n, go){
-  levelNo = n; solo = null;
+  levelNo = n; solo = null; allTest = false;
   if(!sessionStart) sessionStart = Date.now();
   if(go === "test") return startTestPass();   // straight to the blind pass
   mode = "practice";
@@ -879,7 +979,7 @@ function startTestPass(){
 /* One word, the same two passes: copy it, then spell it blind. Same shape as a
    level, just a queue of one — for the days when five words is four too many. */
 function startSolo(w, go){
-  solo = byWord(w); levelNo = 0;
+  solo = byWord(w); levelNo = 0; allTest = false;
   if(!solo) return;
   if(!sessionStart) sessionStart = Date.now();
   if(go === "test") return startSoloTest();
@@ -896,37 +996,23 @@ function startSoloTest(){
   step();
 }
 
-/* "Test all" stays available for later in the week. */
+/* "Test all" is the dress rehearsal for Friday: the whole list every time,
+   shuffled, regardless of what he has already learned — and a score at the end. */
 function startRound(m){
   levelNo = 0; solo = null;
   if(!sessionStart) sessionStart = Date.now();
   mode = m;
-  let pool = (m==="practice")
-    ? WORDS.slice()
-    : WORDS.filter(o=>stats[o.w].score<GOAL);
-
-  if(!pool.length) pool = WORDS.slice();          // all done → free practice
-
-  if(m==="test"){
-    // Shuffle, then float the words he's struggling with toward the front.
-    pool.sort(()=>Math.random()-0.5);
-    pool.sort((a,b)=>rank(a)-rank(b));
-  }
+  allTest = (m==="test"); results = {};
+  const pool = WORDS.slice();
+  if(m==="test") shuffle(pool);
   queue = pool; at = 0; streak = 0; solved = new Set(); asks = {}; gotAt = {}; tally = {right:0,wrong:0};
   show("round");
   step();
 }
 
-/* Ordering for "Test all": words he's actually missing come first, and
-   within each group the easier levels lead — he types slowly, so early wins
-   matter more than front-loading the monsters. */
-const levelOf = w => LEVELS.findIndex(L => L.ws.includes(w));
-
-function rank(o){
-  const s = stats[o.w], lv = levelOf(o.w);
-  if(s.tries && s.score===0) return lv;        //   0-4  known-bad, easiest first
-  if(s.score < GOAL)         return 10 + lv;   // 10-14  not yet learned
-  return 100;                                  //        already solid, last
+function shuffle(a){
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
 }
 
 function current(){ return queue[at]; }
@@ -965,10 +1051,12 @@ function step(){
   // round after one use, and in Practice it duplicated the meaning already shown.)
   const hb = $("#hintbox");
   hb.hidden = true; hb.innerHTML = "";
-  $("#hint").hidden = (mode === "practice");
+  $("#hint").hidden = (mode === "practice") || allTest;   // no hints on the real test
   // Skip works in both passes: copying out `characteristics` is a chore too when
   // you type slowly, and being stuck on one word is what makes him give up.
   $("#skip").hidden = !!solo;
+  $("#skip").textContent = allTest ? "⏭ Skip" : "⏭ Later";
+  $("#quit").textContent = allTest ? "Stop (not counted)" : "Finish";
 
   const ans = $("#ans");
   ans.value=""; ans.classList.remove("bad"); ans.disabled=false;
@@ -977,6 +1065,7 @@ function step(){
     $("#stage").innerHTML = `
       <div class="word">${o.w}</div>
       ${o.c ? `<div class="chunks">${o.c}</div>` : ""}
+      ${o.zh ? `<div class="zh">${o.zh}</div>` : ""}
       <div class="mean">${o.m}</div>`;
     say(o.w);
   } else {
@@ -1024,6 +1113,7 @@ function submit(){
 function accept(o, s, fix){
   solved.add(o.w);             // counts even after a correction — he did spell it
   if(mode==="test" && !fix && !gotAt[o.w]) gotAt[o.w] = asks[o.w];
+  if(allTest && !fix && !results[o.w]) results[o.w] = {ok:true};
   if(!fix){
     s.tries++;                 // every first attempt counts, right or wrong,
     s.hits++;                  // so hits/tries is a real accuracy rate
@@ -1039,7 +1129,7 @@ function accept(o, s, fix){
   $("#fb").style.display="block";
   $("#fb").innerHTML =
     `<div class="verdict good">✓ ${o.w}</div>` +
-    (fix    ? `<div class="note">Fixed it — you'll see this one again later.</div>`
+    (fix    ? `<div class="note">${allTest ? "Fixed it." : "Fixed it — you'll see this one again later."}</div>`
    : hinted ? `<div class="note">Nice — try it without the hint next time.</div>` : "");
   const g = gen;   // only advance if we're still on THIS word
   setTimeout(()=>{ if(gen===g && phase==="feedback") step2(); }, fix ? 1300 : 1100);
@@ -1052,14 +1142,30 @@ function refuse(o, s, typed, fix){
     tally.wrong++;
     streak = 0;
     if(mode==="test") s.score = 0;         // a copying typo shouldn't wipe real progress
+    if(allTest && !results[o.w]) results[o.w] = {ok:false, typed:norm(typed)};
     // Missed words come back cold a few items later — that's the actual re-test.
-    if(mode==="test" && !queue.slice(at+1).includes(o)){
+    // Not in Test all: there each word is asked once, the score is the point.
+    if(mode==="test" && !allTest && !queue.slice(at+1).includes(o)){
       queue.splice(Math.min(at+3, queue.length), 0, o);
     }
   }
   if(s.errs[s.errs.length-1] !== norm(typed)) s.errs.push(norm(typed));
   if(s.errs.length>4) s.errs.shift();
   save();
+
+  /* Test all is a one-shot exam: show the right spelling, then move on. */
+  if(allTest){
+    phase="feedback";
+    $("#tools").style.display="none";
+    $("#ans").disabled = true;
+    $("#ans").classList.add("bad");
+    $("#fb").style.display="block";
+    $("#fb").innerHTML =
+      `<div class="verdict miss">Not quite</div>` + renderDiff(norm(typed), norm(o.w)) +
+      `<button class="btn primary" id="next" style="text-align:center">Next →</button>`;
+    $("#next").onclick = step2;
+    return;
+  }
 
   phase="retry";
   $("#tools").style.display="none";
@@ -1105,6 +1211,7 @@ function finish(){
   }
 
   renderHome();
+  $("#done-list").hidden = true;
 
   const minutes = sessionStart ? Math.round((Date.now()-sessionStart)/60000) : 0;
   const acts = [];
@@ -1164,6 +1271,30 @@ function finish(){
     } else {
       acts.push(`<button class="btn primary" data-act="soloredo" style="text-align:center">↻ This word again</button>`);
     }
+  } else if(allTest){
+    const total  = WORDS.length;
+    const right  = WORDS.filter(o => results[o.w] && results[o.w].ok).length;
+    const missed = WORDS.filter(o => results[o.w] && !results[o.w].ok);
+    const pct    = Math.round(100*right/total);
+    /* Only a run that reached the last word gets here — stopping early goes
+       straight home and is not recorded as a test. Skips count as wrong. */
+    const d = new Date();
+    lastAll = {right, total, date:`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`};
+    toFix = missed.map(o => o.w);
+    missed.forEach(o => { wordStars[o.w] = 0; });   // a miss today outranks an old ⭐⭐⭐
+    save(); renderHome();
+
+    $("#done-emoji").textContent = pct===100 ? "🏆" : pct>=80 ? "🎉" : "💪";
+    $("#done-stars").innerHTML   = `<div class="score">${right} / ${total}</div>`;
+    $("#done-title").textContent = pct===100 ? "Perfect score!" : `${pct}%`;
+    $("#done-sub").textContent   = missed.length ? `${missed.length} to practise — they're waiting under Test all:` : "Every word right first try. Ready for Friday!";
+
+    const li = (o, right) => `<li><b>${o.w}<span class="cn">${o.zh||""}</span></b>${right}</li>`;
+    const list = $("#done-list");
+    list.innerHTML =
+      missed.map(o => li(o, `<span class="typed">${results[o.w].skipped ? "skipped" : results[o.w].typed}</span>`)).join("");
+    list.hidden = !missed.length;
+    acts.push(`<button class="btn primary" data-act="testall" style="text-align:center">↻ Test all again</button>`);
   } else {
     const need = WORDS.filter(o=>stats[o.w].score<GOAL).length;
     const perfect = tally.wrong===0 && tally.right>0;
@@ -1183,7 +1314,7 @@ function finish(){
     box.textContent = `🎈 You've been working ${minutes} minutes — time for a break!`;
     acts.length = 0;                       // make stopping the obvious choice
     acts.push(`<button class="btn primary" data-act="home" style="text-align:center">Done for today 🎈</button>`);
-    acts.push(`<button class="btn" data-act="${solo ? "solonext" : "next"}" style="text-align:center">${solo ? "One more word" : "One more level"}</button>`);
+    acts.push(`<button class="btn" data-act="${solo ? "solonext" : allTest ? "testall" : "next"}" style="text-align:center">${solo ? "One more word" : allTest ? "Test all again" : "One more level"}</button>`);
   } else {
     box.hidden = true;
   }
@@ -1195,6 +1326,7 @@ function finish(){
     // New words -> warm up first. Same words again -> he just did them, go straight to the test.
     if(a==="next"){ const m = LEVELS.find(x=>x.n>levelNo); return m ? startLevel(m.n,"practice") : goHome(); }
     if(a==="redo") return startLevel(levelNo, "test");
+    if(a==="testall") return startRound("test");
     // New word -> warm up first. Same word again -> he just saw it, go straight to the test.
     if(a==="solonext"){ const n = solo && soloAfter(solo.w); return n ? startSolo(n.w,"practice") : goHome(); }
     if(a==="soloredo") return startSolo(solo.w, "test");
@@ -1270,6 +1402,8 @@ $("#skip").onclick = ()=>{
   const o = current();
   stats[o.w].skips = (stats[o.w].skips||0) + 1;
   save();
+  // Test all: a skipped word is a wrong answer and doesn't come back.
+  if(allTest){ results[o.w] = {ok:false, skipped:true}; tally.wrong++; streak = 0; return step2(); }
   queue.push(o);
   streak = 0;
   step2();
@@ -1277,7 +1411,7 @@ $("#skip").onclick = ()=>{
 
 /* Leaving early must not award stars for a level he didn't finish — word
    scores are saved as he goes, so nothing is lost by just going home. */
-$("#quit").onclick = ()=> levelNo ? goHome() : finish();
+$("#quit").onclick = ()=> (levelNo || allTest) ? (gen++, goHome()) : finish();
 $("#reset").onclick = ()=>{
   if(!confirm(`Clear progress for ${WEEK}?`)) return;
   wipe();
