@@ -229,10 +229,10 @@
 
 <script>
 /* =========================================================
-   Word list — from Kai's Week 1–6 History Key Vocabulary sheets.
+   Word list — from Kai's Week 1–6 and 9 History Key Vocabulary sheets.
    Meanings rewritten short + kid-language + tied to the unit
    (ancient China: geography → Shang → Zhou/Confucius → Qin → Great Wall
-   → culture, trade and the sea).
+   → culture, trade and the sea → Three Kingdoms).
    ========================================================= */
 const WEEKS = [
  { n:1, title:"地理 · 时间工具", words:[
@@ -304,6 +304,17 @@ const WEEKS = [
   {w:"trade", ipa:"/treɪd/", zh:"贸易", en:"buying and selling goods — silk and tea went west along the Silk Road"},
   {w:"tradition", ipa:"/trəˈdɪʃən/", zh:"传统", en:"something people have done the same way for a very long time"},
   {w:"maritime", ipa:"/ˈmærətaɪm/", zh:"海上的", en:"to do with the sea — Zheng He led huge maritime voyages"}
+ ]},
+ { n:9, title:"三国 · 军阀与谋略", words:[
+  {w:"navy", ipa:"/ˈneɪvi/", zh:"水军；海军", en:"a country's army of warships — Cao Cao's navy burned at Red Cliffs"},
+  {w:"division", ipa:"/dɪˈvɪʒən/", zh:"分裂", en:"splitting one country into parts — after Han, China split into three kingdoms"},
+  {w:"clever", ipa:"/ˈklevər/", zh:"聪明的", en:"quick at thinking up smart ideas — like Zhuge Liang"},
+  {w:"alliance", ipa:"/əˈlaɪəns/", zh:"联盟", en:"a deal to fight together — Liu Bei and Sun Quan joined against Cao Cao"},
+  {w:"strategy", ipa:"/ˈstrætədʒi/", zh:"策略；战略", en:"a clever plan for how to win"},
+  {w:"territory", ipa:"/ˈterətɔːri/", zh:"领土", en:"the land a ruler controls"},
+  {w:"warlord", ipa:"/ˈwɔːrlɔːrd/", zh:"军阀", en:"a leader with his own army who fights to rule land"},
+  {w:"advancement", ipa:"/ədˈvænsmənt/", zh:"进步", en:"moving forward and getting better — new ideas and inventions"},
+  {w:"general", ipa:"/ˈdʒenərəl/", zh:"将军", en:"a top army leader who commands soldiers in battle"}
  ]}
 ];
 
@@ -343,7 +354,7 @@ function say(text, rate){
 const speakWord = it => say(it.say || it.w, 0.8);
 
 /* ---------- setup screen ---------- */
-let picked = new Set([1]);
+let picked = new Set([9]);
 let mode = "read";
 
 function drawWeeks(){
