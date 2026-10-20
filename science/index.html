@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Kai's Science Words</title>
+<style>
+  :root{
+    --bg:#f6f3ec; --card:#fffdf8; --ink:#232019; --muted:#6f6758;
+    --line:#e3dcce; --accent:#2a6f6b; --accent-soft:#dcebe7;
+    --good:#2f7d52; --again:#b4521f; --again-soft:#f8e4d8; --shadow:0 1px 2px rgba(35,32,25,.06),0 8px 24px rgba(35,32,25,.07);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#17150f; --card:#221f18; --ink:#f2ece0; --muted:#a79c88;
+      --line:#38332a; --accent:#7fcfc4; --accent-soft:#1c2e2b;
+      --good:#6fcf97; --again:#f0a373; --again-soft:#3a2a1c; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink); min-height:100vh;
+    font:16px/1.5 ui-rounded,"SF Pro Rounded",-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB",sans-serif;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:24px 16px 48px}
+  h1{font-size:22px;margin:0 0 2px;letter-spacing:-.01em}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 24px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px}
+  .label{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;font-weight:600}
+  /* 等宽网格：周数一多，pill 按标题长短各长各短，一行排不齐。
+     固定列宽后每张卡一样大，以后加周也不会乱。 */
+  .chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+  .chip{
+    appearance:none;font:inherit;font-weight:600;cursor:pointer;text-align:center;
+    background:transparent;color:var(--ink);border:1.5px solid var(--line);
+    border-radius:14px;padding:12px 10px;transition:.12s;
+  }
+  .chip:hover{border-color:var(--accent)}
+  .chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+  .chip small{display:block;font-weight:400;font-size:11px;color:var(--muted);margin-top:2px;line-height:1.45}
+  .chip[aria-pressed="true"] small{color:var(--accent);opacity:.8}
+  .chip .num{font-size:11px;opacity:.7}
+  .modes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .mode{
+    appearance:none;font:inherit;cursor:pointer;text-align:left;
+    background:transparent;color:var(--ink);border:1.5px solid var(--line);
+    border-radius:14px;padding:14px;transition:.12s;
+  }
+  .mode:hover{border-color:var(--accent)}
+  .mode[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
+  .mode b{display:block;font-size:18px;text-align:center}
+  .mode[aria-pressed="true"] b{color:var(--accent)}
+  @media (max-width:480px){ .mode{padding:14px 6px} .mode b{font-size:15px} }
+  .chips.parts{grid-template-columns:repeat(2,1fr);margin-top:14px}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .btn{
+    appearance:none;font:inherit;font-weight:700;cursor:pointer;
+    background:var(--accent);color:var(--bg);border:none;border-radius:14px;
+    padding:15px 22px;font-size:17px;transition:.12s;
+  }
+  .btn:hover{filter:brightness(1.08)}
+  .btn.ghost{background:transparent;color:var(--muted);border:1.5px solid var(--line);font-weight:600;font-size:15px;padding:12px 18px}
+  .btn.ghost:hover{color:var(--ink);border-color:var(--accent)}
+  .btn.wide{width:100%}
+
+  /* ---- session ---- */
+  .top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .bar{flex:1;height:7px;background:var(--line);border-radius:99px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .25s}
+  .count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .x{appearance:none;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:0 4px;line-height:1}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:22px;
+    box-shadow:var(--shadow);padding:48px 22px 30px;min-height:min(62vh,440px);
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;  /* top-anchored: the word stays put when the answer appears below it */
+  }
+  .cue{font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:18px}
+  .word{font-size:clamp(34px,8.5vw,54px);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin:0}
+  .ipa{margin-top:10px;font-size:clamp(16px,4vw,21px);color:var(--accent);font-weight:600;letter-spacing:.01em}
+  .zh{margin-top:16px;font-size:clamp(22px,5.5vw,30px);font-weight:700}
+  .en{margin-top:8px;font-size:clamp(16px,4vw,20px);color:var(--muted);max-width:30ch;line-height:1.45}
+  .timer{
+    margin-top:26px;width:64px;height:64px;border-radius:50%;
+    border:3px solid var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;
+  }
+  .timer.pulse{animation:pop .9s ease-in-out infinite}
+  @keyframes pop{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+  .blank{margin-top:26px;height:64px;display:flex;align-items:center}
+  .speaker{appearance:none;background:var(--accent-soft);border:none;color:var(--accent);
+    border-radius:999px;padding:11px 20px;font:inherit;font-weight:700;font-size:15px;cursor:pointer}
+  .rate{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+  .rate button{
+    appearance:none;font:inherit;font-weight:700;font-size:17px;cursor:pointer;
+    border-radius:16px;padding:18px 12px;border:2px solid;transition:.12s;background:transparent;
+  }
+  .rate .ok{color:var(--good);border-color:var(--good)}
+  .rate .no{color:var(--again);border-color:var(--again)}
+  .rate button:hover{transform:translateY(-1px)}
+  /* the button he picked fills in, the other fades, and a face pops up for a second */
+  .rate .ok.picked{background:var(--good);color:var(--card)}
+  .rate .no.picked{background:var(--again);color:var(--card)}
+  .rate button.faded{opacity:.3}
+  .card{position:relative}
+  .burst{position:absolute;left:50%;top:50%;font-size:110px;line-height:1;pointer-events:none;
+    transform:translate(-50%,-50%) scale(.3);opacity:0;animation:burst 1s ease-out forwards;
+    filter:drop-shadow(0 6px 18px rgba(0,0,0,.18))}
+  @keyframes burst{
+    0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}
+    30%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}
+    50%{transform:translate(-50%,-50%) scale(1)}
+    85%{opacity:1}
+    100%{opacity:0;transform:translate(-50%,-60%) scale(1)}
+  }
+  .rate small{display:block;font-weight:500;font-size:12px;opacity:.75;margin-top:2px}
+  .keys{text-align:center;color:var(--muted);font-size:12px;margin-top:14px}
+
+  /* ---- done ---- */
+  .score{font-size:56px;font-weight:800;text-align:center;letter-spacing:-.02em}
+  .scoresub{text-align:center;color:var(--muted);margin:2px 0 20px}
+  .misslist{list-style:none;padding:0;margin:0 0 18px}
+  .misslist li{padding:11px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+  .misslist b{font-size:17px}
+  .misslist .mw{display:block}
+  .misslist .ipa{margin:0 0 0 6px;font-size:13px;font-weight:600;color:var(--accent);opacity:.85;letter-spacing:0}
+  .misslist span{color:var(--muted);font-size:14px;text-align:right}
+  .history{color:var(--muted);font-size:13px;margin-top:4px}
+  .prev{list-style:none;padding:0;margin:0}
+  .prev li{display:flex;gap:12px;align-items:baseline;padding:8px 6px;border-top:1px solid var(--line);
+    border-radius:10px;cursor:pointer;transition:.1s}
+  .prev li:first-child{border-top:none}
+  .prev li:hover{background:var(--accent-soft)}
+  .prev .num{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums;min-width:18px}
+  .prev .body{flex:1}
+  .prev .hdr{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+  .prev b{font-size:17px}
+  .prev .cn{font-weight:700;color:var(--accent)}
+  .prev .ipa{margin:0;font-size:13px;font-weight:600;color:var(--accent);opacity:.85;letter-spacing:0}
+  .prev .def{display:block;color:var(--muted);font-size:13px;line-height:1.4;margin-top:2px}
+  .prev .wk{padding:12px 6px 4px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--muted);font-weight:700;border-top:1px solid var(--line);cursor:default}
+  .prev .wk:hover{background:transparent}
+  .grade{text-align:center;font-size:19px;font-weight:800;color:var(--accent);margin:6px 0 0;letter-spacing:.02em}
+  .rcname{font-weight:700;font-size:15px;margin:0 0 8px}
+  .rc{list-style:none;padding:0;margin:0}
+  .rc li{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:15px}
+  .rc li:first-child{border-top:none}
+  .rc .val{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
+  .rc .dim{color:var(--muted);font-weight:500}
+  .rc .tot{border-top:2px solid var(--line);font-weight:800;padding-top:11px}
+  .rc .tot .val{color:var(--accent)}
+  .rcnote{color:var(--muted);font-size:12.5px;margin:10px 0 0}
+  /* the sheet's picture: on a white tile so it looks the same in dark mode */
+  .pic{margin-top:18px;max-width:min(240px,70%);max-height:170px;object-fit:contain;
+    background:#fff;border-radius:12px;padding:6px;border:1px solid var(--line)}
+  .prev .thumb{width:46px;height:46px;object-fit:contain;background:#fff;border-radius:8px;
+    border:1px solid var(--line);flex:none;align-self:center}
+  /* ---- spell (same as BMC 1000 / the spelling trainer) ---- */
+  .scard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow)}
+  .stage{text-align:center;padding:10px 0 4px;min-height:104px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px}
+  .sword{font-size:46px;font-weight:700;letter-spacing:-.02em;word-break:break-word;line-height:1.15;margin:0}
+  .veil{font-size:44px;color:var(--line);letter-spacing:.14em;margin:0}
+  .smean{font-size:17px;color:var(--muted);max-width:min(100%,58ch);margin:0 auto;text-wrap:balance}
+  .stage .pic{margin-top:4px;max-height:130px}
+  #answer{
+    width:100%;font-family:inherit;font-size:36px;font-weight:600;line-height:1.2;
+    color:inherit;text-align:center;letter-spacing:.01em;
+    background:var(--bg);border:2px solid var(--line);border-radius:14px;
+    padding:22px 16px;margin:20px 0 16px;outline:none;
+  }
+  @media (max-width:480px){ #answer{font-size:30px;padding:18px 12px} }
+  #answer:focus{border-color:var(--accent)}
+  #answer.bad{border-color:var(--again)}
+  #answer.good{border-color:var(--good);color:var(--good)}
+  .tools{display:flex;gap:10px;flex-wrap:wrap}
+  .mini{appearance:none;font:inherit;color:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);
+    border-radius:999px;padding:10px 16px;font-size:16px;min-height:44px}
+  .mini:hover{border-color:var(--accent)}
+  .fb{margin-top:6px}
+  .verdict{font-size:22px;font-weight:700;margin:0 0 14px}
+  .verdict.good{color:var(--good)} .verdict.miss{color:var(--again)}
+  .fbrow{display:flex;align-items:center;gap:12px;margin-bottom:8px;font-size:15px;color:var(--muted)}
+  .fbrow .lbl{width:82px;flex:none;text-align:right}
+  .cells{display:flex;gap:3px;flex-wrap:wrap;font:600 26px/1 ui-monospace,Menlo,monospace}
+  .c{min-width:.72em;padding:5px 3px;border-radius:5px;text-align:center}
+  .c.ok{color:var(--ink)}
+  .c.bad{background:var(--again-soft);color:var(--again)}
+  .c.gap{background:var(--again-soft);color:var(--again);opacity:.55}
+  .note{font-size:15px;color:var(--muted);margin:10px 0 16px}
+  .note.retry{color:var(--again);font-weight:600;font-size:17px;margin-bottom:10px}
+  .misslist span.mw{text-align:left;flex:none;max-width:48%}
+  .misslist .typed{display:block;font-size:13px;color:var(--again);text-decoration:line-through;text-align:left}
+  [hidden]{display:none !important}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ================= SETUP ================= -->
+  <section id="setup">
+    <h1>Kai's Science Words</h1>
+    <p class="sub">Q1 · Read it, know what it means, then spell it.</p>
+
+    <div class="panel">
+      <p class="label">Pick a list</p>
+      <div class="chips" id="weeks" role="radiogroup"></div>
+      <p class="label" id="prevTitle" style="margin:18px 0 6px"></p>
+      <ul class="prev" id="preview"></ul>
+      <p class="rcnote">Look them over first — tap any word to hear it.</p>
+    </div>
+
+    <div class="panel">
+      <p class="label">What to practice</p>
+      <div class="modes">
+        <button class="mode" id="mRead" aria-pressed="true"><b>🗣 Read</b></button>
+        <button class="mode" id="mUnd" aria-pressed="false"><b>💡 Understand</b></button>
+        <button class="mode" id="mSpell" aria-pressed="false"><b>✏️ Spell</b></button>
+      </div>
+      <div class="chips parts" id="spellHow" hidden>
+        <button class="chip" data-s="warm">✍️ Warm up<small>see it, type it</small></button>
+        <button class="chip" data-s="test">📝 Test<small>hear it, one try each</small></button>
+      </div>
+    </div>
+
+    <button class="btn wide" id="start">Start →</button>
+    <div class="panel" id="reportPanel" style="margin-top:16px" hidden>
+      <p class="label">Report card</p>
+      <div id="report"></div>
+    </div>
+  </section>
+
+  <!-- ================= SESSION ================= -->
+  <section id="session" hidden>
+    <div class="top">
+      <button class="x" id="quit" title="Quit">✕</button>
+      <div class="bar"><i id="barFill"></i></div>
+      <div class="count" id="count"></div>
+    </div>
+
+    <div class="card" id="card">
+      <p class="cue" id="cue"></p>
+      <p class="word" id="word"></p>
+      <p class="ipa" id="ipa" hidden></p>
+      <p class="zh" id="zh" hidden></p>
+      <p class="en" id="en" hidden></p>
+      <img class="pic" id="pic" alt="" hidden>
+      <div class="timer" id="timer" hidden>5</div>
+      <div class="blank" id="blank" hidden><button class="speaker" id="replay">🔊 Hear it again</button></div>
+    </div>
+
+    <div class="scard" id="spellCard" hidden>
+      <div class="stage">
+        <p class="sword" id="sWord"></p>
+        <p class="smean" id="sMean"></p>
+        <img class="pic" id="sPic" alt="">
+      </div>
+      <form id="spellbox" autocomplete="off">
+        <input id="answer" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+               enterkeyhint="go" aria-label="Type the word">
+      </form>
+      <div class="tools" id="tools">
+        <button class="mini" id="sAgain" type="button">🔊 Again</button>
+        <button class="mini" id="sSlow" type="button">🐢 Slower</button>
+        <button class="mini" id="sLater" type="button">⏭ Skip</button>
+      </div>
+      <div class="fb" id="fb" hidden></div>
+    </div>
+
+    <div class="rate" id="rate" hidden>
+      <button class="ok" id="rOk"></button>
+      <button class="no" id="rNo"></button>
+    </div>
+    <p class="keys" id="keys">space = skip the wait · 1 = got it · 2 = practice again</p>
+  </section>
+
+  <!-- ================= DONE ================= -->
+  <section id="done" hidden>
+    <div class="panel">
+      <p class="score" id="score"></p>
+      <p class="grade" id="grade"></p>
+      <p class="scoresub" id="scoresub"></p>
+      <ul class="misslist" id="misslist"></ul>
+      <button class="btn wide" id="again" hidden>Practice the missed words →</button>
+      <button class="btn wide" id="toTest" hidden>Now take the test →</button>
+    </div>
+    <div class="panel" id="doneReport"></div>
+    <button class="btn ghost wide" id="home">Back to start</button>
+  </section>
+
+</div>
+
+<script>
+/* =========================================================
+   Word list — from Kai's G4 Science Q1 vocabulary sheet (科学 G4).
+   Meanings kept close to the sheet's own wording, since that is what
+   the benchmark asks; a few Chinese glosses fixed (phase 相, volume 体积,
+   freezing 凝固). Pictures are the sheet's, cropped into img/.
+   ========================================================= */
+const LISTS = [
+ { n:1, title:"科学方法 · 1.1", words:[
+  {w:"experiment", ipa:"/ɪkˈsperəmənt/", zh:"实验", en:"an organized procedure to study something under controlled conditions"},
+  {w:"hypothesis", ipa:"/haɪˈpɑːθəsɪs/", zh:"假设", en:"a testable idea or explanation that leads to a scientific investigation"},
+  {w:"independent variable", ipa:"/ˌɪndɪˈpendənt ˈveriəbəl/", zh:"自变量", en:"the factor that is changed or manipulated in an investigation"},
+  {w:"dependent variable", ipa:"/dɪˈpendənt ˈveriəbəl/", zh:"因变量", en:"the factor that is measured to create results"},
+  {w:"control variables", ipa:"/kənˈtroʊl ˈveriəbəlz/", zh:"控制变量", en:"the things you keep the same in an experiment"},
+  {w:"observation", ipa:"/ˌɑːbzərˈveɪʃən/", zh:"观察", en:"getting information by using the five senses"},
+  {w:"empirical evidence", ipa:"/ɪmˈpɪrɪkəl ˈevɪdəns/", zh:"经验证据", en:"measurements and data gathered by scientists to build a scientific explanation"},
+  {w:"scientific theory", ipa:"/ˌsaɪənˈtɪfɪk ˈθiːəri/", zh:"科学理论", en:"a well-tested idea that explains a wide range of observations"},
+  {w:"scientific law", ipa:"/ˌsaɪənˈtɪfɪk lɔː/", zh:"科学定律", en:"a basic principle that applies anywhere in the natural world"},
+  {w:"repetition", ipa:"/ˌrepəˈtɪʃən/", zh:"重复", en:"the SAME person does the activity again, many times"},
+  {w:"replication", ipa:"/ˌreplɪˈkeɪʃən/", zh:"复制（换人重做）", en:"a DIFFERENT person does the activity again, many times"},
+  {w:"scientific method", ipa:"/ˌsaɪənˈtɪfɪk ˈmeθəd/", zh:"科学方法", en:"the steps for testing a prediction, then studying and analyzing the results"},
+  {w:"conclusion", ipa:"/kənˈkluːʒən/", zh:"结论", en:"a summary of the results of an investigation"},
+  {w:"data", ipa:"/ˈdeɪtə/", zh:"数据", en:"facts and numbers collected together to look at and analyze"},
+  {w:"physical model", ipa:"/ˈfɪzɪkəl ˈmɑːdl/", zh:"物理模型", en:"a real object you can touch that represents something — like a prototype"},
+  {w:"conceptual model", ipa:"/kənˈseptʃuəl ˈmɑːdl/", zh:"概念模型", en:"an explanation in words or a drawing of how a system works or is organized"},
+  {w:"mathematical model", ipa:"/ˌmæθəˈmætɪkəl ˈmɑːdl/", zh:"数学模型", en:"one or more equations that show how a system or process works"},
+  {w:"inference", ipa:"/ˈɪnfərəns/", zh:"推断", en:"a conclusion reached from evidence and reasoning"},
+  {w:"quantitative data", ipa:"/ˈkwɑːntəteɪtɪv ˈdeɪtə/", zh:"定量数据", en:"data that is in numbers"},
+  {w:"qualitative data", ipa:"/ˈkwɑːləteɪtɪv ˈdeɪtə/", zh:"定性数据", en:"data that describes — color, smell, shape or other features"},
+  {w:"line graph", ipa:"/laɪn ɡræf/", zh:"折线图", en:"a graph that uses lines to show changes over time"},
+  {w:"bar graph", ipa:"/bɑːr ɡræf/", zh:"条形图", en:"a graph that uses bars to compare two or more things"},
+  {w:"pie graph", ipa:"/paɪ ɡræf/", zh:"饼图", en:"a circle cut into slices to show each group's share of the whole"}
+ ]},
+ { n:9, title:"物质的状态 · 4.1", words:[
+  {w:"matter", ipa:"/ˈmætər/", zh:"物质", en:"anything that has mass and takes up space"},
+  {w:"density", ipa:"/ˈdensəti/", zh:"密度", en:"how much matter is packed into a space"},
+  {w:"solid", ipa:"/ˈsɑːlɪd/", zh:"固体", en:"particles packed tight in fixed places, so it keeps its own shape and volume"},
+  {w:"liquid", ipa:"/ˈlɪkwɪd/", zh:"液体", en:"has a fixed volume but no shape of its own — it takes the shape of its container"},
+  {w:"gas", ipa:"/ɡæs/", zh:"气体", en:"has no fixed shape and no fixed volume"},
+  {w:"phase", ipa:"/feɪz/", zh:"相（物态）", en:"a part of matter that is the same all the way through — solid, liquid or gas"},
+  {w:"vaporization", ipa:"/ˌveɪpərəˈzeɪʃən/", zh:"汽化", en:"changing from a liquid to a gas"},
+  {w:"evaporation", ipa:"/ɪˌvæpəˈreɪʃən/", zh:"蒸发", en:"vaporization at the surface of a liquid"},
+  {w:"condensation", ipa:"/ˌkɑːndenˈseɪʃən/", zh:"凝结", en:"gas particles lose heat energy and turn into a liquid"},
+  {w:"boiling", ipa:"/ˈbɔɪlɪŋ/", zh:"沸腾", en:"vaporization all through a liquid, not just on top"},
+  {w:"melting", ipa:"/ˈmeltɪŋ/", zh:"熔化", en:"changing from a solid to a liquid"},
+  {w:"particles", ipa:"/ˈpɑːrtɪkəlz/", zh:"粒子", en:"very tiny pieces that matter is made of"},
+  {w:"buoyancy", ipa:"/ˈbɔɪənsi/", zh:"浮力", en:"the push that makes things float — less dense than the fluid floats, more dense sinks"},
+  {w:"mass", ipa:"/mæs/", zh:"质量", en:"how much matter an object has, measured in grams"},
+  {w:"volume", ipa:"/ˈvɑːljuːm/", zh:"体积", en:"how much space an object takes up"},
+  {w:"freezing", ipa:"/ˈfriːzɪŋ/", zh:"凝固", en:"changing from a liquid to a solid"}
+ ]},
+ { n:10, title:"元素 · 分子 · 化合物 · 混合物 · 4.2", words:[
+  {w:"element", ipa:"/ˈeləmənt/", zh:"元素", en:"a pure substance made of only one kind of atom"},
+  {w:"molecule", ipa:"/ˈmɑːlɪkjuːl/", zh:"分子", en:"a group of atoms bonded together"},
+  {w:"compound", ipa:"/ˈkɑːmpaʊnd/", zh:"化合物", en:"atoms of two or more different elements joined by chemical bonds"},
+  {w:"mixture", ipa:"/ˈmɪkstʃər/", zh:"混合物", en:"two or more substances mixed but not chemically joined"},
+  {w:"nucleus", ipa:"/ˈnuːkliəs/", zh:"原子核；细胞核", en:"the center of an atom, where protons and neutrons are (in a cell, it is the control center)"},
+  {w:"electron", ipa:"/ɪˈlektrɑːn/", zh:"电子", en:"a tiny particle with a negative (−) charge"},
+  {w:"proton", ipa:"/ˈproʊtɑːn/", zh:"质子", en:"a tiny particle with a positive (+) charge, found in the nucleus"},
+  {w:"neutron", ipa:"/ˈnuːtrɑːn/", zh:"中子", en:"a tiny particle with no charge, found in the nucleus"},
+  {w:"charge", ipa:"/tʃɑːrdʒ/", zh:"电荷", en:"how many extra positive or negative particles an object has"},
+  {w:"atomic model", ipa:"/əˈtɑːmɪk ˈmɑːdl/", zh:"原子模型", en:"a model that shows how an atom is built and where its particles are"},
+  {w:"solute", ipa:"/ˈsɑːljuːt/", zh:"溶质", en:"the substance that gets dissolved — like salt in salt water"},
+  {w:"solution", ipa:"/səˈluːʃən/", zh:"溶液", en:"two or more substances mixed evenly all the way through"},
+  {w:"solvent", ipa:"/ˈsɑːlvənt/", zh:"溶剂", en:"the liquid that does the dissolving — like the water in salt water"},
+  {w:"dissolve", ipa:"/dɪˈzɑːlv/", zh:"溶解", en:"to mix into a liquid evenly and form a solution"}
+ ]}
+];
+LISTS.forEach(l => l.words.forEach((x, k) => x.img = "img/l" + l.n + "-" + String(k + 1).padStart(2, "0") + ".webp"));
+
+const STORE = "kai-science-vocab-v1";
+const PAUSE = 5;             // seconds of thinking time
+const SHUFFLE = true;        // words come in random order
+const SPEAK_FIRST = true;    // Understand mode says the word when it appears
+const $ = id => document.getElementById(id);
+
+/* ---------- speech ----------
+   Samantha (en-US), the same voice on every device. The old code iterated
+   the DEVICE's voice list and took the first entry matching any preference,
+   so the preference order never applied and each device landed somewhere
+   different — Samantha on a Mac, an en-GB voice on an iPad. */
+let voice = null;
+function pickVoice(){
+  const all = speechSynthesis.getVoices();
+  const us  = all.filter(v => /^en[-_]US/i.test(v.lang));
+  if(!all.length) return;                        // voices not loaded yet
+  voice = us.find(v => v.name.includes("Samantha"))   // what we actually want
+       || us[0]                                       // no Samantha — any US voice
+       || all.find(v => /^en(-|_)/i.test(v.lang));    // no US voice — any English
+}
+pickVoice();
+speechSynthesis.onvoiceschanged = pickVoice;
+
+function say(text, rate){
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    if(voice) u.voice = voice;
+    u.lang = voice ? voice.lang : "en-US";
+    u.rate = rate || 0.85;
+    speechSynthesis.speak(u);
+  }catch(e){ /* no speech on this device — the rest still works */ }
+}
+const speakWord = it => say(it.say || it.w, 0.8);
+
+/* ---------- setup screen ---------- */
+let picked = new Set([1]);
+let mode = "read";
+
+const ALL = { n:0, title:"Q1 全部", words:[].concat(...LISTS.map(l => l.words)) };
+const listName = n => n === 0 ? "All Q1" : "List " + n;
+function drawWeeks(){
+  const box = $("weeks");
+  box.innerHTML = "";
+  LISTS.concat(ALL).forEach(wk => {
+    const b = document.createElement("button");
+    b.className = "chip";
+    b.setAttribute("role", "radio");
+    b.setAttribute("aria-pressed", picked.has(wk.n));
+    b.innerHTML = listName(wk.n) + "<small>" + wk.title + "<br><span class='num'>" + wk.words.length + " words</span></small>";
+    b.onclick = () => { picked = new Set([wk.n]); drawWeeks(); drawPreview(); showHistory(); };
+    box.appendChild(b);
+  });
+}
+function drawPreview(){
+  const ul = $("preview");
+  const wk = LISTS.concat(ALL).find(w => picked.has(w.n));
+  $("prevTitle").textContent = listName(wk.n) + " · " + wk.title + " · " + wk.words.length + " words";
+  ul.innerHTML = "";
+  wk.words.forEach((it, n) => {
+    const li = document.createElement("li");
+    li.innerHTML = "<span class='num'>" + (n + 1) + "</span><img class='thumb' loading='lazy' alt='' src='" + it.img + "'><span class='body'>" +
+      "<span class='hdr'><b>" + it.w + "</b>" +
+      (it.ipa ? "<span class='ipa'>" + it.ipa + "</span>" : "") +
+      "<span class='cn'>" + it.zh + "</span></span>" +
+      "<span class='def'>" + it.en + "</span></span>";
+    li.onclick = () => speakWord(it);
+    ul.appendChild(li);
+  });
+}
+
+let spellHow = "warm";   // Spell: warm up first, then test
+function setMode(m){
+  mode = m;
+  $("mRead").setAttribute("aria-pressed", m==="read");
+  $("mUnd").setAttribute("aria-pressed", m==="und");
+  $("mSpell").setAttribute("aria-pressed", m==="spell");
+  $("spellHow").hidden = m !== "spell";
+  document.querySelectorAll("[data-s]").forEach(b => b.setAttribute("aria-pressed", b.dataset.s === spellHow));
+  showHistory();
+}
+$("mRead").onclick  = () => setMode("read");
+$("mUnd").onclick   = () => setMode("und");
+$("mSpell").onclick = () => setMode("spell");
+document.querySelectorAll("[data-s]").forEach(b => b.onclick = () => { spellHow = b.dataset.s; setMode("spell"); });
+
+function log(){ try{ return JSON.parse(localStorage.getItem(STORE)) || []; }catch(e){ return []; } }
+function saveRun(run){
+  try{ const l = log(); l.unshift(run); localStorage.setItem(STORE, JSON.stringify(l.slice(0,80))); }catch(e){}
+}
+/* 最近一次完整测试（补练不算） */
+function latest(key, m){ return log().find(r => r.weeks === key && r.mode === m && !r.retry); }
+function pct(r){ return Math.round(r.right / r.total * 100); }
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function fmtDate(d){ return MONTHS[d.getMonth()] + " " + d.getDate(); }
+function runDate(run){
+  if(run.ts) return fmtDate(new Date(run.ts));
+  const m = /^(\d{1,2})\/(\d{1,2})$/.exec(run.date || "");   // old records saved as 9/19
+  return m ? MONTHS[+m[1] - 1] + " " + (+m[2]) : (run.date || "");
+}
+
+function grade(p){
+  if(p >= 97) return {g:"A+", s:"⭐⭐⭐⭐⭐", say:"Perfect — this list is in the bag."};
+  if(p >= 90) return {g:"A",  s:"⭐⭐⭐⭐⭐", say:"Great work, almost all right."};
+  if(p >= 80) return {g:"B",  s:"⭐⭐⭐⭐",   say:"Solid — a few still to fix."};
+  if(p >= 70) return {g:"C",  s:"⭐⭐⭐",     say:"You passed. One more round makes it stick."};
+  if(p >= 60) return {g:"D",  s:"⭐⭐",       say:"Worth going through again."};
+  return              {g:"Redo", s:"⭐",     say:"Start with the ones you missed."};
+}
+
+function keyLabel(key){ return listName(+key); }
+
+/* 一个 list 的成绩单：Read + Understand + Spell（只算 Test）+ 总评 */
+function reportHTML(key){
+  const r = latest(key, "read"), u = latest(key, "und"), s = latest(key, "spell");
+  if(!r && !u && !s) return "";
+  const row = (icon, name, run) => "<li><span>" + icon + " " + name + "</span>" +
+    (run ? "<span class='val'>" + run.right + " / " + run.total + " · " + pct(run) + "% <span class='dim'>last done " + runDate(run) + "</span></span>"
+         : "<span class='val dim'>not yet</span>") + "</li>";
+  let out = "<p class='rcname'>" + keyLabel(key) + "</p><ul class='rc'>" +
+            row("🗣", "Read", r) + row("💡", "Understand", u) + row("✏️", "Spell test", s);
+  if(r && u && s){
+    const p = Math.round((pct(r) + pct(u) + pct(s)) / 3), g = grade(p);
+    out += "<li class='tot'><span>List grade</span><span class='val'>" + g.s + " " + g.g + " · " + p + "%</span></li>";
+  }else{
+    out += "<li class='tot'><span class='dim'>List grade</span><span class='val dim'>do all three to unlock</span></li>";
+  }
+  return out + "</ul>";
+}
+
+function showHistory(){
+  const keys = LISTS.concat(ALL).map(w => String(w.n));
+  const html = keys.map(reportHTML).filter(Boolean).join("<div style='height:18px'></div>");
+  $("report").innerHTML = html;
+  $("reportPanel").hidden = !html;
+}
+
+/* ---------- session ---------- */
+let queue = [], i = 0, phase = 0, timer = null, results = [], isRetry = false;
+
+function buildQueue(){
+  let list = [];
+  LISTS.concat(ALL).filter(w => picked.has(w.n)).forEach(w => w.words.forEach(x => list.push(x)));
+  if(SHUFFLE){
+    for(let k = list.length - 1; k > 0; k--){
+      const j = Math.floor(Math.random() * (k + 1));
+      [list[k], list[j]] = [list[j], list[k]];
+    }
+  }
+  return list;
+}
+
+function show(which){
+  ["setup","session","done"].forEach(s => $(s).hidden = (s !== which));
+}
+
+$("start").onclick = () => {
+  queue = buildQueue(); i = 0; results = []; isRetry = false;
+  if(!queue.length) return;
+  show("session");
+  step();
+};
+$("quit").onclick = () => { clearInterval(timer); clearTimeout(timer); speechSynthesis.cancel(); show("setup"); };
+$("home").onclick = () => { show("setup"); showHistory(); };
+
+function step(){
+  clearInterval(timer);
+  document.querySelectorAll(".burst").forEach(e => e.remove());   // leftovers if he quit mid-animation
+  ["rOk","rNo"].forEach(id => $(id).classList.remove("picked", "faded"));
+  const it = queue[i];
+  phase = 0;
+  $("barFill").style.width = (i / queue.length * 100) + "%";
+  $("count").textContent = (i + 1) + " / " + queue.length;
+  $("rate").hidden = true;
+  $("card").hidden = mode === "spell";
+  $("keys").hidden = mode === "spell";
+  $("spellCard").hidden = mode !== "spell";
+  if(mode === "spell") return stepSpell(it);
+  $("blank").hidden = true;
+  $("word").textContent = it.w;
+  $("ipa").hidden = !it.ipa;
+  if(it.ipa) $("ipa").textContent = it.ipa;
+
+  if(mode === "read"){
+    $("cue").textContent = "READ IT OUT LOUD";
+    $("zh").hidden = false; $("zh").textContent = it.zh;
+    $("en").hidden = false; $("en").textContent = it.en;
+    $("pic").hidden = false; $("pic").src = it.img;
+  }else{
+    $("cue").textContent = "WHAT DOES IT MEAN?";
+    $("zh").hidden = true; $("en").hidden = true; $("pic").hidden = true;
+  }
+  if(SPEAK_FIRST && mode === "und") speakWord(it);
+  countdown();
+}
+
+function countdown(){
+  let left = PAUSE;
+  const t = $("timer");
+  t.hidden = false; t.classList.add("pulse"); t.textContent = left;
+  timer = setInterval(() => {
+    left--;
+    if(left <= 0){ clearInterval(timer); reveal(); }
+    else t.textContent = left;
+  }, 1000);
+}
+
+function reveal(){
+  clearInterval(timer);
+  phase = 1;
+  const it = queue[i];
+  $("timer").hidden = true; $("timer").classList.remove("pulse");
+  $("blank").hidden = false;
+
+  if(mode === "read"){
+    $("cue").textContent = "NOW LISTEN";
+    speakWord(it);
+    $("rOk").innerHTML = "👍 Read it well<small>smooth, no stumble</small>";
+    $("rNo").innerHTML = "🔁 Practice again<small>wrong or stuck</small>";
+  }else{
+    $("cue").textContent = "ANSWER";
+    $("zh").hidden = false; $("zh").textContent = it.zh;
+    $("en").hidden = false; $("en").textContent = it.en;
+    $("pic").hidden = false; $("pic").src = it.img;
+    speakWord(it);
+    $("rOk").innerHTML = "✅ I knew it<small>said the meaning</small>";
+    $("rNo").innerHTML = "❌ Didn't know<small>couldn't remember</small>";
+  }
+  $("rate").hidden = false;
+}
+
+/* ---- spell ----
+   Same as BMC 1000: just the word (Warm up) or • • • (Test), the meaning,
+   the sheet's picture and the sound. Feedback goes under the box.
+   Warm up / extra practice: a miss stays on the word until it's typed right.
+   Test: every word once, scored on the first try. A miss shows the right
+   spelling and moves on; Skip counts as wrong; stopping early (✕) isn't recorded. */
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let missedHere = false;   // already got this appearance of the word wrong
+const exam = () => mode === "spell" && spellHow === "test" && !isRetry;
+function stepSpell(it){
+  missedHere = false;
+  const warm = spellHow === "warm";
+  $("sWord").className = warm ? "sword" : "veil";
+  $("sWord").textContent = warm ? it.w : "• • •";
+  $("sMean").textContent = it.zh + " · " + it.en;
+  $("sPic").src = it.img;
+  $("fb").hidden = true; $("fb").innerHTML = "";
+  $("tools").hidden = false;
+  $("sLater").hidden = false;
+  $("quit").title = exam() ? "Stop (not counted)" : "Quit";
+  const box = $("answer");
+  box.value = ""; box.className = ""; box.readOnly = false;
+  speakWord(it);
+  box.focus();
+}
+
+const norm = s => s.trim().toLowerCase().replace(/[’']/g, "'").replace(/\s+/g, " ");
+
+/* edit-distance alignment, so a left-out letter doesn't make everything after it look wrong */
+function align(a, b){                       // a = typed, b = correct
+  const n = a.length, m = b.length;
+  const dp = Array.from({length:n + 1}, () => new Array(m + 1).fill(0));
+  for(let x = 0; x <= n; x++) dp[x][0] = x;
+  for(let y = 0; y <= m; y++) dp[0][y] = y;
+  for(let x = 1; x <= n; x++) for(let y = 1; y <= m; y++)
+    dp[x][y] = a[x-1] === b[y-1] ? dp[x-1][y-1] : 1 + Math.min(dp[x-1][y-1], dp[x-1][y], dp[x][y-1]);
+  const ops = []; let x = n, y = m;
+  while(x > 0 || y > 0){
+    if(x > 0 && y > 0 && a[x-1] === b[y-1] && dp[x][y] === dp[x-1][y-1]){ ops.push({t:"ok", a:a[x-1], b:b[y-1]}); x--; y--; }
+    else if(x > 0 && y > 0 && dp[x][y] === dp[x-1][y-1] + 1){ ops.push({t:"sub", a:a[x-1], b:b[y-1]}); x--; y--; }
+    else if(y > 0 && dp[x][y] === dp[x][y-1] + 1){ ops.push({t:"miss", a:null, b:b[y-1]}); y--; }
+    else { ops.push({t:"extra", a:a[x-1], b:null}); x--; }
+  }
+  return ops.reverse();
+}
+const cell = (ch, cls) => ch === null ? "<span class='c gap'>·</span>" : "<span class='c " + cls + "'>" + (ch === " " ? "&nbsp;" : esc(ch)) + "</span>";
+
+function diffHTML(typed, word){
+  const ops = align(typed, word.toLowerCase());
+  const top = ops.map(o => o.t === "ok" ? cell(o.a, "ok") : o.t === "miss"  ? cell(null) : cell(o.a, "bad")).join("");
+  const bot = ops.map(o => o.t === "ok" ? cell(o.b, "ok") : o.t === "extra" ? cell(null) : cell(o.b, "bad")).join("");
+  const wrong = ops.filter(o => o.t !== "ok");
+  let note = "";
+  if(wrong.length === 1){
+    const o = wrong[0];
+    note = o.t === "miss"  ? "You missed the <b>" + esc(o.b) + "</b>."
+         : o.t === "extra" ? "There's an extra <b>" + esc(o.a) + "</b>."
+         :                   "It's <b>" + esc(o.b) + "</b>, not <b>" + esc(o.a) + "</b>.";
+  }else if(wrong.length <= 3) note = "Look at the orange letters.";
+  return "<div class='fbrow'><span class='lbl'>You typed</span><span class='cells'>" + top + "</span></div>" +
+         "<div class='fbrow'><span class='lbl'>Correct</span><span class='cells'>" + bot + "</span></div>" +
+         (note ? "<div class='note'>" + note + "</div>" : "");
+}
+
+function checkSpell(){
+  const it = queue[i], box = $("answer");
+  const typed = norm(box.value);
+  if(!typed) return;
+  const ok = typed === norm(it.w);
+  const first = !missedHere;
+  if(first && !results.some(r => r.item === it)) results.push({ item: it, ok: ok, typed: ok ? "" : typed });
+  const fb = $("fb");
+  fb.hidden = false;
+  if(ok){
+    phase = 1;
+    box.readOnly = true; box.className = "good";
+    $("tools").hidden = true;
+    fb.innerHTML = "<p class='verdict good'>✓ " + esc(it.w) + "</p>" +
+      (first ? "" : "<p class='note'>Fixed it 👍</p>");
+    timer = setTimeout(next, first ? 1000 : 1300);
+  }else if(exam()){
+    // One-shot: show the right spelling, then on to the next word.
+    phase = 1;
+    box.readOnly = true; box.className = "bad";
+    $("tools").hidden = true;
+    fb.innerHTML = "<p class='verdict miss'>Not quite</p>" + diffHTML(typed, it.w) +
+      "<button class='btn wide' id='sNext' type='button'>Next →</button>";
+    $("sNext").onclick = next;
+    speakWord(it);
+    box.focus();
+  }else{
+    missedHere = true;
+    $("sLater").hidden = true;             // once missed, fix it now — no putting it off
+    fb.innerHTML = "<p class='verdict miss'>" + (first ? "Not quite" : "Almost — look again") + "</p>" +
+      diffHTML(typed, it.w) + "<p class='note retry'>Now type it again, correctly 👇</p>";
+    box.value = ""; box.className = "bad";
+    speakWord(it);
+    box.focus();
+  }
+}
+
+$("spellbox").onsubmit = e => {
+  e.preventDefault();
+  if(phase === 0) checkSpell(); else next();
+};
+$("sAgain").onclick = () => { speakWord(queue[i]); $("answer").focus(); };
+$("sSlow").onclick  = () => { say(queue[i].say || queue[i].w, 0.55); $("answer").focus(); };
+/* Test: a skipped word counts as wrong and doesn't come back — it's a real test.
+   Warm up / extra practice: Skip just drops the word. */
+$("sLater").onclick = () => {
+  if(phase !== 0 || missedHere) return;
+  if(exam() && !results.some(r => r.item === queue[i]))
+    results.push({ item: queue[i], ok: false, typed: "", skipped: true });
+  next();
+};
+function next(){
+  clearTimeout(timer);
+  i++;
+  if(i < queue.length) step(); else finish();
+}
+
+$("replay").onclick = () => speakWord(queue[i]);
+$("rOk").onclick = () => rate(true);
+$("rNo").onclick = () => rate(false);
+
+const HAPPY = ["😄","🤩","😎","🥳","👏"], SERIOUS = ["🧐","😐","🤔","😤"];
+function rate(ok){
+  if(phase !== 1) return;                  // already picked — ignore double taps / key repeats
+  phase = 2;
+  $(ok ? "rOk" : "rNo").classList.add("picked");
+  $(ok ? "rNo" : "rOk").classList.add("faded");
+  const face = document.createElement("div");
+  face.className = "burst";
+  const set = ok ? HAPPY : SERIOUS;
+  face.textContent = set[Math.floor(Math.random() * set.length)];
+  $("card").appendChild(face);
+  results.push({ item: queue[i], ok: ok });
+  timer = setTimeout(() => {
+    face.remove();
+    $("rOk").classList.remove("picked", "faded");
+    $("rNo").classList.remove("picked", "faded");
+    next();
+  }, 1000);
+}
+
+function finish(){
+  clearInterval(timer); speechSynthesis.cancel();
+  $("toTest").hidden = true;
+  if(mode === "spell" && spellHow === "warm") return finishWarm();
+  const right = results.filter(r => r.ok).length;
+  const miss  = results.filter(r => !r.ok);
+  const p = Math.round(right / results.length * 100), g = grade(p);
+  $("score").textContent = right + " / " + results.length;
+  $("grade").textContent = g.s + "  " + g.g + " · " + p + "%";
+  $("scoresub").textContent = (isRetry ? "Extra practice done — not counted in the report card." : g.say) +
+    (miss.length ? { read:" Read these again:", und:" Remember these meanings:", spell:" Spell these again:" }[mode] : " 🎉");
+  const ul = $("misslist"); ul.innerHTML = "";
+  miss.forEach(r => {
+    const li = document.createElement("li");
+    li.innerHTML = "<span class='mw'><b>" + r.item.w + "</b>" +
+      (r.item.ipa ? "<span class='ipa'>" + r.item.ipa + "</span>" : "") +
+      (r.skipped ? "<span class='typed'>skipped</span>" : r.typed ? "<span class='typed'>" + esc(r.typed) + "</span>" : "") + "</span><span>" + r.item.zh + " · " + r.item.en + "</span>";
+    ul.appendChild(li);
+  });
+  $("again").hidden = !miss.length;
+  $("again").onclick = () => {
+    queue = miss.map(r => r.item); i = 0; results = []; isRetry = true;
+    show("session"); step();
+  };
+  const key = [...picked].sort().join(",");
+  saveRun({
+    ts: Date.now(), date: fmtDate(new Date()),
+    weeks: key, mode: mode, right: right, total: results.length, retry: isRetry
+  });
+  const rc = reportHTML(key);
+  $("doneReport").innerHTML = rc + (latest(key,"read") && latest(key,"und") && latest(key,"spell")
+      ? "" : "<p class='rcnote'>Do all three — Read, Understand and the Spell test — and this list gets a grade.</p>");
+  $("doneReport").hidden = !rc;
+  showHistory();
+  show("done");
+}
+
+function finishWarm(){
+  const miss = results.filter(r => !r.ok);
+  $("score").textContent = "✍️ Warm-up done";
+  $("grade").textContent = "";
+  $("scoresub").textContent = !results.length ? "Skipped them all — ready for the test?"
+    : miss.length
+    ? "Got " + (results.length - miss.length) + " of " + results.length + " right the first time. Watch these in the test:"
+    : "Every word right the first time. 🎉";
+  const ul = $("misslist"); ul.innerHTML = "";
+  miss.forEach(r => {
+    const li = document.createElement("li");
+    li.innerHTML = "<span class='mw'><b>" + esc(r.item.w) + "</b><span class='typed'>" + esc(r.typed) + "</span></span>" +
+      "<span>" + esc(r.item.zh) + "</span>";
+    ul.appendChild(li);
+  });
+  $("again").hidden = true;
+  $("toTest").hidden = false;
+  $("toTest").onclick = () => {
+    spellHow = "test"; setMode("spell");
+    queue = buildQueue(); i = 0; results = []; isRetry = false;
+    show("session"); step();
+  };
+  $("doneReport").hidden = true;
+  show("done");
+}
+
+/* ---------- keyboard (Read / Understand; Spell uses the form) ---------- */
+document.addEventListener("keydown", e => {
+  if($("session").hidden || mode === "spell") return;
+  if(e.key === " " || e.key === "Enter"){
+    e.preventDefault();
+    if(phase === 0) reveal(); else speakWord(queue[i]);
+  }
+  if(phase === 1 && e.key === "1") rate(true);
+  if(phase === 1 && e.key === "2") rate(false);
+});
+$("card").onclick = () => { if(mode !== "spell" && phase === 0) reveal(); };
+
+drawWeeks(); drawPreview(); setMode("read"); showHistory();
+ALL.words.forEach(x => { new Image().src = x.img; });
+</script>
+</body>
+</html>
