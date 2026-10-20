@@ -155,9 +155,7 @@
   .rc .tot{border-top:2px solid var(--line);font-weight:800;padding-top:11px}
   .rc .tot .val{color:var(--accent)}
   .rcnote{color:var(--muted);font-size:12.5px;margin:10px 0 0}
-  /* the sheet's picture: on a white tile so it looks the same in dark mode */
-  .pic{margin-top:18px;max-width:min(240px,70%);max-height:170px;object-fit:contain;
-    background:#fff;border-radius:12px;padding:6px;border:1px solid var(--line)}
+  /* the sheet's picture (word list only): on a white tile so it looks the same in dark mode */
   .prev .thumb{width:46px;height:46px;object-fit:contain;background:#fff;border-radius:8px;
     border:1px solid var(--line);flex:none;align-self:center}
   /* ---- spell (same as BMC 1000 / the spelling trainer) ---- */
@@ -166,7 +164,6 @@
   .sword{font-size:46px;font-weight:700;letter-spacing:-.02em;word-break:break-word;line-height:1.15;margin:0}
   .veil{font-size:44px;color:var(--line);letter-spacing:.14em;margin:0}
   .smean{font-size:17px;color:var(--muted);max-width:min(100%,58ch);margin:0 auto;text-wrap:balance}
-  .stage .pic{margin-top:4px;max-height:130px}
   #answer{
     width:100%;font-family:inherit;font-size:36px;font-weight:600;line-height:1.2;
     color:inherit;text-align:center;letter-spacing:.01em;
@@ -248,7 +245,6 @@
       <p class="ipa" id="ipa" hidden></p>
       <p class="zh" id="zh" hidden></p>
       <p class="en" id="en" hidden></p>
-      <img class="pic" id="pic" alt="" hidden>
       <div class="timer" id="timer" hidden>5</div>
       <div class="blank" id="blank" hidden><button class="speaker" id="replay">🔊 Hear it again</button></div>
     </div>
@@ -257,7 +253,6 @@
       <div class="stage">
         <p class="sword" id="sWord"></p>
         <p class="smean" id="sMean"></p>
-        <img class="pic" id="sPic" alt="">
       </div>
       <form id="spellbox" autocomplete="off">
         <input id="answer" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
@@ -551,10 +546,9 @@ function step(){
     $("cue").textContent = "READ IT OUT LOUD";
     $("zh").hidden = false; $("zh").textContent = it.zh;
     $("en").hidden = false; $("en").textContent = it.en;
-    $("pic").hidden = false; $("pic").src = it.img;
   }else{
     $("cue").textContent = "WHAT DOES IT MEAN?";
-    $("zh").hidden = true; $("en").hidden = true; $("pic").hidden = true;
+    $("zh").hidden = true; $("en").hidden = true;
   }
   if(SPEAK_FIRST && mode === "und") speakWord(it);
   countdown();
@@ -587,7 +581,6 @@ function reveal(){
     $("cue").textContent = "ANSWER";
     $("zh").hidden = false; $("zh").textContent = it.zh;
     $("en").hidden = false; $("en").textContent = it.en;
-    $("pic").hidden = false; $("pic").src = it.img;
     speakWord(it);
     $("rOk").innerHTML = "✅ I knew it<small>said the meaning</small>";
     $("rNo").innerHTML = "❌ Didn't know<small>couldn't remember</small>";
@@ -597,7 +590,7 @@ function reveal(){
 
 /* ---- spell ----
    Same as BMC 1000: just the word (Warm up) or • • • (Test), the meaning,
-   the sheet's picture and the sound. Feedback goes under the box.
+   and the sound. Feedback goes under the box.
    Warm up / extra practice: a miss stays on the word until it's typed right.
    Test: every word once, scored on the first try. A miss shows the right
    spelling and moves on; Skip counts as wrong; stopping early (✕) isn't recorded. */
@@ -610,7 +603,6 @@ function stepSpell(it){
   $("sWord").className = warm ? "sword" : "veil";
   $("sWord").textContent = warm ? it.w : "• • •";
   $("sMean").textContent = it.zh + " · " + it.en;
-  $("sPic").src = it.img;
   $("fb").hidden = true; $("fb").innerHTML = "";
   $("tools").hidden = false;
   $("sLater").hidden = false;
@@ -816,7 +808,6 @@ document.addEventListener("keydown", e => {
 $("card").onclick = () => { if(mode !== "spell" && phase === 0) reveal(); };
 
 drawWeeks(); drawPreview(); setMode("read"); showHistory();
-ALL.words.forEach(x => { new Image().src = x.img; });
 </script>
 </body>
 </html>
