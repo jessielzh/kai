@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Kai's Math Words</title>
+<style>
+  :root{
+    --bg:#f6f3ec; --card:#fffdf8; --ink:#232019; --muted:#6f6758;
+    --line:#e3dcce; --accent:#2f5bb7; --accent-soft:#e1e9f8;
+    --good:#2f7d52; --again:#b4521f; --shadow:0 1px 2px rgba(35,32,25,.06),0 8px 24px rgba(35,32,25,.07);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#17150f; --card:#221f18; --ink:#f2ece0; --muted:#a79c88;
+      --line:#38332a; --accent:#8db2f5; --accent-soft:#1d2a42;
+      --good:#6fcf97; --again:#f0a373; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink); min-height:100vh;
+    font:16px/1.5 ui-rounded,"SF Pro Rounded",-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB",sans-serif;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:24px 16px 48px}
+  h1{font-size:22px;margin:0 0 2px;letter-spacing:-.01em}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 24px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px}
+  .label{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;font-weight:600}
+  /* 等宽网格：周数一多，pill 按标题长短各长各短，一行排不齐。
+     固定列宽后每张卡一样大，以后加周也不会乱。 */
+  .chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+  .chip{
+    appearance:none;font:inherit;font-weight:600;cursor:pointer;text-align:center;
+    background:transparent;color:var(--ink);border:1.5px solid var(--line);
+    border-radius:14px;padding:12px 10px;transition:.12s;
+  }
+  .chip:hover{border-color:var(--accent)}
+  .chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+  .chip small{display:block;font-weight:400;font-size:11px;color:var(--muted);margin-top:2px;line-height:1.45}
+  .chip[aria-pressed="true"] small{color:var(--accent);opacity:.8}
+  .chip .num{font-size:11px;opacity:.7}
+  .modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .mode{
+    appearance:none;font:inherit;cursor:pointer;text-align:left;
+    background:transparent;color:var(--ink);border:1.5px solid var(--line);
+    border-radius:14px;padding:14px;transition:.12s;
+  }
+  .mode:hover{border-color:var(--accent)}
+  .mode[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
+  .mode b{display:block;font-size:18px;text-align:center}
+  .mode[aria-pressed="true"] b{color:var(--accent)}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .btn{
+    appearance:none;font:inherit;font-weight:700;cursor:pointer;
+    background:var(--accent);color:var(--bg);border:none;border-radius:14px;
+    padding:15px 22px;font-size:17px;transition:.12s;
+  }
+  .btn:hover{filter:brightness(1.08)}
+  .btn.ghost{background:transparent;color:var(--muted);border:1.5px solid var(--line);font-weight:600;font-size:15px;padding:12px 18px}
+  .btn.ghost:hover{color:var(--ink);border-color:var(--accent)}
+  .btn.wide{width:100%}
+
+  /* ---- session ---- */
+  .top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .bar{flex:1;height:7px;background:var(--line);border-radius:99px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .25s}
+  .count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .x{appearance:none;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:0 4px;line-height:1}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:22px;
+    box-shadow:var(--shadow);padding:48px 22px 30px;min-height:min(62vh,440px);
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;  /* top-anchored: the word stays put when the answer appears below it */
+  }
+  .cue{font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:18px}
+  .word{font-size:clamp(34px,8.5vw,54px);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin:0}
+  .ipa{margin-top:10px;font-size:clamp(16px,4vw,21px);color:var(--accent);font-weight:600;letter-spacing:.01em}
+  .zh{margin-top:16px;font-size:clamp(22px,5.5vw,30px);font-weight:700}
+  .en{margin-top:8px;font-size:clamp(16px,4vw,20px);color:var(--muted);max-width:30ch;line-height:1.45}
+  .timer{
+    margin-top:26px;width:64px;height:64px;border-radius:50%;
+    border:3px solid var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;
+  }
+  .timer.pulse{animation:pop .9s ease-in-out infinite}
+  @keyframes pop{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+  .blank{margin-top:26px;height:64px;display:flex;align-items:center}
+  .speaker{appearance:none;background:var(--accent-soft);border:none;color:var(--accent);
+    border-radius:999px;padding:11px 20px;font:inherit;font-weight:700;font-size:15px;cursor:pointer}
+  .rate{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+  .rate button{
+    appearance:none;font:inherit;font-weight:700;font-size:17px;cursor:pointer;
+    border-radius:16px;padding:18px 12px;border:2px solid;transition:.12s;background:transparent;
+  }
+  .rate .ok{color:var(--good);border-color:var(--good)}
+  .rate .no{color:var(--again);border-color:var(--again)}
+  .rate button:hover{transform:translateY(-1px)}
+  /* the button he picked fills in, the other fades, and a face pops up for a second */
+  .rate .ok.picked{background:var(--good);color:var(--card)}
+  .rate .no.picked{background:var(--again);color:var(--card)}
+  .rate button.faded{opacity:.3}
+  .card{position:relative}
+  .burst{position:absolute;left:50%;top:50%;font-size:110px;line-height:1;pointer-events:none;
+    transform:translate(-50%,-50%) scale(.3);opacity:0;animation:burst 1s ease-out forwards;
+    filter:drop-shadow(0 6px 18px rgba(0,0,0,.18))}
+  @keyframes burst{
+    0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}
+    30%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}
+    50%{transform:translate(-50%,-50%) scale(1)}
+    85%{opacity:1}
+    100%{opacity:0;transform:translate(-50%,-60%) scale(1)}
+  }
+  .rate small{display:block;font-weight:500;font-size:12px;opacity:.75;margin-top:2px}
+  .keys{text-align:center;color:var(--muted);font-size:12px;margin-top:14px}
+
+  /* ---- done ---- */
+  .score{font-size:56px;font-weight:800;text-align:center;letter-spacing:-.02em}
+  .scoresub{text-align:center;color:var(--muted);margin:2px 0 20px}
+  .misslist{list-style:none;padding:0;margin:0 0 18px}
+  .misslist li{padding:11px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+  .misslist b{font-size:17px}
+  .misslist .mw{display:block}
+  .misslist .ipa{margin:0 0 0 6px;font-size:13px;font-weight:600;color:var(--accent);opacity:.85;letter-spacing:0}
+  .misslist span{color:var(--muted);font-size:14px;text-align:right}
+  .history{color:var(--muted);font-size:13px;margin-top:4px}
+  .prev{list-style:none;padding:0;margin:0}
+  .prev li{display:flex;gap:12px;align-items:baseline;padding:8px 6px;border-top:1px solid var(--line);
+    border-radius:10px;cursor:pointer;transition:.1s}
+  .prev li:first-child{border-top:none}
+  .prev li:hover{background:var(--accent-soft)}
+  .prev .num{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums;min-width:18px}
+  .prev .body{flex:1}
+  .prev .hdr{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+  .prev b{font-size:17px}
+  .prev .cn{font-weight:700;color:var(--accent)}
+  .prev .ipa{margin:0;font-size:13px;font-weight:600;color:var(--accent);opacity:.85;letter-spacing:0}
+  .prev .def{display:block;color:var(--muted);font-size:13px;line-height:1.4;margin-top:2px}
+  .prev .wk{padding:12px 6px 4px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--muted);font-weight:700;border-top:1px solid var(--line);cursor:default}
+  .prev .wk:hover{background:transparent}
+  .grade{text-align:center;font-size:19px;font-weight:800;color:var(--accent);margin:6px 0 0;letter-spacing:.02em}
+  .rcname{font-weight:700;font-size:15px;margin:0 0 8px}
+  .rc{list-style:none;padding:0;margin:0}
+  .rc li{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:15px}
+  .rc li:first-child{border-top:none}
+  .rc .val{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
+  .rc .dim{color:var(--muted);font-weight:500}
+  .rc .tot{border-top:2px solid var(--line);font-weight:800;padding-top:11px}
+  .rc .tot .val{color:var(--accent)}
+  .rcnote{color:var(--muted);font-size:12.5px;margin:10px 0 0}
+  [hidden]{display:none !important}
+.homelink{display:inline-block;margin:0 0 14px;font-size:14px;color:var(--muted);text-decoration:none}
+.homelink:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="homelink" href="../">&larr; Back to home</a>
+
+  <!-- ================= SETUP ================= -->
+  <section id="setup">
+    <h1>Kai's Math Words</h1>
+    <p class="sub">G4 math vocab in small lists — read it and know what it means.</p>
+
+    <div class="panel">
+      <p class="label">Pick a list</p>
+      <div class="chips" id="lists" role="radiogroup"></div>
+      <p class="label" id="prevTitle" style="margin:18px 0 6px"></p>
+      <ul class="prev" id="preview"></ul>
+      <p class="rcnote">Look them over first — tap any word to hear it.</p>
+    </div>
+
+    <div class="panel">
+      <p class="label">What to practice</p>
+      <div class="modes">
+        <button class="mode" id="mRead" aria-pressed="true"><b>🗣 Read</b></button>
+        <button class="mode" id="mUnd" aria-pressed="false"><b>💡 Understand</b></button>
+      </div>
+    </div>
+
+    <button class="btn wide" id="start">Start →</button>
+    <div class="panel" id="reportPanel" style="margin-top:16px" hidden>
+      <p class="label">Report card</p>
+      <div id="report"></div>
+    </div>
+  </section>
+
+  <!-- ================= SESSION ================= -->
+  <section id="session" hidden>
+    <div class="top">
+      <button class="x" id="quit" title="Quit">✕</button>
+      <div class="bar"><i id="barFill"></i></div>
+      <div class="count" id="count"></div>
+    </div>
+
+    <div class="card" id="card">
+      <p class="cue" id="cue"></p>
+      <p class="word" id="word"></p>
+      <p class="ipa" id="ipa" hidden></p>
+      <p class="zh" id="zh" hidden></p>
+      <p class="en" id="en" hidden></p>
+      <div class="timer" id="timer" hidden>5</div>
+      <div class="blank" id="blank" hidden><button class="speaker" id="replay">🔊 Hear it again</button></div>
+    </div>
+
+    <div class="rate" id="rate" hidden>
+      <button class="ok" id="rOk"></button>
+      <button class="no" id="rNo"></button>
+    </div>
+    <p class="keys">space = skip the wait · 1 = got it · 2 = practice again</p>
+  </section>
+
+  <!-- ================= DONE ================= -->
+  <section id="done" hidden>
+    <div class="panel">
+      <p class="score" id="score"></p>
+      <p class="grade" id="grade"></p>
+      <p class="scoresub" id="scoresub"></p>
+      <ul class="misslist" id="misslist"></ul>
+      <button class="btn wide" id="again" hidden>Practice the missed words →</button>
+    </div>
+    <div class="panel" id="doneReport"></div>
+    <button class="btn ghost wide" id="home">Back to start</button>
+  </section>
+
+</div>
+
+<script>
+/* =========================================================
+   Word list — from 数学词汇G4.docx (G4 math vocab, ~110 terms),
+   split by topic into short lists so each sitting is 6–10 words.
+   Duplicates in the sheet (sum, difference, perimeter, area…) kept once.
+   Meanings rewritten short + kid-language, most with a tiny example.
+   ========================================================= */
+const LISTS = [
+ { n:1, title:"加法 · 减法", words:[
+  {w:"add", ipa:"/æd/", zh:"加", en:"put numbers together — the sign is + and we read it \"plus\""},
+  {w:"addition", ipa:"/əˈdɪʃən/", zh:"加法", en:"the math of adding: 5 + 3 = 8"},
+  {w:"addends", ipa:"/ˈædendz/", zh:"加数", en:"the numbers you add: in 5 + 3, 5 and 3 are addends"},
+  {w:"sum", ipa:"/sʌm/", zh:"和", en:"the answer to an addition problem: the sum of 5 and 3 is 8"},
+  {w:"subtract", ipa:"/səbˈtrækt/", zh:"减", en:"take one number away — the sign is − and we read it \"minus\""},
+  {w:"subtraction", ipa:"/səbˈtrækʃən/", zh:"减法", en:"the math of taking away: 9 − 4 = 5"},
+  {w:"minuend", ipa:"/ˈmɪnjuend/", zh:"被减数", en:"the number you take away from: in 9 − 4, it's 9"},
+  {w:"subtrahend", ipa:"/ˈsʌbtrəhend/", zh:"减数", en:"the number you take away: in 9 − 4, it's 4"},
+  {w:"difference", ipa:"/ˈdɪfərəns/", zh:"差", en:"the answer to a subtraction problem: the difference of 9 and 4 is 5"},
+  {w:"inverse operations", ipa:"/ˈɪnvɜːrs ˌɑːpəˈreɪʃənz/", zh:"逆运算", en:"operations that undo each other: + and −, × and ÷"}
+ ]},
+ { n:2, title:"乘法 · 除法", words:[
+  {w:"multiply", ipa:"/ˈmʌltəplaɪ/", zh:"乘", en:"add the same number many times — the sign is × and we read it \"times\""},
+  {w:"multiplication", ipa:"/ˌmʌltəplɪˈkeɪʃən/", zh:"乘法", en:"the math of multiplying: 6 × 7 = 42"},
+  {w:"factors", ipa:"/ˈfæktərz/", zh:"因数", en:"the numbers you multiply: in 6 × 7 = 42, 6 and 7 are factors"},
+  {w:"product", ipa:"/ˈprɑːdʌkt/", zh:"积", en:"the answer to a multiplication problem: the product of 6 and 7 is 42"},
+  {w:"divide", ipa:"/dɪˈvaɪd/", zh:"除", en:"split into equal groups — the sign is ÷ and we read it \"divided by\""},
+  {w:"division", ipa:"/dɪˈvɪʒən/", zh:"除法", en:"the math of dividing: 42 ÷ 6 = 7"},
+  {w:"dividend", ipa:"/ˈdɪvədend/", zh:"被除数", en:"the number being divided: in 42 ÷ 6, it's 42"},
+  {w:"divisor", ipa:"/dɪˈvaɪzər/", zh:"除数", en:"the number you divide by: in 42 ÷ 6, it's 6"},
+  {w:"quotient", ipa:"/ˈkwoʊʃənt/", zh:"商", en:"the answer to a division problem: in 42 ÷ 6, the quotient is 7"},
+  {w:"operations of arithmetic", ipa:"/ˌɑːpəˈreɪʃənz əv əˈrɪθmətɪk/", zh:"四则运算", en:"the four basic jobs in math: add, subtract, multiply, divide"}
+ ]},
+ { n:3, title:"比较 · 运算律", words:[
+  {w:"equals", ipa:"/ˈiːkwəlz/", zh:"等于", en:"has the same value — the sign is =: 3 + 4 equals 7"},
+  {w:"is equivalent to", ipa:"/ɪz ɪˈkwɪvələnt tuː/", zh:"等价于", en:"is worth the same, even if it looks different: 1/2 is equivalent to 2/4"},
+  {w:"is greater than", ipa:"/ɪz ˈɡreɪtər ðæn/", zh:"大于", en:"is bigger — the sign is >: 8 > 5"},
+  {w:"is less than", ipa:"/ɪz les ðæn/", zh:"小于", en:"is smaller — the sign is <: 5 < 8"},
+  {w:"commutative property of addition", ipa:"/kəˈmjuːtətɪv ˈprɑːpərti/", zh:"加法交换律", en:"swap the order when adding, same answer: a + b = b + a"},
+  {w:"commutative property of multiplication", ipa:"/kəˈmjuːtətɪv ˈprɑːpərti/", zh:"乘法交换律", en:"swap the order when multiplying, same answer: a × b = b × a"},
+  {w:"associative property", ipa:"/əˈsoʊʃiətɪv ˈprɑːpərti/", zh:"结合律", en:"move the brackets when adding or multiplying, same answer: (2 × 3) × 5 = 2 × (3 × 5)"},
+  {w:"estimate", ipa:"/ˈestɪmət/", zh:"估算", en:"round the numbers first to get close to the answer fast"}
+ ]},
+ { n:4, title:"数的种类", words:[
+  {w:"number", ipa:"/ˈnʌmbər/", zh:"数", en:"tells how many, or which place in order"},
+  {w:"counting numbers", ipa:"/ˈkaʊntɪŋ ˈnʌmbərz/", zh:"自然数", en:"the numbers we say when we count: 1, 2, 3, 4…"},
+  {w:"whole numbers", ipa:"/hoʊl ˈnʌmbərz/", zh:"整数", en:"0 and all the counting numbers: 0, 1, 2, 3… — no fractions, no decimals"},
+  {w:"integers", ipa:"/ˈɪntɪdʒərz/", zh:"整数（含负数）", en:"whole numbers and their opposites: … −2, −1, 0, 1, 2 …"},
+  {w:"positive numbers", ipa:"/ˈpɑːzətɪv ˈnʌmbərz/", zh:"正数", en:"numbers bigger than 0 — right of 0 on the number line"},
+  {w:"negative numbers", ipa:"/ˈneɡətɪv ˈnʌmbərz/", zh:"负数", en:"numbers smaller than 0 — left of 0, like −3"},
+  {w:"opposites", ipa:"/ˈɑːpəzɪts/", zh:"相反数", en:"same distance from 0, on opposite sides: 3 and −3 add up to 0"},
+  {w:"even numbers", ipa:"/ˈiːvən ˈnʌmbərz/", zh:"偶数", en:"split into 2 equal groups with none left: 0, 2, 4, 6, 8…"},
+  {w:"odd numbers", ipa:"/ɑːd ˈnʌmbərz/", zh:"奇数", en:"one is always left over when you split into 2: 1, 3, 5, 7, 9…"},
+  {w:"sequence", ipa:"/ˈsiːkwəns/", zh:"数列", en:"numbers in order that follow a rule: 3, 7, 11, 15… (add 4 each time)"}
+ ]},
+ { n:5, title:"数位", words:[
+  {w:"digit", ipa:"/ˈdɪdʒɪt/", zh:"数字", en:"one of the ten symbols 0–9 we use to write numbers"},
+  {w:"place value", ipa:"/pleɪs ˈvæljuː/", zh:"数位；位值", en:"what a digit is worth because of where it sits: in 352, the 5 means 50"},
+  {w:"ones place", ipa:"/wʌnz pleɪs/", zh:"个位", en:"first place left of the decimal point — also called the units place"},
+  {w:"tens place", ipa:"/tenz pleɪs/", zh:"十位", en:"next to the ones place, on its left: in 4,352 it's the 5"},
+  {w:"hundreds place", ipa:"/ˈhʌndrədz pleɪs/", zh:"百位", en:"left of the tens place: in 4,352 it's the 3"},
+  {w:"thousands place", ipa:"/ˈθaʊzəndz pleɪs/", zh:"千位", en:"left of the hundreds place: in 4,352 it's the 4"}
+ ]},
+ { n:6, title:"小数 · 百分数", words:[
+  {w:"decimal", ipa:"/ˈdesəməl/", zh:"小数", en:"a number with a dot that shows parts smaller than 1: 0.5, 3.25"},
+  {w:"decimal point", ipa:"/ˈdesəməl pɔɪnt/", zh:"小数点", en:"the dot in a decimal — wholes on the left, parts on the right"},
+  {w:"decimal places", ipa:"/ˈdesəməl ˈpleɪsɪz/", zh:"小数位", en:"how many digits come after the point: 5.47 has two decimal places"},
+  {w:"tenths place", ipa:"/tenθs pleɪs/", zh:"十分位", en:"first place right of the point: in 0.3, the 3 means 3 tenths"},
+  {w:"hundredths place", ipa:"/ˈhʌndrədθs pleɪs/", zh:"百分位", en:"second place right of the point: in 0.07, the 7 means 7 hundredths"},
+  {w:"thousandths place", ipa:"/ˈθaʊzəndθs pleɪs/", zh:"千分位", en:"third place right of the point: in 0.009, the 9 means 9 thousandths"},
+  {w:"percent", ipa:"/pərˈsent/", zh:"百分数", en:"out of 100 — 28% means 28 out of every 100"}
+ ]},
+ { n:7, title:"因数 · 倍数", words:[
+  {w:"prime numbers", ipa:"/praɪm ˈnʌmbərz/", zh:"质数", en:"have exactly two factors, 1 and itself: 2, 3, 5, 7, 11… (2 is the only even one)"},
+  {w:"multiples", ipa:"/ˈmʌltəpəlz/", zh:"倍数", en:"a number times 1, 2, 3…: multiples of 4 are 4, 8, 12, 16…"},
+  {w:"GCF", ipa:"/ˌdʒiː siː ˈef/", zh:"最大公因数", en:"greatest common factor — the biggest factor they share: GCF of 12 and 18 is 6", say:"G C F"},
+  {w:"LCM", ipa:"/ˌel siː ˈem/", zh:"最小公倍数", en:"least common multiple — the smallest multiple they share: LCM of 4 and 6 is 12", say:"L C M"},
+  {w:"square", ipa:"/skwer/", zh:"平方", en:"a number times itself: 5 squared = 5 × 5 = 25"},
+  {w:"square root", ipa:"/skwer ruːt/", zh:"平方根", en:"the number that times itself makes this one: the square root of 25 is 5"},
+  {w:"ratio", ipa:"/ˈreɪʃioʊ/", zh:"比", en:"compares two amounts: 2 cats to 3 dogs is a ratio of 2 : 3"}
+ ]},
+ { n:8, title:"分数", words:[
+  {w:"fraction", ipa:"/ˈfrækʃən/", zh:"分数", en:"a number that names part of a whole: 3/4"},
+  {w:"numerator", ipa:"/ˈnuːməreɪtər/", zh:"分子", en:"the top number — how many parts you have"},
+  {w:"denominator", ipa:"/dɪˈnɑːməneɪtər/", zh:"分母", en:"the bottom number — how many equal parts the whole is cut into"},
+  {w:"proper fraction", ipa:"/ˈprɑːpər ˈfrækʃən/", zh:"真分数", en:"top smaller than bottom: 3/4 — less than 1"},
+  {w:"improper fraction", ipa:"/ɪmˈprɑːpər ˈfrækʃən/", zh:"假分数", en:"top as big as or bigger than bottom: 7/4 — 1 or more"},
+  {w:"mixed number", ipa:"/mɪkst ˈnʌmbər/", zh:"带分数", en:"a whole number and a fraction together: 1¾"},
+  {w:"reduce", ipa:"/rɪˈduːs/", zh:"约分", en:"write a fraction in lowest terms: 6/8 → 3/4"},
+  {w:"reciprocal", ipa:"/rɪˈsɪprəkəl/", zh:"倒数", en:"flip the fraction upside down: the reciprocal of 2/3 is 3/2"}
+ ]},
+ { n:9, title:"线", words:[
+  {w:"geometry", ipa:"/dʒiˈɑːmətri/", zh:"几何", en:"the math of shapes, lines and angles"},
+  {w:"line", ipa:"/laɪn/", zh:"直线", en:"a straight path that goes on forever both ways — no endpoints"},
+  {w:"segment", ipa:"/ˈseɡmənt/", zh:"线段", en:"part of a line with two endpoints"},
+  {w:"ray", ipa:"/reɪ/", zh:"射线", en:"starts at one point and goes on forever in one direction"},
+  {w:"endpoint", ipa:"/ˈendpɔɪnt/", zh:"端点", en:"the point where a segment or ray stops"},
+  {w:"plane", ipa:"/pleɪn/", zh:"平面", en:"a flat surface that goes on forever"},
+  {w:"parallel", ipa:"/ˈpærəlel/", zh:"平行", en:"lines that stay the same distance apart and never cross"},
+  {w:"intersect", ipa:"/ˌɪntərˈsekt/", zh:"相交", en:"lines that meet or cross each other"},
+  {w:"perpendicular", ipa:"/ˌpɜːrpənˈdɪkjələr/", zh:"垂直", en:"lines that cross to make right angles (90°)"},
+  {w:"oblique", ipa:"/əˈbliːk/", zh:"斜交", en:"lines that cross but not at a right angle"}
+ ]},
+ { n:10, title:"角", words:[
+  {w:"angle", ipa:"/ˈæŋɡəl/", zh:"角", en:"the shape made where two lines or rays meet"},
+  {w:"vertex", ipa:"/ˈvɜːrteks/", zh:"顶点", en:"the corner point where lines, rays or sides meet"},
+  {w:"degree", ipa:"/dɪˈɡriː/", zh:"度", en:"the unit for measuring angles: 90°"},
+  {w:"right angle", ipa:"/raɪt ˈæŋɡəl/", zh:"直角", en:"exactly 90° — a square corner"},
+  {w:"acute angle", ipa:"/əˈkjuːt ˈæŋɡəl/", zh:"锐角", en:"less than 90° — small and pointy"},
+  {w:"obtuse angle", ipa:"/əbˈtuːs ˈæŋɡəl/", zh:"钝角", en:"more than 90° but less than 180° — wide open"},
+  {w:"straight angle", ipa:"/streɪt ˈæŋɡəl/", zh:"平角", en:"exactly 180° — looks like a straight line"}
+ ]},
+ { n:11, title:"平面图形 · 圆", words:[
+  {w:"triangle", ipa:"/ˈtraɪæŋɡəl/", zh:"三角形", en:"a flat shape with 3 straight sides and 3 angles"},
+  {w:"square", ipa:"/skwer/", zh:"正方形", en:"4 equal sides and 4 right angles"},
+  {w:"rectangle", ipa:"/ˈrektæŋɡəl/", zh:"长方形", en:"4 right angles, and opposite sides are equal"},
+  {w:"rhombus", ipa:"/ˈrɑːmbəs/", zh:"菱形", en:"4 equal sides — like a square pushed over"},
+  {w:"trapezoid", ipa:"/ˈtræpəzɔɪd/", zh:"梯形", en:"4 sides with one pair of parallel sides"},
+  {w:"circle", ipa:"/ˈsɜːrkəl/", zh:"圆", en:"a round shape — every point is the same distance from the center"},
+  {w:"radius", ipa:"/ˈreɪdiəs/", zh:"半径", en:"from the center of a circle to its edge"},
+  {w:"diameter", ipa:"/daɪˈæmətər/", zh:"直径", en:"straight across a circle through the center — 2 radii long"},
+  {w:"circumference", ipa:"/sərˈkʌmfərəns/", zh:"圆周长", en:"the distance around a circle"}
+ ]},
+ { n:12, title:"立体 · 周长面积体积", words:[
+  {w:"perimeter", ipa:"/pəˈrɪmətər/", zh:"周长", en:"the distance all the way around a shape — add up the sides"},
+  {w:"area", ipa:"/ˈeriə/", zh:"面积", en:"how many square units cover a flat shape: a 3 × 4 rectangle has area 12"},
+  {w:"volume", ipa:"/ˈvɑːljuːm/", zh:"体积", en:"how much space a solid takes up, in cubic units"},
+  {w:"cube", ipa:"/kjuːb/", zh:"正方体", en:"a solid with 6 equal square faces — like a dice"},
+  {w:"rectangular prism", ipa:"/rekˈtæŋɡjələr ˈprɪzəm/", zh:"长方体", en:"a box shape with 6 rectangle faces"},
+  {w:"cylinder", ipa:"/ˈsɪlɪndər/", zh:"圆柱体", en:"two flat circle ends and a curved side — like a can"},
+  {w:"cone", ipa:"/koʊn/", zh:"圆锥体", en:"a circle base that comes to a point — like an ice-cream cone"},
+  {w:"sphere", ipa:"/sfɪr/", zh:"球体", en:"perfectly round, like a ball"}
+ ]},
+ { n:13, title:"单位 · 数据", words:[
+  {w:"U.S. Customary System", ipa:"/juː es ˈkʌstəmeri ˈsɪstəm/", zh:"美制单位", en:"units used in the US: inches, feet, yards, miles, pounds, quarts", say:"U S customary system"},
+  {w:"metric system", ipa:"/ˈmetrɪk ˈsɪstəm/", zh:"公制单位", en:"units based on tens: centimeters, meters, kilograms"},
+  {w:"Fahrenheit", ipa:"/ˈfærənhaɪt/", zh:"华氏温度", en:"a temperature scale: water freezes at 32°F and boils at 212°F"},
+  {w:"line plot", ipa:"/laɪn plɑːt/", zh:"线条图", en:"a number line with an X above a number each time it shows up"},
+  {w:"mean", ipa:"/miːn/", zh:"平均数", en:"the average — add them all, divide by how many: mean of 2, 4, 9 is 5"},
+  {w:"median", ipa:"/ˈmiːdiən/", zh:"中位数", en:"the middle number when they're put in order"},
+  {w:"mode", ipa:"/moʊd/", zh:"众数", en:"the number that shows up most often"},
+  {w:"range", ipa:"/reɪndʒ/", zh:"极差", en:"biggest minus smallest"},
+  {w:"probability", ipa:"/ˌprɑːbəˈbɪləti/", zh:"概率", en:"how likely something is to happen"}
+ ]}
+];
+
+const STORE = "kai-math-vocab-v1";
+const PAUSE = 5;             // seconds of thinking time
+const SHUFFLE = true;        // words come in random order
+const SPEAK_FIRST = true;    // Understand mode says the word when it appears
+const $ = id => document.getElementById(id);
+
+/* ---------- speech ----------
+   Samantha (en-US), the same voice on every device. The old code iterated
+   the DEVICE's voice list and took the first entry matching any preference,
+   so the preference order never applied and each device landed somewhere
+   different — Samantha on a Mac, an en-GB voice on an iPad. */
+let voice = null;
+function pickVoice(){
+  const all = speechSynthesis.getVoices();
+  const us  = all.filter(v => /^en[-_]US/i.test(v.lang));
+  if(!all.length) return;                        // voices not loaded yet
+  voice = us.find(v => v.name.includes("Samantha"))   // what we actually want
+       || us[0]                                       // no Samantha — any US voice
+       || all.find(v => /^en(-|_)/i.test(v.lang));    // no US voice — any English
+}
+pickVoice();
+speechSynthesis.onvoiceschanged = pickVoice;
+
+function say(text, rate){
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    if(voice) u.voice = voice;
+    u.lang = voice ? voice.lang : "en-US";
+    u.rate = rate || 0.85;
+    speechSynthesis.speak(u);
+  }catch(e){ /* no speech on this device — the rest still works */ }
+}
+const speakWord = it => say(it.say || it.w, 0.8);
+
+/* ---------- setup screen ---------- */
+let picked = new Set([1]);
+let mode = "read";
+
+function drawLists(){
+  const box = $("lists");
+  box.innerHTML = "";
+  LISTS.forEach(wk => {
+    const b = document.createElement("button");
+    b.className = "chip";
+    b.setAttribute("role", "radio");
+    b.setAttribute("aria-pressed", picked.has(wk.n));
+    b.innerHTML = "List " + wk.n + "<small>" + wk.title + "<br><span class='num'>" + wk.words.length + " words</span></small>";
+    b.onclick = () => { picked = new Set([wk.n]); drawLists(); drawPreview(); showHistory(); };
+    box.appendChild(b);
+  });
+}
+function drawPreview(){
+  const ul = $("preview");
+  const wk = LISTS.find(w => picked.has(w.n));
+  $("prevTitle").textContent = "List " + wk.n + " · " + wk.title + " · " + wk.words.length + " words";
+  ul.innerHTML = "";
+  wk.words.forEach((it, n) => {
+    const li = document.createElement("li");
+    li.innerHTML = "<span class='num'>" + (n + 1) + "</span><span class='body'>" +
+      "<span class='hdr'><b>" + it.w + "</b>" +
+      (it.ipa ? "<span class='ipa'>" + it.ipa + "</span>" : "") +
+      "<span class='cn'>" + it.zh + "</span></span>" +
+      "<span class='def'>" + it.en + "</span></span>";
+    li.onclick = () => speakWord(it);
+    ul.appendChild(li);
+  });
+}
+
+function setMode(m){
+  mode = m;
+  $("mRead").setAttribute("aria-pressed", m==="read");
+  $("mUnd").setAttribute("aria-pressed", m==="und");
+  showHistory();
+}
+$("mRead").onclick = () => setMode("read");
+$("mUnd").onclick  = () => setMode("und");
+
+function log(){ try{ return JSON.parse(localStorage.getItem(STORE)) || []; }catch(e){ return []; } }
+function saveRun(run){
+  try{ const l = log(); l.unshift(run); localStorage.setItem(STORE, JSON.stringify(l.slice(0,80))); }catch(e){}
+}
+/* 最近一次完整测试（补练不算） */
+function latest(key, m){ return log().find(r => r.weeks === key && r.mode === m && !r.retry); }
+function pct(r){ return Math.round(r.right / r.total * 100); }
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function fmtDate(d){ return MONTHS[d.getMonth()] + " " + d.getDate(); }
+function runDate(run){
+  if(run.ts) return fmtDate(new Date(run.ts));
+  const m = /^(\d{1,2})\/(\d{1,2})$/.exec(run.date || "");   // old records saved as 9/19
+  return m ? MONTHS[+m[1] - 1] + " " + (+m[2]) : (run.date || "");
+}
+
+function grade(p){
+  if(p >= 97) return {g:"A+", s:"⭐⭐⭐⭐⭐", say:"Perfect — this list is in the bag."};
+  if(p >= 90) return {g:"A",  s:"⭐⭐⭐⭐⭐", say:"Great work, almost all right."};
+  if(p >= 80) return {g:"B",  s:"⭐⭐⭐⭐",   say:"Solid — a few still to fix."};
+  if(p >= 70) return {g:"C",  s:"⭐⭐⭐",     say:"You passed. One more round makes it stick."};
+  if(p >= 60) return {g:"D",  s:"⭐⭐",       say:"Worth going through again."};
+  return              {g:"Redo", s:"⭐",     say:"Start with the ones you missed."};
+}
+
+function keyLabel(key){ return "List " + key; }
+
+/* 一个 list 的成绩单：Read + Understand + 总评 */
+function reportHTML(key){
+  const r = latest(key, "read"), u = latest(key, "und");
+  if(!r && !u) return "";
+  const row = (icon, name, run) => "<li><span>" + icon + " " + name + "</span>" +
+    (run ? "<span class='val'>" + run.right + " / " + run.total + " · " + pct(run) + "% <span class='dim'>last done " + runDate(run) + "</span></span>"
+         : "<span class='val dim'>not yet</span>") + "</li>";
+  let out = "<p class='rcname'>" + keyLabel(key) + "</p><ul class='rc'>" +
+            row("🗣", "Read", r) + row("💡", "Understand", u);
+  if(r && u){
+    const p = Math.round((pct(r) + pct(u)) / 2), g = grade(p);
+    out += "<li class='tot'><span>List grade</span><span class='val'>" + g.s + " " + g.g + " · " + p + "%</span></li>";
+  }else{
+    out += "<li class='tot'><span class='dim'>List grade</span><span class='val dim'>do both modes to unlock</span></li>";
+  }
+  return out + "</ul>";
+}
+
+function showHistory(){
+  const keys = LISTS.map(w => String(w.n));
+  const html = keys.map(reportHTML).filter(Boolean).join("<div style='height:18px'></div>");
+  $("report").innerHTML = html;
+  $("reportPanel").hidden = !html;
+}
+
+/* ---------- session ---------- */
+let queue = [], i = 0, phase = 0, timer = null, results = [], isRetry = false;
+
+function buildQueue(){
+  let list = [];
+  LISTS.filter(w => picked.has(w.n)).forEach(w => w.words.forEach(x => list.push(x)));
+  // "square" is in two lists (number and shape) — keep one if both are picked
+  const seen = new Set();
+  list = list.filter(x => !seen.has(x.w) && seen.add(x.w));
+  if(SHUFFLE){
+    for(let k = list.length - 1; k > 0; k--){
+      const j = Math.floor(Math.random() * (k + 1));
+      [list[k], list[j]] = [list[j], list[k]];
+    }
+  }
+  return list;
+}
+
+function show(which){
+  ["setup","session","done"].forEach(s => $(s).hidden = (s !== which));
+}
+
+$("start").onclick = () => {
+  queue = buildQueue(); i = 0; results = []; isRetry = false;
+  if(!queue.length) return;
+  show("session");
+  step();
+};
+$("quit").onclick = () => { clearInterval(timer); speechSynthesis.cancel(); show("setup"); };
+$("home").onclick = () => { show("setup"); showHistory(); };
+
+function step(){
+  clearInterval(timer);
+  document.querySelectorAll(".burst").forEach(e => e.remove());   // leftovers if he quit mid-animation
+  ["rOk","rNo"].forEach(id => $(id).classList.remove("picked", "faded"));
+  const it = queue[i];
+  phase = 0;
+  $("barFill").style.width = (i / queue.length * 100) + "%";
+  $("count").textContent = (i + 1) + " / " + queue.length;
+  $("rate").hidden = true;
+  $("blank").hidden = true;
+  $("word").textContent = it.w;
+  $("ipa").hidden = !it.ipa;
+  if(it.ipa) $("ipa").textContent = it.ipa;
+
+  if(mode === "read"){
+    $("cue").textContent = "READ IT OUT LOUD";
+    $("zh").hidden = false; $("zh").textContent = it.zh;
+    $("en").hidden = false; $("en").textContent = it.en;
+  }else{
+    $("cue").textContent = "WHAT DOES IT MEAN?";
+    $("zh").hidden = true; $("en").hidden = true;
+  }
+  if(SPEAK_FIRST && mode === "und") speakWord(it);
+  countdown();
+}
+
+function countdown(){
+  let left = PAUSE;
+  const t = $("timer");
+  t.hidden = false; t.classList.add("pulse"); t.textContent = left;
+  timer = setInterval(() => {
+    left--;
+    if(left <= 0){ clearInterval(timer); reveal(); }
+    else t.textContent = left;
+  }, 1000);
+}
+
+function reveal(){
+  clearInterval(timer);
+  phase = 1;
+  const it = queue[i];
+  $("timer").hidden = true; $("timer").classList.remove("pulse");
+  $("blank").hidden = false;
+
+  if(mode === "read"){
+    $("cue").textContent = "NOW LISTEN";
+    speakWord(it);
+    $("rOk").innerHTML = "👍 Read it well<small>smooth, no stumble</small>";
+    $("rNo").innerHTML = "🔁 Practice again<small>wrong or stuck</small>";
+  }else{
+    $("cue").textContent = "ANSWER";
+    $("zh").hidden = false; $("zh").textContent = it.zh;
+    $("en").hidden = false; $("en").textContent = it.en;
+    speakWord(it);
+    $("rOk").innerHTML = "✅ I knew it<small>said the meaning</small>";
+    $("rNo").innerHTML = "❌ Didn't know<small>couldn't remember</small>";
+  }
+  $("rate").hidden = false;
+}
+
+$("replay").onclick = () => speakWord(queue[i]);
+$("rOk").onclick = () => rate(true);
+$("rNo").onclick = () => rate(false);
+
+const HAPPY = ["😄","🤩","😎","🥳","👏"], SERIOUS = ["🧐","😐","🤔","😤"];
+function rate(ok){
+  if(phase !== 1) return;                  // already picked — ignore double taps / key repeats
+  phase = 2;
+  $(ok ? "rOk" : "rNo").classList.add("picked");
+  $(ok ? "rNo" : "rOk").classList.add("faded");
+  const face = document.createElement("div");
+  face.className = "burst";
+  const set = ok ? HAPPY : SERIOUS;
+  face.textContent = set[Math.floor(Math.random() * set.length)];
+  $("card").appendChild(face);
+  results.push({ item: queue[i], ok: ok });
+  timer = setTimeout(() => {
+    face.remove();
+    $("rOk").classList.remove("picked", "faded");
+    $("rNo").classList.remove("picked", "faded");
+    i++;
+    if(i < queue.length) step(); else finish();
+  }, 1000);
+}
+
+function finish(){
+  clearInterval(timer); speechSynthesis.cancel();
+  const right = results.filter(r => r.ok).length;
+  const miss  = results.filter(r => !r.ok);
+  const p = Math.round(right / results.length * 100), g = grade(p);
+  $("score").textContent = right + " / " + results.length;
+  $("grade").textContent = g.s + "  " + g.g + " · " + p + "%";
+  $("scoresub").textContent = (isRetry ? "Extra practice done — not counted in the report card." : g.say) +
+    (miss.length ? (mode === "read" ? " Read these again:" : " Remember these meanings:") : " 🎉");
+  const ul = $("misslist"); ul.innerHTML = "";
+  miss.forEach(r => {
+    const li = document.createElement("li");
+    li.innerHTML = "<span class='mw'><b>" + r.item.w + "</b>" +
+      (r.item.ipa ? "<span class='ipa'>" + r.item.ipa + "</span>" : "") + "</span><span>" + r.item.zh + " · " + r.item.en + "</span>";
+    ul.appendChild(li);
+  });
+  $("again").hidden = !miss.length;
+  $("again").onclick = () => {
+    queue = miss.map(r => r.item); i = 0; results = []; isRetry = true;
+    show("session"); step();
+  };
+  const key = [...picked].sort().join(",");
+  saveRun({
+    ts: Date.now(), date: fmtDate(new Date()),
+    weeks: key, mode: mode, right: right, total: results.length, retry: isRetry
+  });
+  const rc = reportHTML(key);
+  $("doneReport").innerHTML = rc + (latest(key,"read") && latest(key,"und")
+      ? "" : "<p class='rcnote'>Do the other mode too and this list gets a grade.</p>");
+  $("doneReport").hidden = !rc;
+  showHistory();
+  show("done");
+}
+
+/* ---------- keyboard ---------- */
+document.addEventListener("keydown", e => {
+  if($("session").hidden) return;
+  if(e.key === " " || e.key === "Enter"){
+    e.preventDefault();
+    if(phase === 0) reveal(); else speakWord(queue[i]);
+  }
+  if(phase === 1 && e.key === "1") rate(true);
+  if(phase === 1 && e.key === "2") rate(false);
+});
+$("card").onclick = () => { if(phase === 0) reveal(); };
+
+drawLists(); drawPreview(); setMode("read"); showHistory();
+</script>
+</body>
+</html>
