@@ -124,6 +124,33 @@
   .rc .val{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
   .rc .dim{color:var(--muted);font-weight:500}
   .rcnote{color:var(--muted);font-size:12.5px;margin:10px 0 0}
+
+  /* ---- glossary box, like the one on the test paper ---- */
+  .gloss{border:1.5px solid var(--ink);border-radius:4px;padding:10px 14px;margin:0 0 14px;font-size:15px;line-height:1.5}
+  .gloss b.h{display:block;text-decoration:underline;margin-bottom:2px}
+  .gloss .g{display:block}
+  .gloss .zh{color:var(--muted)}
+
+  /* ---- tap a word you didn't know (after the questions only) ---- */
+  .tapnote{color:var(--muted);font-size:14px;margin:0 0 10px}
+  .poemtext .w{cursor:pointer;border-bottom:1.5px dotted var(--muted);border-radius:4px;padding:0 1px}
+  .poemtext .w.saved{background:var(--accent-soft);color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+  .winfo{min-height:52px;border-radius:12px;background:var(--accent-soft);padding:10px 14px;font-size:16px;line-height:1.45}
+  .winfo b{font-size:18px}
+  .winfo .zh{font-weight:700;color:var(--accent);margin-left:6px}
+  .winfo .en{display:block;color:var(--muted);font-size:14.5px}
+  .winfo.empty{background:transparent;border:1.5px dashed var(--line);color:var(--muted);font-size:14px}
+
+  /* ---- my words ---- */
+  .mw{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .mw .n{font-size:15px}
+  .mw .n b{font-size:22px;color:var(--accent)}
+  .wcard{text-align:center;padding:36px 22px 24px}
+  .wcard .big{font-size:clamp(34px,8vw,48px);font-weight:800;letter-spacing:-.02em;margin:0}
+  .wcard .from{color:var(--muted);font-size:13.5px;margin:6px 0 14px}
+  .wcard .line{font-style:italic;color:var(--muted);margin:0 0 18px}
+  .wcard .opts{text-align:left}
+  .wcard .fb{text-align:left}
 </style>
 </head>
 <body>
@@ -138,10 +165,16 @@
     <div class="panel how">
       <p class="label">How to do it</p>
       <ol>
-        <li>Read the poem <b>out loud</b> once. Tap 🔊 to hear it if you want.</li>
+        <li>Read the <b>Glossary</b> box first — just like on the test.</li>
+        <li>Read the poem <b>out loud</b> once. Tap 🔊 to hear it if you want. A word you don't know? Guess from the words around it and keep going.</li>
         <li>Answer the questions. Go back to the poem to check — don't guess.</li>
-        <li>Read the explanation after every question, even when you get it right.</li>
+        <li>At the end, tap the words you didn't know. They go into <b>My Words</b> for practice.</li>
       </ol>
+    </div>
+
+    <div class="panel mw" id="mwPanel" hidden>
+      <span class="n" id="mwCount"></span>
+      <button class="btn" id="mwGo">Practise my words</button>
     </div>
 
     <div class="poems" id="poems"></div>
@@ -164,6 +197,7 @@
       <div class="panel poembox">
         <h2 id="pTitle"></h2>
         <p class="by" id="pBy"></p>
+        <div class="gloss" id="pGloss"></div>
         <div class="poemtext" id="pText"></div>
         <button class="speaker" id="listen">🔊 Listen</button>
       </div>
@@ -188,6 +222,30 @@
         <button class="btn wide" id="redo">Redo the ones I missed</button>
         <button class="btn ghost wide" id="back">Back to poems</button>
       </div>
+    </div>
+    <div class="panel" style="max-width:640px;margin:16px auto 0">
+      <p class="label">Words you didn't know?</p>
+      <p class="tapnote">Tap them in the poem. Tap again to take one out.</p>
+      <div class="poemtext" id="tapText"></div>
+      <div class="winfo empty" id="winfo">Tap a dotted word to see what it means.</div>
+    </div>
+  </section>
+
+  <!-- ================= MY WORDS QUIZ ================= -->
+  <section id="wq" hidden>
+    <div class="top">
+      <button class="x" id="wqQuit" aria-label="Quit">&times;</button>
+      <div class="bar"><i id="wqBar"></i></div>
+      <span class="count" id="wqCount"></span>
+    </div>
+    <div class="panel wcard" style="max-width:640px;margin:0 auto">
+      <p class="big" id="wqWord"></p>
+      <p class="from" id="wqFrom"></p>
+      <button class="speaker" id="wqSay">🔊 Say it</button>
+      <p class="line" id="wqLine" style="margin-top:16px"></p>
+      <div class="opts" id="wqOpts"></div>
+      <div class="fb" id="wqFb" hidden></div>
+      <button class="btn wide next" id="wqNext" hidden>Next &rarr;</button>
     </div>
   </section>
 
@@ -380,9 +438,57 @@ const POEMS = [
   ]}
 ];
 
+/* =========================================================
+   Word help. `gloss` = the 3–4 words in the test-style Glossary box (never
+   the word Question 1 asks about). `words` = every word Kai can tap after
+   the questions, with the meaning it has IN THIS POEM ("spring" in The
+   Pasture is 泉水, not 春天). Keys are lower-case, straight apostrophes.
+   ========================================================= */
+const WORDS = {
+dust:{ gloss:["crow","hemlock","mood","rued"], words:{
+  crow:["乌鸦","a big black bird"], shook:["抖落（shake 的过去式）","past tense of shake — moved quickly so something fell"],
+  dust:["一层细粉","a thin layer of something tiny — here, a little snow"], hemlock:["铁杉树","a kind of evergreen tree"],
+  heart:["心；心情","your feelings"], change:["改变","when something becomes different"], mood:["心情","the way you feel"],
+  saved:["挽救了","kept from being ruined"], part:["一部分","a piece of something"], rued:["懊悔；觉得糟糕","felt sorry or sad about"] }},
+wind:{ gloss:["neither","nor","bow"], words:{
+  neither:["两个都不","not this one and not that one — “neither I nor you”"], nor:["也不","used with neither: neither I nor you = not me and not you"],
+  leaves:["树叶（leaf 的复数）","more than one leaf"], hang:["挂着；垂着","to be held from above"], trembling:["颤抖","shaking a little"],
+  passing:["经过","going past"], bow:["低头；鞠躬","to bend forward"], heads:["头","the top part — here, the tops of the trees"] }},
+fog:{ gloss:["silent","haunches"], words:{
+  fog:["雾","a cloud near the ground that is hard to see through"], harbor:["港口","a place by the sea where boats stay"],
+  city:["城市","a big town"], silent:["安静的","making no sound"], haunches:["（动物的）后腿和臀部","the back legs and bottom of an animal when it sits"],
+  moves:["移动","goes from one place to another"], sits:["坐着","rests in one place"] }},
+bed:{ gloss:["candle-light","grown-up"], words:{
+  winter:["冬天","the cold season"], summer:["夏天","the hot season"], dress:["穿衣服","to put on your clothes"],
+  "candle-light":["烛光","light from a candle"], quite:["完全","completely"], hopping:["跳来跳去","jumping in small jumps"],
+  "grown-up":["大人","an adult"], street:["街道","a road in a town"], seem:["似乎；看起来","to look or feel like"],
+  hard:["难受的","difficult, not fair"], clear:["晴朗的","with no clouds"] }},
+pasture:{ gloss:["pasture","spring","fetch","calf"], words:{
+  pasture:["牧场","a field where cows and sheep eat grass"], spring:["泉水（不是春天）","a place where water comes up out of the ground"],
+  rake:["耙（把叶子扫开）","to pull leaves away with a rake"], clear:["变清","to become clean so you can see through it"],
+  "sha'n't":["不会（= shall not）","an old way to say “won’t”"], fetch:["去带回来","to go and bring something back"],
+  calf:["小牛","a baby cow"], young:["年幼的","not old — just born"], totters:["走路摇摇晃晃","walks in a shaky way, almost falling"],
+  licks:["舔","touches with the tongue"], tongue:["舌头","the soft part in your mouth you taste with"] }},
+arrow:{ gloss:["swiftly","afterward","unbroke"], words:{
+  shot:["射（shoot 的过去式）","past tense of shoot — sent flying"], arrow:["箭","a thin stick with a point, shot from a bow"],
+  earth:["地面","the ground"], knew:["知道（know 的过去式）","“I knew not where” = I did not know where"],
+  swiftly:["飞快地","very fast"], flew:["飞（fly 的过去式）","past tense of fly"], sight:["视力；眼睛","being able to see"],
+  follow:["跟着","to go after something"], flight:["飞行","the act of flying"], breathed:["轻轻唱出","let out with your breath"],
+  keen:["敏锐的","very sharp, able to see well"], afterward:["后来","later"], oak:["橡树","a big, strong tree"],
+  found:["找到（find 的过去式）","past tense of find"], unbroke:["没断的（老写法）","not broken — an old way to say it"] }},
+woods:{ gloss:["harness","downy","flake","promises"], words:{
+  whose:["谁的","belonging to which person"], woods:["树林","a place with many trees"], village:["村子","a small town"],
+  though:["不过","but; however"], queer:["奇怪的（老用法）","strange"], farmhouse:["农舍","a house on a farm"],
+  frozen:["结冰的","turned to ice"], lake:["湖","a big area of water with land all around"], darkest:["最黑的","the most dark"],
+  harness:["挽具（马身上的带子）","the straps on a horse"], bells:["铃铛","small things that ring"], mistake:["错误","something done wrong"],
+  sweep:["（风）掠过的声音","a soft, moving sound"], downy:["像绒毛一样软的","soft like tiny feathers"],
+  flake:["雪花","a small piece of snow"], lovely:["美丽的","very beautiful"], deep:["深的","going far in"],
+  promises:["承诺","things you said you will do"], miles:["英里（1 英里 ≈ 1.6 公里）","a way to measure distance"] }}
+};
+
 /* ---------- helpers ---------- */
 const $ = id => document.getElementById(id);
-const show = id => ["setup","session","done"].forEach(s => $(s).hidden = s !== id);
+const show = id => ["setup","session","done","wq"].forEach(s => $(s).hidden = s !== id);
 const shuffle = arr => { const a = arr.slice(); for(let k = a.length - 1; k > 0; k--){ const j = Math.floor(Math.random() * (k + 1)); [a[k], a[j]] = [a[j], a[k]]; } return a; };
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
@@ -443,6 +549,7 @@ const fmtDate = t => { const d = new Date(t); return (d.getMonth() + 1) + "/" + 
 
 /* ---------- setup ---------- */
 function drawSetup(){
+  drawMyWords();
   $("poems").innerHTML = POEMS.map((p, n) => {
     const f = firstTry(p.id);
     const st = f ? "<span class='st'>" + f.right + "/" + f.total + " " + stars(f.right, f.total) + "</span>"
@@ -476,6 +583,9 @@ function start(p, onlyThese){
   $("pTitle").textContent = p.title;
   $("pBy").textContent = "by " + p.by;
   $("pText").innerHTML = p.lines.map(l => l ? "<span class='ln'>" + esc(l) + "</span>" : "<span class='gap'></span>").join("");
+  const W = WORDS[p.id];
+  $("pGloss").innerHTML = "<b class='h'>Glossary</b>" + W.gloss.map(k =>
+    "<span class='g'><b>" + esc(k) + ":</b> " + esc(W.words[k][1]) + " <span class='zh'>" + esc(W.words[k][0]) + "</span></span>").join("");
   show("session"); window.scrollTo(0, 0);
   drawQ();
 }
@@ -530,8 +640,116 @@ function finish(){
   $("missList").innerHTML = missed.map(q =>
     "<li><span class='tag'>" + TAGS[q.t] + "</span><span class='mq'>" + esc(q.q) + "</span><span class='ma'>✓ " + esc(q.a[0]) + "</span></li>").join("");
   $("redo").hidden = !missed.length;
+  drawTap();
   show("done"); window.scrollTo(0, 0);
 }
+
+/* ---------- tap words after the questions ---------- */
+const keyOf = t => t.toLowerCase().replace(/’/g, "'");
+function drawTap(){
+  const W = WORDS[poem.id].words, saved = myWords();
+  $("tapText").innerHTML = poem.lines.map(l => !l ? "<span class='gap'></span>" :
+    "<span class='ln'>" + l.split(/([A-Za-z’'-]+)/).map(t => {
+      const k = keyOf(t);
+      return W[k] ? "<span class='w" + (saved[poem.id + ":" + k] ? " saved" : "") + "' data-k='" + esc(k) + "'>" + esc(t) + "</span>" : esc(t);
+    }).join("") + "</span>").join("");
+  $("winfo").className = "winfo empty";
+  $("winfo").textContent = "Tap a dotted word to see what it means.";
+  $("tapText").querySelectorAll(".w").forEach(el => el.onclick = () => tapWord(el.dataset.k));
+}
+function tapWord(k){
+  const [zh, en] = WORDS[poem.id].words[k], id = poem.id + ":" + k, m = myWords();
+  sayWord(k);
+  if(m[id]){ delete m[id]; } else { m[id] = {poem: poem.id, k, streak: 0, last: ""}; }
+  saveWords(m);
+  $("tapText").querySelectorAll(".w").forEach(el => el.classList.toggle("saved", !!m[poem.id + ":" + el.dataset.k]));
+  $("winfo").className = "winfo";
+  $("winfo").innerHTML = "<b>" + esc(k) + "</b><span class='zh'>" + esc(zh) + "</span><span class='en'>" + esc(en) + "</span>" +
+    "<span class='en'>" + (m[id] ? "➕ Saved to My Words" : "Taken out of My Words") + "</span>";
+}
+
+/* ---------- my words: saved on this iPad, quiz until known ----------
+   A word is learned after 2 right answers in a row, on 2 different days,
+   so one lucky guess doesn't clear it. */
+const WSTORE = "kai-poem-words-v1", LEARNED = "kai-poem-learned-v1";
+function myWords(){ try{ return JSON.parse(localStorage.getItem(WSTORE)) || {}; }catch(e){ return {}; } }
+function saveWords(m){ try{ localStorage.setItem(WSTORE, JSON.stringify(m)); }catch(e){} }
+function learnedCount(){ try{ return +localStorage.getItem(LEARNED) || 0; }catch(e){ return 0; } }
+function bumpLearned(){ try{ localStorage.setItem(LEARNED, learnedCount() + 1); }catch(e){} }
+const today = () => new Date().toDateString();
+function sayWord(text){
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    if(voice) u.voice = voice;
+    u.lang = voice ? voice.lang : "en-US";
+    u.rate = 0.8;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+const poemLine = (pid, k) => (POEMS.find(p => p.id === pid).lines.find(l => l.split(/([A-Za-z’'-]+)/).some(t => keyOf(t) === k)) || "");
+
+function drawMyWords(){
+  const n = Object.keys(myWords()).length, done = learnedCount();
+  $("mwPanel").hidden = !n && !done;
+  $("mwCount").innerHTML = "<b>" + n + "</b> word" + (n === 1 ? "" : "s") + " to practise" +
+    (done ? " <span style='color:var(--muted)'>· " + done + " learned</span>" : "");
+  $("mwGo").hidden = !n;
+}
+
+let wqList = [], wqi = 0, wqRight = 0;
+function startWords(){
+  const m = myWords();
+  wqList = shuffle(Object.keys(m)).map(id => {
+    const {poem: pid, k} = m[id], right = WORDS[pid].words[k];
+    const pool = [];
+    Object.entries(WORDS).forEach(([p2, W]) => Object.entries(W.words).forEach(([k2, v]) => { if(v[0] !== right[0] && k2 !== k) pool.push(v); }));
+    return {id, pid, k, right, opts: shuffle([right].concat(shuffle(pool).slice(0, 3)))};
+  });
+  wqi = 0; wqRight = 0;
+  show("wq"); window.scrollTo(0, 0);
+  drawWQ();
+}
+function drawWQ(){
+  const it = wqList[wqi], p = POEMS.find(x => x.id === it.pid);
+  $("wqBar").style.width = (wqi / wqList.length * 100) + "%";
+  $("wqCount").textContent = (wqi + 1) + " / " + wqList.length;
+  $("wqWord").textContent = it.k;
+  $("wqFrom").textContent = "from “" + p.title + "”";
+  $("wqLine").textContent = "“" + poemLine(it.pid, it.k) + "”";
+  $("wqFb").hidden = true; $("wqNext").hidden = true;
+  $("wqOpts").innerHTML = it.opts.map((o, n) =>
+    "<button class='opt' data-n='" + n + "'><span class='k'>" + "ABCD"[n] + "</span><span>" + esc(o[0]) + "<br><small style='color:var(--muted)'>" + esc(o[1]) + "</small></span></button>").join("");
+  $("wqOpts").querySelectorAll(".opt").forEach(b => b.onclick = () => answerWQ(+b.dataset.n));
+  sayWord(it.k);
+}
+function answerWQ(n){
+  const it = wqList[wqi], ok = it.opts[n] === it.right, m = myWords(), w = m[it.id];
+  $("wqOpts").querySelectorAll(".opt").forEach((b, j) => {
+    b.disabled = true;
+    b.classList.add(it.opts[j] === it.right ? "right" : j === n ? "wrong" : "dim");
+  });
+  let note = "";
+  if(w){
+    if(!ok){ w.streak = 0; w.last = ""; }
+    else if(w.last !== today()){ w.streak++; w.last = today(); }
+    if(w.streak >= 2){ delete m[it.id]; bumpLearned(); note = " 🎉 Learned — it leaves My Words."; }
+    else if(ok) note = w.streak === 1 ? " Get it right again on another day to finish it." : "";
+    saveWords(m);
+  }
+  if(ok) wqRight++;
+  const fb = $("wqFb");
+  fb.className = "fb " + (ok ? "ok" : "no");
+  fb.innerHTML = "<b>" + (ok ? "✅ Right!" : "❌ Not quite.") + "</b>" + esc(it.k) + " = " + esc(it.right[0]) + "<span class='zh'>" + esc(it.right[1]) + esc(note) + "</span>";
+  fb.hidden = false;
+  $("wqNext").textContent = wqi + 1 < wqList.length ? "Next →" : "Done ✓";
+  $("wqNext").hidden = false;
+  $("wqNext").scrollIntoView({behavior:"smooth", block:"nearest"});
+}
+$("wqNext").onclick = () => { wqi++; if(wqi < wqList.length) drawWQ(); else { drawSetup(); show("setup"); window.scrollTo(0, 0); } };
+$("wqQuit").onclick = () => { stopSpeech(); drawSetup(); show("setup"); };
+$("wqSay").onclick = () => sayWord(wqList[wqi].k);
+$("mwGo").onclick = startWords;
 $("redo").onclick = () => start(poem, missed.slice());
 $("back").onclick = () => { drawSetup(); show("setup"); window.scrollTo(0, 0); };
 
