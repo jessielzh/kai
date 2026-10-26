@@ -824,6 +824,16 @@ const SETS = [
 ];
 const setOf = p => p.set || 1;
 
+// Which kinds of question Kai gets wrong on a FIRST try — the useful number for
+// choosing next week's focus. (Runs before 10/27 didn't record this.)
+function missedTypes(ps){
+  const n = {};
+  ps.forEach(p => { const f = firstTry(p.id); (f && f.miss || []).forEach(t => n[t] = (n[t] || 0) + 1); });
+  const top = Object.entries(n).sort((a, b) => b[1] - a[1]);
+  return top.length ? "<li><span class='dim'>Missed most (first try)</span><span class='val'>" +
+    top.map(([t, c]) => esc(TAGS[t].split(" · ")[0]) + " ×" + c).join(", ") + "</span></li>" : "";
+}
+
 function drawSetup(){
   drawMyWords();
   $("poems").innerHTML = SETS.map(S => {
@@ -860,7 +870,7 @@ function drawSetup(){
       return r + "/" + t + " · " + Math.round(r / t * 100) + "%"; };
     return "<li class='rchead'>" + S.name + "</li>" + rows.join("") +
       "<li style='border-top:2px solid var(--line);font-weight:800'><span>Total · first try</span><span class='val'>" + sum(firstTry) + "</span></li>" +
-      "<li style='font-weight:800'><span>Total · latest</span><span class='val'>" + sum(lastTry) + "</span></li>";
+      "<li style='font-weight:800'><span>Total · latest</span><span class='val'>" + sum(lastTry) + "</span></li>" + missedTypes(ps);
   }).filter(Boolean);
   $("recordPanel").hidden = !blocks.length;
   $("record").innerHTML = blocks.join("");
@@ -1027,7 +1037,7 @@ $("quit").onclick = () => { stopSpeech(); drawSetup(); show("setup"); };
 function finish(){
   stopSpeech();
   const total = queue.length;
-  if(!isRetry) addLog({id: poem.id, right, total, at: Date.now()});
+  if(!isRetry) addLog({id: poem.id, right, total, at: Date.now(), miss: missed.map(q => q.t)});   // miss: question types got wrong, for the weekly look
   $("score").textContent = right + " / " + total;
   $("stars").textContent = isRetry ? "" : stars(right, total);
   $("scoreSub").textContent = isRetry
