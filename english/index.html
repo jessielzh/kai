@@ -182,7 +182,7 @@
     <div class="panel" id="recordPanel" style="margin-top:18px" hidden>
       <p class="label">Record</p>
       <ul class="rc" id="record"></ul>
-      <p class="rcnote">First try counts as the score. Redoing missed questions doesn't change it.</p>
+      <p class="rcnote">First try → latest try. Doing a whole poem again updates “latest”; “Redo the ones I missed” doesn't count as a try.</p>
     </div>
   </section>
 
@@ -543,7 +543,8 @@ function stopSpeech(){
 const STORE = "kai-poems-v1";
 function log(){ try{ return JSON.parse(localStorage.getItem(STORE)) || []; }catch(e){ return []; } }
 function addLog(run){ try{ const l = log(); l.unshift(run); localStorage.setItem(STORE, JSON.stringify(l.slice(0,200))); }catch(e){} }
-const firstTry = id => log().filter(r => r.id === id && !r.retry).pop();   // oldest non-retry run
+const firstTry = id => log().filter(r => r.id === id && !r.retry).pop();   // oldest full run — for the parent's record
+const lastTry  = id => log().find(r => r.id === id && !r.retry);            // newest full run — what Kai sees on the card
 function stars(right, total){ return right === total ? "⭐⭐⭐" : right * 3 >= total * 2 ? "⭐⭐" : right * 3 >= total ? "⭐" : ""; }
 const fmtDate = t => { const d = new Date(t); return (d.getMonth() + 1) + "/" + d.getDate(); };
 
@@ -551,7 +552,7 @@ const fmtDate = t => { const d = new Date(t); return (d.getMonth() + 1) + "/" + 
 function drawSetup(){
   drawMyWords();
   $("poems").innerHTML = POEMS.map((p, n) => {
-    const f = firstTry(p.id);
+    const f = lastTry(p.id);
     const st = f ? "<span class='st'>" + f.right + "/" + f.total + " " + stars(f.right, f.total) + "</span>"
                  : "<span class='st todo'>Not done yet</span>";
     return "<button class='pcard" + (f ? " done" : "") + "' data-i='" + n + "'>" +
@@ -561,14 +562,20 @@ function drawSetup(){
   $("poems").querySelectorAll(".pcard").forEach(b => b.onclick = () => start(POEMS[+b.dataset.i]));
 
   const rows = POEMS.map(p => {
-    const f = firstTry(p.id);
-    return f ? "<li><span>" + esc(p.title) + " <span class='dim'>· " + fmtDate(f.at) + "</span></span><span class='val'>" + f.right + "/" + f.total + "</span></li>" : "";
+    const f = firstTry(p.id), l = lastTry(p.id);
+    if(!f) return "";
+    const once = f.at === l.at;   // each call parses the log afresh, so compare runs by time, not identity
+    const val = once ? f.right + "/" + f.total
+      : f.right + "/" + f.total + " <span class='dim'>(" + fmtDate(f.at) + ")</span> → " + l.right + "/" + l.total + " <span class='dim'>(" + fmtDate(l.at) + ")</span>";
+    return "<li><span>" + esc(p.title) + (once ? " <span class='dim'>· " + fmtDate(f.at) + "</span>" : "") + "</span><span class='val'>" + val + "</span></li>";
   }).filter(Boolean);
   $("recordPanel").hidden = !rows.length;
   if(rows.length){
-    const done = POEMS.map(p => firstTry(p.id)).filter(Boolean);
-    const r = done.reduce((s, f) => s + f.right, 0), t = done.reduce((s, f) => s + f.total, 0);
-    rows.push("<li style='border-top:2px solid var(--line);font-weight:800'><span>Total</span><span class='val'>" + r + "/" + t + " · " + Math.round(r / t * 100) + "%</span></li>");
+    const sum = pick => { const d = POEMS.map(p => pick(p.id)).filter(Boolean);
+      const r = d.reduce((s, x) => s + x.right, 0), t = d.reduce((s, x) => s + x.total, 0);
+      return r + "/" + t + " · " + Math.round(r / t * 100) + "%"; };
+    rows.push("<li style='border-top:2px solid var(--line);font-weight:800'><span>Total · first try</span><span class='val'>" + sum(firstTry) + "</span></li>");
+    rows.push("<li style='font-weight:800'><span>Total · latest</span><span class='val'>" + sum(lastTry) + "</span></li>");
   }
   $("record").innerHTML = rows.join("");
 }
