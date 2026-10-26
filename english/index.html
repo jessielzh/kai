@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Kai's Poem Practice</title>
+<style>
+  :root{
+    --bg:#f6f3ec; --card:#fffdf8; --ink:#232019; --muted:#6f6758;
+    --line:#e3dcce; --accent:#8a5a2b; --accent-soft:#f0e3d2;
+    --good:#2f7d52; --good-soft:#e2f1e7; --again:#b4521f; --again-soft:#f8e4d8;
+    --shadow:0 1px 2px rgba(35,32,25,.06),0 8px 24px rgba(35,32,25,.07);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#17150f; --card:#221f18; --ink:#f2ece0; --muted:#a79c88;
+      --line:#38332a; --accent:#e0b07a; --accent-soft:#33291d;
+      --good:#6fcf97; --good-soft:#1d3226; --again:#f0a373; --again-soft:#3a261a;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink); min-height:100vh;
+    font:16px/1.5 ui-rounded,"SF Pro Rounded",-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB",sans-serif;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:24px 16px 48px}
+  h1{font-size:22px;margin:0 0 2px;letter-spacing:-.01em}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 24px}
+  .homelink{display:inline-block;margin:0 0 14px;font-size:14px;color:var(--muted);text-decoration:none}
+  .homelink:hover{color:var(--accent)}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px}
+  .label{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;font-weight:600}
+  .btn{
+    appearance:none;font:inherit;font-weight:700;cursor:pointer;
+    background:var(--accent);color:var(--bg);border:none;border-radius:14px;
+    padding:15px 22px;font-size:17px;transition:.12s;
+  }
+  .btn:hover{filter:brightness(1.08)}
+  .btn.ghost{background:transparent;color:var(--muted);border:1.5px solid var(--line);font-weight:600;font-size:15px;padding:12px 18px}
+  .btn.ghost:hover{color:var(--ink);border-color:var(--accent)}
+  .btn.wide{width:100%}
+  [hidden]{display:none !important}
+
+  /* ---- setup: one card per poem ---- */
+  .how{max-width:640px;margin-bottom:20px}
+  .how ol{margin:0;padding-left:20px;color:var(--ink)}
+  .how li{margin:3px 0}
+  .poems{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+  .pcard{
+    appearance:none;font:inherit;text-align:left;cursor:pointer;color:var(--ink);
+    background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:16px 18px;
+    box-shadow:var(--shadow);transition:.12s;display:flex;flex-direction:column;gap:4px;
+  }
+  .pcard:hover{border-color:var(--accent);transform:translateY(-1px)}
+  .pcard .day{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+  .pcard b{font-size:19px;color:var(--accent)}
+  .pcard .by{font-size:13.5px;color:var(--muted)}
+  .pcard .st{margin-top:6px;font-size:14px;font-weight:600}
+  .pcard .st.todo{color:var(--muted);font-weight:500}
+  .pcard.done{border-color:var(--good)}
+
+  /* ---- session ---- */
+  .top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .bar{flex:1;height:7px;background:var(--line);border-radius:99px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .25s}
+  .count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .x{appearance:none;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:0 4px;line-height:1}
+  /* poem and question side by side on an iPad in landscape; stacked when narrow */
+  .duo{display:grid;grid-template-columns:1fr;gap:16px;align-items:start}
+  @media (min-width:760px){ .duo{grid-template-columns:minmax(0,5fr) minmax(0,6fr)} .poembox{position:sticky;top:16px} }
+  .poembox h2{font-size:21px;margin:0}
+  .poembox .by{color:var(--muted);font-size:14px;margin:2px 0 12px}
+  .poemtext{font-size:18px;line-height:1.65;margin:0 0 14px}
+  .poemtext .ln{display:block}
+  .poemtext .gap{display:block;height:.8em}
+  .speaker{appearance:none;background:var(--accent-soft);border:none;color:var(--accent);
+    border-radius:999px;padding:11px 20px;font:inherit;font-weight:700;font-size:15px;cursor:pointer}
+  .tag{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.04em;color:var(--accent);
+    background:var(--accent-soft);border-radius:999px;padding:4px 12px;margin-bottom:12px}
+  .qtext{font-size:20px;font-weight:700;line-height:1.4;margin:0 0 16px}
+  .opts{display:grid;gap:10px}
+  .opt{
+    appearance:none;font:inherit;font-size:17px;text-align:left;cursor:pointer;color:var(--ink);
+    background:transparent;border:2px solid var(--line);border-radius:14px;padding:14px 16px;transition:.12s;
+    display:flex;gap:12px;align-items:baseline;line-height:1.4;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent)}
+  .opt .k{font-weight:800;color:var(--muted);min-width:1.2em}
+  .opt:disabled{cursor:default}
+  .opt.right{border-color:var(--good);background:var(--good-soft)}
+  .opt.right .k{color:var(--good)}
+  .opt.wrong{border-color:var(--again);background:var(--again-soft)}
+  .opt.wrong .k{color:var(--again)}
+  .opt.dim{opacity:.45}
+  .fb{margin-top:16px;border-radius:14px;padding:14px 16px;font-size:16px;line-height:1.5}
+  .fb.ok{background:var(--good-soft)}
+  .fb.no{background:var(--again-soft)}
+  .fb b{display:block;font-size:18px;margin-bottom:4px}
+  .fb.ok b{color:var(--good)}
+  .fb.no b{color:var(--again)}
+  .fb .zh{display:block;color:var(--muted);margin-top:4px}
+  .next{margin-top:16px}
+
+  /* ---- done ---- */
+  .score{font-size:56px;font-weight:800;text-align:center;letter-spacing:-.02em}
+  .stars{text-align:center;font-size:28px;margin-top:2px}
+  .scoresub{text-align:center;color:var(--muted);margin:6px 0 20px}
+  .misslist{list-style:none;padding:0;margin:0 0 18px}
+  .misslist li{padding:12px 0;border-top:1px solid var(--line)}
+  .misslist .mq{display:block;font-weight:600}
+  .misslist .ma{display:block;color:var(--good);margin-top:3px}
+  .misslist .tag{margin-bottom:6px}
+  .actions{display:grid;gap:10px}
+
+  /* ---- record ---- */
+  .rc{list-style:none;padding:0;margin:0}
+  .rc li{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:15px}
+  .rc li:first-child{border-top:none}
+  .rc .val{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
+  .rc .dim{color:var(--muted);font-weight:500}
+  .rcnote{color:var(--muted);font-size:12.5px;margin:10px 0 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ================= SETUP ================= -->
+  <section id="setup">
+    <a class="homelink" href="../">&larr; Back to home</a>
+    <h1>Kai's Poem Practice</h1>
+    <p class="sub">One poem a day. Read it, then answer 6 questions — the same steps as your theme paragraph.</p>
+
+    <div class="panel how">
+      <p class="label">How to do it</p>
+      <ol>
+        <li>Read the poem <b>out loud</b> once. Tap 🔊 to hear it if you want.</li>
+        <li>Answer the questions. Go back to the poem to check — don't guess.</li>
+        <li>Read the explanation after every question, even when you get it right.</li>
+      </ol>
+    </div>
+
+    <div class="poems" id="poems"></div>
+
+    <div class="panel" id="recordPanel" style="margin-top:18px" hidden>
+      <p class="label">Record</p>
+      <ul class="rc" id="record"></ul>
+      <p class="rcnote">First try counts as the score. Redoing missed questions doesn't change it.</p>
+    </div>
+  </section>
+
+  <!-- ================= SESSION ================= -->
+  <section id="session" hidden>
+    <div class="top">
+      <button class="x" id="quit" aria-label="Quit">&times;</button>
+      <div class="bar"><i id="barFill"></i></div>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="duo">
+      <div class="panel poembox">
+        <h2 id="pTitle"></h2>
+        <p class="by" id="pBy"></p>
+        <div class="poemtext" id="pText"></div>
+        <button class="speaker" id="listen">🔊 Listen</button>
+      </div>
+      <div class="panel">
+        <span class="tag" id="qTag"></span>
+        <p class="qtext" id="qText"></p>
+        <div class="opts" id="opts"></div>
+        <div class="fb" id="fb" hidden></div>
+        <button class="btn wide next" id="next" hidden>Next &rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DONE ================= -->
+  <section id="done" hidden>
+    <div class="panel" style="max-width:640px;margin:0 auto">
+      <div class="score" id="score"></div>
+      <div class="stars" id="stars"></div>
+      <p class="scoresub" id="scoreSub"></p>
+      <ul class="misslist" id="missList"></ul>
+      <div class="actions">
+        <button class="btn wide" id="redo">Redo the ones I missed</button>
+        <button class="btn ghost wide" id="back">Back to poems</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* =========================================================
+   Poems — public domain, G4 level. Each has 6 questions that follow
+   the theme-paragraph steps from the Q1 writing rubric:
+   word meaning → summary → theme → evidence → poetry feature / explain → a correct sentence.
+   The first answer in `a` is the right one; options are shuffled on screen.
+   ========================================================= */
+const TAGS = {
+  word:"Word · 词义", summary:"Summary · 概括", theme:"Theme · 主题",
+  evidence:"Evidence · 证据", poetry:"Poetry · 诗歌特点", explain:"Explain · 解释",
+  sentence:"Sentence · 写对句子"
+};
+
+const POEMS = [
+{ id:"dust", title:"Dust of Snow", by:"Robert Frost",
+  lines:["The way a crow","Shook down on me","The dust of snow","From a hemlock tree","",
+         "Has given my heart","A change of mood","And saved some part","Of a day I had rued."],
+  qs:[
+  {t:"word", q:"What does “shook down on me” mean?",
+   a:["The crow made snow fall on the speaker.","A snake fell on the speaker.","The crow flew down to the speaker.","The tree fell on the speaker."],
+   why:"“Shook” is the past tense of “shake”. The crow moved the branch and snow fell down.", zh:"shook = shake 的过去式（抖落），不是 snake（蛇）。"},
+  {t:"summary", q:"What happens in the poem?",
+   a:["A crow shakes snow from a tree onto the speaker, and the speaker’s bad day gets better.","The speaker cuts down a hemlock tree to save it.","A crow and a snake fight in the snow.","The speaker builds a snowman with a crow."],
+   why:"Beginning: snow falls on the speaker. End: the speaker’s mood changes and the day is “saved”.", zh:"开头：乌鸦把雪抖到我身上；结尾：我的坏心情变好了。"},
+  {t:"theme", q:"What is the theme (the message) of the poem?",
+   a:["Small moments can change how we feel.","Crows are dangerous birds.","Winter is the best season.","Always stay inside when it snows."],
+   why:"A tiny thing — a little snow — turned a bad day into a better one.", zh:"主题：一件小事也能改变我们的心情。"},
+  {t:"evidence", q:"Which lines best show the theme?",
+   a:["“Has given my heart / A change of mood”","“From a hemlock tree”","“The way a crow”","“The dust of snow”"],
+   why:"These lines say the speaker’s feelings changed — that is the theme.", zh:"证据要能直接说明主题：心情变了。"},
+  {t:"poetry", q:"Look at the line endings: me / tree, mood / rued. What poetry feature is this?",
+   a:["Rhyme","Repetition","A question","A title"],
+   why:"Words that end with the same sound (me – tree) rhyme.", zh:"押韵：结尾的音相同。"},
+  {t:"sentence", q:"Which sentence is written correctly?",
+   a:["A crow shakes snow onto the speaker, and the speaker’s mood changes.","A crow shake snow onto the speaker, and the speaker’s mood change.","A crow shaking snow onto the speaker, and the mood changing.","A crows shakes snows onto the speaker."],
+   why:"One crow → “shakes”. One mood → “changes”. Add -s to the verb when the subject is one thing.", zh:"主语是单数（a crow / the mood），动词要加 -s。"}
+  ]},
+
+{ id:"wind", title:"Who Has Seen the Wind?", by:"Christina Rossetti",
+  lines:["Who has seen the wind?","Neither I nor you:","But when the leaves hang trembling,","The wind is passing through.","",
+         "Who has seen the wind?","Neither you nor I:","But when the trees bow down their heads,","The wind is passing by."],
+  qs:[
+  {t:"word", q:"In the poem, “trembling” means…",
+   a:["shaking a little","falling down","growing bigger","turning green"],
+   why:"The leaves shake a little because the wind moves them.", zh:"trembling = 轻轻颤动。"},
+  {t:"summary", q:"What happens in the poem?",
+   a:["Nobody can see the wind, but we know it is there when leaves shake and trees bend.","The speaker sees the wind and talks to it.","A storm knocks all the trees down.","The speaker and a friend fly a kite."],
+   why:"Each stanza asks who has seen the wind, then shows how we know it is there.", zh:"看不见风，但树叶和树会告诉我们风来了。"},
+  {t:"theme", q:"What is the theme of the poem?",
+   a:["We can know something is real even if we cannot see it.","Wind is dangerous.","Trees are sad.","Everyone should stay home on windy days."],
+   why:"We never see the wind, but we see what it does.", zh:"主题：看不见的东西也可以是真实的。"},
+  {t:"evidence", q:"Which lines best support the theme?",
+   a:["“But when the leaves hang trembling, / The wind is passing through.”","“Neither I nor you:”","“Neither you nor I:”","“Who has seen the wind?”"],
+   why:"The leaves are the proof that the wind is there. “Who has seen the wind?” is only the question.", zh:"证据是“树叶在抖”——它证明风在。"},
+  {t:"poetry", q:"“Who has seen the wind?” comes at the start of both stanzas. What poetry feature is this?",
+   a:["Repetition","Rhyme","Imagery","A glossary"],
+   why:"Saying the same words again is repetition. It makes the question stick in your head.", zh:"重复：同样的句子出现不止一次。"},
+  {t:"sentence", q:"Which sentence is written correctly?",
+   a:["Nobody sees the wind, but the leaves show that it is there.","Nobody see the wind, but the leaf show that it are there.","Nobody sees the wind, but the leafs shows that it is there.","Nobody seeing the wind, but the leaves showing it there."],
+   why:"Nobody → “sees”. Many leaves → “leaves show” (no -s on the verb when there are many).", zh:"nobody 当单数，用 sees；leaves 是复数，动词 show 不加 -s。"}
+  ]},
+
+{ id:"fog", title:"Fog", by:"Carl Sandburg",
+  lines:["The fog comes","on little cat feet.","",
+         "It sits looking","over harbor and city","on silent haunches","and then moves on."],
+  qs:[
+  {t:"word", q:"In the poem, a “harbor” is…",
+   a:["a place by the sea where boats stay","a tall building","a kind of cat","a busy road"],
+   why:"A harbor is where ships and boats stop, near a city by the sea.", zh:"harbor = 港口。"},
+  {t:"summary", q:"What happens in the poem?",
+   a:["Fog comes in quietly, sits over the harbor and city, then moves away.","A cat gets lost in the fog.","Boats crash in the harbor.","The city builds a wall to stop the fog."],
+   why:"Beginning: fog comes. Middle: it sits and looks. End: it moves on.", zh:"雾悄悄来，停在港口和城市上空，然后离开。"},
+  {t:"theme", q:"What is the main idea of the poem?",
+   a:["Fog moves quietly and softly, like a cat.","Cats are afraid of fog.","Fog is loud and scary.","Cities are better than the sea."],
+   why:"The whole poem compares the fog to a quiet cat.", zh:"中心意思：雾像猫一样轻轻地、静静地来去。"},
+  {t:"evidence", q:"Which line compares the fog to a cat most clearly?",
+   a:["“on little cat feet.”","“over harbor and city”","“and then moves on.”","“The fog comes”"],
+   why:"“Little cat feet” tells us the fog walks in softly, like a cat.", zh:"“小猫的脚”最直接地把雾比作猫。"},
+  {t:"poetry", q:"“On little cat feet” helps you picture the fog in your mind. What poetry feature is this?",
+   a:["Imagery (a word picture)","Rhyme","Repetition","A question"],
+   why:"Imagery is words that help you see, hear or feel something.", zh:"意象：让你脑中出现画面的词。"},
+  {t:"sentence", q:"Which sentence is written correctly?",
+   a:["The fog comes in quietly and then moves on.","The fog come in quietly and then move on.","The fog coming in quietly and then moving on.","The fogs comes in quiet and then moves on."],
+   why:"The fog (one thing) → “comes”, “moves”.", zh:"the fog 单数，动词加 -s：comes、moves。"}
+  ]},
+
+{ id:"bed", title:"Bed in Summer", by:"Robert Louis Stevenson",
+  lines:["In winter I get up at night","And dress by yellow candle-light.","In summer, quite the other way,","I have to go to bed by day.","",
+         "I have to go to bed and see","The birds still hopping on the tree,","Or hear the grown-up people’s feet","Still going past me in the street.","",
+         "And does it not seem hard to you,","When all the sky is clear and blue,","And I should like so much to play,","To have to go to bed by day?"],
+  qs:[
+  {t:"word", q:"“I have to go to bed by day.” Here, “by day” means…",
+   a:["while it is still light outside","at midnight","on the weekend","next to the bed"],
+   why:"In summer the sun sets late, so bedtime comes while it is still light.", zh:"by day = 天还亮着的时候。"},
+  {t:"summary", q:"What happens in the poem?",
+   a:["In winter the child gets up in the dark; in summer the child must go to bed while it is still light.","The child sleeps outside with the birds.","The child stays up late every night in summer.","The child hates winter because of the snow."],
+   why:"Stanza 1 compares winter and summer. Stanzas 2–3 show what the child sees and feels at bedtime.", zh:"冬天天没亮就起床；夏天天还亮就得睡觉。"},
+  {t:"theme", q:"What is the theme of the poem?",
+   a:["It feels unfair to go to bed when you still want to play.","Birds should go to bed early.","Candles are better than lamps.","Grown-ups never go outside."],
+   why:"The child wants to play but has to sleep — and thinks that is hard.", zh:"主题：还想玩却得睡觉，觉得不公平。"},
+  {t:"evidence", q:"Which lines best support the theme?",
+   a:["“And I should like so much to play, / To have to go to bed by day?”","“And dress by yellow candle-light.”","“The birds still hopping on the tree,”","“In winter I get up at night”"],
+   why:"These lines say the child wants to play but must go to bed.", zh:"这两句直接说出“想玩却要睡”。"},
+  {t:"explain", q:"The last stanza asks the reader a question. Why does the poet do this?",
+   a:["To make the reader agree that it is unfair","Because the speaker forgot the answer","To tell us what time it is","To describe the birds"],
+   why:"“Does it not seem hard to you?” asks you to feel what the child feels.", zh:"用问句让读者也觉得“这确实很难受”。"},
+  {t:"sentence", q:"Which sentence is written correctly?",
+   a:["In summer, the child has to go to bed while the sky is still blue.","In summer, the child have to go to bed while the sky are still blue.","In summer, the child having to go to bed while the sky still blue.","In summer, the childs has to go to bed while the sky is still blue."],
+   why:"The child (one) → “has”. The sky (one) → “is”.", zh:"单数主语用 has、is。"}
+  ]},
+
+{ id:"pasture", title:"The Pasture", by:"Robert Frost",
+  lines:["I’m going out to clean the pasture spring;","I’ll only stop to rake the leaves away","(And wait to watch the water clear, I may):","I sha’n’t be gone long.—You come too.","",
+         "I’m going out to fetch the little calf","That’s standing by the mother. It’s so young","It totters when she licks it with her tongue.","I sha’n’t be gone long.—You come too."],
+  qs:[
+  {t:"word", q:"“It totters when she licks it.” Here, “totters” means…",
+   a:["walks in a shaky way, almost falling","runs very fast","falls asleep","eats grass"],
+   why:"The calf is so young that it wobbles when its mother licks it.", zh:"totters = 走路摇摇晃晃。"},
+  {t:"summary", q:"What happens in the poem?",
+   a:["A farmer is going out to clean the spring and fetch a young calf, and asks someone to come along.","A farmer sells a calf at the market.","A calf runs away and the farmer chases it.","Leaves fall and cover the whole farm."],
+   why:"Stanza 1: clean the spring. Stanza 2: fetch the calf. Both end with “You come too.”", zh:"农夫要去清理泉水、去牵小牛，邀请别人一起去。"},
+  {t:"theme", q:"What is the theme of the poem?",
+   a:["Simple everyday jobs are nicer when we share them with someone.","Farm work is boring.","Calves are dangerous.","It is best to always work alone."],
+   why:"The jobs are small, but the speaker wants a friend to share them.", zh:"主题：平常的小事，和人一起做会更美好。"},
+  {t:"evidence", q:"Which line best supports the theme?",
+   a:["“I sha’n’t be gone long.—You come too.”","“I’ll only stop to rake the leaves away”","“That’s standing by the mother.”","“I’m going out to clean the pasture spring;”"],
+   why:"“You come too” is the invitation to share the jobs.", zh:"“你也一起来吧”就是邀请别人分享。"},
+  {t:"poetry", q:"This poem has two stanzas. What is a stanza?",
+   a:["A group of lines in a poem","A word that rhymes","The title of a poem","The person who wrote the poem"],
+   why:"A stanza is like a paragraph in a poem. There is a space between stanzas.", zh:"stanza（诗节）就像诗里的一个段落。"},
+  {t:"sentence", q:"Which sentence is written correctly?",
+   a:["The farmer asks a friend to come with him.","The farmer ask a friend to come with him.","The farmer asking a friend come with him.","The farmers asks a friends to come with him."],
+   why:"The farmer (one) → “asks”. “A friend” — one friend, no -s.", zh:"the farmer 单数 → asks；a friend 不加 -s。"}
+  ]},
+
+{ id:"arrow", title:"The Arrow and the Song", by:"Henry Wadsworth Longfellow",
+  lines:["I shot an arrow into the air,","It fell to earth, I knew not where;","For, so swiftly it flew, the sight","Could not follow it in its flight.","",
+         "I breathed a song into the air,","It fell to earth, I knew not where;","For who has sight so keen and strong,","That it can follow the flight of song?","",
+         "Long, long afterward, in an oak","I found the arrow, still unbroke;","And the song, from beginning to end,","I found again in the heart of a friend."],
+  qs:[
+  {t:"word", q:"“For who has sight so keen and strong.” Here, “keen” means…",
+   a:["very sharp, able to see well","very sleepy","very loud","very slow"],
+   why:"Keen sight means very good eyes. Nobody’s eyes are good enough to follow a song.", zh:"keen = 敏锐的。"},
+  {t:"summary", q:"What happens in the poem?",
+   a:["The speaker shoots an arrow and sings a song, loses both, and later finds the arrow in a tree and the song in a friend’s heart.","The speaker uses an arrow to hunt birds.","The speaker writes a song about an oak tree.","A friend steals the speaker’s arrow."],
+   why:"Stanza 1: the arrow is lost. Stanza 2: the song is lost. Stanza 3: both are found.", zh:"箭和歌都不见了，后来箭在橡树上找到，歌在朋友心里找到。"},
+  {t:"theme", q:"What is the theme of the poem?",
+   a:["The good things we give to others can stay with them for a long time.","Arrows are dangerous.","Never sing outside.","Friends always forget songs."],
+   why:"The song was given away, and years later the friend still remembered all of it.", zh:"主题：我们给别人的美好，会在他们心里留很久。"},
+  {t:"evidence", q:"Which lines best support the theme?",
+   a:["“And the song, from beginning to end, / I found again in the heart of a friend.”","“I shot an arrow into the air,”","“It fell to earth, I knew not where;”","“Long, long afterward, in an oak”"],
+   why:"These lines show the song stayed in the friend’s heart.", zh:"这两句说明歌一直留在朋友心里。"},
+  {t:"poetry", q:"Which pair of words rhymes in the poem?",
+   a:["end / friend","arrow / song","air / earth","oak / tree"],
+   why:"End and friend finish with the same sound: -end.", zh:"end 和 friend 结尾都是 -end 的音。"},
+  {t:"sentence", q:"Which sentence is written correctly?",
+   a:["Later, the speaker found the arrow in an oak tree.","Later, the speaker find the arrow in a oak tree.","Later, the speaker founded the arrow in an oak tree.","Later, the speaker finding the arrow in an oak tree."],
+   why:"It happened in the past → “found” (past tense of find). “An” goes before a vowel sound: an oak.", zh:"过去发生的事用过去式：find → found；元音前用 an。"}
+  ]},
+
+{ id:"woods", title:"Stopping by Woods on a Snowy Evening", by:"Robert Frost",
+  lines:["Whose woods these are I think I know.","His house is in the village though;","He will not see me stopping here","To watch his woods fill up with snow.","",
+         "My little horse must think it queer","To stop without a farmhouse near","Between the woods and frozen lake","The darkest evening of the year.","",
+         "He gives his harness bells a shake","To ask if there is some mistake.","The only other sound’s the sweep","Of easy wind and downy flake.","",
+         "The woods are lovely, dark and deep,","But I have promises to keep,","And miles to go before I sleep,","And miles to go before I sleep."],
+  qs:[
+  {t:"word", q:"“My little horse must think it queer.” Here, “queer” means…",
+   a:["strange","happy","cold","quick"],
+   why:"The horse thinks it is strange to stop in the middle of nowhere.", zh:"这里 queer = 奇怪的（老用法）。"},
+  {t:"summary", q:"What happens in the poem?",
+   a:["A traveller stops at night to watch snow fall in the woods, then remembers there is still a long way to go.","A man gets lost in the woods and sleeps there.","A horse runs away in the snow.","The owner of the woods chases the traveller away."],
+   why:"Beginning: stop to watch the snow. Middle: the horse shakes its bells. End: “miles to go”.", zh:"旅人夜里停下看雪，最后想起还有很远的路要走。"},
+  {t:"theme", q:"What is the theme of the poem?",
+   a:["Even when we want to rest and enjoy a beautiful moment, we have to keep our promises.","Horses do not like snow.","Woods are always dangerous at night.","It is fine to break promises."],
+   why:"The woods are lovely, but the speaker has promises to keep.", zh:"主题：再美的时刻也要继续前行、遵守承诺。"},
+  {t:"evidence", q:"Which lines best support the theme?",
+   a:["“But I have promises to keep, / And miles to go before I sleep,”","“Whose woods these are I think I know.”","“He gives his harness bells a shake”","“The darkest evening of the year.”"],
+   why:"“Promises to keep” is exactly the theme.", zh:"“我还有承诺要遵守”直接说明主题。"},
+  {t:"explain", q:"The last line is said two times. Why does the poet repeat it?",
+   a:["To show the long journey ahead and make the ending feel strong","Because he made a mistake","To make it rhyme with “horse”","Because the horse said it"],
+   why:"Repeating the line makes you feel how far there is still to go.", zh:"重复最后一句，让人感到路还很长，结尾更有力。"},
+  {t:"sentence", q:"Which sentence is written correctly?",
+   a:["The traveller stopped to watch the snow, but the traveller still had miles to go.","The traveller stop to watch the snow, but the traveller still have miles to go.","The traveller stopped to watch the snow, but the traveller still haved miles to go.","The traveller stopping to watch the snows, but still have miles to go."],
+   why:"It happened in the past → “stopped”, “had”. (have → had, not “haved”.)", zh:"过去式：stop → stopped，have → had。"}
+  ]}
+];
+
+/* ---------- helpers ---------- */
+const $ = id => document.getElementById(id);
+const show = id => ["setup","session","done"].forEach(s => $(s).hidden = s !== id);
+const shuffle = arr => { const a = arr.slice(); for(let k = a.length - 1; k > 0; k--){ const j = Math.floor(Math.random() * (k + 1)); [a[k], a[j]] = [a[j], a[k]]; } return a; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---------- speech (same voice choice as the other pages) ---------- */
+let voice = null;
+function pickVoice(){
+  try{
+    const all = speechSynthesis.getVoices();
+    const us  = all.filter(v => /^en[-_]US/i.test(v.lang));
+    if(!all.length) return;
+    voice = us.find(v => v.name.includes("Samantha")) || us[0] || all.find(v => /^en(-|_)/i.test(v.lang));
+  }catch(e){}
+}
+try{ pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }catch(e){}
+function say(text, rate){
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    if(voice) u.voice = voice;
+    u.lang = voice ? voice.lang : "en-US";
+    u.rate = rate || 0.85;
+    speechSynthesis.speak(u);
+  }catch(e){ /* no speech on this device — the rest still works */ }
+}
+const stopSpeech = () => { try{ speechSynthesis.cancel(); }catch(e){} };
+
+/* ---------- record (this iPad only) ---------- */
+const STORE = "kai-poems-v1";
+function log(){ try{ return JSON.parse(localStorage.getItem(STORE)) || []; }catch(e){ return []; } }
+function addLog(run){ try{ const l = log(); l.unshift(run); localStorage.setItem(STORE, JSON.stringify(l.slice(0,200))); }catch(e){} }
+const firstTry = id => log().filter(r => r.id === id && !r.retry).pop();   // oldest non-retry run
+function stars(right, total){ return right === total ? "⭐⭐⭐" : right * 3 >= total * 2 ? "⭐⭐" : right * 3 >= total ? "⭐" : ""; }
+const fmtDate = t => { const d = new Date(t); return (d.getMonth() + 1) + "/" + d.getDate(); };
+
+/* ---------- setup ---------- */
+function drawSetup(){
+  $("poems").innerHTML = POEMS.map((p, n) => {
+    const f = firstTry(p.id);
+    const st = f ? "<span class='st'>" + f.right + "/" + f.total + " " + stars(f.right, f.total) + "</span>"
+                 : "<span class='st todo'>Not done yet</span>";
+    return "<button class='pcard" + (f ? " done" : "") + "' data-i='" + n + "'>" +
+      "<span class='day'>Day " + (n + 1) + "</span><b>" + esc(p.title) + "</b>" +
+      "<span class='by'>" + esc(p.by) + "</span>" + st + "</button>";
+  }).join("");
+  $("poems").querySelectorAll(".pcard").forEach(b => b.onclick = () => start(POEMS[+b.dataset.i]));
+
+  const rows = POEMS.map(p => {
+    const f = firstTry(p.id);
+    return f ? "<li><span>" + esc(p.title) + " <span class='dim'>· " + fmtDate(f.at) + "</span></span><span class='val'>" + f.right + "/" + f.total + "</span></li>" : "";
+  }).filter(Boolean);
+  $("recordPanel").hidden = !rows.length;
+  if(rows.length){
+    const done = POEMS.map(p => firstTry(p.id)).filter(Boolean);
+    const r = done.reduce((s, f) => s + f.right, 0), t = done.reduce((s, f) => s + f.total, 0);
+    rows.push("<li style='border-top:2px solid var(--line);font-weight:800'><span>Total</span><span class='val'>" + r + "/" + t + " · " + Math.round(r / t * 100) + "%</span></li>");
+  }
+  $("record").innerHTML = rows.join("");
+}
+
+/* ---------- session ---------- */
+let poem = null, queue = [], qi = 0, missed = [], right = 0, isRetry = false;
+
+function start(p, onlyThese){
+  poem = p; isRetry = !!onlyThese;
+  queue = (onlyThese || p.qs).map(q => ({q, opts: shuffle(q.a)}));
+  qi = 0; missed = []; right = 0;
+  $("pTitle").textContent = p.title;
+  $("pBy").textContent = "by " + p.by;
+  $("pText").innerHTML = p.lines.map(l => l ? "<span class='ln'>" + esc(l) + "</span>" : "<span class='gap'></span>").join("");
+  show("session"); window.scrollTo(0, 0);
+  drawQ();
+}
+
+function drawQ(){
+  const {q, opts} = queue[qi];
+  $("barFill").style.width = (qi / queue.length * 100) + "%";
+  $("count").textContent = (qi + 1) + " / " + queue.length;
+  $("qTag").textContent = TAGS[q.t];
+  $("qText").textContent = q.q;
+  $("fb").hidden = true; $("next").hidden = true;
+  $("opts").innerHTML = opts.map((o, k) =>
+    "<button class='opt' data-k='" + k + "'><span class='k'>" + "ABCD"[k] + "</span><span>" + esc(o) + "</span></button>").join("");
+  $("opts").querySelectorAll(".opt").forEach(b => b.onclick = () => answer(+b.dataset.k));
+}
+
+function answer(k){
+  const {q, opts} = queue[qi];
+  const ok = opts[k] === q.a[0];
+  $("opts").querySelectorAll(".opt").forEach((b, n) => {
+    b.disabled = true;
+    if(opts[n] === q.a[0]) b.classList.add("right");
+    else if(n === k) b.classList.add("wrong");
+    else b.classList.add("dim");
+  });
+  if(ok) right++; else missed.push(q);
+  const fb = $("fb");
+  fb.className = "fb " + (ok ? "ok" : "no");
+  fb.innerHTML = "<b>" + (ok ? "✅ Right!" : "❌ Not quite.") + "</b>" + esc(q.why) + "<span class='zh'>" + esc(q.zh) + "</span>";
+  fb.hidden = false;
+  $("next").textContent = qi + 1 < queue.length ? "Next →" : "See my score →";
+  $("next").hidden = false;
+  $("next").scrollIntoView({behavior:"smooth", block:"nearest"});
+}
+
+$("next").onclick = () => { qi++; qi < queue.length ? drawQ() : finish(); };
+$("listen").onclick = () => say(poem.lines.filter(Boolean).join("\n"), 0.85);
+$("quit").onclick = () => { stopSpeech(); drawSetup(); show("setup"); };
+
+/* ---------- done ---------- */
+function finish(){
+  stopSpeech();
+  const total = queue.length;
+  if(!isRetry) addLog({id: poem.id, right, total, at: Date.now()});
+  $("score").textContent = right + " / " + total;
+  $("stars").textContent = isRetry ? "" : stars(right, total);
+  $("scoreSub").textContent = isRetry
+    ? (missed.length ? "Still a few to fix — read the poem again first." : "All fixed! 🎉")
+    : right === total ? "Perfect — you really understood this poem!"
+    : right >= total - 2 ? "Good work. Look at the ones you missed below."
+    : "Read the poem out loud again, then redo the ones you missed.";
+  $("missList").innerHTML = missed.map(q =>
+    "<li><span class='tag'>" + TAGS[q.t] + "</span><span class='mq'>" + esc(q.q) + "</span><span class='ma'>✓ " + esc(q.a[0]) + "</span></li>").join("");
+  $("redo").hidden = !missed.length;
+  show("done"); window.scrollTo(0, 0);
+}
+$("redo").onclick = () => start(poem, missed.slice());
+$("back").onclick = () => { drawSetup(); show("setup"); window.scrollTo(0, 0); };
+
+drawSetup();
+</script>
+</body>
+</html>
