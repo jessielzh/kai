@@ -75,7 +75,8 @@
   .poembox h2{font-size:21px;margin:0}
   .poembox .by{color:var(--muted);font-size:14px;margin:2px 0 12px}
   .poemtext{font-size:18px;line-height:1.65;margin:0 0 14px}
-  .poemtext .ln{display:block}
+  .poemtext .ln{display:block;border-radius:6px;margin:0 -6px;padding:0 6px;transition:background .2s}
+  .poemtext .ln.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
   .poemtext .gap{display:block;height:.8em}
   .speaker{appearance:none;background:var(--accent-soft);border:none;color:var(--accent);
     border-radius:999px;padding:11px 20px;font:inherit;font-weight:700;font-size:15px;cursor:pointer}
@@ -392,21 +393,45 @@ function pickVoice(){
     const all = speechSynthesis.getVoices();
     const us  = all.filter(v => /^en[-_]US/i.test(v.lang));
     if(!all.length) return;
-    voice = us.find(v => v.name.includes("Samantha")) || us[0] || all.find(v => /^en(-|_)/i.test(v.lang));
+    // a downloaded Premium / Enhanced voice sounds far less robotic — use it when the device has one
+    voice = us.find(v => /premium/i.test(v.name)) || us.find(v => /enhanced/i.test(v.name))
+         || us.find(v => v.name.includes("Samantha")) || us[0] || all.find(v => /^en(-|_)/i.test(v.lang));
   }catch(e){}
 }
 try{ pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }catch(e){}
-function say(text, rate){
-  try{
-    speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    if(voice) u.voice = voice;
-    u.lang = voice ? voice.lang : "en-US";
-    u.rate = rate || 0.85;
-    speechSynthesis.speak(u);
-  }catch(e){ /* no speech on this device — the rest still works */ }
+/* Read a poem line by line: one utterance per line, a short rest after each
+   line and a longer one between stanzas, with the line lit up as it is read.
+   One long utterance ran the lines together and sounded flat. */
+let reading = 0;   // bumps on every start/stop so stale callbacks drop out
+function readPoem(){
+  const my = ++reading;
+  const els = [...$("pText").children];
+  $("listen").textContent = "⏹ Stop";
+  const step = n => {
+    if(my !== reading) return;
+    while(n < els.length && !els[n].classList.contains("ln")) n++;
+    els.forEach(e => e.classList.remove("on"));
+    if(n >= els.length){ stopSpeech(); return; }
+    els[n].classList.add("on");
+    const rest = els[n + 1] && els[n + 1].classList.contains("gap") ? 900 : 350;
+    try{
+      const u = new SpeechSynthesisUtterance(els[n].textContent);
+      if(voice) u.voice = voice;
+      u.lang = voice ? voice.lang : "en-US";
+      u.rate = 0.8;
+      u.onend = () => setTimeout(() => step(n + 1), rest);
+      speechSynthesis.speak(u);
+    }catch(e){ stopSpeech(); }
+  };
+  try{ speechSynthesis.cancel(); }catch(e){}
+  step(0);
 }
-const stopSpeech = () => { try{ speechSynthesis.cancel(); }catch(e){} };
+function stopSpeech(){
+  reading++;
+  try{ speechSynthesis.cancel(); }catch(e){}
+  document.querySelectorAll(".poemtext .ln.on").forEach(e => e.classList.remove("on"));
+  $("listen").textContent = "🔊 Listen";
+}
 
 /* ---------- record (this iPad only) ---------- */
 const STORE = "kai-poems-v1";
@@ -487,7 +512,7 @@ function answer(k){
 }
 
 $("next").onclick = () => { qi++; qi < queue.length ? drawQ() : finish(); };
-$("listen").onclick = () => say(poem.lines.filter(Boolean).join("\n"), 0.85);
+$("listen").onclick = () => $("listen").textContent.includes("Stop") ? stopSpeech() : readPoem();
 $("quit").onclick = () => { stopSpeech(); drawSetup(); show("setup"); };
 
 /* ---------- done ---------- */
