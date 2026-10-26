@@ -150,6 +150,30 @@
   .wcard .from{color:var(--muted);font-size:13.5px;margin:6px 0 14px}
   .wcard .line{font-style:italic;color:var(--muted);margin:0 0 18px}
   .wcard .opts{text-align:left}
+
+  /* ---- sets ---- */
+  .sethead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:24px 0 8px}
+  .sethead h3{font-size:18px;margin:0}
+  .sethead span{color:var(--muted);font-size:14px}
+  .sethead .proud{color:var(--good);font-weight:700;font-size:15px}
+  .rc .rchead{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;padding-top:16px;border-top:none}
+
+  /* ---- Set 2 question kinds ---- */
+  .opt.ord .k{min-width:1.7em;height:1.7em;border-radius:50%;border:2px solid var(--line);display:inline-flex;align-items:center;justify-content:center;font-size:14px;flex:none}
+  .opt.ord.on .k{background:var(--accent);border-color:var(--accent);color:var(--card)}
+  .opt.lnopt{font-size:16px;padding:11px 14px}
+  .fixs{font-size:20px;line-height:2.3;margin:0 0 14px}
+  .fixw{appearance:none;font:inherit;background:transparent;border:1.5px solid var(--line);border-radius:10px;padding:2px 8px;cursor:pointer;color:var(--ink)}
+  .fixw.sel{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:700}
+  .fixw.bad{border-color:var(--again);background:var(--again-soft);color:var(--again)}
+  .fixw:disabled{cursor:default}
+  .field{display:block;margin:0 0 12px}
+  .field span{display:block;font-size:14px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;font:inherit;font-size:19px;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink)}
+  .field input:focus{outline:none;border-color:var(--accent)}
+  .field input.ok{border-color:var(--good)}
+  .field input.no{border-color:var(--again)}
+  .chk{margin-top:4px}
   .wcard .fb{text-align:left}
 </style>
 </head>
@@ -160,7 +184,7 @@
   <section id="setup">
     <a class="homelink" href="../">&larr; Back to home</a>
     <h1>Kai's Poem Practice</h1>
-    <p class="sub">One poem a day. Read it, then answer 6 questions — the same steps as your theme paragraph.</p>
+    <p class="sub">One poem a day. Read it, then answer the questions — the same steps as your theme paragraph.</p>
 
     <div class="panel how">
       <p class="label">How to do it</p>
@@ -177,7 +201,7 @@
       <button class="btn" id="mwGo">Practise my words</button>
     </div>
 
-    <div class="poems" id="poems"></div>
+    <div id="poems"></div>
 
     <div class="panel" id="recordPanel" style="margin-top:18px" hidden>
       <p class="label">Record</p>
@@ -261,7 +285,7 @@
 const TAGS = {
   word:"Word · 词义", summary:"Summary · 概括", theme:"Theme · 主题",
   evidence:"Evidence · 证据", poetry:"Poetry · 诗歌特点", explain:"Explain · 解释",
-  sentence:"Sentence · 写对句子"
+  sentence:"Sentence · 写对句子", fix:"Fix it · 改错", intro:"Topic sentence · 开头句"
 };
 
 const POEMS = [
@@ -439,6 +463,206 @@ const POEMS = [
 ];
 
 /* =========================================================
+   Set 2 — harder (added 2026-10-27 after Kai aced Set 1 in one sitting).
+   New poems he hasn't studied, and fewer ready-made choices: put events in
+   order, tap the proving line yourself, fix a wrong word by typing it, and
+   type the title + poet the way a topic sentence needs them.
+   ========================================================= */
+const INTRO = {t:"intro", kind:"intro",
+  q:"Start your topic sentence: type the poem’s title in quotation marks, and the poet’s name. Capital letters count!",
+  why:"The writing rubric gives points for the title in quotation marks and the poet’s name spelled and capitalized correctly.",
+  zh:"评分表第一项：诗名加引号，作者名拼写和大小写都要对。"};
+
+POEMS.push(
+{ id:"eagle", set:2, title:"The Eagle", by:"Alfred, Lord Tennyson",
+  poets:["Alfred, Lord Tennyson","Alfred Lord Tennyson","Alfred Tennyson","Lord Tennyson","Tennyson"],
+  lines:["He clasps the crag with crooked hands;","Close to the sun in lonely lands,","Ring’d with the azure world, he stands.","",
+         "The wrinkled sea beneath him crawls;","He watches from his mountain walls,","And like a thunderbolt he falls."],
+  qs:[
+  {t:"word", q:"“He clasps the crag with crooked hands.” Here, “clasps” means…",
+   a:["holds on tightly","claps loudly","lets go","washes"],
+   why:"The eagle grips the rock with its claws (its “crooked hands”).", zh:"clasps = 紧紧抓住。"},
+  {t:"summary", kind:"order", q:"Tap the events in the order they happen.",
+   items:["The eagle stands on a high rock near the sun.","The eagle watches the sea far below.","The eagle dives down very fast."],
+   why:"Stanza 1: the eagle stands up high. Stanza 2: it watches, then falls like a thunderbolt.", zh:"先站在高处，再俯视大海，最后猛扑下去。"},
+  {t:"theme", q:"Which sentence BEST tells what the poem is mainly about?",
+   a:["The eagle is powerful and alone, high above the world.","Eagles live near the sea.","The eagle is afraid of the sea.","The eagle is old and weak because its hands are crooked."],
+   why:"“Close to the sun”, “lonely lands”, “like a thunderbolt” — strong, alone and high up. “Eagles live near the sea” is only a fact, not the main idea.", zh:"中心：老鹰强大、孤独、高高在上。只说一个事实不算主题。"},
+  {t:"evidence", kind:"line", q:"Tap the line that shows how FAST the eagle moves.",
+   ans:["And like a thunderbolt he falls."],
+   why:"A thunderbolt is lightning — the fastest thing in the sky.", zh:"thunderbolt（霹雳）说明速度极快。"},
+  {t:"poetry", q:"“Like a thunderbolt he falls” compares the eagle to a thunderbolt using the word “like”. This is called…",
+   a:["a simile","a rhyme","a stanza","a title"],
+   why:"A simile compares two things using “like” or “as”.", zh:"明喻（simile）：用 like 或 as 作比较。"},
+  {t:"fix", kind:"fix", q:"One word in this sentence is wrong. Tap it, then type the right word.",
+   s:"The eagle stand on a rock and watches the sea.", bad:"stand", good:"stands",
+   why:"The eagle (one) → “stands”, just like “watches”.", zh:"主语单数，动词加 -s：stands。"},
+  INTRO
+  ]},
+
+{ id:"lamp", set:2, title:"The Lamplighter", by:"Robert Louis Stevenson",
+  poets:["Robert Louis Stevenson","R. L. Stevenson","R.L. Stevenson","Stevenson"],
+  lines:["My tea is nearly ready and the sun has left the sky;","It’s time to take the window to see Leerie going by;","For every night at teatime and before you take your seat,","With lantern and with ladder he comes posting up the street.","",
+         "Now Tom would be a driver and Maria go to sea,","And my papa’s a banker and as rich as he can be;","But I, when I am stronger and can choose what I’m to do,","O Leerie, I’ll go round at night and light the lamps with you!","",
+         "For we are very lucky, with a lamp before the door,","And Leerie stops to light it as he lights so many more;","And O! before you hurry by with ladder and with light,","O Leerie, see a little child and nod to him to-night!"],
+  qs:[
+  {t:"word", q:"“He comes posting up the street.” Here, “posting” means…",
+   a:["hurrying","sending letters","standing still","shouting"],
+   why:"Leerie hurries up the street every evening to light the lamps.", zh:"posting（老用法）= 快步赶来。"},
+  {t:"summary", kind:"order", q:"Tap the events in the order they happen.",
+   items:["At teatime, the child watches for Leerie from the window.","The child says other people want other jobs, but the child wants to light lamps with Leerie.","The child asks Leerie to nod hello tonight."],
+   why:"Stanza 1: waiting at the window. Stanza 2: the dream job. Stanza 3: “nod to him to-night!”", zh:"先在窗边等，再说自己的梦想，最后请 Leerie 点头打招呼。"},
+  {t:"theme", q:"Which is the BEST theme?",
+   a:["A simple job can be special when someone you admire does it.","It is important to be rich.","Children are afraid of the dark.","Being a banker is the best job."],
+   why:"Papa is a rich banker, but the child would rather light lamps like Leerie.", zh:"主题：普通的工作，因为崇拜的人在做而变得特别。"},
+  {t:"evidence", kind:"line", q:"Tap the line that shows the child most wants to be like Leerie.",
+   ans:["O Leerie, I’ll go round at night and light the lamps with you!"],
+   why:"The child says what job they will choose when they grow up.", zh:"这句说出长大后想做的事。"},
+  {t:"explain", q:"Why does the poet tell us that Tom wants to be a driver and Papa is a banker?",
+   a:["To show the child would rather be a lamplighter than have those jobs","To tell us the child’s family is poor","Because Tom is the lamplighter","To explain how lamps work"],
+   why:"Next to those jobs, the child still picks Leerie’s — that shows how much the child admires him.", zh:"用别的工作作对比，突出孩子最想当点灯人。"},
+  {t:"fix", kind:"fix", q:"One word in this sentence is wrong. Tap it, then type the right word.",
+   s:"Every night, Leerie come up the street with his ladder.", bad:"come", good:"comes",
+   why:"Leerie (one person) → “comes”.", zh:"Leerie 单数 → comes。"},
+  INTRO
+  ]},
+
+{ id:"foreign", set:2, title:"Foreign Lands", by:"Robert Louis Stevenson",
+  poets:["Robert Louis Stevenson","R. L. Stevenson","R.L. Stevenson","Stevenson"],
+  lines:["Up into the cherry tree","Who should climb but little me?","I held the trunk with both my hands","And looked abroad on foreign lands.","",
+         "I saw the next door garden lie,","Adorned with flowers, before my eye,","And many pleasant places more","That I had never seen before.","",
+         "I saw the dimpling river pass","And be the sky’s blue looking-glass;","The dusty roads go up and down","With people tramping in to town.","",
+         "If I could find a higher tree","Farther and farther I should see,","To where the grown-up river slips","Into the sea among the ships,","",
+         "To where the roads on either hand","Lead onward into fairy land,","Where all the children dine at five,","And all the playthings come alive."],
+  qs:[
+  {t:"word", q:"The river is “the sky’s blue looking-glass”. A looking-glass is…",
+   a:["a mirror","a window","a telescope","a drinking glass"],
+   why:"The calm river shows the blue sky on top of it, like a mirror.", zh:"looking-glass = 镜子：河面倒映着天空。"},
+  {t:"summary", kind:"order", q:"Tap the events in the order they happen.",
+   items:["The child climbs up a cherry tree.","From the tree, the child sees gardens, a river and roads.","The child imagines a higher tree would show the sea and fairy land."],
+   why:"Climb → look → imagine even further.", zh:"爬树 → 看到的 → 想象更远的地方。"},
+  {t:"theme", q:"Which is the BEST theme?",
+   a:["Going higher helps us see more of the world — and imagine even more.","Climbing trees is dangerous.","The child wants to stay home forever.","The child does not like the people in town."],
+   why:"Each step up shows more, and the last stanzas go into imagination.", zh:"主题：站得越高看得越远，想象也越远。"},
+  {t:"evidence", kind:"line", q:"Tap a line that shows the child is imagining, not just looking.",
+   ans:["Lead onward into fairy land,","Where all the children dine at five,","And all the playthings come alive."],
+   why:"Fairy land and toys coming alive can’t really be seen from a tree — the child is imagining.", zh:"仙境、玩具活过来——这些是想象，不是真看到的。"},
+  {t:"poetry", q:"Each pair of lines rhymes: tree / me, hands / lands. What is this pattern called?",
+   a:["rhyming couplets","repetition","a simile","free verse"],
+   why:"Two lines in a row that rhyme are a rhyming couplet.", zh:"押韵对句：相邻两行押韵。"},
+  {t:"fix", kind:"fix", q:"One word in this sentence is wrong. Tap it, then type the right word.",
+   s:"The child climbed the tree and see many foreign lands.", bad:"see", good:"saw",
+   why:"“Climbed” is past tense, so the second verb is past too: see → saw.", zh:"前面用了过去式 climbed，后面也要用过去式：see → saw。"},
+  INTRO
+  ]},
+
+{ id:"dreams", set:2, title:"Dreams", by:"Langston Hughes",
+  poets:["Langston Hughes","Hughes"],
+  lines:["Hold fast to dreams","For if dreams die","Life is a broken-winged bird","That cannot fly.","",
+         "Hold fast to dreams","For when dreams go","Life is a barren field","Frozen with snow."],
+  qs:[
+  {t:"word", q:"“Hold fast to dreams.” Here, “fast” means…",
+   a:["tightly","quickly","early","in a race"],
+   why:"“Hold fast” means hold on tight and don’t let go — not “quickly”.", zh:"hold fast = 紧紧抓住（这里 fast 不是“快”）。"},
+  {t:"summary", kind:"order", q:"Tap the ideas in the order they come in the poem.",
+   items:["The poet tells us to hold on to our dreams.","If dreams die, life is like a bird that cannot fly.","If dreams go, life is like a cold, empty field."],
+   why:"Each stanza starts with “Hold fast to dreams”, then gives a picture of life without them.", zh:"先说抓住梦想，再用两幅画面说明失去梦想的生活。"},
+  {t:"theme", q:"Which is the BEST theme?",
+   a:["Dreams give our lives hope, so we should hold on to them.","Birds cannot fly in winter.","Dreams at night can be scary.","Farming is hard when it snows."],
+   why:"The bird and the field are pictures of life without dreams. The poem is really about dreams.", zh:"鸟和田野只是比喻，诗真正讲的是梦想。"},
+  {t:"evidence", kind:"line", q:"Tap a line that shows what life is like WITHOUT dreams.",
+   ans:["Life is a broken-winged bird","That cannot fly.","Life is a barren field","Frozen with snow."],
+   why:"A bird that can’t fly and a frozen, empty field — life without dreams can’t go anywhere or grow.", zh:"飞不起来的鸟、冰冻的荒田：没有梦想的生活。"},
+  {t:"poetry", q:"“Life is a broken-winged bird” compares life to a bird WITHOUT using “like” or “as”. This is called…",
+   a:["a metaphor","a simile","a rhyme","a question"],
+   why:"A metaphor says one thing IS another. A simile uses “like” or “as”.", zh:"暗喻（metaphor）：直接说 A 是 B，不用 like / as。"},
+  {t:"fix", kind:"fix", q:"One word in this sentence is wrong. Tap it, then type the right word.",
+   s:"If we lose our dreams, life become empty.", bad:"become", good:"becomes",
+   why:"Life (one thing) → “becomes”.", zh:"life 单数 → becomes。"},
+  INTRO
+  ]},
+
+{ id:"bird", set:2, title:"A Bird Came Down the Walk", by:"Emily Dickinson", note:"first 3 stanzas",
+  poets:["Emily Dickinson","Dickinson"],
+  lines:["A Bird came down the Walk —","He did not know I saw —","He bit an Angleworm in halves","And ate the fellow, raw,","",
+         "And then he drank a Dew","From a convenient Grass —","And then hopped sidewise to the Wall","To let a Beetle pass —","",
+         "He glanced with rapid eyes","That hurried all around —","They looked like frightened Beads, I thought —","He stirred his Velvet Head"],
+  qs:[
+  {t:"word", q:"“And then hopped sidewise to the Wall.” Here, “sidewise” means…",
+   a:["to the side","backwards","upside down","very high"],
+   why:"Sidewise = sideways. The bird hops out of the way so the beetle can pass.", zh:"sidewise = 往旁边（sideways）。"},
+  {t:"summary", kind:"order", q:"Tap the events in the order they happen.",
+   items:["The bird eats a worm.","The bird drinks dew and moves aside for a beetle.","The bird looks around nervously."],
+   why:"Stanza 1: eats. Stanza 2: drinks and makes way. Stanza 3: looks around, frightened.", zh:"吃虫 → 喝露水、让路 → 紧张地四处看。"},
+  {t:"theme", q:"Which is the BEST theme?",
+   a:["If we watch quietly, we can see that small animals have lives of their own.","Birds are cruel because they eat worms.","Beetles and birds are best friends.","Gardens are boring."],
+   why:"“He did not know I saw” — the speaker watches quietly and sees the bird eat, drink, be polite and feel afraid.", zh:"主题：静静观察，会发现小动物也有自己的生活。"},
+  {t:"evidence", kind:"line", q:"Tap a line that shows the bird is nervous.",
+   ans:["They looked like frightened Beads, I thought —","He glanced with rapid eyes","That hurried all around —"],
+   why:"Fast eyes looking all around, “frightened” — the bird is nervous.", zh:"眼睛飞快地到处看，像受惊的珠子——它很紧张。"},
+  {t:"poetry", q:"“They looked like frightened Beads.” Which word tells you this is a simile?",
+   a:["like","frightened","looked","Beads"],
+   why:"Similes use “like” or “as” to compare.", zh:"明喻的标志词：like / as。"},
+  {t:"fix", kind:"fix", q:"One word in this sentence is wrong. Tap it, then type the right word.",
+   s:"The bird drinked some dew from the grass.", bad:"drinked", good:"drank",
+   why:"Drink is irregular: drink → drank (not “drinked”).", zh:"不规则动词：drink → drank。"},
+  INTRO
+  ]},
+
+{ id:"gold", set:2, title:"Nothing Gold Can Stay", by:"Robert Frost",
+  poets:["Robert Frost","Frost"],
+  lines:["Nature’s first green is gold,","Her hardest hue to hold.","Her early leaf’s a flower;","But only so an hour.","Then leaf subsides to leaf.","So Eden sank to grief,","So dawn goes down to day.","Nothing gold can stay."],
+  qs:[
+  {t:"word", q:"“So dawn goes down to day.” “Dawn” is…",
+   a:["the very start of the morning, when the sun comes up","the middle of the night","a kind of flower","the end of the day"],
+   why:"Dawn is the first light of morning — beautiful, but it quickly becomes ordinary day.", zh:"dawn = 黎明。"},
+  {t:"summary", kind:"order", q:"Tap the ideas in the order they come in the poem.",
+   items:["New leaves in spring look gold, like flowers.","Soon they turn into ordinary green leaves.","The poet says beautiful things never last."],
+   why:"Gold leaf → ordinary leaf → “Nothing gold can stay.”", zh:"金色新叶 → 普通绿叶 → 美好不长久。"},
+  {t:"theme", q:"Which is the BEST theme?",
+   a:["The most beautiful moments don’t last, so we should notice them.","Gold is the most valuable metal.","Leaves stay green all year.","Mornings are better than daytime."],
+   why:"“Gold” here means the special, beautiful first moment — not real gold.", zh:"这里的 gold 指美好的时刻，不是真的金子。"},
+  {t:"evidence", kind:"line", q:"Tap the line that says the theme most directly.",
+   ans:["Nothing gold can stay."],
+   why:"The last line sums up the whole poem.", zh:"最后一句直接点明主题。"},
+  {t:"explain", q:"Why does the poet say nature’s first green is “gold”?",
+   a:["Because new spring leaves are bright and special, like gold","Because the leaves are made of real gold","Because it is autumn","Because gold rhymes with green"],
+   why:"Brand-new leaves shine yellow-green for a short time — precious, like gold.", zh:"春天的嫩叶短暂地闪着金黄色，像金子一样珍贵。"},
+  {t:"fix", kind:"fix", q:"One word in this sentence is wrong. Tap it, then type the right word.",
+   s:"In spring, the new leaves looks like gold.", bad:"looks", good:"look",
+   why:"Leaves (many) → “look”, no -s.", zh:"leaves 复数 → look 不加 -s。"},
+  INTRO
+  ]},
+
+{ id:"sea", set:2, title:"Sea Fever", by:"John Masefield",
+  poets:["John Masefield","Masefield"],
+  lines:["I must go down to the seas again, to the lonely sea and the sky,","And all I ask is a tall ship and a star to steer her by;","And the wheel’s kick and the wind’s song and the white sail’s shaking,","And a grey mist on the sea’s face, and a grey dawn breaking.","",
+         "I must go down to the seas again, for the call of the running tide","Is a wild call and a clear call that may not be denied;","And all I ask is a windy day with the white clouds flying,","And the flung spray and the blown spume, and the sea-gulls crying.","",
+         "I must go down to the seas again, to the vagrant gypsy life,","To the gull’s way and the whale’s way where the wind’s like a whetted knife;","And all I ask is a merry yarn from a laughing fellow-rover,","And quiet sleep and a sweet dream when the long trick’s over."],
+  qs:[
+  {t:"word", q:"“A tall ship and a star to steer her by.” Here, “steer” means…",
+   a:["guide which way the ship goes","stop the ship","clean the ship","buy a ship"],
+   why:"Sailors used the stars to know which way to steer (guide) the ship.", zh:"steer = 掌舵、驾驶方向。"},
+  {t:"summary", kind:"order", q:"Tap what the speaker wants, in the order of the stanzas.",
+   items:["A tall ship, a star, wind and a grey sea at dawn.","A windy day, white clouds, sea spray and crying gulls.","A travelling life, funny stories and good sleep after work."],
+   why:"Each stanza starts “I must go down to the seas again” and lists what the speaker wants.", zh:"每一节都列出想要的东西：船和星星 → 风和海鸥 → 漂泊生活和好觉。"},
+  {t:"theme", q:"Which is the BEST theme?",
+   a:["The speaker feels a strong pull to go back to the sea.","Sailing is dangerous, so it is better to stay on land.","The speaker is scared of storms.","The speaker wants to buy a new ship."],
+   why:"“I must go down…”, “a wild call … that may not be denied” — the sea keeps calling.", zh:"主题：大海强烈地召唤着他，他必须回去。"},
+  {t:"evidence", kind:"line", q:"Tap a line that shows the sea is CALLING the speaker back.",
+   ans:["I must go down to the seas again, for the call of the running tide","Is a wild call and a clear call that may not be denied;"],
+   why:"The tide’s “call” can’t be “denied” (said no to) — the speaker has to go.", zh:"潮水的呼唤无法拒绝。"},
+  {t:"explain", q:"Every stanza starts with “I must go down to the seas again”. Why does the poet repeat it?",
+   a:["To show how strong the speaker’s wish is","Because the speaker forgot","To make the poem shorter","To tell us the time"],
+   why:"Saying it three times makes the wish feel strong — like the speaker can’t stop thinking about it.", zh:"重复三次，表现这个愿望有多强烈。"},
+  {t:"fix", kind:"fix", q:"One word in this sentence is wrong. Tap it, then type the right word.",
+   s:"The speaker want to hear the gulls crying.", bad:"want", good:"wants",
+   why:"The speaker (one person) → “wants”.", zh:"the speaker 单数 → wants。"},
+  INTRO
+  ]}
+);
+
+/* =========================================================
    Word help. `gloss` = the 3–4 words in the test-style Glossary box (never
    the word Question 1 asks about). `words` = every word Kai can tap after
    the questions, with the meaning it has IN THIS POEM ("spring" in The
@@ -485,6 +709,51 @@ woods:{ gloss:["harness","downy","flake","promises"], words:{
   flake:["雪花","a small piece of snow"], lovely:["美丽的","very beautiful"], deep:["深的","going far in"],
   promises:["承诺","things you said you will do"], miles:["英里（1 英里 ≈ 1.6 公里）","a way to measure distance"] }}
 };
+
+Object.assign(WORDS, {
+eagle:{ gloss:["crag","azure","thunderbolt"], words:{
+  clasps:["紧紧抓住","holds tightly"], crag:["峭壁上的岩石","a steep, rough rock on a cliff"], crooked:["弯曲的","bent, not straight"],
+  lonely:["荒凉的；孤独的","empty, with no one around"], "ring'd":["被环绕着","with something in a ring all around"],
+  azure:["蔚蓝色的","bright blue, like the sky"], wrinkled:["起皱的","with small lines and folds"], beneath:["在…下面","under"],
+  crawls:["爬；慢慢移动","moves slowly, low down"], thunderbolt:["霹雳；闪电","a flash of lightning with thunder"] }},
+lamp:{ gloss:["lantern","ladder","banker"], words:{
+  tea:["晚饭（英式说法）","an early evening meal"], teatime:["吃晚饭的时间","the time for the evening meal"],
+  lantern:["提灯","a light you can carry"], ladder:["梯子","steps you climb to reach something high"],
+  posting:["快步赶来（老用法）","hurrying"], driver:["车夫；司机","someone who drives a carriage or car"],
+  banker:["银行家","someone who runs a bank"], rich:["有钱的","having a lot of money"], stronger:["更强壮","more strong — older and bigger"],
+  lucky:["幸运的","having good luck"], hurry:["匆忙","to go quickly"], nod:["点头","to move your head down and up, to say hello"],
+  "to-night":["今晚","tonight"] }},
+foreign:{ gloss:["abroad","adorned","tramping"], words:{
+  trunk:["树干","the thick main part of a tree"], abroad:["向远处","far away, over a wide area"], foreign:["外国的；陌生的","from another country"],
+  adorned:["装饰着","made beautiful with"], pleasant:["令人愉快的","nice"], dimpling:["泛起小涟漪的","with small ripples on top"],
+  "looking-glass":["镜子","a mirror"], dusty:["尘土飞扬的","covered in dust"], tramping:["步行；重重地走","walking with heavy steps"],
+  farther:["更远","further away"], slips:["悄悄流入","moves smoothly"], onward:["向前","forward"],
+  fairy:["仙境的","from fairy tales"], dine:["吃饭","to eat a meal"], playthings:["玩具","toys"] }},
+dreams:{ gloss:["barren"], words:{
+  hold:["抓住","to keep in your hands"], fast:["牢牢地（不是“快”）","tightly"], dreams:["梦想","hopes for the future"],
+  "broken-winged":["翅膀断了的","with a broken wing"], barren:["贫瘠的；荒芜的","where nothing can grow"],
+  field:["田野","an open area of land for crops"], frozen:["冰冻的","turned to ice"] }},
+bird:{ gloss:["angleworm","convenient","beetle"], words:{
+  walk:["小路","a path"], angleworm:["蚯蚓","an earthworm"], halves:["两半","two equal parts"], fellow:["家伙（这里指虫子）","a person or animal — here, the worm"],
+  raw:["生的","not cooked"], dew:["露水","small drops of water on grass in the morning"], convenient:["就在手边的；方便的","easy to reach"],
+  sidewise:["往旁边","sideways"], beetle:["甲虫","an insect with a hard shell"], glanced:["瞥了一眼","looked quickly"],
+  rapid:["快速的","very fast"], hurried:["匆匆","moved quickly"], frightened:["受惊的","scared"], beads:["珠子","small round balls, like on a necklace"],
+  stirred:["动了动","moved a little"], velvet:["天鹅绒般柔软的","soft and smooth like velvet cloth"] }},
+gold:{ gloss:["hue","subsides","eden"], words:{
+  "nature's":["大自然的","belonging to nature"], gold:["金色；金子","a bright yellow colour — something precious"],
+  hardest:["最难的","the most difficult"], hue:["颜色","a colour"], early:["早期的；最早的","at the beginning"],
+  "leaf's":["叶子是（= leaf is）","leaf is"], subsides:["慢慢退去；变回","slowly settles or changes"],
+  eden:["伊甸园","a perfect garden in an old story"], sank:["沉下（sink 的过去式）","past tense of sink — went down"],
+  grief:["悲伤","deep sadness"], dawn:["黎明","the start of the morning"], stay:["留住；保持","to last; to not go away"] }},
+sea:{ gloss:["tide","spume","vagrant","yarn"], words:{
+  steer:["掌舵","to guide which way a ship goes"], "wheel's":["舵轮的","of the ship’s steering wheel"], kick:["猛地一动","a sudden push"],
+  "sail's":["帆的","of the sail — cloth on a ship that catches the wind"], mist:["薄雾","thin fog"], dawn:["黎明","the start of the morning"],
+  tide:["潮水","the sea rising and falling each day"], denied:["拒绝","said no to"], flung:["被抛起的","thrown hard"],
+  spray:["浪花水沫","tiny drops of sea water in the air"], spume:["浪花泡沫","foam on top of waves"], "sea-gulls":["海鸥","sea birds"],
+  vagrant:["流浪的","wandering, with no home"], gypsy:["四处漂泊的","travelling from place to place"],
+  whetted:["磨快的","made sharp"], merry:["欢乐的","happy"], yarn:["故事（这里）","a long, fun story"],
+  "fellow-rover":["一起漂泊的伙伴","a friend who also travels"], "trick's":["（船上）一班值守","a turn of work on a ship — “the long trick’s over” = work is done"] }}
+});
 
 /* ---------- helpers ---------- */
 const $ = id => document.getElementById(id);
@@ -549,46 +818,82 @@ function stars(right, total){ return right === total ? "⭐⭐⭐" : right * 3 >
 const fmtDate = t => { const d = new Date(t); return (d.getMonth() + 1) + "/" + d.getDate(); };
 
 /* ---------- setup ---------- */
+const SETS = [
+  {n:2, name:"Set 2 · Harder", sub:"New poems, fewer choices — put things in order, tap the line, type your answer."},
+  {n:1, name:"Set 1 · Warm-up", sub:""}
+];
+const setOf = p => p.set || 1;
+
 function drawSetup(){
   drawMyWords();
-  $("poems").innerHTML = POEMS.map((p, n) => {
-    const f = lastTry(p.id);
-    const st = f ? "<span class='st'>" + f.right + "/" + f.total + " " + stars(f.right, f.total) + "</span>"
-                 : "<span class='st todo'>Not done yet</span>";
-    return "<button class='pcard" + (f ? " done" : "") + "' data-i='" + n + "'>" +
-      "<span class='day'>Day " + (n + 1) + "</span><b>" + esc(p.title) + "</b>" +
-      "<span class='by'>" + esc(p.by) + "</span>" + st + "</button>";
+  $("poems").innerHTML = SETS.map(S => {
+    const ps = POEMS.filter(p => setOf(p) === S.n), tries = ps.map(p => lastTry(p.id));
+    const all = tries.every(Boolean), perfect = all && tries.every(t => t.right === t.total);
+    const badge = perfect ? "<span class='proud'>🏆 All " + ps.length + " perfect!</span>"
+      : all ? "<span class='proud'>✓ All done</span>" : "<span>" + tries.filter(Boolean).length + " / " + ps.length + " done</span>";
+    return "<div class='sethead'><h3>" + S.name + "</h3>" + badge + "</div>" +
+      (S.sub ? "<p class='sub' style='margin:0 0 12px'>" + S.sub + "</p>" : "") +
+      "<div class='poems'>" + ps.map((p, n) => {
+        const f = lastTry(p.id);
+        const st = f ? "<span class='st'>" + f.right + "/" + f.total + " " + stars(f.right, f.total) + "</span>"
+                     : "<span class='st todo'>Not done yet</span>";
+        return "<button class='pcard" + (f ? " done" : "") + "' data-id='" + p.id + "'>" +
+          "<span class='day'>Day " + (n + 1) + "</span><b>" + esc(p.title) + "</b>" +
+          "<span class='by'>" + esc(p.by) + "</span>" + st + "</button>";
+      }).join("") + "</div>";
   }).join("");
-  $("poems").querySelectorAll(".pcard").forEach(b => b.onclick = () => start(POEMS[+b.dataset.i]));
+  $("poems").querySelectorAll(".pcard").forEach(b => b.onclick = () => start(POEMS.find(p => p.id === b.dataset.id)));
 
-  const rows = POEMS.map(p => {
-    const f = firstTry(p.id), l = lastTry(p.id);
-    if(!f) return "";
-    const once = f.at === l.at;   // each call parses the log afresh, so compare runs by time, not identity
-    const val = once ? f.right + "/" + f.total
-      : f.right + "/" + f.total + " <span class='dim'>(" + fmtDate(f.at) + ")</span> → " + l.right + "/" + l.total + " <span class='dim'>(" + fmtDate(l.at) + ")</span>";
-    return "<li><span>" + esc(p.title) + (once ? " <span class='dim'>· " + fmtDate(f.at) + "</span>" : "") + "</span><span class='val'>" + val + "</span></li>";
-  }).filter(Boolean);
-  $("recordPanel").hidden = !rows.length;
-  if(rows.length){
-    const sum = pick => { const d = POEMS.map(p => pick(p.id)).filter(Boolean);
+  const blocks = SETS.map(S => {
+    const ps = POEMS.filter(p => setOf(p) === S.n);
+    const rows = ps.map(p => {
+      const f = firstTry(p.id), l = lastTry(p.id);
+      if(!f) return "";
+      const once = f.at === l.at;   // each call parses the log afresh, so compare runs by time, not identity
+      const val = once ? f.right + "/" + f.total
+        : f.right + "/" + f.total + " <span class='dim'>(" + fmtDate(f.at) + ")</span> → " + l.right + "/" + l.total + " <span class='dim'>(" + fmtDate(l.at) + ")</span>";
+      return "<li><span>" + esc(p.title) + (once ? " <span class='dim'>· " + fmtDate(f.at) + "</span>" : "") + "</span><span class='val'>" + val + "</span></li>";
+    }).filter(Boolean);
+    if(!rows.length) return "";
+    const sum = pick => { const d = ps.map(p => pick(p.id)).filter(Boolean);
       const r = d.reduce((s, x) => s + x.right, 0), t = d.reduce((s, x) => s + x.total, 0);
       return r + "/" + t + " · " + Math.round(r / t * 100) + "%"; };
-    rows.push("<li style='border-top:2px solid var(--line);font-weight:800'><span>Total · first try</span><span class='val'>" + sum(firstTry) + "</span></li>");
-    rows.push("<li style='font-weight:800'><span>Total · latest</span><span class='val'>" + sum(lastTry) + "</span></li>");
-  }
-  $("record").innerHTML = rows.join("");
+    return "<li class='rchead'>" + S.name + "</li>" + rows.join("") +
+      "<li style='border-top:2px solid var(--line);font-weight:800'><span>Total · first try</span><span class='val'>" + sum(firstTry) + "</span></li>" +
+      "<li style='font-weight:800'><span>Total · latest</span><span class='val'>" + sum(lastTry) + "</span></li>";
+  }).filter(Boolean);
+  $("recordPanel").hidden = !blocks.length;
+  $("record").innerHTML = blocks.join("");
 }
 
 /* ---------- session ---------- */
 let poem = null, queue = [], qi = 0, missed = [], right = 0, isRetry = false;
 
+/* Question kinds:
+   mc    pick one of four (all of Set 1, some of Set 2)
+   order tap the three events in story order
+   line  tap the line of the poem that proves it — no ready-made choices
+   fix   one word in the sentence is wrong: tap it, then type the right word
+   intro type the title in quotation marks and the poet — how a topic sentence starts */
+const kindOf = q => q.kind || "mc";
+const strip = w => w.replace(/[.,!?;:]+$/, "");
+const NOCORRECT = " autocapitalize='none' autocomplete='off' autocorrect='off' spellcheck='false'";   // capitals and spelling are Kai's job here
+function ansText(q){
+  const k = kindOf(q);
+  if(k === "order") return q.items.map((t, i) => (i + 1) + ". " + t).join("  ");
+  if(k === "line")  return "“" + q.ans[0] + "”";
+  if(k === "fix")   return q.s.split(" ").map(w => strip(w) === q.bad ? w.replace(q.bad, q.good) : w).join(" ");
+  if(k === "intro") return "“" + poem.title + "” by " + poem.by;
+  return q.a[0];
+}
+
 function start(p, onlyThese){
   poem = p; isRetry = !!onlyThese;
-  queue = (onlyThese || p.qs).map(q => ({q, opts: shuffle(q.a)}));
+  queue = (onlyThese || p.qs).map(q => ({q,
+    opts: kindOf(q) === "mc" ? shuffle(q.a) : kindOf(q) === "order" ? shuffle(q.items.map((t, i) => i)) : null}));
   qi = 0; missed = []; right = 0;
   $("pTitle").textContent = p.title;
-  $("pBy").textContent = "by " + p.by;
+  $("pBy").textContent = "by " + p.by + (p.note ? " · " + p.note : "");
   $("pText").innerHTML = p.lines.map(l => l ? "<span class='ln'>" + esc(l) + "</span>" : "<span class='gap'></span>").join("");
   const W = WORDS[p.id];
   $("pGloss").innerHTML = "<b class='h'>Glossary</b>" + W.gloss.map(k =>
@@ -598,34 +903,120 @@ function start(p, onlyThese){
 }
 
 function drawQ(){
-  const {q, opts} = queue[qi];
+  const it = queue[qi];
   $("barFill").style.width = (qi / queue.length * 100) + "%";
   $("count").textContent = (qi + 1) + " / " + queue.length;
-  $("qTag").textContent = TAGS[q.t];
-  $("qText").textContent = q.q;
+  $("qTag").textContent = TAGS[it.q.t];
+  $("qText").textContent = it.q.q;
   $("fb").hidden = true; $("next").hidden = true;
-  $("opts").innerHTML = opts.map((o, k) =>
-    "<button class='opt' data-k='" + k + "'><span class='k'>" + "ABCD"[k] + "</span><span>" + esc(o) + "</span></button>").join("");
-  $("opts").querySelectorAll(".opt").forEach(b => b.onclick = () => answer(+b.dataset.k));
+  ({mc: drawMC, order: drawOrder, line: drawLine, fix: drawFix, intro: drawIntro})[kindOf(it.q)](it);
 }
 
-function answer(k){
-  const {q, opts} = queue[qi];
-  const ok = opts[k] === q.a[0];
-  $("opts").querySelectorAll(".opt").forEach((b, n) => {
-    b.disabled = true;
-    if(opts[n] === q.a[0]) b.classList.add("right");
-    else if(n === k) b.classList.add("wrong");
-    else b.classList.add("dim");
-  });
+// every kind ends here: count it, show why, offer Next. `extra` is trusted HTML.
+function settle(ok, extra){
+  const q = queue[qi].q;
   if(ok) right++; else missed.push(q);
   const fb = $("fb");
   fb.className = "fb " + (ok ? "ok" : "no");
-  fb.innerHTML = "<b>" + (ok ? "✅ Right!" : "❌ Not quite.") + "</b>" + esc(q.why) + "<span class='zh'>" + esc(q.zh) + "</span>";
+  fb.innerHTML = "<b>" + (ok ? "✅ Right!" : "❌ Not quite.") + "</b>" + (extra ? extra + "<br>" : "") +
+    esc(q.why) + "<span class='zh'>" + esc(q.zh) + "</span>";
   fb.hidden = false;
   $("next").textContent = qi + 1 < queue.length ? "Next →" : "See my score →";
   $("next").hidden = false;
   $("next").scrollIntoView({behavior:"smooth", block:"nearest"});
+}
+
+function drawMC(it){
+  const {q, opts} = it;
+  $("opts").innerHTML = opts.map((o, k) =>
+    "<button class='opt' data-k='" + k + "'><span class='k'>" + "ABCD"[k] + "</span><span>" + esc(o) + "</span></button>").join("");
+  const btns = [...$("opts").querySelectorAll(".opt")];
+  btns.forEach(b => b.onclick = () => {
+    const k = +b.dataset.k;
+    btns.forEach((x, n) => { x.disabled = true; x.classList.add(opts[n] === q.a[0] ? "right" : n === k ? "wrong" : "dim"); });
+    settle(opts[k] === q.a[0]);
+  });
+}
+
+function drawOrder(it){
+  const {q, opts} = it;
+  let picks = [];
+  $("opts").innerHTML = opts.map(i =>
+    "<button class='opt ord' data-i='" + i + "'><span class='k'></span><span>" + esc(q.items[i]) + "</span></button>").join("") +
+    "<button class='btn wide chk' id='chk' hidden>Check</button>";
+  const btns = [...$("opts").querySelectorAll(".ord")];
+  const paint = () => {
+    btns.forEach(b => { const n = picks.indexOf(+b.dataset.i); b.querySelector(".k").textContent = n < 0 ? "" : n + 1; b.classList.toggle("on", n >= 0); });
+    $("chk").hidden = picks.length < q.items.length;
+  };
+  // tap to number it; tap a numbered one to take it (and everything after it) back
+  btns.forEach(b => b.onclick = () => { const i = +b.dataset.i, n = picks.indexOf(i); picks = n >= 0 ? picks.slice(0, n) : picks.concat(i); paint(); });
+  $("chk").onclick = () => {
+    const ok = picks.every((v, j) => v === j);
+    btns.forEach(b => { b.disabled = true; const i = +b.dataset.i; b.classList.add(picks.indexOf(i) === i ? "right" : "wrong"); });
+    $("chk").hidden = true;
+    settle(ok, ok ? "" : "Right order: " + esc(ansText(q)));
+  };
+}
+
+function drawLine(it){
+  const q = it.q, lines = poem.lines.filter(Boolean);
+  $("opts").innerHTML = lines.map((l, n) => "<button class='opt lnopt' data-n='" + n + "'><span>" + esc(l) + "</span></button>").join("");
+  const btns = [...$("opts").querySelectorAll(".opt")];
+  btns.forEach(b => b.onclick = () => {
+    const ok = q.ans.includes(lines[+b.dataset.n]);
+    btns.forEach((x, n) => { x.disabled = true; x.classList.add(q.ans.includes(lines[n]) ? "right" : x === b ? "wrong" : "dim"); });
+    settle(ok);
+  });
+}
+
+function drawFix(it){
+  const q = it.q, words = q.s.split(" "), bad = words.findIndex(w => strip(w) === q.bad);
+  let sel = -1;
+  $("opts").innerHTML = "<p class='fixs'>" + words.map((w, n) => "<button class='fixw' data-n='" + n + "'>" + esc(w) + "</button>").join(" ") + "</p>" +
+    "<label class='field' id='fixRow' hidden><span id='fixLbl'></span><input id='fixIn'" + NOCORRECT + "></label>" +
+    "<button class='btn wide chk' id='chk' hidden>Check</button>";
+  const btns = [...$("opts").querySelectorAll(".fixw")];
+  btns.forEach(b => b.onclick = () => {
+    sel = +b.dataset.n;
+    btns.forEach(x => x.classList.toggle("sel", x === b));
+    $("fixLbl").textContent = "Change “" + strip(words[sel]) + "” to:";
+    $("fixRow").hidden = false; $("chk").hidden = false;
+    $("fixIn").value = ""; $("fixIn").focus();
+  });
+  const check = () => {
+    if(sel < 0 || !$("fixIn").value.trim()) return;
+    const ok = sel === bad && $("fixIn").value.trim().toLowerCase() === q.good.toLowerCase();
+    btns.forEach(x => x.disabled = true);
+    btns[bad].classList.add("bad");
+    $("fixIn").disabled = true; $("fixIn").classList.add(ok ? "ok" : "no");
+    $("chk").hidden = true;
+    settle(ok, "“" + esc(q.bad) + "” → “" + esc(q.good) + "”: " + esc(ansText(q)));
+  };
+  $("chk").onclick = check;
+  $("fixIn").onkeydown = e => { if(e.key === "Enter") check(); };
+}
+
+function drawIntro(it){
+  $("opts").innerHTML =
+    "<label class='field'><span>Title — inside quotation marks “ ”</span><input id='inT'" + NOCORRECT + "></label>" +
+    "<label class='field'><span>Poet</span><input id='inA'" + NOCORRECT + "></label>" +
+    "<button class='btn wide chk' id='chk'>Check</button>";
+  $("chk").onclick = () => {
+    const t = $("inT").value.trim(), a = $("inA").value.trim().replace(/\s+/g, " ");
+    if(!t || !a) return;
+    const quoted = t.length > 2 && /^["“”]/.test(t) && /["“”]$/.test(t);
+    const inner = t.replace(/^["“”]\s*/, "").replace(/\s*["“”]$/, "").replace(/\s+/g, " ").replace(/’/g, "'");
+    const title = poem.title.replace(/’/g, "'"), poets = poem.poets || [poem.by];
+    const tOk = inner === title, aOk = poets.includes(a), tips = [];
+    if(!quoted) tips.push("Put the title inside quotation marks “ ”.");
+    if(!tOk) tips.push(inner.toLowerCase() === title.toLowerCase() ? "Check the capital letters in the title." : "Check the spelling of the title.");
+    if(!aOk) tips.push(poets.some(x => x.toLowerCase() === a.toLowerCase()) ? "Check the capital letters in the poet’s name." : "Check the spelling of the poet’s name.");
+    $("inT").classList.add(quoted && tOk ? "ok" : "no"); $("inA").classList.add(aOk ? "ok" : "no");
+    $("inT").disabled = $("inA").disabled = true; $("chk").hidden = true;
+    settle(!tips.length, (tips.length ? esc(tips.join(" ")) + "<br>" : "") +
+      "Your topic sentence can start: <strong>" + esc(ansText(it.q)) + "</strong> shows that…");
+  };
 }
 
 $("next").onclick = () => { qi++; qi < queue.length ? drawQ() : finish(); };
@@ -645,7 +1036,7 @@ function finish(){
     : right >= total - 2 ? "Good work. Look at the ones you missed below."
     : "Read the poem out loud again, then redo the ones you missed.";
   $("missList").innerHTML = missed.map(q =>
-    "<li><span class='tag'>" + TAGS[q.t] + "</span><span class='mq'>" + esc(q.q) + "</span><span class='ma'>✓ " + esc(q.a[0]) + "</span></li>").join("");
+    "<li><span class='tag'>" + TAGS[q.t] + "</span><span class='mq'>" + esc(q.q) + "</span><span class='ma'>✓ " + esc(ansText(q)) + "</span></li>").join("");
   $("redo").hidden = !missed.length;
   drawTap();
   show("done"); window.scrollTo(0, 0);
