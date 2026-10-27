@@ -50,13 +50,9 @@ button{font:inherit;color:inherit;cursor:pointer;border:none;background:none}
 .mini:hover{border-color:var(--accent)}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 
-/* ---------- start ---------- */
-#start .card{text-align:center;padding:44px 24px}
-#start .big{font-size:52px;margin-bottom:8px}
 
 /* ---------- week picker ---------- */
 .weekpick{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
-#start .weekpick{justify-content:center}
 .weekpick button{border:1px solid var(--line);background:var(--card);color:var(--muted);
   border-radius:999px;padding:9px 15px;font-size:15px;min-height:42px;
   transition:border-color .15s ease}
@@ -224,21 +220,8 @@ input.bad{border-color:var(--warn)}
 <body>
 <div class="wrap">
 
-  <!-- ============ START (primes speech; browsers need a tap) ============ -->
-  <section id="start" class="screen on">
-    <a class="homelink" href="../">&larr; Back to home</a>
-    <div class="card">
-      <div class="big">📣</div>
-      <h1>Kai's Spelling</h1>
-      <p class="sub" style="margin:10px 0 18px">Week of <span data-week></span> &middot; <span data-count></span> words</p>
-      <div class="weekpick" data-weeks></div>
-      <button class="btn primary" id="go" style="text-align:center">Tap to start</button>
-      <p class="sub" style="margin-top:16px;font-size:14px">Turn the sound on 🔊</p>
-    </div>
-  </section>
-
   <!-- ============ HOME ============ -->
-  <section id="home" class="screen">
+  <section id="home" class="screen on">
     <a class="homelink" href="../">&larr; Back to home</a>
     <div class="head">
       <div>
@@ -1413,12 +1396,12 @@ function goHome(){ renderHome(); show("home"); }
 setWeek(defaultWeek());
 renderAll();
 
-$("#go").onclick = ()=>{
-  // Prime the speech engine inside a user gesture (Safari requires this).
+/* Safari only lets a page speak after a tap. There used to be a "Tap to
+   start" screen for this; now his first tap anywhere primes it instead. */
+document.addEventListener("click", ()=>{
   if(canSpeak){ try{ speechSynthesis.speak(new SpeechSynthesisUtterance(" ")); }catch(e){} }
   pickVoice();
-  show("home");
-};
+}, {capture:true, once:true});
 
 $("#ready-go").onclick     = ()=> solo ? startSoloTest() : startTestPass();
 $("#ready-later").onclick  = goHome;
