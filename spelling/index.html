@@ -512,6 +512,53 @@ const WEEKS = [
       { n:6, name:"Champion Words", emoji:"🏔️", ws:["repetition","alliteration","onomatopoeia","characteristics","figurative language"] },
     ],
   },
+
+  /* Week 10 sheet — animal survival words. The sheet pairs some words
+     ("toxin / toxic"); each half is tested as its own word. Test date is
+     a guess: Friday of the first week of Q2 (Oct 1-7 holiday not counted). */
+  {
+    week: "Oct 30",
+    date: "2026-10-30",
+    words: [
+      { w:"suddenly",     m:"quickly, when you don't expect it",             c:"sud·den·ly" },
+      { w:"photograph",   m:"a picture taken with a camera",                 c:"pho·to·graph" },
+      { w:"pattern",      m:"shapes or colors that repeat — like stripes",   c:"pat·tern" },
+      { w:"lizard",       m:"a small reptile with four legs and a long tail", c:"liz·ard" },
+      { w:"migrate",      m:"to move far away when the season changes",      c:"mi·grate" },
+      { w:"enable",       m:"to make something possible",                    c:"en·a·ble" },
+      { w:"habitat",      m:"the natural home of an animal or plant",        c:"hab·i·tat" },
+      { w:"predator",     m:"an animal that hunts other animals for food",   c:"pred·a·tor" },
+      { w:"prey",         m:"an animal that gets hunted and eaten" },
+      { w:"camouflage",   m:"colors or shapes that help an animal hide",     c:"cam·ou·flage" },
+      { w:"invisible",    m:"can't be seen",                                 c:"in·vis·i·ble" },
+      { w:"toxin",        m:"a poison made by a living thing",               c:"tox·in" },
+      { w:"toxic",        m:"poisonous — it can harm you",                   c:"tox·ic" },
+      { w:"poison",       m:"something that hurts you if you touch or eat it", c:"poi·son" },
+      { w:"poisonous",    m:"has poison in it — don't eat or touch!",        c:"poi·son·ous" },
+      { w:"venom",        m:"poison an animal injects with a bite or sting", c:"ven·om" },
+      { w:"venomous",     m:"can bite or sting you with venom",              c:"ven·om·ous" },
+      { w:"inject",       m:"to put a liquid into a body, like with a needle or fang", c:"in·ject" },
+      { w:"survive",      m:"to stay alive",                                 c:"sur·vive" },
+      { w:"instinct",     m:"something an animal knows to do without learning it", c:"in·stinct" },
+      { w:"herd",         m:"a big group of animals that live together" },
+      { w:"gazelle",      m:"a fast, light, deer-like animal in Africa",     c:"ga·zelle" },
+      { w:"graze",        m:"to eat grass slowly in a field" },
+      { w:"quiver",       m:"to shake a little, like when scared or cold",   c:"quiv·er" },
+      { w:"solitary",     m:"living or being alone",                         c:"sol·i·tar·y" },
+      { w:"colony",       m:"a big group of the same animal living together, like ants", c:"col·o·ny" },
+      { w:"allergic",     m:"your body reacts badly to something, like itching or sneezing", c:"al·ler·gic" },
+      { w:"defend",       m:"to protect from an attack",                     c:"de·fend" },
+      { w:"defense mechanism", m:"a way an animal protects itself — spines, ink, playing dead", c:"de·fense mech·a·nism" },
+    ],
+    levels: [
+      { n:1, name:"Short & Sweet",  emoji:"🌱", ws:["prey","herd","toxin","toxic","venom"] },
+      { n:2, name:"Six Letters",    emoji:"🌿", ws:["graze","poison","lizard","enable","inject"] },
+      { n:3, name:"Getting Longer", emoji:"🌳", ws:["defend","quiver","colony","pattern","migrate"] },
+      { n:4, name:"Climbing Up",    emoji:"🌲", ws:["habitat","survive","gazelle","suddenly","predator"] },
+      { n:5, name:"Big Words",      emoji:"⛰️", ws:["venomous","instinct","allergic","solitary","poisonous"] },
+      { n:6, name:"Champion Words", emoji:"🏔️", ws:["invisible","photograph","camouflage","defense mechanism"] },
+    ],
+  },
 ];
 
 /* Chinese meaning for the word list, shared by every week since most words
@@ -533,6 +580,14 @@ const ZH = {
   "compassion":"同情心；怜悯", "reflect":"反思", "slobber":"流口水", "groceries":"食品杂货",
   "miracle":"奇迹", "prompt":"写作题目；提示", "response":"回答；回应",
   "flattered":"（被夸得）很高兴的；受宠若惊的",
+  "suddenly":"突然", "photograph":"照片", "pattern":"图案；花纹", "lizard":"蜥蜴",
+  "migrate":"迁徙", "enable":"使能够", "habitat":"栖息地", "predator":"捕食者",
+  "prey":"猎物", "camouflage":"伪装；保护色", "invisible":"看不见的；隐形的",
+  "toxin":"毒素", "toxic":"有毒的", "poison":"毒药；毒物", "poisonous":"有毒的（吃或碰会中毒）",
+  "venom":"（动物咬或蜇注入的）毒液", "venomous":"有毒液的（会咬人、蜇人）", "inject":"注射；注入",
+  "survive":"生存；活下来", "instinct":"本能", "herd":"（动物）群", "gazelle":"瞪羚",
+  "graze":"吃草", "quiver":"颤抖", "solitary":"独居的；单独的", "colony":"群体；群落",
+  "allergic":"过敏的", "defend":"保卫；防御", "defense mechanism":"防御机制",
 };
 /* US IPA, same style as the History list. A new word needs a line here too. */
 const IPA = {
@@ -553,6 +608,16 @@ const IPA = {
   "empathy":"/ˈempəθi/", "compassion":"/kəmˈpæʃən/", "reflect":"/rɪˈflekt/",
   "slobber":"/ˈslɑːbər/", "groceries":"/ˈɡroʊsəriz/", "miracle":"/ˈmɪrəkəl/",
   "prompt":"/prɑːmpt/", "response":"/rɪˈspɑːns/", "flattered":"/ˈflætərd/",
+  "suddenly":"/ˈsʌdənli/", "photograph":"/ˈfoʊtəɡræf/", "pattern":"/ˈpætərn/",
+  "lizard":"/ˈlɪzərd/", "migrate":"/ˈmaɪɡreɪt/", "enable":"/ɪˈneɪbəl/",
+  "habitat":"/ˈhæbɪtæt/", "predator":"/ˈpredətər/", "prey":"/preɪ/",
+  "camouflage":"/ˈkæməflɑːʒ/", "invisible":"/ɪnˈvɪzəbəl/", "toxin":"/ˈtɑːksɪn/",
+  "toxic":"/ˈtɑːksɪk/", "poison":"/ˈpɔɪzən/", "poisonous":"/ˈpɔɪzənəs/",
+  "venom":"/ˈvenəm/", "venomous":"/ˈvenəməs/", "inject":"/ɪnˈdʒekt/",
+  "survive":"/sərˈvaɪv/", "instinct":"/ˈɪnstɪŋkt/", "herd":"/hɜːrd/",
+  "gazelle":"/ɡəˈzel/", "graze":"/ɡreɪz/", "quiver":"/ˈkwɪvər/",
+  "solitary":"/ˈsɑːləteri/", "colony":"/ˈkɑːləni/", "allergic":"/əˈlɜːrdʒɪk/",
+  "defend":"/dɪˈfend/", "defense mechanism":"/dɪˈfens ˈmekənɪzəm/",
 };
 WEEKS.forEach(wk => wk.words.forEach(o => {
   o.zh  = o.zh  || ZH[o.w]  || "";
