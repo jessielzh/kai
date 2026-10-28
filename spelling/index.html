@@ -121,7 +121,6 @@ td.acc{width:92px;padding-left:14px;text-align:right;vertical-align:middle}
 .solo .wstars{letter-spacing:1px}
 /* Tap the word (not the buttons) to hear it, like the History vocab list. */
 .solo[data-say]{cursor:pointer}
-.solo .nm .play{margin-left:6px;width:32px;height:32px;font-size:14px}
 .solo.on{border-color:var(--accent);background:var(--accent-soft)}
 
 /* ---------- level cards ---------- */
@@ -904,7 +903,7 @@ function soloRow(o, i, isNext, done){
     return `<div class="solo ${isNext?"next":""} ${done?"done":""}"${canSpeak?` data-say="${o.w}"`:""}>
       <span class="n">${i+1}</span>
       <span class="txt">
-        <span class="nm">${o.w}${done?`<span class="tick">✓</span>`:""}${canSpeak?`<button class="play" aria-label="Say ${o.w}">🔊</button>`:""}</span>
+        <span class="nm">${o.w}${done?`<span class="tick">✓</span>`:""}</span>
         <span class="sz">${letters(o)} letters${
           got===undefined ? "" : ` &middot; <span class="wstars">${starRow(got)}</span>`}</span>
       </span>
@@ -919,11 +918,10 @@ function soloRow(o, i, isNext, done){
 function hearRows(box){
   $$(box+" .solo[data-say]").forEach(r => r.onclick = e=>{
     if(e.target.closest(".acts")) return;      // 📖 / ✍️ have their own job
-    $$(".solo.on, .solo .play.on").forEach(x => x.classList.remove("on"));
+    $$(".solo.on").forEach(x => x.classList.remove("on"));
     r.classList.add("on");
-    r.querySelector(".play").classList.add("on");
     say(r.dataset.say);
-    setTimeout(()=>{ r.classList.remove("on"); r.querySelector(".play").classList.remove("on"); }, 1400);
+    setTimeout(()=> r.classList.remove("on"), 1400);
   });
 }
 
