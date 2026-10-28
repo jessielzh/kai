@@ -119,6 +119,11 @@ td.acc{width:92px;padding-left:14px;text-align:right;vertical-align:middle}
 .solo .acts .mini{padding:9px 12px;font-size:16px;min-height:40px}
 .solo.done .nm{color:var(--muted)}
 .solo .wstars{letter-spacing:1px}
+/* Tap the word (not the buttons) to hear it, like the History vocab list. */
+.solo[data-say]{cursor:pointer}
+.solo .hear{font-size:14px;margin-left:6px;opacity:.55}
+.solo.on{border-color:var(--accent);background:var(--accent-soft)}
+.solo.on .hear{opacity:1}
 
 /* ---------- level cards ---------- */
 .lv{background:var(--card);border:1px solid var(--line);border-radius:14px;
@@ -888,10 +893,10 @@ function renderLevels(){
 
 function soloRow(o, i, isNext, done){
     const got  = wordStars[o.w];        // undefined until he has spelled it blind
-    return `<div class="solo ${isNext?"next":""} ${done?"done":""}">
+    return `<div class="solo ${isNext?"next":""} ${done?"done":""}"${canSpeak?` data-say="${o.w}"`:""}>
       <span class="n">${i+1}</span>
       <span class="txt">
-        <span class="nm">${o.w}${done?`<span class="tick">✓</span>`:""}</span>
+        <span class="nm">${o.w}${done?`<span class="tick">✓</span>`:""}${canSpeak?`<span class="hear">🔊</span>`:""}</span>
         <span class="sz">${letters(o)} letters${
           got===undefined ? "" : ` &middot; <span class="wstars">${starRow(got)}</span>`}</span>
       </span>
@@ -900,6 +905,17 @@ function soloRow(o, i, isNext, done){
         <button class="mini go" data-solo="${o.w}" data-sgo="test" title="Spell it">✍️</button>
       </span>
     </div>`;
+}
+
+/* Tapping a row reads the word out; the 📖 / ✍️ buttons keep their own job. */
+function hearRows(box){
+  $$(box+" .solo[data-say]").forEach(r => r.onclick = e=>{
+    if(e.target.closest("button")) return;
+    $$(".solo.on").forEach(x => x.classList.remove("on"));
+    r.classList.add("on");
+    say(r.dataset.say);
+    setTimeout(()=> r.classList.remove("on"), 1400);
+  });
 }
 
 function renderSolos(){
@@ -911,6 +927,7 @@ function renderSolos(){
 
   $$("#solos [data-solo]").forEach(b =>
     b.onclick = ()=>{ soloFrom = null; startSolo(b.dataset.solo, b.dataset.sgo); });
+  hearRows("#solos");
 
   const left = order.filter(o => stats[o.w].score < GOAL).length;
   $("#solo-go").innerHTML = left < order.length
@@ -931,6 +948,7 @@ function renderFixes(){
   $("#fixes").innerHTML = list.map((o,i)=> soloRow(o, i, o===nxt, fixed(o))).join("");
   $$("#fixes [data-solo]").forEach(b =>
     b.onclick = ()=>{ soloFrom = toFix.slice(); startSolo(b.dataset.solo, b.dataset.sgo); });
+  hearRows("#fixes");
 }
 
 function renderHome(){
