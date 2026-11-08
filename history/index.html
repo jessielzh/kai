@@ -232,10 +232,10 @@
 
 <script>
 /* =========================================================
-   Word list — from Kai's Week 1–6, 9 and 10 History Key Vocabulary sheets.
+   Word list — from Kai's Week 1–6, 9, 10 and 11 History Key Vocabulary sheets.
    Meanings rewritten short + kid-language + tied to the unit
    (ancient China: geography → Shang → Zhou/Confucius → Qin → Great Wall
-   → culture, trade and the sea → Three Kingdoms → Sui reunification).
+   → culture, trade and the sea → Three Kingdoms → Sui reunification → Tang).
    ========================================================= */
 const WEEKS = [
  { n:1, title:"地理 · 时间工具", words:[
@@ -328,6 +328,18 @@ const WEEKS = [
   {w:"resources", ipa:"/ˈriːsɔːrsɪz/", zh:"资源", en:"useful things a country has — land, water, food, wood, metal"},
   {w:"conquer", ipa:"/ˈkɑːŋkər/", zh:"征服", en:"to beat another people and take over their land"},
   {w:"irrigation", ipa:"/ˌɪrɪˈɡeɪʃən/", zh:"灌溉", en:"bringing water to farm fields through canals and ditches"}
+ ]},
+ { n:11, title:"唐朝 · 盛世与丝绸之路", words:[
+  {w:"empress", ipa:"/ˈemprəs/", zh:"女皇", en:"a woman who rules an empire — Wu Zetian was China's only empress"},
+  {w:"cosmopolitan", ipa:"/ˌkɑːzməˈpɑːlɪtən/", zh:"国际化的；多元的", en:"full of people and ideas from many countries — like Tang Chang'an"},
+  {w:"prosperity", ipa:"/prɑːˈsperəti/", zh:"繁荣", en:"a time of being rich and doing well"},
+  {w:"tribute", ipa:"/ˈtrɪbjuːt/", zh:"贡品；进贡", en:"gifts sent to a ruler to show respect"},
+  {w:"poetry", ipa:"/ˈpoʊətri/", zh:"诗歌", en:"writing with rhythm — Li Bai and Du Fu were famous Tang poets"},
+  {w:"expansion", ipa:"/ɪkˈspænʃən/", zh:"扩张", en:"growing bigger by taking more land"},
+  {w:"Silk Road", ipa:"/ˈsɪlk roʊd/", zh:"丝绸之路", en:"the old trade routes linking China to the west"},
+  {w:"capital", ipa:"/ˈkæpɪtəl/", zh:"首都", en:"the city where the government is — Chang'an was the Tang capital"},
+  {w:"achieve", ipa:"/əˈtʃiːv/", zh:"实现；达到", en:"to reach a goal by working hard"},
+  {w:"revolt", ipa:"/rɪˈvoʊlt/", zh:"起义；叛乱", en:"when people fight against their rulers"}
  ]}
 ];
 
@@ -367,7 +379,7 @@ function say(text, rate){
 const speakWord = it => say(it.say || it.w, 0.8);
 
 /* ---------- setup screen ---------- */
-let picked = new Set([9]);
+let picked = new Set([WEEKS[WEEKS.length-1].n]);   // open on the newest week
 let mode = "read";
 
 function drawWeeks(){
