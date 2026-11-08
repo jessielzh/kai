@@ -544,6 +544,51 @@ const WEEKS = [
       { n:6, name:"Champion Words", emoji:"🏔️", ws:["invisible","photograph","camouflage","defense mechanism"] },
     ],
   },
+
+  /* Week 11 sheet — more animal survival words. "vibrate/vibration" is
+     tested as two words. The last nine (habitat … defense mechanism) carry
+     over from Week 10. Test date assumed Fri Nov 13 (Q2 week 1 = Oct 26). */
+  {
+    week: "Nov 13",
+    date: "2026-11-13",
+    words: [
+      { w:"burrow",       m:"a hole in the ground an animal digs to live in", c:"bur·row" },
+      { w:"pursue",       m:"to follow or chase",                            c:"pur·sue" },
+      { w:"flee",         m:"to run away from danger" },
+      { w:"armor",        m:"a hard cover that protects the body",           c:"ar·mor" },
+      { w:"resemble",     m:"to look like something else",                   c:"re·sem·ble" },
+      { w:"paralyzed",    m:"not able to move",                              c:"par·a·lyzed" },
+      { w:"species",      m:"one kind of animal or plant",                   c:"spe·cies" },
+      { w:"reveal",       m:"to show something that was hidden",             c:"re·veal" },
+      { w:"alter",        m:"to change",                                     c:"al·ter" },
+      { w:"extreme",      m:"much more than normal — very, very",            c:"ex·treme" },
+      { w:"vibrate",      m:"to shake quickly back and forth",               c:"vi·brate" },
+      { w:"vibration",    m:"a quick shaking movement",                      c:"vi·bra·tion" },
+      { w:"ooze",         m:"when a thick liquid comes out slowly" },
+      { w:"wedge",        m:"to push into a narrow space" },
+      { w:"crevice",      m:"a narrow crack in a rock or wall",              c:"crev·ice" },
+      { w:"tactic",       m:"a way of doing something to win",               c:"tac·tic" },
+      { w:"strategy",     m:"a plan to reach a goal",                        c:"strat·e·gy" },
+      { w:"variety",      m:"many different kinds of something",             c:"va·ri·e·ty" },
+      { w:"habitat",      m:"the natural home of an animal or plant",        c:"hab·i·tat" },
+      { w:"camouflage",   m:"colors or shapes that help an animal hide",     c:"cam·ou·flage" },
+      { w:"toxic",        m:"poisonous — it can harm you",                   c:"tox·ic" },
+      { w:"poisonous",    m:"has poison in it — don't eat or touch!",        c:"poi·son·ous" },
+      { w:"venomous",     m:"can bite or sting you with venom",              c:"ven·om·ous" },
+      { w:"survive",      m:"to stay alive",                                 c:"sur·vive" },
+      { w:"instinct",     m:"something an animal knows to do without learning it", c:"in·stinct" },
+      { w:"defend",       m:"to protect from an attack",                     c:"de·fend" },
+      { w:"defense mechanism", m:"a way an animal protects itself — spines, ink, playing dead", c:"de·fense mech·a·nism" },
+    ],
+    levels: [
+      { n:1, name:"Short & Sweet",  emoji:"🌱", ws:["flee","ooze","alter","wedge","armor"] },
+      { n:2, name:"Six Letters",    emoji:"🌿", ws:["toxic","burrow","pursue","reveal","tactic"] },
+      { n:3, name:"Getting Longer", emoji:"🌳", ws:["defend","extreme","species","variety","crevice"] },
+      { n:4, name:"Climbing Up",    emoji:"🌲", ws:["vibrate","habitat","survive","strategy","resemble"] },
+      { n:5, name:"Big Words",      emoji:"⛰️", ws:["instinct","venomous","paralyzed","poisonous"] },
+      { n:6, name:"Champion Words", emoji:"🏔️", ws:["vibration","camouflage","defense mechanism"] },
+    ],
+  },
 ];
 
 /* Chinese meaning for the word list, shared by every week since most words
@@ -573,6 +618,11 @@ const ZH = {
   "survive":"生存；活下来", "instinct":"本能", "herd":"（动物）群", "gazelle":"瞪羚",
   "graze":"吃草", "quiver":"颤抖", "solitary":"独居的；单独的", "colony":"群体；群落",
   "allergic":"过敏的", "defend":"保卫；防御", "defense mechanism":"防御机制",
+  "burrow":"（动物的）洞穴；挖洞", "pursue":"追赶；追捕", "flee":"逃跑", "armor":"盔甲；护甲",
+  "resemble":"像；与……相似", "paralyzed":"瘫痪的；动不了的", "species":"物种", "reveal":"揭示；露出",
+  "alter":"改变", "extreme":"极端的；极度的", "vibrate":"振动；颤动", "vibration":"振动",
+  "ooze":"（浓稠液体）慢慢渗出", "wedge":"把……塞进；楔入", "crevice":"（岩石的）裂缝",
+  "tactic":"策略；手段", "strategy":"战略；计划", "variety":"多样；各种各样",
 };
 /* US IPA, same style as the History list. A new word needs a line here too. */
 const IPA = {
@@ -603,6 +653,11 @@ const IPA = {
   "gazelle":"/ɡəˈzel/", "graze":"/ɡreɪz/", "quiver":"/ˈkwɪvər/",
   "solitary":"/ˈsɑːləteri/", "colony":"/ˈkɑːləni/", "allergic":"/əˈlɜːrdʒɪk/",
   "defend":"/dɪˈfend/", "defense mechanism":"/dɪˈfens ˈmekənɪzəm/",
+  "burrow":"/ˈbɜːroʊ/", "pursue":"/pərˈsuː/", "flee":"/fliː/", "armor":"/ˈɑːrmər/",
+  "resemble":"/rɪˈzembəl/", "paralyzed":"/ˈpærəlaɪzd/", "species":"/ˈspiːʃiːz/",
+  "reveal":"/rɪˈviːl/", "alter":"/ˈɔːltər/", "extreme":"/ɪkˈstriːm/",
+  "vibrate":"/ˈvaɪbreɪt/", "vibration":"/vaɪˈbreɪʃən/", "ooze":"/uːz/", "wedge":"/wedʒ/",
+  "crevice":"/ˈkrevɪs/", "tactic":"/ˈtæktɪk/", "strategy":"/ˈstrætədʒi/", "variety":"/vəˈraɪəti/",
 };
 WEEKS.forEach(wk => wk.words.forEach(o => {
   o.zh  = o.zh  || ZH[o.w]  || "";
