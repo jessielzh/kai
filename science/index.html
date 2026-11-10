@@ -398,7 +398,7 @@ function say(text, rate){
 const speakWord = it => say(it.say || it.w, 0.8);
 
 /* ---------- setup screen ---------- */
-let picked = new Set([1]);
+let picked = new Set([LISTS[LISTS.length-1].n]);   // open on the newest list
 let mode = "read";
 
 const ALL = { n:0, title:"Q1 全部", words:[].concat(...LISTS.map(l => l.words)) };
