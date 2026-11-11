@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Kai's Vocab Quiz</title>
+<style>
+  :root{
+    --bg:#f6f3ec; --card:#fffdf8; --ink:#232019; --muted:#6f6758;
+    --line:#e3dcce; --accent:#8a5a2b; --accent-soft:#f0e3d2;
+    --good:#2f7d52; --bad:#b4521f; --shadow:0 1px 2px rgba(35,32,25,.06),0 8px 24px rgba(35,32,25,.07);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#17150f; --card:#221f18; --ink:#f2ece0; --muted:#a79c88;
+      --line:#38332a; --accent:#e0b07a; --accent-soft:#33291d;
+      --good:#6fcf97; --bad:#f0a373; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);min-height:100vh;
+    font:17px/1.5 ui-rounded,"SF Pro Rounded",-apple-system,"Segoe UI","PingFang SC",sans-serif;-webkit-text-size-adjust:100%}
+  .wrap{max-width:760px;margin:0 auto;padding:24px 16px 60px}
+  h1{font-size:22px;margin:0 0 2px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 22px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px}
+  .label{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;font-weight:600}
+  .chips{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .chip,.mode{appearance:none;font:inherit;font-weight:700;cursor:pointer;background:transparent;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:14px;padding:12px 8px;text-align:center;transition:.12s}
+  .chip small,.mode small{display:block;font-weight:400;font-size:12px;color:var(--muted)}
+  .chip[aria-pressed="true"],.mode[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+  .modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .btn{appearance:none;font:inherit;font-weight:700;cursor:pointer;background:var(--accent);color:var(--bg);border:none;
+    border-radius:14px;padding:15px 22px;font-size:17px}
+  .btn.ghost{background:transparent;color:var(--muted);border:1.5px solid var(--line);font-weight:600}
+  .btn.wide{width:100%}
+  .btn:disabled{opacity:.4;cursor:default}
+  .homelink{display:inline-block;margin:0 0 14px;font-size:14px;color:var(--muted);text-decoration:none}
+  .words{list-style:none;padding:0;margin:0}
+  .words li{display:flex;gap:12px;padding:10px 4px;border-top:1px solid var(--line);cursor:pointer}
+  .words li:first-child{border-top:none}
+  .words .em{font-size:28px;line-height:1.1;width:36px;text-align:center}
+  .words b{font-size:18px}
+  .pos{font-size:12px;color:var(--muted);font-style:italic;margin-left:6px}
+  .zh{color:var(--accent);font-weight:700;margin-left:6px}
+  .def{display:block;color:var(--muted);font-size:14px;line-height:1.4}
+  .ex{display:block;font-size:14px;line-height:1.4;margin-top:2px}
+  .note{color:var(--muted);font-size:13px;margin:10px 0 0}
+  [hidden]{display:none!important}
+
+  /* ---- test paper ---- */
+  .paper h2{font-size:18px;margin:0 0 4px}
+  .paper .dir{color:var(--muted);font-size:14px;margin:0 0 14px}
+  .q{padding:12px 0;border-top:1px solid var(--line)}
+  .q:first-of-type{border-top:none}
+  .q .qt{margin:0 0 8px}
+  input[type=text],textarea,select{font:inherit;font-size:19px;width:100%;padding:10px 12px;border-radius:12px;
+    border:1.5px solid var(--line);background:var(--bg);color:var(--ink)}
+  textarea{min-height:70px;resize:vertical}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent)}
+  .ok-b{border-color:var(--good)!important}
+  .no-b{border-color:var(--bad)!important}
+  .match{display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:center;padding:8px 0}
+  .match b{font-size:19px}
+  .opts{display:grid;gap:8px;margin-bottom:10px}
+  .opt{appearance:none;font:inherit;font-size:16px;text-align:left;cursor:pointer;background:transparent;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:12px;padding:10px 12px}
+  .opt[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+  .opt.right{border-color:var(--good);background:transparent;color:var(--good);font-weight:700}
+  .opt.wrong{border-color:var(--bad);color:var(--bad);text-decoration:line-through}
+  .fb{font-size:14px;margin-top:6px}
+  .fb .g{color:var(--good);font-weight:700}
+  .fb .r{color:var(--bad);font-weight:700}
+  .checks{list-style:none;padding:0;margin:6px 0 0;font-size:14px}
+  .score{font-size:52px;font-weight:800;text-align:center}
+  .scoresub{text-align:center;color:var(--muted);margin:0 0 6px}
+  .sticky{position:sticky;top:0;z-index:2;background:var(--bg);padding:8px 0 10px;display:flex;justify-content:space-between;align-items:center}
+
+  /* ---- spelling card ---- */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);
+    padding:30px 22px;text-align:center}
+  .card .big{font-size:64px;line-height:1}
+  .card .d{font-size:20px;margin:14px auto 16px;max-width:32ch}
+  .speak{appearance:none;background:var(--accent-soft);border:none;color:var(--accent);border-radius:999px;
+    padding:10px 18px;font:inherit;font-weight:700;cursor:pointer;margin-bottom:16px}
+  .card input{text-align:center;font-size:26px;font-weight:700;max-width:420px}
+  .bar{height:7px;background:var(--line);border-radius:99px;overflow:hidden;margin:6px 0 14px}
+  .bar i{display:block;height:100%;background:var(--accent)}
+  .rc{list-style:none;padding:0;margin:0}
+  .rc li{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:15px}
+  .rc li:first-child{border-top:none}
+  .rc .val{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .rc .dim{color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ============ SETUP ============ -->
+<section id="setup">
+  <a class="homelink" href="../">&larr; Back to home</a>
+  <h1>Kai's Vocab Quiz</h1>
+  <p class="sub">Same kind of test as school. Typing counts — spell it right!</p>
+
+  <div class="panel">
+    <p class="label">Pick a list</p>
+    <div class="chips" id="lists"></div>
+    <p class="label" style="margin:18px 0 6px">The 10 words — tap one to hear it</p>
+    <ul class="words" id="preview"></ul>
+  </div>
+
+  <div class="panel">
+    <p class="label">What to do</p>
+    <div class="modes">
+      <button class="mode" id="mTest" aria-pressed="true">📝 Mock test<small>Like the real quiz · 10 points</small></button>
+      <button class="mode" id="mSpell" aria-pressed="false">✏️ Spell all 10<small>Hear it, read it, type it</small></button>
+    </div>
+  </div>
+
+  <button class="btn wide" id="start">Start →</button>
+
+  <div class="panel" style="margin-top:16px">
+    <p class="label">Report card (first try counts)</p>
+    <div id="report"></div>
+  </div>
+</section>
+
+<!-- ============ MOCK TEST ============ -->
+<section id="test" hidden>
+  <div class="sticky"><button class="btn ghost" id="tQuit">✕ Quit</button><b id="tTitle"></b></div>
+  <div id="tResult" class="panel" hidden></div>
+  <div class="panel paper" id="p1"></div>
+  <div class="panel paper" id="p2"></div>
+  <div class="panel paper" id="p3"></div>
+  <button class="btn wide" id="submit">Hand it in ✓</button>
+  <button class="btn wide ghost" id="again" style="margin-top:10px" hidden>New test (different questions) ↻</button>
+</section>
+
+<!-- ============ SPELLING ============ -->
+<section id="spell" hidden>
+  <div class="sticky"><button class="btn ghost" id="sQuit">✕ Quit</button><b id="sCount"></b></div>
+  <div class="bar"><i id="sBar"></i></div>
+  <div class="card" id="sCard"></div>
+</section>
+
+</div>
+<script>
+/* -------------------------------------------------------------
+   Word lists from Kai's English Literacy vocab sheets (photos in this folder).
+   [word, other accepted spellings, part of speech, 中文, emoji,
+    test-style definition, "own words" explanation (does NOT use the word),
+    wrong explanation that just repeats the word (teacher marks these wrong),
+    example sentence]
+------------------------------------------------------------- */
+const LISTS = [
+{ n:1, words:[
+ ["ached",["ache","aches","aching"],"verb","疼、酸痛","🤕","Hurt with a slow pain that does not go away quickly.","felt sore and painful for a long time","when something is aching","After the long hike, my legs ached all night."],
+ ["concentrate",["concentrated","concentrating"],"verb","集中注意力","🧐","To give all your attention to one thing.","to think hard about only one thing and not look around","to do concentrating on things","I turn off the TV so I can concentrate on my homework."],
+ ["educated",["educate"],"adjective","受过教育的","🎓","Having learned a lot at school.","someone who has learned many things by going to school","being educated a lot","My grandma is an educated woman who reads every day."],
+ ["effort",["efforts"],"noun","努力","💪","Hard work you put in to do something.","the energy you use when you try very hard","to make an effort","Kai put a lot of effort into his science project."],
+ ["improved",["improve","improves"],"verb","进步了","📈","Got better at something.","became better than before","something that is improved","My reading improved after I read every night."],
+ ["satisfied",["satisfy"],"adjective","满意的","😊","Happy because you got what you wanted or needed.","pleased with how something turned out","feeling satisfied with something","Mom was satisfied with my clean room."],
+ ["assisted",["assist","assists"],"verb","帮助了","🤝","Helped someone do something.","helped another person with a job","to assist someone","The nurse assisted the old man into his wheelchair."],
+ ["flood",["floods","flooded"],"noun","洪水","🌊","A lot of water that covers land that is usually dry.","when too much water covers streets, fields and houses","when there is a flood","After days of heavy rain, a flood covered the village."],
+ ["eagerly",[],"adverb","急切地、热切地","🙋","In a way that shows you really want to do something.","in an excited way, because you really want it","doing something eagerly","The children eagerly opened their presents."],
+ ["field",["fields"],"noun","田野、场地","🌾","A big open area of land with grass or crops.","a wide open piece of land covered with grass","a place that is a field","The cows were eating grass in the field."]
+]},
+{ n:2, words:[
+ ["celebrate",["celebrated","celebrating"],"verb","庆祝","🎉","To do something fun or special for an important day or event.","to have a party or do something special on a happy day","to celebrate something","We celebrate Chinese New Year with a big family dinner."],
+ ["precious",[],"adjective","珍贵的","💎","Very valuable or special to you.","worth a lot, so you love it and keep it safe","something that is precious","This old photo of my grandpa is precious to me."],
+ ["disappointment",[],"noun","失望","😞","The sad feeling you get when something you hoped for does not happen.","feeling sad because things did not go the way you hoped","being disappointed","To my disappointment, the picnic was cancelled because of rain."],
+ ["courage",[],"noun","勇气","🦁","Being brave when something is scary or hard.","being brave even when you feel afraid","having courage","It took courage to sing in front of the whole school."],
+ ["remind",["reminded","reminds"],"verb","提醒","📢","To help someone remember something.","to tell someone something so they do not forget","to remind someone","Please remind me to bring my swimsuit tomorrow."],
+ ["symbol",["symbols"],"noun","符号、象征","➕","A sign or picture that stands for something else.","a mark or picture that has a meaning","a symbol of something","The + symbol means to add."],
+ ["feast",["feasts"],"noun","盛宴","🍗","A big, special meal with lots of food.","a huge meal with many kinds of food, often for a celebration","having a feast","The king held a feast with roast chicken, fruit and cakes."],
+ ["admire",["admired","admires"],"verb","钦佩、欣赏","👏","To like and respect someone for what they do.","to think someone is great and want to be like them","to admire a person","I admire my coach because she never gives up."],
+ ["tradition",["traditions"],"noun","传统","🧧","Something you do over and over with your family or community, like a special food or holiday, because it is important to them.","something families have done every year for a long, long time","a traditional thing","Giving red packets at New Year is a Chinese tradition."],
+ ["invitation",["invitations"],"noun","邀请函","💌","A card or note that asks someone to come to a party or special event.","a note asking you to come to a party","being invited","I got an invitation to Leo's birthday party."]
+]},
+{ n:3, words:[
+ ["created",["create","creates"],"verb","创造了","🎨","Made something new.","made something that was not there before","to create things","Mia created a painting of the sea."],
+ ["interfere",["interfered","interferes"],"verb","干扰、妨碍","🚧","To get in the way and stop something from going well.","to get in the way of what someone else is doing","to interfere with something","Don't let the TV interfere with your homework."],
+ ["timid",[],"adjective","胆小的","🙈","Shy and not sure of yourself.","shy and a little bit scared","being timid","The timid boy hid behind his mother's legs."],
+ ["awkward",[],"adjective","尴尬的、别扭的","😬","Feeling uncomfortable or embarrassed.","embarrassed and not sure what to do or say","feeling awkward","It was awkward when I called my teacher \"Mom\"."],
+ ["furiously",[],"adverb","狂怒地、猛烈地","😡","In a very angry, fast and wild way.","very angrily and very fast","doing it furiously","He typed furiously because he was so angry."],
+ ["attempt",["attempted","attempts"],"verb","尝试","🧗","To try to do something, especially something hard.","to try to do something even if it is hard","to attempt things","I attempted to climb the rock wall."],
+ ["recipe",["recipes"],"noun","食谱","📖","A list of ingredients and steps for making a food.","instructions that tell you how to cook something","a recipe for food","We followed Grandma's recipe to make dumplings."],
+ ["unfortunately",[],"adverb","不幸地、可惜","🌧️","Sadly; because of bad luck.","sadly — used when something bad happens","when it is unfortunate","Unfortunately, it rained on Sports Day."],
+ ["cooperation",[],"noun","合作","🧩","Working together to do something.","people helping each other to get a job done","cooperating together","With cooperation, our team built the tower quickly."],
+ ["fuel",["fuels"],"noun","燃料","⛽","Something that is burned to make heat or power, like gas, coal or wood.","something like gas or coal that is burned to make energy","a kind of fuel","Cars need fuel to run."]
+]},
+{ n:4, words:[
+ ["massive",[],"adjective","巨大的","🏔️","Very big and heavy.","really, really huge","something massive","A massive rock blocked the road."],
+ ["national",[],"adjective","国家的、全国的","🇨🇳","Belonging to or about a whole country.","for the whole country","something national","October 1st is China's National Day."],
+ ["carved",["carve","carves"],"verb","雕刻了","🗿","Cut into wood or stone to make a shape or picture.","cut a shape out of wood or stone with a sharp tool","something that was carved","The artist carved a bear out of stone."],
+ ["traces",["trace"],"noun","痕迹","👣","Small signs that show something was there before.","little marks left behind by someone or something","the traces of things","We found traces of footprints in the sand."],
+ ["grand",[],"adjective","宏伟的、盛大的","🏛️","Very big, important and impressive.","huge and fancy, so it makes you say \"wow\"","a grand thing","The palace had a grand hall with gold walls."],
+ ["clues",["clue"],"noun","线索","🔍","Pieces of information that help you solve a mystery or answer a question.","hints that help you find the answer","giving clues","The detective looked for clues to find the thief."],
+ ["landmarks",["landmark"],"noun","地标","🗼","Famous buildings or places that are easy to see and remember.","well-known places that help you know where you are","landmark places","The Eiffel Tower and Big Ben are famous landmarks."],
+ ["famous",[],"adjective","著名的","🌟","Known by lots and lots of people.","many people know who or what it is","being famous","Messi is a famous football player."],
+ ["tribes",["tribe"],"noun","部落","🛖","Groups of families who live together and share the same language and way of life.","groups of people living together with their own customs","people in tribes","Long ago, many tribes lived along the river."],
+ ["events",["event"],"noun","事件、活动","📅","Things that happen, especially important or planned ones.","special things that happen, like Sports Day or a concert","having events","Sports Day is one of the biggest school events."]
+]}
+];
+
+const STORE = "kai-vocab-v1";
+const $ = id => document.getElementById(id);
+const W = a => ({w:a[0],alts:a[1],pos:a[2],zh:a[3],em:a[4],def:a[5],own:a[6],trap:a[7],ex:a[8]});
+const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const norm = s => s.trim().toLowerCase().replace(/[’']/g,"'").replace(/[.!?,]+$/,"");
+const isRight = (typed, w) => [w.w, ...w.alts].includes(norm(typed));
+
+function say(t){ try{ speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(t); u.lang="en-US"; u.rate=.85; speechSynthesis.speak(u);}catch(e){} }
+function log(){ try{ return JSON.parse(localStorage.getItem(STORE)) || []; }catch(e){ return []; } }
+function addLog(r){ try{ const l = log(); l.push(r); localStorage.setItem(STORE, JSON.stringify(l.slice(-300))); }catch(e){} }
+
+let cur = LISTS.length - 1;          // open on the newest list
+let mode = "test";
+const words = () => LISTS[cur].words.map(W);
+
+/* ---------- setup ---------- */
+function drawSetup(){
+  $("lists").innerHTML = LISTS.map((L,i) =>
+    `<button class="chip" aria-pressed="${i===cur}" data-i="${i}">List ${L.n}<small>${L.words.slice(0,2).map(w=>w[0]).join(", ")}…</small></button>`).join("");
+  $("lists").querySelectorAll(".chip").forEach(b => b.onclick = () => { cur = +b.dataset.i; drawSetup(); });
+  $("preview").innerHTML = words().map(w =>
+    `<li data-w="${esc(w.w)}"><span class="em">${w.em}</span><span><b>${w.w}</b><span class="pos">${w.pos}</span><span class="zh">${w.zh}</span>
+     <span class="def">${esc(w.def)}</span><span class="ex">“${esc(w.ex)}”</span></span></li>`).join("");
+  $("preview").querySelectorAll("li").forEach(li => li.onclick = () => say(li.dataset.w));
+  drawReport();
+}
+$("mTest").onclick = () => { mode="test"; $("mTest").setAttribute("aria-pressed","true"); $("mSpell").setAttribute("aria-pressed","false"); };
+$("mSpell").onclick = () => { mode="spell"; $("mSpell").setAttribute("aria-pressed","true"); $("mTest").setAttribute("aria-pressed","false"); };
+$("start").onclick = () => mode === "test" ? startTest() : startSpell();
+
+function drawReport(){
+  const l = log();
+  const fmt = r => r ? `${r.score}/${r.max}` : "—";
+  const date = r => r ? new Date(r.t).toLocaleDateString("en-GB",{day:"numeric",month:"short"}) : "";
+  let h = "<ul class='rc'>";
+  LISTS.forEach(L => {
+    ["test","spell"].forEach(m => {
+      const runs = l.filter(r => r.list===L.n && r.mode===m);
+      if (!runs.length) return;
+      const f = runs[0], last = runs[runs.length-1];
+      h += `<li><span>List ${L.n} · ${m==="test"?"📝 Mock test":"✏️ Spell"}<br><span class="dim">first try ${date(f)}${f.miss.length?" · missed: "+f.miss.join(", "):""}</span></span>
+            <span class="val">${fmt(f)}<br><span class="dim">latest ${fmt(last)} · ${runs.length}×</span></span></li>`;
+    });
+  });
+  h += "</ul>";
+  $("report").innerHTML = l.length ? h : "<p class='note'>No tests yet.</p>";
+}
+
+/* ---------- mock test (same shape as the school quiz) ----------
+   Part 1: read the definition, write the word (4 words, spelling counts)
+   Part 2: match word to definition (3 words)
+   Part 3: meaning + your own sentence (3 words, ½ + ½ each)          */
+let T = null;
+function show(id){ ["setup","test","spell"].forEach(s => $(s).hidden = s!==id); scrollTo(0,0); }
+
+function startTest(){
+  const ws = shuffle(words());
+  T = { p1: ws.slice(0,4), p2: ws.slice(4,7), p3: ws.slice(7,10), all: words(), done:false };
+  $("tTitle").textContent = `List ${LISTS[cur].n} · Vocabulary Quiz`;
+  $("tResult").hidden = true; $("submit").hidden = false; $("again").hidden = true;
+
+  $("p1").innerHTML = `<h2>Part 1: Vocabulary Definitions</h2><p class="dir">Read each definition. Then write the correct vocabulary word. Spelling counts!</p>` +
+    T.p1.map((w,i) => `<div class="q"><p class="qt"><b>${i+1}.</b> ${esc(w.def)}</p>
+      <input type="text" id="a1_${i}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="type the word">
+      <div class="fb" id="f1_${i}"></div></div>`).join("");
+
+  const defs = shuffle(T.p2.map(w => w.def));
+  $("p2").innerHTML = `<h2>Part 2: Match the Word to Its Definition</h2><p class="dir">Pick the meaning for each word. Each meaning is used once.</p>` +
+    T.p2.map((w,i) => `<div class="match"><b>${w.w}</b><select id="a2_${i}"><option value="">— pick —</option>${defs.map(d=>`<option>${esc(d)}</option>`).join("")}</select></div><div class="fb" id="f2_${i}"></div>`).join("");
+
+  $("p3").innerHTML = `<h2>Part 3: Meaning and Usage</h2><p class="dir">Choose the best explanation <b>in your own words</b> (you can't use the word to explain itself!). Then write your own sentence.</p>` +
+    T.p3.map((w,i) => {
+      const other = shuffle(T.all.filter(x => x.w!==w.w))[0];
+      const opts = shuffle([{t:w.own,k:"own"},{t:w.trap,k:"trap"},{t:other.own,k:"other"}]);
+      w._opts = opts;
+      return `<div class="q"><p class="qt"><b>${i+1}.</b> What does <b>${w.w}</b> mean?</p>
+        <div class="opts" id="o3_${i}">${opts.map((o,j)=>`<button class="opt" data-j="${j}" aria-pressed="false">${esc(o.t)}</button>`).join("")}</div>
+        <p class="qt">Now write your own sentence using <b>${w.w}</b>.</p>
+        <textarea id="s3_${i}" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false"></textarea>
+        <div class="fb" id="f3_${i}"></div></div>`;
+    }).join("");
+  T.p3.forEach((w,i) => {
+    $("o3_"+i).querySelectorAll(".opt").forEach(b => b.onclick = () => {
+      if (T.done) return;
+      $("o3_"+i).querySelectorAll(".opt").forEach(x => x.setAttribute("aria-pressed", x===b));
+      w._pick = +b.dataset.j;
+    });
+  });
+  show("test");
+}
+
+function sentenceChecks(text, w){
+  const s = text.trim(), low = s.toLowerCase();
+  return [
+    ["uses the word “"+w.w+"”", [w.w, ...w.alts].some(f => low.includes(f))],
+    ["starts with a capital letter", /^[A-Z]/.test(s)],
+    ["ends with . ! or ?", /[.!?]["”]?$/.test(s)],
+    ["at least 6 words", s.split(/\s+/).filter(Boolean).length >= 6]
+  ];
+}
+
+$("submit").onclick = () => {
+  const blanks = [...T.p1.map((_,i)=>$("a1_"+i).value.trim()), ...T.p2.map((_,i)=>$("a2_"+i).value), ...T.p3.map((_,i)=>$("s3_"+i).value.trim())].filter(v=>!v).length
+               + T.p3.filter(w => w._pick===undefined).length;
+  if (blanks && !confirm(`${blanks} answer(s) are still empty. Hand it in anyway?`)) return;
+  T.done = true;
+  let score = 0; const miss = [];
+  T.p1.forEach((w,i) => {
+    const el = $("a1_"+i), ok = isRight(el.value, w); el.readOnly = true;
+    el.classList.add(ok?"ok-b":"no-b");
+    $("f1_"+i).innerHTML = ok ? `<span class="g">✓ 1</span>` : `<span class="r">✗</span> It's <b>${w.w}</b>`;
+    if (ok) score += 1; else miss.push(w.w);
+  });
+  T.p2.forEach((w,i) => {
+    const el = $("a2_"+i), ok = el.value === w.def; el.disabled = true;
+    el.classList.add(ok?"ok-b":"no-b");
+    $("f2_"+i).innerHTML = ok ? `<span class="g">✓ 1</span>` : `<span class="r">✗</span> ${w.w} = ${esc(w.def)}`;
+    if (ok) score += 1; else miss.push(w.w);
+  });
+  T.p3.forEach((w,i) => {
+    let pts = 0, fb = "";
+    const pick = w._opts[w._pick];
+    $("o3_"+i).querySelectorAll(".opt").forEach((b,j) => {
+      if (w._opts[j].k==="own") b.classList.add("right"); else if (j===w._pick) b.classList.add("wrong");
+    });
+    if (pick && pick.k==="own"){ pts += .5; fb += `<span class="g">✓ ½ meaning</span>`; }
+    else if (pick && pick.k==="trap") fb += `<span class="r">✗ meaning</span> — that one just repeats the word. Use <b>other</b> words to explain!`;
+    else fb += `<span class="r">✗ meaning</span>`;
+    const ta = $("s3_"+i); ta.readOnly = true;
+    const ch = sentenceChecks(ta.value, w), allOk = ch.every(c => c[1]);
+    if (allOk) pts += .5;
+    ta.classList.add(allOk?"ok-b":"no-b");
+    fb += `<br>${allOk?'<span class="g">✓ ½ sentence</span>':'<span class="r">✗ sentence</span>'}<ul class="checks">${ch.map(c=>`<li>${c[1]?"✅":"❌"} ${c[0]}</li>`).join("")}</ul>Example: “${esc(w.ex)}”`;
+    $("f3_"+i).innerHTML = fb;
+    score += pts; if (pts < 1) miss.push(w.w);
+  });
+  addLog({list:LISTS[cur].n, mode:"test", score, max:10, miss, t:Date.now()});
+  const first = log().filter(r => r.list===LISTS[cur].n && r.mode==="test").length === 1;
+  $("tResult").innerHTML = `<div class="score">${score}/10</div><p class="scoresub">${first?"First try — this one goes on the report card.":"Practice round."} ${score>=9?"🏆 Excellent!":score>=7?"👍 Good — fix the red ones.":"Read the red ones again, then try a new test."}</p>
+    <p class="note" style="text-align:center">The page checks that your sentence looks right — ask Mom to read whether it makes sense.</p>`;
+  $("tResult").hidden = false; $("submit").hidden = true; $("again").hidden = false;
+  scrollTo({top:0,behavior:"smooth"});
+};
+$("again").onclick = startTest;
+$("tQuit").onclick = () => { if (T.done || confirm("Quit this test?")) { show("setup"); drawSetup(); } };
+
+/* ---------- spell all 10 ----------
+   Hear it + read the definition, type the word. First answer is what counts.
+   If wrong, he has to type it correctly once before moving on. */
+let S = null;
+function startSpell(){ S = { ws: shuffle(words()), i:0, score:0, miss:[] }; show("spell"); drawSpell(); }
+function drawSpell(){
+  const w = S.ws[S.i];
+  $("sCount").textContent = `${S.i+1} / ${S.ws.length}`;
+  $("sBar").style.width = (S.i / S.ws.length * 100) + "%";
+  $("sCard").innerHTML = `<div class="big">${w.em}</div><p class="d">${esc(w.def)}</p>
+    <button class="speak" id="hear">🔊 Hear the word</button><br>
+    <input type="text" id="sIn" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
+    <div class="fb" id="sFb" style="font-size:18px;margin-top:12px"></div>
+    <button class="btn" id="sGo" style="margin-top:14px">Check</button>`;
+  $("hear").onclick = () => say(w.w);
+  say(w.w);
+  let stage = "first";
+  const go = () => {
+    const v = $("sIn").value;
+    if (!v.trim()) return;
+    if (stage === "first"){
+      if (isRight(v, w)){ S.score++; $("sFb").innerHTML = `<span class="g">✓ Correct!</span>`; stage = "next"; $("sGo").textContent = "Next →"; $("sIn").readOnly = true; }
+      else { S.miss.push(w.w); $("sFb").innerHTML = `<span class="r">✗</span> It's <b style="font-size:24px;letter-spacing:.06em">${w.w}</b><br>Type it again correctly:`; $("sIn").value=""; stage = "fix"; $("sIn").focus(); }
+    } else if (stage === "fix"){
+      if (isRight(v, w)){ $("sFb").innerHTML = `<span class="g">✓ Got it now.</span>`; stage = "next"; $("sGo").textContent = "Next →"; $("sIn").readOnly = true; }
+      else { $("sFb").innerHTML = `<span class="r">Not yet</span> — <b style="font-size:24px;letter-spacing:.06em">${w.w}</b>`; $("sIn").value=""; }
+    } else nextSpell();
+  };
+  $("sGo").onclick = go;
+  $("sIn").onkeydown = e => { if (e.key==="Enter") go(); };
+  $("sIn").focus();
+}
+function nextSpell(){
+  S.i++;
+  if (S.i < S.ws.length) return drawSpell();
+  addLog({list:LISTS[cur].n, mode:"spell", score:S.score, max:S.ws.length, miss:S.miss, t:Date.now()});
+  $("sBar").style.width = "100%";
+  $("sCard").innerHTML = `<div class="score">${S.score}/${S.ws.length}</div>
+    <p class="scoresub">${S.miss.length ? "Practise these: <b>"+S.miss.join(", ")+"</b>" : "🏆 All 10 right on the first try!"}</p>
+    <button class="btn" id="sAgain">Again ↻</button> <button class="btn ghost" id="sHome">Done</button>`;
+  $("sAgain").onclick = startSpell;
+  $("sHome").onclick = () => { show("setup"); drawSetup(); };
+}
+$("sQuit").onclick = () => { show("setup"); drawSetup(); };
+
+drawSetup();
+</script>
+</body>
+</html>
