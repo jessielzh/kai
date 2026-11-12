@@ -43,7 +43,30 @@
   .chip small{display:block;font-weight:400;font-size:11px;color:var(--muted);margin-top:2px;line-height:1.45}
   .chip[aria-pressed="true"] small{color:var(--accent);opacity:.8}
   .chip .num{font-size:11px;opacity:.7}
-  .modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .modes{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .mode small{display:block;text-align:center;font-size:11px;color:var(--muted);margin-top:2px}
+
+  /* ---- apply mode: tap-an-answer word problems ---- */
+  .qcard{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:22px 20px 20px;position:relative}
+  .qtag{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+  .qtag .tw{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  .qtag .tk{font-size:12px;color:var(--muted)}
+  .qtext{font-size:clamp(19px,4.6vw,23px);line-height:1.45;font-weight:600;margin:0 0 14px}
+  .qfig{display:flex;justify-content:center;margin:0 0 14px}
+  .qfig svg{width:200px;height:auto}
+  .opts{display:grid;gap:10px}
+  .opt{appearance:none;font:inherit;font-size:18px;font-weight:600;text-align:left;cursor:pointer;
+    background:transparent;color:var(--ink);border:2px solid var(--line);border-radius:14px;padding:14px 16px;transition:.12s}
+  .opt:hover{border-color:var(--accent)}
+  .opt.right{border-color:var(--good);background:var(--good);color:var(--card)}
+  .opt.wrong{border-color:var(--again);color:var(--again);text-decoration:line-through}
+  .opt:disabled{cursor:default}
+  .opt:disabled:not(.right):not(.wrong){opacity:.45}
+  .fb{margin-top:14px;padding:14px 16px;border-radius:14px;font-size:17px;line-height:1.5}
+  .fb.ok{background:color-mix(in srgb,var(--good) 14%,transparent)}
+  .fb.no{background:color-mix(in srgb,var(--again) 14%,transparent)}
+  .fb b{display:block;font-size:18px;margin-bottom:2px}
+  .again-tag{display:inline-block;font-size:11px;font-weight:700;color:var(--again);border:1.5px solid var(--again);border-radius:99px;padding:1px 8px;margin-left:6px;letter-spacing:.04em}
   .mode{
     appearance:none;font:inherit;cursor:pointer;text-align:left;
     background:transparent;color:var(--ink);border:1.5px solid var(--line);
@@ -167,12 +190,12 @@
     <h1>Kai's Math Words</h1>
     <p class="sub">G4 math vocab in small lists — read it and know what it means.</p>
 
-    <div class="panel">
+    <div class="panel" id="listPanel">
       <p class="label">Pick a list</p>
       <div class="chips" id="lists" role="radiogroup"></div>
       <p class="label" id="prevTitle" style="margin:18px 0 6px"></p>
       <ul class="prev" id="preview"></ul>
-      <p class="rcnote">Look them over first — tap any word to hear it.</p>
+      <p class="rcnote" id="prevNote">Look them over first — tap any word to hear it.</p>
     </div>
 
     <div class="panel">
@@ -180,6 +203,7 @@
       <div class="modes">
         <button class="mode" id="mRead" aria-pressed="true"><b>🗣 Read</b></button>
         <button class="mode" id="mUnd" aria-pressed="false"><b>💡 Understand</b></button>
+        <button class="mode" id="mApp" aria-pressed="false"><b>🧮 Apply</b><small>use it in a problem</small></button>
       </div>
     </div>
 
@@ -213,6 +237,26 @@
       <button class="no" id="rNo"></button>
     </div>
     <p class="keys">space = skip the wait · 1 = got it · 2 = practice again</p>
+  </section>
+
+  <!-- ================= APPLY SESSION ================= -->
+  <section id="apply" hidden>
+    <div class="top">
+      <button class="x" id="aquit" title="Quit">✕</button>
+      <div class="bar"><i id="abar"></i></div>
+      <div class="count" id="acount"></div>
+    </div>
+    <div class="qcard" id="qcard">
+      <div class="qtag"><span class="tw" id="qword"></span><span class="tk" id="qkind"></span></div>
+      <p class="qtext" id="qtext"></p>
+      <div class="qfig" id="qfig" hidden></div>
+      <div class="opts" id="opts"></div>
+      <div class="fb" id="fb" hidden></div>
+    </div>
+    <div class="row" style="margin-top:14px">
+      <button class="btn ghost" id="qsay">🔊 Read it to me</button>
+      <button class="btn" id="qnext" hidden>Next →</button>
+    </div>
   </section>
 
   <!-- ================= DONE ================= -->
@@ -417,21 +461,35 @@ let mode = "read";
 function drawLists(){
   const box = $("lists");
   box.innerHTML = "";
+  if(mode === "apply"){
+    const n = reviewQs().length;
+    const b = document.createElement("button");
+    b.className = "chip"; b.setAttribute("role", "radio");
+    b.setAttribute("aria-pressed", picked.has("R"));
+    b.innerHTML = "⭐ 错词复习<small>words missed on tests<br><span class='num'>" + n + " questions</span></small>";
+    b.onclick = () => { picked = new Set(["R"]); drawLists(); drawPreview(); showHistory(); };
+    box.appendChild(b);
+  }
   LISTS.forEach(wk => {
     const b = document.createElement("button");
     b.className = "chip";
     b.setAttribute("role", "radio");
     b.setAttribute("aria-pressed", picked.has(wk.n));
-    b.innerHTML = "List " + wk.n + "<small>" + wk.title + "<br><span class='num'>" + wk.words.length + " words</span></small>";
+    const nq = listQs(wk.n).length;
+    const count = mode !== "apply" ? wk.words.length + " words" : (nq ? nq + " questions" : "coming soon");
+    b.innerHTML = "List " + wk.n + "<small>" + wk.title + "<br><span class='num'>" + count + "</span></small>";
+    if(mode === "apply" && !nq) b.style.opacity = ".5";
     b.onclick = () => { picked = new Set([wk.n]); drawLists(); drawPreview(); showHistory(); };
     box.appendChild(b);
   });
 }
 function drawPreview(){
   const ul = $("preview");
+  ul.innerHTML = "";
+  if(mode === "apply"){ drawApplyPreview(); return; }
+  $("prevNote").textContent = "Look them over first — tap any word to hear it.";
   const wk = LISTS.find(w => picked.has(w.n));
   $("prevTitle").textContent = "List " + wk.n + " · " + wk.title + " · " + wk.words.length + " words";
-  ul.innerHTML = "";
   wk.words.forEach((it, n) => {
     const li = document.createElement("li");
     li.innerHTML = "<span class='num'>" + (n + 1) + "</span><span class='body'>" +
@@ -448,10 +506,15 @@ function setMode(m){
   mode = m;
   $("mRead").setAttribute("aria-pressed", m==="read");
   $("mUnd").setAttribute("aria-pressed", m==="und");
+  $("mApp").setAttribute("aria-pressed", m==="apply");
+  if(m !== "apply" && picked.has("R")) picked = new Set([1]);   // the review chip only exists in Apply
+  if(m === "apply" && !pickedQs().length) picked = new Set(["R"]);   // start on a set that has questions
+  drawLists(); drawPreview();
   showHistory();
 }
 $("mRead").onclick = () => setMode("read");
 $("mUnd").onclick  = () => setMode("und");
+$("mApp").onclick  = () => setMode("apply");
 
 function log(){ try{ return JSON.parse(localStorage.getItem(STORE)) || []; }catch(e){ return []; } }
 function saveRun(run){
@@ -499,7 +562,8 @@ function reportHTML(key){
 
 function showHistory(){
   const keys = LISTS.map(w => String(w.n));
-  const html = keys.map(reportHTML).filter(Boolean).join("<div style='height:18px'></div>");
+  const html = (mode === "apply" ? ["R"].concat(keys).map(applyReportHTML) : keys.map(reportHTML))
+    .filter(Boolean).join("<div style='height:18px'></div>");
   $("report").innerHTML = html;
   $("reportPanel").hidden = !html;
 }
@@ -523,10 +587,11 @@ function buildQueue(){
 }
 
 function show(which){
-  ["setup","session","done"].forEach(s => $(s).hidden = (s !== which));
+  ["setup","session","apply","done"].forEach(s => $(s).hidden = (s !== which));
 }
 
 $("start").onclick = () => {
+  if(mode === "apply"){ startApply(); return; }
   queue = buildQueue(); i = 0; results = []; isRetry = false;
   if(!queue.length) return;
   show("session");
@@ -654,6 +719,244 @@ function finish(){
   show("done");
 }
 
+/* =========================================================
+   APPLY mode — word problems that make him USE the word.
+   Set 1 (2026-11-12) = the words Kai lost marks on in Saxon
+   Cumulative Test 6 (29/42): estimate (worked 68×21 exactly),
+   ratio (boys:girls backwards, not reduced), average (added,
+   never divided), diameter vs circumference, missing units.
+   Each word: 1 meaning → 2 compute → 3 word problem → 4 find the
+   mistake (the mistake is Kai's own from the test).
+   o[0] is always the right answer; options are shuffled on screen.
+   ========================================================= */
+const CIRCLE = `<svg viewBox="0 0 200 200" role="img" aria-label="circle with three marked lines">
+  <circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" stroke-opacity=".25" stroke-width="3"/>
+  <path d="M 100 20 A 80 80 0 0 1 180 100" fill="none" stroke="#c0392b" stroke-width="6" stroke-linecap="round"/>
+  <line x1="20" y1="100" x2="180" y2="100" stroke="#2f5bb7" stroke-width="5" stroke-linecap="round"/>
+  <line x1="100" y1="100" x2="43" y2="157" stroke="#2f7d52" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="100" cy="100" r="5" fill="currentColor"/>
+  <text x="158" y="40" font-size="22" font-weight="700" fill="#c0392b">c</text>
+  <text x="128" y="92" font-size="22" font-weight="700" fill="#2f5bb7">b</text>
+  <text x="56" y="128" font-size="22" font-weight="700" fill="#2f7d52">a</text>
+</svg>`;
+
+/* Each question hangs off a word in LISTS (w must match exactly) and
+   shows up when that list is picked in Apply mode. test:"…" = Kai got
+   this word wrong on that test → it also goes into ⭐ 错词复习. */
+const APPLYQ = [
+  // ---- estimate (List 3) ----
+  {test:"Test 6", w:"estimate", k:"meaning", q:"To <b>estimate</b> 68 × 21, what do you do first?",
+   o:["Round: 70 × 20","Multiply 68 × 21 exactly","Add 68 + 21"],
+   h:"estimate = 先取整，再算。68 → 70，21 → 20，70 × 20 = 1400。"},
+  {test:"Test 6", w:"estimate", k:"compute", q:"<b>Estimate</b> the product of 49 and 31.",
+   o:["1500","1519","1200","80"],
+   h:"49 → 50，31 → 30，50 × 30 = 1500。1519 是精确答案，不是估算！"},
+  {test:"Test 6", w:"estimate", k:"word problem", q:"One bus holds 58 kids. <b>About</b> how many kids can 9 buses hold? <b>Estimate.</b>",
+   o:["About 540","Exactly 522","About 450","About 67"],
+   h:"\"About\" 和 \"estimate\" 都是让你估算：58 → 60，60 × 9 = 540。"},
+  {test:"Test 6", w:"estimate", k:"find the mistake", q:"The test said: <b>Estimate</b> the product of 68 and 21.<br>Max wrote: 68 × 21 = 1428.<br>Why did he lose marks?",
+   o:["He found the exact answer. He should round first: 70 × 20 = 1400","He multiplied wrong","He should add, not multiply"],
+   h:"1428 算得没错，但题目要的是估算。看到 estimate 就先取整。"},
+  // ---- ratio (List 7) ----
+  {test:"Test 6", w:"ratio", k:"meaning", q:"3 red balls and 5 blue balls.<br>The <b>ratio of red to blue</b> is…",
+   o:["3 : 5","5 : 3","3 : 8","8 : 3"],
+   h:"ratio of A to B → A 写在前面。red to blue → 3 : 5。"},
+  {test:"Test 6", w:"ratio", k:"compute", q:"12 cats and 8 dogs.<br>What is the <b>ratio of dogs to cats</b>? (lowest terms)",
+   o:["2 : 3","3 : 2","12 : 8","8 : 20"],
+   h:"dogs 在前：8 : 12，再约分（都除以 4）= 2 : 3。"},
+  {test:"Test 6", w:"ratio", k:"word problem", q:"A class has 30 students. 16 are girls.<br>What is the <b>ratio of boys to girls</b>? (lowest terms)",
+   o:["7 : 8","8 : 7","14 : 16","16 : 14"],
+   h:"先算男生：30 − 16 = 14。boys 在前：14 : 16，约分 = 7 : 8。"},
+  {test:"Test 6", w:"ratio", k:"find the mistake", q:"16 girls, 14 boys. The question asks for the <b>ratio of boys to girls</b>.<br>Leo wrote <b>16 : 14</b>. What is wrong?",
+   o:["Wrong order (boys first) and not reduced — it should be 7 : 8","He subtracted wrong","Nothing — 16 : 14 is right"],
+   h:"两个错：顺序反了（boys to girls → 男生在前），也没约分。"},
+  // ---- mean / average (List 13) ----
+  {test:"Test 6", w:"mean", k:"meaning", q:"To find the <b>average</b> (mean) of some numbers, you…",
+   o:["Add them up, then divide by how many numbers there are","Just add them up","Take the biggest one","Subtract the smallest from the biggest"],
+   h:"average 有两步：① 全部加起来 ② 除以有几个数。"},
+  {test:"Test 6", w:"mean", k:"compute", q:"What is the <b>average</b> of 6, 9 and 9?",
+   o:["8","24","9","3"],
+   h:"6 + 9 + 9 = 24，有 3 个数，24 ÷ 3 = 8。"},
+  {test:"Test 6", w:"mean", k:"word problem", q:"Kai read 20 pages on Monday, 30 on Tuesday and 40 on Wednesday.<br><b>On average</b>, how many pages did he read a day?",
+   o:["30 pages","90 pages","40 pages","20 pages"],
+   h:"20 + 30 + 40 = 90，3 天，90 ÷ 3 = 30。90 是总数，不是平均数。"},
+  {test:"Test 6", w:"mean", k:"find the mistake", q:"What is the <b>average</b> of 68, 72 and 82?<br>Sam wrote: 68 + 72 + 82 = 222. Answer: 222.<br>What did he forget?",
+   o:["To divide by 3 — the average is 74","To round the numbers","Nothing — 222 is right"],
+   h:"只加不除就停下了。222 ÷ 3 = 74。（加的时候也要仔细：68 + 72 + 82 = 222，不是 212。）"},
+  // ---- circle (List 11) ----
+  {test:"Test 6", w:"diameter", k:"meaning", fig:CIRCLE, q:"Which line is the <b>diameter</b>?",
+   o:["b — straight across, through the center","a — from the center to the edge","c — along the edge"],
+   h:"diameter 直径 = 穿过圆心、从一边到另一边。a 是 radius 半径，c 是 circumference 圆周。"},
+  {test:"Test 6", w:"circumference", k:"meaning", fig:CIRCLE, q:"Which one is part of the <b>circumference</b>?",
+   o:["c — along the edge","b — straight across, through the center","a — from the center to the edge"],
+   h:"circumference = 绕圆一圈的长度（圆周长）。它是弯的，沿着边走。"},
+  {test:"Test 6", w:"diameter", k:"compute", q:"The <b>radius</b> of a wheel is 5 cm.<br>What is its <b>diameter</b>?",
+   o:["10 cm","5 cm","2.5 cm","25 cm"],
+   h:"diameter = 2 个 radius。5 × 2 = 10 cm。"},
+  {test:"Test 6", w:"circumference", k:"word problem", q:"An ant walks all the way <b>around</b> the edge of a round pizza.<br>The distance it walks is the pizza's…",
+   o:["circumference","diameter","radius"],
+   h:"around 绕一圈 → circumference。across 穿过中间 → diameter。"},
+  // ---- units: perimeter & area (List 12), fraction & mixed number (List 8) ----
+  {test:"Test 6", w:"perimeter", k:"word problem", q:"The perimeter of a square is 36 in.<br>How long is each side?",
+   o:["9 in","9","9 sq in","144 in"],
+   h:"36 ÷ 4 = 9，答案要带单位：9 in。只写 9 会扣分。"},
+  {test:"Test 6", w:"fraction", k:"word problem", q:"¾ of the 12 pencils were sharpened.<br>How many pencils were sharpened?",
+   o:["9 pencils","9","3 pencils","16 pencils"],
+   h:"12 ÷ 4 × 3 = 9。题目问 pencils，就答 9 pencils。"},
+  {test:"Test 6", w:"mixed number", k:"word problem", q:"A 27-inch ribbon is cut into 4 equal pieces.<br>How long is each piece?",
+   o:["6¾ in","6¼ in","6¾","7 in"],
+   h:"27 ÷ 4 = 6 余 3 → 6¾（余数 3 放分子上，不是 1）。再加单位 in。"},
+  {test:"Test 6", w:"area", k:"find the mistake", q:"A rectangle is 5 cm long and 3 cm wide.<br>Which answer for its <b>area</b> is fully right?",
+   o:["15 sq cm","15 cm","16 cm","15"],
+   h:"area = 5 × 3 = 15，面积的单位是 sq cm（平方厘米），不是 cm。"}
+];
+
+let aq = [], ai = 0, afirst = {}, aphase = 0, abase = [];
+
+/* questions for one list, in the list's word order (each word: meaning → … → mistake) */
+function listQs(n){
+  const wk = LISTS.find(w => w.n === n);
+  const out = [];
+  wk.words.forEach(x => APPLYQ.forEach(q => { if(q.w === x.w) out.push(q); }));
+  return out;
+}
+/* ⭐ 错词复习 = every question whose word Kai missed on a test, across all lists */
+function reviewQs(){
+  const out = [];
+  LISTS.forEach(wk => listQs(wk.n).forEach(q => { if(q.test) out.push(q); }));
+  return out;
+}
+function pickedQs(){
+  const k = [...picked][0];
+  return k === "R" ? reviewQs() : listQs(k);
+}
+function applyLabel(key){
+  if(String(key) === "R") return "⭐ 错词复习";
+  const wk = LISTS.find(w => String(w.n) === String(key));
+  return "List " + wk.n + " · " + wk.title;
+}
+function drawApplyPreview(){
+  const k = [...picked][0], qs = pickedQs(), ul = $("preview");
+  $("prevTitle").textContent = applyLabel(k) + " · " + (qs.length ? qs.length + " questions" : "coming soon");
+  $("prevNote").innerHTML = qs.length
+    ? "Tap the answer. Wrong ones come back at the end — the score is your <b>first try</b>."
+    : "No problems for this list yet — pick one that has questions.";
+  // review: the words in it, with the list they come from. a list: all its words, ones without questions faded
+  const rows = [];
+  if(k === "R"){
+    LISTS.forEach(wk => wk.words.forEach(it => { if(qs.some(q => q.w === it.w)) rows.push({it, from:"List " + wk.n}); }));
+  }else{
+    LISTS.find(w => w.n === k).words.forEach(it => rows.push({it}));
+  }
+  rows.forEach(({it, from}) => {
+    const n = qs.filter(q => q.w === it.w).length;
+    const li = document.createElement("li");
+    if(!n) li.style.opacity = ".4";
+    li.innerHTML = "<span class='num'>" + (n ? n + "×" : "–") + "</span><span class='body'><span class='hdr'><b>" + it.w +
+      "</b><span class='cn'>" + it.zh + "</span>" +
+      (from ? "<span style='font-size:12px;color:var(--muted)'>" + from + "</span>" : "") + "</span></span>";
+    li.onclick = () => speakWord(it);
+    ul.appendChild(li);
+  });
+}
+
+function shuffled(a){ a = a.slice(); for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]];} return a; }
+
+function startApply(){
+  abase = pickedQs();
+  if(!abase.length) return;
+  aq = abase.map((q, n) => ({...q, id:n, again:false}));   // fixed order: meaning → compute → problem → mistake
+  ai = 0; afirst = {};
+  show("apply"); askApply();
+}
+
+function askApply(){
+  const q = aq[ai];
+  aphase = 0;
+  $("abar").style.width = (ai / aq.length * 100) + "%";
+  $("acount").textContent = (ai + 1) + " / " + aq.length;
+  $("qword").innerHTML = q.w + (q.again ? "<span class='again-tag'>TRY AGAIN</span>" : "");
+  $("qkind").textContent = q.k;
+  $("qtext").innerHTML = q.q;
+  $("qfig").hidden = !q.fig; $("qfig").innerHTML = q.fig || "";
+  $("fb").hidden = true; $("qnext").hidden = true;
+  const box = $("opts"); box.innerHTML = "";
+  shuffled(q.o.map((t, n) => ({t, ok: n === 0}))).forEach(o => {
+    const b = document.createElement("button");
+    b.className = "opt"; b.textContent = o.t; b.dataset.ok = o.ok ? "1" : "";
+    b.onclick = () => pickApply(b, o.ok);
+    box.appendChild(b);
+  });
+}
+
+function pickApply(btn, ok){
+  if(aphase !== 0) return;
+  aphase = 1;
+  const q = aq[ai];
+  if(!(q.id in afirst)) afirst[q.id] = ok;          // score = first try only
+  document.querySelectorAll("#opts .opt").forEach(b => {
+    b.disabled = true;
+    if(b.dataset.ok) b.classList.add("right");
+  });
+  if(!ok){ btn.classList.add("wrong"); aq.push({...q, again:true}); }
+  const fb = $("fb");
+  fb.className = "fb " + (ok ? "ok" : "no");
+  fb.innerHTML = "<b>" + (ok ? "✅ Right!" : "❌ Not quite — it comes back at the end.") + "</b>" + q.h;
+  fb.hidden = false;
+  $("qnext").hidden = false;
+  $("acount").textContent = (ai + 1) + " / " + aq.length;
+  const face = document.createElement("div");
+  face.className = "burst";
+  const set = ok ? HAPPY : SERIOUS;
+  face.textContent = set[Math.floor(Math.random() * set.length)];
+  $("qcard").appendChild(face);
+  setTimeout(() => face.remove(), 1000);
+}
+
+$("qnext").onclick = () => {
+  ai++;
+  if(ai < aq.length) askApply(); else finishApply();
+};
+$("qsay").onclick = () => {
+  const q = aq[ai];
+  const tmp = document.createElement("div"); tmp.innerHTML = q.q.replace(/<br>/g, " ");
+  say(tmp.textContent + " " + q.o.join(". "), 0.85);
+};
+$("aquit").onclick = () => { speechSynthesis.cancel(); show("setup"); showHistory(); };
+
+function finishApply(){
+  speechSynthesis.cancel();
+  const total = abase.length, key = String([...picked][0]);
+  const right = Object.values(afirst).filter(Boolean).length;
+  const p = Math.round(right / total * 100), g = grade(p);
+  $("score").textContent = right + " / " + total;
+  $("grade").textContent = g.s + "  " + g.g + " · " + p + "%";
+  $("scoresub").textContent = "First-try score. " + g.say + (right < total ? " Remember these:" : " 🎉");
+  const ul = $("misslist"); ul.innerHTML = "";
+  abase.forEach((q, n) => {
+    if(afirst[n]) return;
+    const li = document.createElement("li");
+    li.innerHTML = "<span class='mw'><b>" + q.w + "</b></span><span>" + q.h + "</span>";
+    ul.appendChild(li);
+  });
+  $("again").hidden = true;
+  saveRun({ ts: Date.now(), date: fmtDate(new Date()), weeks: key, mode: "apply",
+            right: right, total: total, retry: false });
+  $("doneReport").innerHTML = applyReportHTML(key);
+  $("doneReport").hidden = false;
+  show("done");
+}
+
+/* last 5 first-try scores for one apply set */
+function applyReportHTML(key){
+  key = String(key);
+  const runs = log().filter(r => r.weeks === key && r.mode === "apply").slice(0, 5);
+  if(!runs.length) return "";
+  return "<p class='rcname'>🧮 " + applyLabel(key) + " — first tries</p><ul class='rc'>" +
+    runs.map(r => "<li><span>" + runDate(r) + "</span><span class='val'>" + r.right + " / " + r.total +
+      " · " + pct(r) + "% <span class='dim'>" + grade(pct(r)).g + "</span></span></li>").join("") + "</ul>";
+}
+
 /* ---------- keyboard ---------- */
 document.addEventListener("keydown", e => {
   if($("session").hidden) return;
@@ -666,7 +969,7 @@ document.addEventListener("keydown", e => {
 });
 $("card").onclick = () => { if(phase === 0) reveal(); };
 
-drawLists(); drawPreview(); setMode("read"); showHistory();
+setMode("read"); showHistory();
 </script>
 </body>
 </html>
