@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Kai's Skeleton Explorer</title>
+<style>
+  :root{
+    --bg:#f6f3ec; --card:#fffdf8; --ink:#232019; --muted:#6f6758;
+    --line:#e3dcce; --accent:#8a5a2b; --accent-soft:#f0e3d2;
+    --good:#2f7d52; --bad:#b4521f; --shadow:0 1px 2px rgba(35,32,25,.06),0 8px 24px rgba(35,32,25,.07);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#17150f; --card:#221f18; --ink:#f2ece0; --muted:#a79c88;
+      --line:#38332a; --accent:#e0b07a; --accent-soft:#33291d;
+      --good:#6fcf97; --bad:#f0a373; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);min-height:100vh;
+    font:17px/1.5 ui-rounded,"SF Pro Rounded",-apple-system,"Segoe UI","PingFang SC",sans-serif;-webkit-text-size-adjust:100%}
+  .wrap{max-width:760px;margin:0 auto;padding:20px 16px 60px}
+  h1{font-size:22px;margin:0 0 2px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 16px}
+  .homelink{display:inline-block;margin:0 0 12px;font-size:14px;color:var(--muted);text-decoration:none}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--shadow);margin-bottom:14px}
+  .tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+  .tab{appearance:none;font:inherit;font-weight:700;cursor:pointer;background:transparent;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:14px;padding:11px 8px;text-align:center}
+  .tab small{display:block;font-weight:400;font-size:12px;color:var(--muted)}
+  .tab[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+  .btn{appearance:none;font:inherit;font-weight:700;cursor:pointer;background:var(--accent);color:var(--bg);border:none;
+    border-radius:14px;padding:14px 22px;font-size:17px}
+  .btn.ghost{background:transparent;color:var(--muted);border:1.5px solid var(--line);font-weight:600;font-size:15px;padding:10px 14px}
+  .btn.wide{width:100%}
+  [hidden]{display:none!important}
+
+  /* ---- the skeleton ---- */
+  .stage{position:relative}
+  svg.skel{width:100%;height:auto;max-height:76vh;display:block;margin:0 auto;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+  svg.skel [data-part]{cursor:pointer;transition:opacity .2s}
+  svg.skel.focus [data-part]{opacity:.18}
+  svg.skel.focus [data-part].hl{opacity:1}
+  svg.skel [data-part].hl{animation:pulse 1.1s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+  svg.skel [data-part].wrongtap{opacity:1!important;animation:shake .4s}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+  .lbl rect{fill:#fffdf8;stroke:#8a5a2b;stroke-width:1.5}
+  .lbl text{font:700 15px ui-rounded,-apple-system,sans-serif;fill:#3b2a14}
+  .lbl line{stroke:#8a5a2b;stroke-width:1.5}
+  .lbl circle{fill:#8a5a2b}
+  .lbls{pointer-events:none}
+  .hole{fill:var(--card)}
+
+  .info{min-height:150px}
+  .info .nm{font-size:30px;font-weight:800;line-height:1.1;margin:0}
+  .info .zh{color:var(--accent);font-weight:700;font-size:20px;margin-left:8px}
+  .info .job{font-size:18px;margin:8px 0 6px}
+  .info .like{background:var(--accent-soft);border-radius:12px;padding:10px 12px;font-size:16px;margin:8px 0 0}
+  .info .clue{font-size:14px;color:var(--muted);margin:8px 0 0}
+  .info .where{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .speak{appearance:none;background:var(--accent-soft);border:none;color:var(--accent);border-radius:999px;
+    padding:6px 12px;font:inherit;font-weight:700;font-size:14px;cursor:pointer;vertical-align:middle;margin-left:8px}
+  .found{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .found button{appearance:none;font:inherit;font-size:14px;cursor:pointer;border-radius:999px;padding:6px 12px;
+    border:1.5px dashed var(--line);background:transparent;color:var(--muted)}
+  .found button.seen{border-style:solid;border-color:var(--good);color:var(--good);font-weight:700}
+  .row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+
+  /* ---- quiz ---- */
+  .qhead{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .bar{flex:1;height:7px;background:var(--line);border-radius:99px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--accent);transition:width .25s}
+  .count{font-size:13px;color:var(--muted);white-space:nowrap}
+  .qtext{font-size:21px;font-weight:700;text-align:center;margin:4px 0 10px;line-height:1.35}
+  .qtext em{font-style:normal;color:var(--accent)}
+  .opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  .opt{appearance:none;font:inherit;font-size:18px;font-weight:700;cursor:pointer;background:transparent;color:var(--ink);
+    border:2px solid var(--line);border-radius:14px;padding:14px 10px}
+  .opt.right{border-color:var(--good);color:var(--good);background:transparent}
+  .opt.wrong{border-color:var(--bad);color:var(--bad);text-decoration:line-through}
+  .fb{text-align:center;font-size:17px;min-height:28px;margin:10px 0}
+  .fb .g{color:var(--good);font-weight:800}
+  .fb .r{color:var(--bad);font-weight:800}
+  .score{font-size:56px;font-weight:800;text-align:center}
+  .scoresub{text-align:center;color:var(--muted);margin:0 0 14px}
+  .fact{margin:6px 0;font-size:16px}
+  .z{color:var(--accent);font-weight:700;font-size:14px}
+  .rules{margin:4px 0 0;padding-left:24px;font-size:16px}
+  .rules li{margin:3px 0}
+  .info b{color:var(--ink)}
+  .rc{list-style:none;padding:0;margin:0}
+  .rc li{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:15px}
+  .rc li:first-child{border-top:none}
+  .rc .val{font-weight:700;white-space:nowrap}
+  .rc .dim{color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="homelink" href="../">&larr; Back to home</a>
+  <h1>Kai's Skeleton Explorer 🦴</h1>
+  <p class="sub">Tap the bones. Learn each bone's name and where it is in your body.</p>
+
+  <div class="tabs">
+    <button class="tab" id="tExplore" aria-pressed="true">🔍 Explore<small>Tap and learn</small></button>
+    <button class="tab" id="tQuiz" aria-pressed="false">🎯 Quiz<small>15 questions · scored</small></button>
+  </div>
+
+  <!-- ============ EXPLORE ============ -->
+  <section id="explore">
+    <div class="panel">
+      <div class="stage" id="exStage"></div>
+      <div class="row" style="margin-top:6px">
+        <span class="count" id="foundCount"></span>
+        <button class="btn ghost" id="lblBtn">🏷 Show all names</button>
+      </div>
+      <div class="found" id="found"></div>
+    </div>
+    <div class="panel info" id="info"><p class="clue" style="font-size:16px">👆 Tap any bone to see what it is.</p></div>
+    <div class="panel">
+      <p style="margin:0 0 6px;font-weight:700">Report card (first try counts)</p>
+      <div id="report"></div>
+    </div>
+    <div class="panel facts">
+      <p style="margin:0 0 6px;font-weight:700">📘 Bone groups</p>
+      <p class="fact"><b>Skull</b> <span class="z">头骨</span> = <b>cranium</b> (brain case) + <b>mandible</b> (jawbone).</p>
+      <p class="fact"><b>Spinal column</b> <span class="z">脊柱</span>, from top to bottom:</p>
+      <ol class="rules">
+        <li><b>cervical</b> vertebrae — neck — <b>7</b> (C1–C7)</li>
+        <li><b>thoracic</b> vertebrae — chest / upper back — <b>12</b> (T1–T12)</li>
+        <li><b>lumbar</b> vertebrae — lower back — <b>5</b> (L1–L5)</li>
+        <li><b>sacrum</b>, then <b>coccyx</b> (tailbone)</li>
+      </ol>
+      <p class="fact"><b>Hand:</b> carpals (wrist) → <b>meta</b>carpals (palm) → phalanges (fingers).<br>
+        <b>Foot:</b> tarsals (ankle) → <b>meta</b>tarsals (foot) → phalanges (toes).<br>
+        <span class="z">meta- = “after”: the metacarpals come after the carpals.</span></p>
+      <p class="fact"><b>Two-bone pairs:</b> forearm = <b>ulna + radius</b>; lower leg = <b>tibia + fibula</b>.</p>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="quiz" hidden>
+    <div class="panel" id="qPanel">
+      <div class="qhead"><button class="btn ghost" id="qQuit">✕</button><div class="bar"><i id="qBar"></i></div><span class="count" id="qCount"></span></div>
+      <p class="qtext" id="qText"></p>
+      <div class="stage" id="qStage"></div>
+      <div class="opts" id="qOpts"></div>
+      <div class="fb" id="qFb"></div>
+      <button class="btn wide" id="qNext" hidden>Next →</button>
+    </div>
+    <div class="panel" id="qDone" hidden></div>
+  </section>
+</div>
+
+<script>
+/* -------------------------------------------------------------
+   Bones = the labels on the textbook page "The Skeletal System"
+   (p.18, IMG_9590). Phalanges is labelled twice in the book
+   (fingers and toes) — here it is one part covering both.
+------------------------------------------------------------- */
+const PARTS = {
+  cranium:  {name:"cranium", zh:"颅骨", group:"skull", region:"head", emoji:"💀", aka:"the brain case",
+    job:"The rounded top part of the skull. It protects your brain.",
+    like:"⛑ A built-in helmet for your brain.",
+    clue:"<b>cranium</b> comes from Greek <i>kranion</i> = skull."},
+  mandible: {name:"mandible", zh:"下颌骨", group:"skull", region:"head", emoji:"😬", aka:"the jawbone",
+    job:"The lower jaw. It is the only skull bone that moves — you use it to chew and talk.",
+    like:"🦴 Also called the <b>jawbone</b>. Open and close your mouth — that's your mandible moving.",
+    clue:"Latin <i>mandere</i> = to <b>chew</b> → the chewing bone."},
+  cervical: {name:"cervical vertebrae", zh:"颈椎", group:"spinal column", region:"neck", emoji:"🦒", aka:"the neck bones",
+    job:"The 7 vertebrae in your neck (C1–C7). They hold up your head and let it turn.",
+    like:"🦒 Your <b>neck bones</b>. Even a giraffe has only 7!",
+    clue:"Latin <i>cervix</i> = <b>neck</b>. C for cervical, C for collar."},
+  thoracic: {name:"thoracic vertebrae", zh:"胸椎", group:"spinal column", region:"upper back", emoji:"🔗", aka:"the upper back bones",
+    job:"The 12 vertebrae in your upper back (T1–T12). The ribs join onto them.",
+    like:"🔗 Your <b>upper back bones</b> — one for each pair of ribs.",
+    clue:"<b>thorax</b> = chest → the chest-level part of the spine."},
+  lumbar:   {name:"lumbar vertebrae", zh:"腰椎", group:"spinal column", region:"lower back", emoji:"🏋️", aka:"the lower back bones",
+    job:"The 5 vertebrae in your lower back (L1–L5). They are the biggest and carry the most weight.",
+    like:"🏋️ Your <b>lower back bones</b> — big and strong.",
+    clue:"Latin <i>lumbus</i> = lower back. A chair with “lumbar support” holds your lower back."},
+  sacrum:   {name:"sacrum", zh:"骶骨", group:"spinal column", region:"bottom of the spine", emoji:"🔻",
+    job:"A triangle-shaped bone at the bottom of the spine. It joins the spine to the hips.",
+    like:"🔻 An upside-down triangle wedged between your two hip bones.",
+    clue:"Sacrum → coccyx: the last two pieces of the spinal column, in that order."},
+  coccyx:   {name:"coccyx", zh:"尾骨", group:"spinal column", region:"bottom of the spine", emoji:"🐦", aka:"the tailbone",
+    job:"The very bottom tip of the spine.",
+    like:"🐒 Also called the <b>tailbone</b> — where a tail would be!",
+    clue:"Greek for <b>cuckoo</b> 🐦 — it's shaped like a cuckoo's beak. Say it: <b>COCK-six</b>."},
+  clavicle: {name:"clavicle", zh:"锁骨", region:"shoulder", emoji:"🔑", aka:"the collarbone",
+    job:"The long thin bone across the top of your chest. It connects your arm to your body.",
+    like:"🔑 Also called the <b>collarbone</b> — feel it just under your shirt collar.",
+    clue:"Latin <i>clavicula</i> = <b>little key</b> (it's shaped like an old key)."},
+  manubrium:{name:"manubrium", zh:"胸骨柄", region:"chest", emoji:"🗡", aka:"the top of the breastbone",
+    job:"The top part of the breastbone. The collarbones join onto it.",
+    like:"🗡 If the breastbone is a sword, the manubrium is its <b>handle</b>.",
+    clue:"Latin <i>manubrium</i> = <b>handle</b> (<i>manus</i> = hand, like <b>manu</b>al)."},
+  sternum:  {name:"sternum", zh:"胸骨", region:"chest", emoji:"🛡", aka:"the breastbone",
+    job:"The flat bone in the middle of your chest. The ribs join onto it at the front.",
+    like:"🛡 Also called the <b>breastbone</b> — the front plate of your rib cage.",
+    clue:"Greek <i>sternon</i> = chest. Manubrium on top, sternum below it."},
+  scapula:  {name:"scapula", zh:"肩胛骨", region:"shoulder", emoji:"🪽", aka:"the shoulder blade",
+    job:"The flat, triangle-shaped bone on your upper back. Your arm moves on it.",
+    like:"🪽 Also called the <b>shoulder blade</b> — flat like a blade, it sticks out when you squeeze your shoulders back.",
+    clue:"Latin <i>scapula</i> = shoulder. (Two are scapulae.)"},
+  ribs:     {name:"ribs", zh:"肋骨", region:"chest", emoji:"🫁", aka:"the rib cage",
+    job:"12 pairs of curved bones that make a cage around your heart and lungs.",
+    like:"🫁 A bony cage that protects your heart and lungs.",
+    clue:"12 pairs of ribs ↔ 12 thoracic vertebrae — each rib joins one."},
+  humerus:  {name:"humerus", zh:"肱骨", region:"arm", emoji:"💪", aka:"the upper arm bone",
+    job:"The long bone in your upper arm, from shoulder to elbow.",
+    like:"💪 Your <b>upper arm bone</b>.",
+    clue:"Sounds like “<b>humorous</b>” — and the “funny bone” is at its elbow end! 😄"},
+  ulna:     {name:"ulna", zh:"尺骨", region:"arm", emoji:"🤙", aka:"the pinky-side forearm bone",
+    job:"One of the two forearm bones — on the little-finger side.",
+    like:"🤙 Forearm bone on the <b>pinky</b> side. The point of your elbow is the ulna.",
+    clue:"Ulna and radius go together. <b>U</b>lna = <b>U</b>nder the pinky."},
+  radius:   {name:"radius", zh:"桡骨", region:"arm", emoji:"👍", aka:"the thumb-side forearm bone",
+    job:"One of the two forearm bones — on the thumb side.",
+    like:"👍 Forearm bone on the <b>thumb</b> side. It rolls around the ulna when you turn your hand over.",
+    clue:"<b>Radius</b> goes <b>round</b> — turn your palm up and down to feel it."},
+  pelvis:   {name:"pelvic girdle", zh:"骨盆", region:"hip", emoji:"🦋", aka:"the hip bones",
+    job:"The hip bones. They hold up the top of your body and join your legs to your spine.",
+    like:"🦋 Shaped like a butterfly — the big bones you feel at your hips.",
+    clue:"A <b>girdle</b> is a <b>belt</b> → a bony belt around your hips."},
+  carpals:  {name:"carpals", zh:"腕骨", region:"hand", emoji:"⌚", aka:"the wrist bones",
+    job:"8 small bones in your wrist. They let your hand bend and twist.",
+    like:"⌚ Your <b>wrist bones</b> — under your watch.",
+    clue:"Carpals = wrist, tarsals = ankle. <b>C</b>arpals come with <b>c</b>arrying (hands)."},
+  metacarpals:{name:"metacarpals", zh:"掌骨", region:"hand", emoji:"✋", aka:"the palm bones",
+    job:"5 long bones in your palm, between the wrist and the fingers.",
+    like:"✋ Your <b>palm bones</b> — your knuckles are their ends.",
+    clue:"<b>meta</b> = after → the bones that come <b>after the carpals</b>."},
+  phalanges:{name:"phalanges", zh:"指骨 / 趾骨", region:"fingers and toes", emoji:"🖐", aka:"the finger and toe bones",
+    job:"The bones in your fingers and toes. 14 in each hand and 14 in each foot.",
+    like:"🖐 Your <b>finger and toe bones</b>. Three in each finger, two in the thumb.",
+    clue:"Greek <i>phalanx</i> = a row of soldiers — fingers lined up in a row. (One is a phalanx.)"},
+  femur:    {name:"femur", zh:"股骨", region:"leg", emoji:"🍗", aka:"the thigh bone",
+    job:"The thigh bone, from hip to knee. The longest and strongest bone in your body.",
+    like:"🍗 Your <b>thigh bone</b> — the longest bone you have.",
+    clue:"Femur = longest. Its top is a ball that fits into the hip like a joystick."},
+  patella:  {name:"patella", zh:"髌骨", region:"leg", emoji:"🦵", aka:"the kneecap",
+    job:"A small, flat bone at the front of your knee. It protects the knee joint.",
+    like:"🦵 Also called the <b>kneecap</b>.",
+    clue:"Latin <i>patella</i> = <b>little dish</b> — a round, flat plate on your knee."},
+  tibia:    {name:"tibia", zh:"胫骨", region:"leg", emoji:"🦿", aka:"the shin bone",
+    job:"The big, thick bone in the lower leg, on the inside. It carries your weight.",
+    like:"🦿 Also called the <b>shin bone</b> — the hard bone at the front of your lower leg.",
+    clue:"<b>T</b>ibia = <b>T</b>hick. <b>F</b>ibula = <b>F</b>ine (thin)."},
+  fibula:   {name:"fibula", zh:"腓骨", region:"leg", emoji:"🥢", aka:"the thin lower-leg bone",
+    job:"The thin bone on the outside of the lower leg, next to the tibia.",
+    like:"🥢 The thin partner of the tibia.",
+    clue:"<b>F</b>ibula = <b>F</b>ine (thin). <b>T</b>ibia = <b>T</b>hick."},
+  tarsals:  {name:"tarsals", zh:"跗骨", region:"foot", emoji:"🦶", aka:"the ankle bones",
+    job:"7 bones in your ankle and heel.",
+    like:"🦶 Your <b>ankle bones</b>.",
+    clue:"Carpals = wrist, <b>tarsals</b> = ankle."},
+  metatarsals:{name:"metatarsals", zh:"跖骨", region:"foot", emoji:"👣", aka:"the foot bones",
+    job:"5 long bones in the middle of your foot, between the ankle and the toes.",
+    like:"👣 The long bones of your foot.",
+    clue:"<b>meta</b> = after → the bones that come <b>after the tarsals</b>."}
+};
+const ORDER = Object.keys(PARTS);
+const FACTS = [
+  ["The cranium and the mandible together make the…","skull","spinal column","pelvic girdle","rib cage"],
+  ["Cervical, thoracic and lumbar vertebrae are all part of the…","spinal column","skull","pelvic girdle","arm"],
+  ["How many cervical (neck) vertebrae are there?","7","12","5","3"],
+  ["How many thoracic vertebrae are there?","12","7","5","20"],
+  ["How many lumbar vertebrae are there?","5","7","12","2"],
+  ["Phalanges are the bones in your…","fingers and toes","wrists and ankles","skull","back"],
+  ["Carpals are in the wrist. Tarsals are in the…","ankle","knee","elbow","neck"],
+  ["The two bones in your forearm are the…","ulna and radius","tibia and fibula","femur and patella","clavicle and scapula"],
+  ["The two bones in your lower leg are the…","tibia and fibula","ulna and radius","femur and humerus","carpals and tarsals"],
+  ["The longest bone in your body is the…","femur","humerus","tibia","sternum"],
+  ["The ribs protect your…","heart and lungs","brain","feet","eyes"],
+  ["Which skull bone moves when you chew?","mandible","cranium","manubrium","sternum"],
+  ["What is at the very bottom of the spinal column?","coccyx","sacrum","patella","cranium"]
+];
+
+/* ---------- drawing (skeleton drawn in a 500-wide box, shifted right by 100 to leave room for labels) ---------- */
+const BONE = "#f3dfa8", EDGE = "#b8913f", DARK = "#5a4a2e";
+const bone = (x1,y1,x2,y2,w) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${EDGE}" stroke-width="${w+4}" stroke-linecap="round"/><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${BONE}" stroke-width="${w}" stroke-linecap="round"/>`;
+const hit  = (x1,y1,x2,y2,w) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="transparent" stroke-width="${w}" stroke-linecap="round"/>`;
+const knob = (cx,cy,rx,ry) => `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="${BONE}" stroke="${EDGE}" stroke-width="2"/>`;
+const block = (cx,y,w,h) => `<rect x="${cx-w/2}" y="${y}" width="${w}" height="${h}" rx="${h/2.5}" fill="${BONE}" stroke="${EDGE}" stroke-width="1.8"/>`;
+const blob = d => `<path d="${d}" fill="${BONE}" stroke="${EDGE}" stroke-width="2.5" stroke-linejoin="round"/>`;
+const hitRect = (x,y,w,h) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="transparent"/>`;
+const curve = (d,w) => `<path d="${d}" fill="none" stroke="${EDGE}" stroke-width="${w+3}" stroke-linecap="round"/><path d="${d}" fill="none" stroke="${BONE}" stroke-width="${w}" stroke-linecap="round"/><path d="${d}" fill="none" stroke="transparent" stroke-width="${w+10}"/>`;
+const both = s => s + `<g transform="matrix(-1 0 0 1 500 0)">${s}</g>`;   // draw the left side, mirror for the right
+const range = n => [...Array(n).keys()];
+const segs = (list, w) => list.map(([a,b,c,d]) => bone(a,b,c,d,w) + hit(a,b,c,d,w+8)).join("");
+
+const DRAW = {
+  pelvis: both(blob("M 243 452 C 225 432, 180 424, 164 446 C 150 468, 168 494, 190 508 C 194 526, 210 546, 241 549 L 246 538 C 236 528, 232 512, 240 496 Z")
+    + `<ellipse class="hole" cx="216" cy="524" rx="10" ry="9"/>`),
+  sacrum: blob("M 229 447 L 271 447 L 257 500 L 243 500 Z") + range(3).map(i => `<circle class="hole" cx="${243}" cy="${460+i*12}" r="2.5"/><circle class="hole" cx="${257}" cy="${460+i*12}" r="2.5"/>`).join(""),
+  coccyx: blob("M 243 503 L 257 503 L 250 521 Z") + `<circle cx="250" cy="512" r="12" fill="transparent"/>`,
+  lumbar: range(5).map(i => block(250, 366+i*16, 32, 13)).join(""),
+  thoracic: range(12).map(i => block(250, 211+i*12.7, 24, 10)).join("") + hitRect(237,316,26,46),
+  cervical: range(7).map(i => block(250, 166+i*6, 20, 4.6)).join("") + hitRect(236,164,28,46),
+  ribs: both(range(10).map(i => { const W=[46,58,66,72,76,78,78,76,72,66][i], y=226+i*13;
+    return curve(`M 241 ${y} C ${241-W*.55} ${y-12}, ${250-W} ${y-2}, ${253-W} ${y+26}`, 5); }).join("")),
+  sternum: blob("M 242 241 L 258 241 L 257 312 L 250 322 L 243 312 Z"),
+  manubrium: blob("M 237 219 L 263 219 L 258 239 L 242 239 Z"),
+  scapula: both(`<path d="M 165 212 L 214 221 L 184 300 Z" fill="#e6cb88" stroke="${EDGE}" stroke-width="2.5" stroke-linejoin="round"/>`),
+  clavicle: both(curve("M 239 216 C 220 205, 196 219, 170 207", 7)),
+  humerus: both(bone(168,228,150,386,13) + knob(170,222,13,13) + knob(150,390,16,8) + hit(168,222,150,390,30)),
+  radius: both(bone(138,402,118,537,7) + hit(138,402,118,537,18)),
+  ulna: both(bone(158,402,140,537,7) + hit(158,402,140,537,18)),
+  carpals: both([[-11,0],[-3,-1],[5,0],[13,1],[-9,9],[-1,9],[7,9],[15,10]].map(([dx,dy]) => knob(128+dx,548+dy,4.8,4.6)).join("") + hitRect(110,540,40,26)),
+  metacarpals: both(segs([[115,567,103,590],[121,569,118,600],[129,569,129,602],[137,569,139,600],[144,568,148,596]], 5)),
+  phalanges: both(segs([[101,596,95,612],[94,617,91,630],
+      [118,606,117,622],[117,627,116,640],[116,645,116,655],
+      [129,608,129,626],[129,631,129,645],[129,650,129,661],
+      [139,606,140,623],[140,628,141,641],[141,646,141,656],
+      [148,602,150,615],[150,620,151,631],[151,636,152,645]], 4.5)
+    + segs([[185,984,184,991],[184,995,183,1001],[197,986,196,993],[196,997,196,1003],
+      [209,988,209,995],[209,999,209,1005],[221,989,222,996],[222,1000,223,1006]], 4)
+    + segs([[233,988,235,997],[235,1001,236,1009]], 6)),
+  femur: both(bone(206,528,214,726,16) + bone(194,514,206,530,10) + knob(194,512,12,12) + knob(206,733,11,9) + knob(223,733,11,9) + hit(200,512,214,735,32)),
+  fibula: both(bone(197,774,195,925,6) + knob(196,770,5,5) + hit(197,770,195,925,16)),
+  tibia: both(bone(218,767,216,924,13) + knob(216,762,17,8) + knob(217,929,10,7) + hit(217,760,216,930,26)),
+  patella: both(`<ellipse cx="214" cy="748" rx="11" ry="13" fill="${BONE}" stroke="${EDGE}" stroke-width="2.5"/><circle cx="214" cy="748" r="16" fill="transparent"/>`),
+  tarsals: both([[200,940],[210,939],[220,940],[196,950],[205,950],[215,950],[225,950]].map(([x,y]) => knob(x,y,5,4.8)).join("") + hitRect(188,932,44,24)),
+  metatarsals: both(segs([[194,958,186,979],[202,959,198,981],[210,959,209,983],[218,959,220,984]], 4.5) + segs([[226,959,232,983]], 6)),
+  cranium: blob("M 250 12 C 300 12, 312 55, 308 90 C 306 108, 298 118, 290 123 L 210 123 C 202 118, 194 108, 192 90 C 188 55, 200 12, 250 12 Z")
+    + `<ellipse cx="230" cy="80" rx="13" ry="11" fill="${DARK}"/><ellipse cx="270" cy="80" rx="13" ry="11" fill="${DARK}"/>
+       <path d="M 250 92 L 244 108 L 256 108 Z" fill="${DARK}"/>`
+    + range(9).map(i => `<line x1="${230+i*5}" y1="114" x2="${230+i*5}" y2="123" stroke="${EDGE}" stroke-width="1.5"/>`).join(""),
+  mandible: blob("M 211 124 L 289 124 C 293 142, 280 161, 250 164 C 220 161, 207 142, 211 124 Z")
+    + range(9).map(i => `<line x1="${230+i*5}" y1="124" x2="${230+i*5}" y2="133" stroke="${EDGE}" stroke-width="1.5"/>`).join("")
+};
+// draw order (later = on top)
+const LAYERS = ["pelvis","sacrum","coccyx","lumbar","thoracic","cervical","ribs","sternum","manubrium","scapula","clavicle",
+  "humerus","radius","ulna","carpals","metacarpals","phalanges","femur","fibula","tibia","patella","tarsals","metatarsals","cranium","mandible"];
+
+// labels: [part, pointX, pointY (skeleton coords), side, labelY]
+const LABELS = [
+  ["cervical",250,186,"L",186],["scapula",182,240,"L",238],["humerus",160,310,"L",296],["thoracic",250,340,"L",344],
+  ["lumbar",250,405,"L",400],["ulna",150,450,"L",440],["radius",127,472,"L",474],["sacrum",250,474,"L",508],
+  ["coccyx",250,512,"L",532],["carpals",118,552,"L",560],["metacarpals",122,585,"L",588],["phalanges",116,640,"L",636],
+  ["cranium",272,42,"R",44],["mandible",276,148,"R",150],["clavicle",300,211,"R",204],["manubrium",252,229,"R",230],
+  ["sternum",250,276,"R",268],["ribs",322,306,"R",302],["pelvis",322,462,"R",458],["femur",290,620,"R",620],
+  ["patella",286,748,"R",748],["tibia",283,830,"R",826],["fibula",305,860,"R",858],["tarsals",290,945,"R",938],
+  ["metatarsals",292,972,"R",970],["phalanges",292,1001,"R",1004]
+];
+
+function svgFor(){
+  return `<svg class="skel" viewBox="0 0 700 1025" xmlns="http://www.w3.org/2000/svg"><g transform="translate(100 0)">
+    ${LAYERS.map(id => `<g data-part="${id}">${DRAW[id]}</g>`).join("")}</g>
+    <g class="lbls"></g></svg>`;
+}
+function mount(el, onTap){
+  el.innerHTML = svgFor();
+  const svg = el.querySelector("svg");
+  svg.addEventListener("click", e => { const g = e.target.closest("[data-part]"); if (g) onTap(g.dataset.part, g); });
+  return svg;
+}
+function focusOn(svg, ids){
+  svg.querySelectorAll("[data-part]").forEach(g => g.classList.toggle("hl", ids.includes(g.dataset.part)));
+  svg.classList.toggle("focus", ids.length > 0);
+}
+function drawLabels(svg, on){
+  const box = svg.querySelector(".lbls"); box.innerHTML = "";
+  if (!on) return;
+  LABELS.forEach(([id, px, py, side, ly]) => {
+    const g = document.createElementNS("http://www.w3.org/2000/svg","g");
+    const tx = side === "L" ? 180 : 522, lx = side === "L" ? 184 : 518;
+    g.setAttribute("class","lbl");
+    g.innerHTML = `<line x1="${lx}" y1="${ly}" x2="${px+100}" y2="${py}"/><circle cx="${px+100}" cy="${py}" r="3"/>
+      <rect rx="7"/><text x="${tx}" y="${ly+5}" text-anchor="${side==="L"?"end":"start"}">${PARTS[id].name}</text>`;
+    box.appendChild(g);
+    const b = g.querySelector("text").getBBox(), r = g.querySelector("rect");
+    r.setAttribute("x", b.x-6); r.setAttribute("y", b.y-2); r.setAttribute("width", b.width+12); r.setAttribute("height", b.height+4);
+  });
+}
+
+/* ---------- helpers ---------- */
+const $ = id => document.getElementById(id);
+const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+function say(t){ try{ speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(t); u.lang="en-US"; u.rate=.85; speechSynthesis.speak(u);}catch(e){} }
+const STORE = "kai-skeleton-v1";
+function log(){ try{ return JSON.parse(localStorage.getItem(STORE)) || []; }catch(e){ return []; } }
+function addLog(r){ try{ const l = log(); l.push(r); localStorage.setItem(STORE, JSON.stringify(l.slice(-200))); }catch(e){} }
+const whereTxt = p => (p.group ? `Part of the ${p.group} · ` : "") + p.region;
+
+/* ---------- explore ---------- */
+let exSvg = null, labelsOn = false;
+const seen = new Set();
+function drawExplore(){
+  exSvg = mount($("exStage"), showPart);
+  drawLabels(exSvg, labelsOn);
+  drawFound();
+}
+function drawFound(){
+  $("found").innerHTML = ORDER.map(id => `<button class="${seen.has(id)?"seen":""}" data-id="${id}">${seen.has(id)?"✓ "+PARTS[id].name:"?"}</button>`).join("");
+  $("found").querySelectorAll("button").forEach(b => b.onclick = () => { if (seen.has(b.dataset.id)) showPart(b.dataset.id); });
+  $("foundCount").textContent = seen.size === ORDER.length ? `🏆 You found all ${ORDER.length} bones!` : `Found ${seen.size} of ${ORDER.length} bones`;
+}
+function showPart(id){
+  const p = PARTS[id];
+  focusOn(exSvg, [id]);
+  seen.add(id); drawFound();
+  $("info").innerHTML = `<p class="where">${whereTxt(p)}</p>
+    <p class="nm">${p.name}<span class="zh">${p.zh}</span><button class="speak" id="sp">🔊</button></p>
+    <p class="job">${p.job}</p><p class="like">${p.like}</p><p class="clue">💡 ${p.clue}</p>`;
+  $("sp").onclick = () => say(p.name);
+  say(p.name);
+}
+$("lblBtn").onclick = () => { labelsOn = !labelsOn; $("lblBtn").textContent = labelsOn ? "🏷 Hide names" : "🏷 Show all names"; drawLabels(exSvg, labelsOn); };
+
+function drawReport(){
+  const runs = log();
+  if (!runs.length){ $("report").innerHTML = "<p class='rc dim' style='margin:0'>No quiz yet.</p>"; return; }
+  const f = runs[0], last = runs[runs.length-1], d = r => new Date(r.t).toLocaleDateString("en-GB",{day:"numeric",month:"short"});
+  const best = runs.reduce((a,r) => r.score > a.score ? r : a, runs[0]);
+  $("report").innerHTML = `<ul class="rc">
+    <li><span>First try · ${d(f)}<br><span class="dim">${f.miss.length?"missed: "+f.miss.join(", "):"no mistakes"}</span></span><span class="val">${f.score}/${f.max}</span></li>
+    <li><span>Latest · ${d(last)}<br><span class="dim">${last.miss.length?"missed: "+last.miss.join(", "):"no mistakes"}</span></span><span class="val">${last.score}/${last.max}</span></li>
+    <li><span>Best · ${runs.length} quizzes</span><span class="val">${best.score}/${best.max}</span></li></ul>`;
+}
+
+/* ---------- quiz ----------
+   5 × "tap the <name>"   3 × "tap the <common name>"   3 × "what is the glowing bone called?"
+   2 × "where in the body?"   2 × bone-group facts                                   */
+let Q = null;
+function makeQuiz(){
+  let pool = shuffle(ORDER);
+  const take = (n, ok = () => true) => { const got = pool.filter(ok).slice(0,n); pool = pool.filter(x => !got.includes(x)); return got; };
+  const tapA = take(3, id => PARTS[id].aka), tapN = take(5), named = take(3), regions = take(2);
+  return shuffle([
+    ...tapN.map(id => ({t:"tapName",id})),
+    ...tapA.map(id => ({t:"tapAka",id})),
+    ...named.map(id => ({t:"nameIt",id})),
+    ...regions.map(id => ({t:"where",id})),
+    ...shuffle(FACTS).slice(0,2).map(f => ({t:"fact",f}))
+  ]);
+}
+function startQuiz(){ Q = {qs:makeQuiz(), i:0, score:0, miss:[]}; $("qPanel").hidden=false; $("qDone").hidden=true; drawQ(); }
+function choices(right, wrong, cb){
+  $("qOpts").style.gridTemplateColumns = "1fr 1fr";
+  $("qOpts").innerHTML = shuffle([right, ...wrong]).map(o => `<button class="opt">${o}</button>`).join("");
+  $("qOpts").querySelectorAll(".opt").forEach(b => b.onclick = () => {
+    if (Q.qs[Q.i].answered) return;
+    $("qOpts").querySelectorAll(".opt").forEach(x => { if (x.textContent===right) x.classList.add("right"); else if (x===b) x.classList.add("wrong"); });
+    cb(b.textContent === right);
+  });
+}
+function drawQ(){
+  const q = Q.qs[Q.i], p = PARTS[q.id] || {name:""};
+  $("qCount").textContent = `${Q.i+1} / ${Q.qs.length}`;
+  $("qBar").style.width = (Q.i/Q.qs.length*100)+"%";
+  $("qFb").innerHTML = ""; $("qNext").hidden = true; $("qOpts").innerHTML = ""; $("qStage").innerHTML = "";
+  q.answered = false;
+  const done = (ok, msg, missName = p.name) => {
+    q.answered = true;
+    if (ok) Q.score++; else Q.miss.push(missName);
+    $("qFb").innerHTML = (ok ? `<span class="g">✓ Yes!</span> ` : `<span class="r">✗ Not quite.</span> `) + msg;
+    $("qNext").hidden = false;
+  };
+  if (q.t === "tapName" || q.t === "tapAka"){
+    $("qText").innerHTML = q.t === "tapName" ? `Tap the <em>${p.name}</em>.` : `Tap ${p.aka.replace(/^the /,"the <em>")}</em>.`;
+    const svg = mount($("qStage"), (id, g) => {
+      if (q.answered) return;
+      const ok = id === q.id;
+      if (!ok) { g.classList.add("wrongtap"); setTimeout(()=>g.classList.remove("wrongtap"),400); }
+      focusOn(svg, ok ? [id] : [q.id]);
+      say(p.name);
+      done(ok, ok ? `That's the <b>${p.name}</b>${q.t==="tapAka"?" ("+p.aka+")":""}.` : `You tapped the ${PARTS[id].name}. The glowing bone is the <b>${p.name}</b>.`);
+    });
+  } else if (q.t === "nameIt"){
+    $("qText").innerHTML = `What is the glowing bone called?`;
+    const svg = mount($("qStage"), () => {});
+    focusOn(svg, [q.id]);
+    choices(p.name, shuffle(ORDER.filter(x => x !== q.id)).slice(0,3).map(x => PARTS[x].name), ok => {
+      say(p.name); done(ok, `That's the <b>${p.name}</b> — ${p.job.charAt(0).toLowerCase()+p.job.slice(1)}`);
+    });
+  } else if (q.t === "where"){
+    $("qText").innerHTML = `Where in your body is the <em>${p.name}</em>?`;
+    $("qStage").innerHTML = `<p style="text-align:center;font-size:64px;margin:6px 0">${p.emoji}</p>`;
+    const others = shuffle([...new Set(ORDER.map(x => PARTS[x].region))].filter(r => r !== p.region)).slice(0,3);
+    choices(p.region, others, ok => done(ok, `The <b>${p.name}</b> is in the <b>${p.region}</b>.`));
+  } else {
+    const [qq, right, ...wrong] = q.f;
+    $("qText").innerHTML = qq;
+    $("qStage").innerHTML = `<p style="text-align:center;font-size:56px;margin:6px 0">📘</p>`;
+    choices(right, wrong, ok => done(ok, `Answer: <b>${right}</b>`, "bone groups"));
+  }
+}
+$("qNext").onclick = () => {
+  Q.i++;
+  if (Q.i < Q.qs.length) return drawQ();
+  const miss = [...new Set(Q.miss)];
+  addLog({score:Q.score, max:Q.qs.length, miss, t:Date.now()});
+  const first = log().length === 1;
+  $("qPanel").hidden = true; $("qDone").hidden = false;
+  $("qDone").innerHTML = `<div class="score">${Q.score}/${Q.qs.length}</div>
+    <p class="scoresub">${first?"First try — this one goes on the report card. ":""}${Q.score===Q.qs.length?"🏆 Perfect! You know your skeleton!":Q.score>=12?"👍 Great! Go back to Explore and tap the ones you missed.":"Go back to Explore, tap each bone again, then try a new quiz."}</p>
+    ${miss.length?`<p class="scoresub">Look again: <b>${miss.join(", ")}</b></p>`:""}
+    <button class="btn wide" id="qAgain">New quiz ↻</button>
+    <button class="btn wide ghost" id="qBack" style="margin-top:10px">Back to Explore</button>`;
+  $("qAgain").onclick = startQuiz;
+  $("qBack").onclick = () => $("tExplore").click();
+};
+$("qQuit").onclick = () => { if (confirm("Stop the quiz? It won't be counted.")) $("tExplore").click(); };
+
+$("tExplore").onclick = () => { $("tExplore").setAttribute("aria-pressed","true"); $("tQuiz").setAttribute("aria-pressed","false");
+  $("explore").hidden = false; $("quiz").hidden = true; drawReport(); drawExplore(); };
+$("tQuiz").onclick = () => { $("tQuiz").setAttribute("aria-pressed","true"); $("tExplore").setAttribute("aria-pressed","false");
+  $("explore").hidden = true; $("quiz").hidden = false; startQuiz(); };
+
+drawExplore(); drawReport();
+</script>
+</body>
+</html>
