@@ -102,8 +102,22 @@ td.acc{width:92px;padding-left:14px;text-align:right;vertical-align:middle}
 .seg button:hover{color:var(--ink)}
 .seg button.on{background:var(--accent);color:#fff}
 
-/* three tabs now — keep them on one line on a phone */
-@media (max-width:400px){ .seg button{font-size:14px;padding:11px 4px} }
+/* four tabs now — keep them on one line on a phone */
+@media (max-width:440px){ .seg button{font-size:13px;padding:11px 2px} }
+
+/* ---------- meaning quiz ---------- */
+.mq-prompt{font-size:22px;font-weight:600;line-height:1.35;margin:4px auto 6px;max-width:30ch}
+.mq-word{font-size:36px;font-weight:700;letter-spacing:.01em}
+.mq-ask{font-size:14px;color:var(--muted);margin-bottom:6px}
+.mq-opts{display:grid;gap:10px;margin-top:14px}
+.mq-opts.words{grid-template-columns:1fr 1fr}
+.mq-opt{border:2px solid var(--line);background:var(--card);border-radius:14px;padding:14px 12px;
+  font-size:17px;font-weight:600;color:var(--ink);text-align:center;line-height:1.3}
+.mq-opts.means .mq-opt{text-align:left;font-weight:500}
+.mq-opt.right{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.mq-opt.wrong{border-color:var(--warn);color:var(--warn);text-decoration:line-through}
+.mq-fb{margin-top:14px;text-align:center;font-size:17px;min-height:26px}
+.mq-fb .cn{color:var(--accent);font-weight:700;margin-left:6px}
 
 /* ---------- one-by-one rows ---------- */
 .solo{display:flex;align-items:center;gap:12px;background:var(--card);
@@ -239,6 +253,7 @@ input.bad{border-color:var(--warn)}
       <button data-view="one">1️⃣ One</button>
       <button data-view="levels">🎮 Level</button>
       <button data-view="all">📋 All</button>
+      <button data-view="mean">🧠 Meaning</button>
     </div>
 
     <div class="stack" data-view-panel="one" hidden>
@@ -260,6 +275,13 @@ input.bad{border-color:var(--warn)}
         <p class="legend" style="text-align:left;margin:8px 0 2px" id="fixhead"></p>
         <div id="fixes" class="stack" style="margin-bottom:0"></div>
       </div>
+    </div>
+
+    <div class="stack" data-view-panel="mean" hidden>
+      <button class="btn primary" id="mean-all">🧠 Meaning test · <span data-count></span> words
+        <small>Read the meaning, pick the word — or hear the word, pick the meaning</small></button>
+      <p class="lasttest" id="lastmean" hidden></p>
+      <div id="meanfix" hidden></div>
     </div>
 
     <details class="more">
@@ -306,6 +328,20 @@ input.bad{border-color:var(--warn)}
       </div>
 
       <div class="fb" id="fb" style="display:none"></div>
+    </div>
+  </section>
+
+  <!-- ============ MEANING QUIZ ============ -->
+  <section id="meanq" class="screen">
+    <div class="bar">
+      <span id="mq-pos"></span>
+      <button class="quit" id="mq-quit">Finish</button>
+    </div>
+    <div class="card">
+      <div class="stage" id="mq-stage"></div>
+      <div class="mq-opts" id="mq-opts"></div>
+      <div class="mq-fb" id="mq-fb"></div>
+      <button class="btn primary" id="mq-next" style="text-align:center;margin-top:14px" hidden>Next →</button>
     </div>
   </section>
 
@@ -783,7 +819,7 @@ function save(){
 /* Must drop the stored copy BEFORE rebuilding — calling load() here would just
    read last week's data straight back in and save() would re-persist it. */
 function wipe(){
-  try{ localStorage.removeItem(KEY); }catch(e){}
+  try{ localStorage.removeItem(KEY); localStorage.removeItem(KEY+":mean"); }catch(e){}
   stats = {}; stars = {}; wordStars = {}; lastAll = null; toFix = [];
   WORDS.forEach(o=>{ stats[o.w] = fresh(); });
   save();
@@ -973,6 +1009,7 @@ function renderAll(){
   $$("[data-week]").forEach(e => e.textContent = WEEK);
   $$("[data-count]").forEach(e => e.textContent = WORDS.length);
   renderHome();
+  renderMean();
 }
 
 function renderLevels(){
@@ -1517,7 +1554,97 @@ function finish(){
   show("done");
 }
 
-function goHome(){ renderHome(); show("home"); }
+function goHome(){ renderHome(); renderMean(); show("home"); }
+
+/* ============================================================
+   Meaning test — does he know what the word MEANS, not just how
+   to spell it. Every word once, shuffled; half the questions show
+   the meaning and ask for the word, half say/show the word and ask
+   for the meaning. Distractors come from the same week's list.
+   Result is kept per week under KEY+":mean" (last run + missed words).
+   ============================================================ */
+let MQ = null;
+const meanLoad = () => { try{ return JSON.parse(localStorage.getItem(KEY+":mean")) || null; }catch(e){ return null; } };
+const meanSave = r  => { try{ localStorage.setItem(KEY+":mean", JSON.stringify(r)); }catch(e){} };
+const mshuffle = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+
+function renderMean(){
+  const r = meanLoad(), lm = $("#lastmean"), fx = $("#meanfix");
+  if(!r){ lm.hidden = true; fx.hidden = true; return; }
+  lm.hidden = false;
+  lm.innerHTML = `Last meaning test (${r.date}): <b>${r.right} / ${r.total}</b>` + (r.right === r.total ? " 🏆" : r.miss.length ? "" : " · missed ones fixed ✓");
+  const miss = r.miss.map(byWord).filter(Boolean);
+  fx.hidden = !miss.length;
+  if(!miss.length) return;
+  fx.innerHTML = `<p class="legend" style="text-align:left;margin:8px 0 2px">Didn't know these yet — read them, then try just these:</p>
+    <ul class="misslist" style="margin-bottom:12px">${miss.map(o =>
+      `<li><span><b>${o.w}</b><span class="cn">${o.zh}</span></span><span style="color:var(--muted);text-align:right">${o.m}</span></li>`).join("")}</ul>
+    <button class="btn" id="mean-fix">🔁 Meaning test · just these ${miss.length}</button>`;
+  $("#mean-fix").onclick = () => startMean(miss);
+}
+
+function startMean(list){
+  const qs = mshuffle(list).map((o,i) => ({o, t: i%2 ? "pickMean" : "pickWord"}));
+  MQ = {qs, i:0, right:0, miss:[], full: list.length === WORDS.length};
+  show("meanq");
+  drawMean();
+}
+function drawMean(){
+  const q = MQ.qs[MQ.i], o = q.o;
+  $("#mq-pos").textContent = `${MQ.i+1} / ${MQ.qs.length}`;
+  $("#mq-fb").innerHTML = ""; $("#mq-next").hidden = true;
+  const others = mshuffle(WORDS.filter(x => x.w !== o.w && x.m !== o.m)).slice(0,3);
+  const opts = mshuffle([o, ...others]);
+  const box = $("#mq-opts");
+  if(q.t === "pickWord"){
+    $("#mq-stage").innerHTML = `<div class="mq-ask">Which word means…</div><div class="mq-prompt">${o.m}</div>`;
+    box.className = "mq-opts words";
+    box.innerHTML = opts.map(x => `<button class="mq-opt" data-w="${x.w}">${x.w}</button>`).join("");
+  } else {
+    $("#mq-stage").innerHTML = `<div class="mq-ask">What does this word mean?</div>
+      <div class="mq-word">${o.w} <button class="play" id="mq-say" aria-label="Hear it">🔊</button></div>`;
+    $("#mq-say").onclick = () => say(o.w);
+    say(o.w);
+    box.className = "mq-opts means";
+    box.innerHTML = opts.map(x => `<button class="mq-opt" data-w="${x.w}">${x.m}</button>`).join("");
+  }
+  box.querySelectorAll(".mq-opt").forEach(b => b.onclick = () => {
+    if(q.done) return;
+    q.done = true;
+    const ok = b.dataset.w === o.w;
+    box.querySelectorAll(".mq-opt").forEach(x => { if(x.dataset.w === o.w) x.classList.add("right"); else if(x === b) x.classList.add("wrong"); });
+    if(ok) MQ.right++; else MQ.miss.push(o.w);
+    if(q.t === "pickWord") say(o.w);
+    $("#mq-fb").innerHTML = (ok ? "✅ " : "❌ ") + `<b>${o.w}</b><span class="cn">${o.zh}</span><br><span style="color:var(--muted)">${o.m}</span>`;
+    $("#mq-next").hidden = false;
+  });
+}
+function finishMean(){
+  const total = MQ.qs.length, miss = MQ.miss;
+  // Only a full-list run replaces the saved result; a "just these" retry
+  // clears the words he now got right from the missed list.
+  const prev = meanLoad();
+  const d = new Date(), date = d.toLocaleDateString("en-US",{month:"short", day:"numeric"});
+  if(MQ.full || !prev) meanSave({right:MQ.right, total, date, miss});
+  else meanSave({...prev, miss: prev.miss.filter(w => miss.includes(w))});
+  $("#done-emoji").textContent = miss.length ? (MQ.right/total >= .8 ? "👍" : "📖") : "🏆";
+  $("#done-stars").textContent = "";
+  $("#done-title").textContent = `${MQ.right} / ${total} meanings`;
+  $("#done-sub").textContent = miss.length ? "Read the ones you missed, then try them again." : "You know what every word means!";
+  $("#done-break").hidden = true;
+  const ul = $("#done-list");
+  ul.hidden = !miss.length;
+  ul.innerHTML = miss.map(byWord).map(o => `<li><span><b>${o.w}</b><span class="cn">${o.zh}</span></span><span style="color:var(--muted);text-align:right">${o.m}</span></li>`).join("");
+  $("#done-actions").innerHTML = (miss.length ? `<button class="btn primary" id="mq-again" style="text-align:center">🔁 Try the ${miss.length} missed again</button>` : "")
+    + `<button class="btn" id="mq-home" style="text-align:center">Home</button>`;
+  if(miss.length) $("#mq-again").onclick = () => startMean(miss.map(byWord));
+  $("#mq-home").onclick = goHome;
+  MQ = null;
+  show("done");
+}
+$("#mean-all").onclick = () => startMean(WORDS);
+$("#mq-next").onclick  = () => { MQ.i++; MQ.i < MQ.qs.length ? drawMean() : finishMean(); };
+$("#mq-quit").onclick  = () => { if(MQ && MQ.i > 0 && confirm("Stop? This test won't be saved.")) { MQ = null; goHome(); } else if(MQ && MQ.i === 0){ MQ = null; goHome(); } };
 
 /* ============================================================
    Wiring
