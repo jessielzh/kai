@@ -105,19 +105,20 @@ td.acc{width:92px;padding-left:14px;text-align:right;vertical-align:middle}
 /* four tabs now — keep them on one line on a phone */
 @media (max-width:440px){ .seg button{font-size:13px;padding:11px 2px} }
 
-/* ---------- meaning quiz ---------- */
-.mq-prompt{font-size:22px;font-weight:600;line-height:1.35;margin:4px auto 6px;max-width:30ch}
-.mq-word{font-size:36px;font-weight:700;letter-spacing:.01em}
-.mq-ask{font-size:14px;color:var(--muted);margin-bottom:6px}
-.mq-opts{display:grid;gap:10px;margin-top:14px}
-.mq-opts.words{grid-template-columns:1fr 1fr}
-.mq-opt{border:2px solid var(--line);background:var(--card);border-radius:14px;padding:14px 12px;
-  font-size:17px;font-weight:600;color:var(--ink);text-align:center;line-height:1.3}
-.mq-opts.means .mq-opt{text-align:left;font-weight:500}
-.mq-opt.right{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
-.mq-opt.wrong{border-color:var(--warn);color:var(--warn);text-decoration:line-through}
-.mq-fb{margin-top:14px;text-align:center;font-size:17px;min-height:26px}
-.mq-fb .cn{color:var(--accent);font-weight:700;margin-left:6px}
+/* ---------- meaning quiz (same flow as History "Understand") ---------- */
+.mq-cue{font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--muted);margin:0 0 8px}
+.mq-word{font-size:38px;font-weight:700;margin:0}
+.mq-ipa{font-size:16px;color:var(--accent);margin:4px 0 0}
+.mq-zh{font-size:24px;font-weight:700;color:var(--accent);margin:16px 0 4px}
+.mq-en{font-size:18px;color:var(--ink);margin:0 auto;max-width:32ch}
+.mq-timer{width:64px;height:64px;border-radius:50%;margin:18px auto 0;display:flex;align-items:center;justify-content:center;
+  font-size:28px;font-weight:700;color:var(--accent);border:3px solid var(--accent);cursor:pointer}
+.mq-rate{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.mq-rate button{border:2px solid var(--line);background:var(--card);border-radius:14px;padding:14px 8px;
+  font-size:18px;font-weight:700;color:var(--ink)}
+.mq-rate button small{display:block;font-size:13px;font-weight:400;color:var(--muted);margin-top:2px}
+.mq-rate .ok{border-color:var(--accent);color:var(--accent)}
+.mq-rate .no{border-color:var(--warn);color:var(--warn)}
 
 /* ---------- one-by-one rows ---------- */
 .solo{display:flex;align-items:center;gap:12px;background:var(--card);
@@ -279,7 +280,7 @@ input.bad{border-color:var(--warn)}
 
     <div class="stack" data-view-panel="mean" hidden>
       <button class="btn primary" id="mean-all">🧠 Meaning test · <span data-count></span> words
-        <small>Read the meaning, pick the word — or hear the word, pick the meaning</small></button>
+        <small>See the word, say what it means, then check</small></button>
       <p class="lasttest" id="lastmean" hidden></p>
       <div id="meanfix" hidden></div>
     </div>
@@ -338,10 +339,19 @@ input.bad{border-color:var(--warn)}
       <button class="quit" id="mq-quit">Finish</button>
     </div>
     <div class="card">
-      <div class="stage" id="mq-stage"></div>
-      <div class="mq-opts" id="mq-opts"></div>
-      <div class="mq-fb" id="mq-fb"></div>
-      <button class="btn primary" id="mq-next" style="text-align:center;margin-top:14px" hidden>Next →</button>
+      <div style="text-align:center">
+        <p class="mq-cue" id="mq-cue"></p>
+        <p class="mq-word" id="mq-word"></p>
+        <p class="mq-ipa" id="mq-ipa"></p>
+        <p class="mq-zh" id="mq-zh" hidden></p>
+        <p class="mq-en" id="mq-en" hidden></p>
+        <div class="mq-timer" id="mq-timer" title="Tap to skip the wait"></div>
+        <button class="mini" id="mq-say" style="margin-top:14px">🔊 Hear it</button>
+      </div>
+      <div class="mq-rate" id="mq-rate" hidden>
+        <button class="ok" id="mq-ok">✅ I knew it<small>said the meaning</small></button>
+        <button class="no" id="mq-no">❌ Didn't know<small>couldn't remember</small></button>
+      </div>
     </div>
   </section>
 
@@ -1583,41 +1593,44 @@ function renderMean(){
   $("#mean-fix").onclick = () => startMean(miss);
 }
 
+const MQ_PAUSE = 5;   // seconds to think before the meaning shows (same as History)
+let mqTimer = null;
 function startMean(list){
-  const qs = mshuffle(list).map((o,i) => ({o, t: i%2 ? "pickMean" : "pickWord"}));
-  MQ = {qs, i:0, right:0, miss:[], full: list.length === WORDS.length};
+  MQ = {qs: mshuffle(list), i:0, right:0, miss:[], full: list.length === WORDS.length};
   show("meanq");
   drawMean();
 }
 function drawMean(){
-  const q = MQ.qs[MQ.i], o = q.o;
+  clearInterval(mqTimer);
+  const o = MQ.qs[MQ.i];
+  MQ.phase = 0;
   $("#mq-pos").textContent = `${MQ.i+1} / ${MQ.qs.length}`;
-  $("#mq-fb").innerHTML = ""; $("#mq-next").hidden = true;
-  const others = mshuffle(WORDS.filter(x => x.w !== o.w && x.m !== o.m)).slice(0,3);
-  const opts = mshuffle([o, ...others]);
-  const box = $("#mq-opts");
-  if(q.t === "pickWord"){
-    $("#mq-stage").innerHTML = `<div class="mq-ask">Which word means…</div><div class="mq-prompt">${o.m}</div>`;
-    box.className = "mq-opts words";
-    box.innerHTML = opts.map(x => `<button class="mq-opt" data-w="${x.w}">${x.w}</button>`).join("");
-  } else {
-    $("#mq-stage").innerHTML = `<div class="mq-ask">What does this word mean?</div>
-      <div class="mq-word">${o.w} <button class="play" id="mq-say" aria-label="Hear it">🔊</button></div>`;
-    $("#mq-say").onclick = () => say(o.w);
-    say(o.w);
-    box.className = "mq-opts means";
-    box.innerHTML = opts.map(x => `<button class="mq-opt" data-w="${x.w}">${x.m}</button>`).join("");
-  }
-  box.querySelectorAll(".mq-opt").forEach(b => b.onclick = () => {
-    if(q.done) return;
-    q.done = true;
-    const ok = b.dataset.w === o.w;
-    box.querySelectorAll(".mq-opt").forEach(x => { if(x.dataset.w === o.w) x.classList.add("right"); else if(x === b) x.classList.add("wrong"); });
-    if(ok) MQ.right++; else MQ.miss.push(o.w);
-    if(q.t === "pickWord") say(o.w);
-    $("#mq-fb").innerHTML = (ok ? "✅ " : "❌ ") + `<b>${o.w}</b><span class="cn">${o.zh}</span><br><span style="color:var(--muted)">${o.m}</span>`;
-    $("#mq-next").hidden = false;
-  });
+  $("#mq-cue").textContent = "WHAT DOES IT MEAN?";
+  $("#mq-word").textContent = o.w;
+  $("#mq-ipa").textContent = o.ipa;
+  $("#mq-zh").hidden = $("#mq-en").hidden = $("#mq-rate").hidden = true;
+  let left = MQ_PAUSE;
+  const t = $("#mq-timer"); t.hidden = false; t.textContent = left;
+  say(o.w);
+  mqTimer = setInterval(() => { left--; if(left <= 0) revealMean(); else t.textContent = left; }, 1000);
+}
+function revealMean(){
+  if(!MQ || MQ.phase !== 0) return;
+  clearInterval(mqTimer);
+  MQ.phase = 1;
+  const o = MQ.qs[MQ.i];
+  $("#mq-cue").textContent = "ANSWER";
+  $("#mq-timer").hidden = true;
+  $("#mq-zh").textContent = o.zh; $("#mq-en").textContent = o.m;
+  $("#mq-zh").hidden = !o.zh; $("#mq-en").hidden = false; $("#mq-rate").hidden = false;
+}
+function rateMean(ok){
+  if(!MQ || MQ.phase !== 1) return;
+  MQ.phase = 2;
+  const o = MQ.qs[MQ.i];
+  if(ok) MQ.right++; else MQ.miss.push(o.w);
+  MQ.i++;
+  MQ.i < MQ.qs.length ? drawMean() : finishMean();
 }
 function finishMean(){
   const total = MQ.qs.length, miss = MQ.miss;
@@ -1643,8 +1656,17 @@ function finishMean(){
   show("done");
 }
 $("#mean-all").onclick = () => startMean(WORDS);
-$("#mq-next").onclick  = () => { MQ.i++; MQ.i < MQ.qs.length ? drawMean() : finishMean(); };
-$("#mq-quit").onclick  = () => { if(MQ && MQ.i > 0 && confirm("Stop? This test won't be saved.")) { MQ = null; goHome(); } else if(MQ && MQ.i === 0){ MQ = null; goHome(); } };
+$("#mq-timer").onclick = revealMean;
+document.addEventListener("keydown", e => {   // space = skip the wait · 1 = knew it · 2 = didn't
+  if(!$("#meanq").classList.contains("on") || !MQ) return;
+  if(e.key === " "){ e.preventDefault(); revealMean(); }
+  else if(e.key === "1") rateMean(true);
+  else if(e.key === "2") rateMean(false);
+});
+$("#mq-say").onclick   = () => MQ && say(MQ.qs[MQ.i].w);
+$("#mq-ok").onclick    = () => rateMean(true);
+$("#mq-no").onclick    = () => rateMean(false);
+$("#mq-quit").onclick  = () => { if(MQ && MQ.i > 0 && !confirm("Stop? This test won't be saved.")) return; clearInterval(mqTimer); MQ = null; goHome(); };
 
 /* ============================================================
    Wiring
