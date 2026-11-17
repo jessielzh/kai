@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Kai's PEEL Writing</title>
+<style>
+  :root{
+    --bg:#f6f3ec; --card:#fffdf8; --ink:#232019; --muted:#6f6758;
+    --line:#e3dcce; --accent:#8a5a2b; --accent-soft:#f0e3d2;
+    --good:#2f7d52; --good-soft:#e2f1e8; --again:#b4521f; --again-soft:#f8e4d8;
+    --p:#3b6fb6; --e1:#2f7d52; --e2:#b4521f; --l:#7a4fa8;
+    --shadow:0 1px 2px rgba(35,32,25,.06),0 8px 24px rgba(35,32,25,.07);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#17150f; --card:#221f18; --ink:#f2ece0; --muted:#a79c88;
+      --line:#38332a; --accent:#e0b07a; --accent-soft:#33291d;
+      --good:#6fcf97; --good-soft:#1d3326; --again:#f0a373; --again-soft:#3a2518;
+      --p:#8db4ec; --e1:#6fcf97; --e2:#f0a373; --l:#c7a2ee;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink); min-height:100vh;
+    font:17px/1.5 ui-rounded,"SF Pro Rounded",-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB",sans-serif;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:24px 16px 56px}
+  h1{font-size:23px;margin:0 0 2px;letter-spacing:-.01em}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 20px}
+  .back{color:var(--muted);font-size:14px;text-decoration:none}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px}
+  .label{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;font-weight:600}
+  .chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+  .chip,.mode{
+    appearance:none;font:inherit;cursor:pointer;background:transparent;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:14px;padding:12px 10px;transition:.12s;
+  }
+  .chip{font-weight:600;text-align:center}
+  .chip small,.mode small{display:block;font-weight:400;font-size:12px;color:var(--muted);margin-top:2px;line-height:1.4}
+  .chip:hover,.mode:hover{border-color:var(--accent)}
+  .chip[aria-pressed="true"],.mode[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+  .modes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .mode{text-align:center;padding:14px 8px}
+  .mode b{display:block;font-size:17px}
+  @media (max-width:520px){.modes{grid-template-columns:1fr}}
+  .btn{
+    appearance:none;font:inherit;font-weight:700;cursor:pointer;
+    background:var(--accent);color:var(--bg);border:none;border-radius:14px;
+    padding:15px 22px;font-size:17px;transition:.12s;
+  }
+  .btn:hover{filter:brightness(1.08)}
+  .btn.ghost{background:transparent;color:var(--muted);border:1.5px solid var(--line);font-weight:600;font-size:15px;padding:12px 18px}
+  .btn.ghost:hover{color:var(--ink);border-color:var(--accent)}
+  .btn.wide{width:100%}
+  .btn[disabled]{opacity:.4;cursor:default}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+  /* PEEL guide */
+  .guide{display:grid;gap:8px}
+  .g{display:flex;gap:12px;align-items:flex-start}
+  .tag{flex:none;width:38px;height:38px;border-radius:11px;color:#fff;font-weight:800;
+    display:flex;align-items:center;justify-content:center;font-size:17px}
+  .tag.p{background:var(--p)} .tag.e1{background:var(--e1)} .tag.e2{background:var(--e2)} .tag.l{background:var(--l)}
+  .g div{font-size:15px;line-height:1.45}
+  .g b{font-size:16px}
+  .g i{color:var(--muted);font-style:normal}
+  .star{background:var(--again-soft);border-radius:12px;padding:6px 10px;margin:-4px -10px}
+
+  /* session */
+  .top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .bar{flex:1;height:7px;background:var(--line);border-radius:99px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .25s}
+  .count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .x{appearance:none;background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;padding:0 4px;line-height:1}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:22px 18px;position:relative}
+  .q{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:4px}
+  .question{font-size:20px;font-weight:700;margin:0 0 16px;line-height:1.35}
+
+  .slot{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px dashed var(--line);min-height:58px}
+  .slot:first-of-type{border-top:none}
+  .slot .txt{flex:1;font-size:17px;padding-top:6px}
+  .slot .txt.empty{color:var(--muted);font-size:14px;font-style:italic}
+  .opts{display:grid;gap:10px;margin-top:16px}
+  .opt{
+    appearance:none;font:inherit;font-size:17px;text-align:left;cursor:pointer;line-height:1.45;
+    background:var(--card);color:var(--ink);border:2px solid var(--line);border-radius:14px;padding:13px 15px;transition:.12s;
+  }
+  .opt:hover{border-color:var(--accent)}
+  .opt.wrong{border-color:var(--again);background:var(--again-soft);animation:shake .35s}
+  .opt.right{border-color:var(--good);background:var(--good-soft)}
+  .opt.dim{opacity:.45}
+  .opt[disabled]{cursor:default}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .given{background:var(--bg);border-radius:14px;padding:10px 14px;margin-bottom:6px}
+  .given .slot{min-height:0;padding:6px 0}
+  .ask{font-weight:700;font-size:17px;margin:14px 0 0}
+  .ask span{color:var(--e2)}
+  .fb{margin-top:14px;border-radius:14px;padding:12px 14px;font-size:16px;line-height:1.45}
+  .fb.ok{background:var(--good-soft);color:var(--good)}
+  .fb.no{background:var(--again-soft);color:var(--again)}
+  .fb > b:first-child{display:block;font-size:17px;margin-bottom:2px}
+  .next{margin-top:16px}
+  .burst{position:absolute;left:50%;top:40%;font-size:96px;line-height:1;pointer-events:none;
+    transform:translate(-50%,-50%) scale(.3);opacity:0;animation:burst 1s ease-out forwards}
+  @keyframes burst{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}30%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}
+    50%{transform:translate(-50%,-50%) scale(1)}85%{opacity:1}100%{opacity:0;transform:translate(-50%,-60%) scale(1)}}
+
+  /* write */
+  .facts{background:var(--accent-soft);border-radius:14px;padding:12px 16px;margin-bottom:14px}
+  .facts ul{margin:4px 0 0;padding-left:20px}
+  .facts li{margin:3px 0;font-size:16px}
+  .wbox{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+  .wbox .in{flex:1}
+  .wbox .hint{font-size:13px;color:var(--muted);margin-bottom:4px}
+  textarea{width:100%;font:inherit;font-size:17px;line-height:1.45;border:1.5px solid var(--line);border-radius:12px;
+    padding:10px 12px;background:var(--card);color:var(--ink);resize:vertical;min-height:72px}
+  textarea:focus{outline:none;border-color:var(--accent)}
+  .model .slot .txt{padding-top:6px}
+  .checks{display:grid;gap:10px;margin-top:8px}
+  .chk{border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+  .chk p{margin:0 0 10px;font-size:16px}
+  .chk .yn{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .chk button{appearance:none;font:inherit;font-weight:700;font-size:15px;cursor:pointer;border-radius:12px;padding:11px;border:2px solid;background:transparent}
+  .chk .y{color:var(--good);border-color:var(--good)} .chk .n{color:var(--again);border-color:var(--again)}
+  .chk .y.on{background:var(--good);color:var(--card)} .chk .n.on{background:var(--again);color:var(--card)}
+  .mine{background:var(--bg);border-radius:14px;padding:12px 14px;font-size:16px;white-space:pre-wrap;margin-bottom:12px}
+
+  /* done + history */
+  .score{font-size:56px;font-weight:800;text-align:center;letter-spacing:-.02em}
+  .scoresub{text-align:center;color:var(--muted);margin:2px 0 20px}
+  .misslist{list-style:none;padding:0;margin:0 0 18px}
+  .misslist li{padding:10px 0;border-top:1px solid var(--line);font-size:15px}
+  .log{list-style:none;padding:0;margin:0}
+  .log li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:14px}
+  .log li:first-child{border-top:none}
+  .log .s{font-weight:700;font-variant-numeric:tabular-nums}
+  .log .redo{color:var(--muted);font-weight:400}
+  .muted{color:var(--muted);font-size:14px}
+  details summary{cursor:pointer;color:var(--muted);font-size:14px}
+  .hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ============ HOME ============ -->
+<section id="home">
+  <a class="back" href="../">← Home</a>
+  <h1>✍️ PEEL Writing</h1>
+  <p class="sub">History paragraphs · Q2 · Ms Heather's topics</p>
+
+  <div class="panel">
+    <p class="label">How a PEEL paragraph works</p>
+    <div class="guide">
+      <div class="g"><span class="tag p">P</span><div><b>Point</b> — answer the question and say <b>why</b>.<br><i>"The Grand Canal was very significant because it joined north and south China."</i></div></div>
+      <div class="g"><span class="tag e1">E</span><div><b>Evidence</b> — 2 facts: names, dates, numbers.<br><i>"It was built in the Sui Dynasty and is over 1,700 km long."</i></div></div>
+      <div class="g star"><span class="tag e2">E</span><div><b>Explain</b> — <b>So what?</b> What did it mean for China? Don't repeat the fact!<br><i>"This meant that… so China…"</i></div></div>
+      <div class="g"><span class="tag l">L</span><div><b>Link</b> — go back to the question.<br><i>"Therefore, the Grand Canal helped China because…"</i></div></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p class="label">1 · Choose practice</p>
+    <div class="modes" id="modes">
+      <button class="mode" data-mode="order" aria-pressed="true"><b>🔀 Order it</b><small>Put the 4 sentences in P‑E‑E‑L order</small></button>
+      <button class="mode" data-mode="explain" aria-pressed="false"><b>💡 So what?</b><small>Find the sentence that really explains</small></button>
+      <button class="mode" data-mode="write" aria-pressed="false"><b>✏️ Write it</b><small>Write your own, then check</small></button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p class="label">2 · Choose topic</p>
+    <div class="chips" id="units"></div>
+  </div>
+
+  <button class="btn wide" id="start">Start</button>
+
+  <div class="panel" style="margin-top:16px">
+    <p class="label">Recent scores (first try)</p>
+    <ul class="log" id="log"></ul>
+    <details id="writings" style="margin-top:10px"><summary>📄 My written paragraphs</summary><div id="wlist" style="margin-top:10px"></div></details>
+  </div>
+</section>
+
+<!-- ============ SESSION ============ -->
+<section id="session" class="hidden">
+  <div class="top">
+    <button class="x" id="quit" aria-label="Quit">✕</button>
+    <div class="bar"><i id="barfill"></i></div>
+    <span class="count" id="count"></span>
+  </div>
+  <div class="card" id="card"></div>
+</section>
+
+<!-- ============ DONE ============ -->
+<section id="done" class="hidden">
+  <div class="panel">
+    <div class="score" id="score"></div>
+    <div class="scoresub" id="scoresub"></div>
+    <ul class="misslist" id="misslist"></ul>
+    <div class="row">
+      <button class="btn" id="redo">Redo the missed ones</button>
+      <button class="btn ghost" id="home2">Back</button>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<script>
+/* ---------- Topics: Ms Heather's Q2 units + Qin/Han ----------
+   Each topic is one model PEEL paragraph at Kai's level.
+   repeat = an "Explain" that only repeats the fact (Kai's habit).
+   vague  = an "Explain" that only says "important" with no reason. */
+const TOPICS = [
+ {id:'canal', unit:'sui', title:'The Grand Canal',
+  q:'How significant was the Grand Canal to the development of China?',
+  facts:['Built in the Sui Dynasty (581–618 CE)','Over 1,700 km long — the longest man‑made waterway in the world','Links Beijing (north) to Hangzhou (south)','Joins the Yellow River and the Yangtze River','The south grew lots of rice'],
+  P:'The Grand Canal was very significant because it joined north and south China together.',
+  E:'It was built in the Sui Dynasty and is over 1,700 km long. It links Beijing in the north to Hangzhou in the south.',
+  X:'This meant that rice and goods from the rich south could travel by boat to the north, so cities and armies in the north had enough food.',
+  L:'Therefore, the Grand Canal helped China develop because it tied the north and the south together.',
+  repeat:'This shows that the Grand Canal is a very long river that goes from Beijing to Hangzhou.',
+  vague:'This means that the Grand Canal is very important.'},
+ {id:'exam', unit:'sui', title:'Civil service exam',
+  q:'Why was the civil service exam important for China?',
+  facts:['The Sui Dynasty made the exam formal','Emperor Taizong of the Tang used it more to hire officials','Officials were chosen by a test, not only by family'],
+  P:'The civil service exam was important because it helped China choose clever officials.',
+  E:'The Sui Dynasty made the exam formal, and the Tang emperor Taizong used it even more to hire government officials.',
+  X:'This meant that people got government jobs because they studied hard, not only because their family was rich, so China was run by educated people.',
+  L:'In conclusion, the civil service exam made China\'s government stronger and fairer.',
+  repeat:'This shows that the Sui and the Tang both had a civil service exam for officials.',
+  vague:'This means that the exam was a very big and important test.'},
+ {id:'poetry', unit:'tang', title:'Tang poetry',
+  q:'Why is the Tang Dynasty called a golden age of culture?',
+  facts:['High Tang = a golden age for China','Art and poetry developed','Li Bai and Du Fu were Tang poets','People still learn Tang poems today'],
+  P:'The Tang Dynasty was a golden age of culture because art and poetry grew a lot.',
+  E:'Two of the most famous Chinese poets, Li Bai and Du Fu, lived in the Tang Dynasty.',
+  X:'This meant that poems became a big part of Chinese culture, so people still read and learn Tang poems today, more than 1,000 years later.',
+  L:'Therefore, Tang poetry shows why the Tang was a golden age of culture.',
+  repeat:'This shows that Li Bai and Du Fu were famous poets from the Tang Dynasty.',
+  vague:'This means that the Tang Dynasty was really good.'},
+ {id:'invent', unit:'tang', title:'Tang inventions',
+  q:'How did Tang inventions change China?',
+  facts:['Woodblock printing was invented in the Tang','Gunpowder was invented in the Tang','Before printing, books were copied by hand'],
+  P:'Tang inventions were important because they changed how people learned.',
+  E:'During the Tang Dynasty, people invented woodblock printing. They also invented gunpowder.',
+  X:'This meant that books could be printed quickly instead of copied by hand, so many more people could read and learn.',
+  L:'In conclusion, Tang inventions helped China because they spread knowledge.',
+  repeat:'This shows that woodblock printing and gunpowder came from the Tang Dynasty.',
+  vague:'This means that the inventions were very cool and important.'},
+ {id:'taizong', unit:'tang', title:'Emperor Taizong',
+  q:'Why was Emperor Taizong an important ruler?',
+  facts:['Started the Tang golden age','Used the civil service exam to hire officials','Built good schools in the capital','Made many changes to make the laws fair'],
+  P:'Emperor Taizong was an important ruler because he started the Tang golden age.',
+  E:'He used the civil service exam to hire officials, built good schools in the capital, and made the laws fairer.',
+  X:'This meant that the government had skilled officials and fair rules, so the country was peaceful and people could live well.',
+  L:'Therefore, Taizong was a great emperor because his changes made the Tang strong.',
+  repeat:'This shows that Taizong used exams, built schools and changed the laws.',
+  vague:'This means that Taizong was a very good emperor.'},
+ {id:'tribute', unit:'tang', title:'Tribute & trade',
+  q:'How did tribute and trade help the Tang Dynasty?',
+  facts:['Many countries paid tribute to the Tang','They sent important people with gifts to the emperor','They wanted peace and trading opportunities'],
+  P:'Tribute and trade helped the Tang Dynasty become rich and powerful.',
+  E:'Many countries sent important people with gifts to the Tang emperor. They did this for peace and for the chance to trade.',
+  X:'This meant that the Tang had peace with its neighbours and new goods and ideas came into China, so the country became richer.',
+  L:'In conclusion, tribute and trade made the Tang stronger.',
+  repeat:'This shows that other countries brought gifts to the Tang emperor.',
+  vague:'This means that trade was important for the Tang.'},
+ {id:'wu', unit:'tang', title:'Wu Zetian',
+  q:'Why is Wu Zetian important in Chinese history?',
+  facts:['The only female emperor in Chinese history','Ruled during the High Tang','Continued the golden age'],
+  P:'Wu Zetian is important because she was the only woman to rule China as emperor.',
+  E:'She ruled during the High Tang and continued the golden age that Taizong started.',
+  X:'This meant that the Tang stayed strong and peaceful under her, so she showed that a woman could rule China well.',
+  L:'Therefore, Wu Zetian is a special part of Chinese history.',
+  repeat:'This shows that Wu Zetian was the only female emperor.',
+  vague:'This means that Wu Zetian was very famous.'},
+ {id:'anlushan', unit:'tang', title:'End of the High Tang',
+  q:'Why did the High Tang golden age end?',
+  facts:['Emperor Xuanzong lost to the Arabs at the Battle of Talas','This ended Tang expansion','General An Lushan rebelled (An Lushan Rebellion)'],
+  P:'The High Tang golden age ended because of war and rebellion.',
+  E:'Under Emperor Xuanzong, the Tang lost to the Arabs at the Battle of Talas. Then General An Lushan rebelled against the emperor.',
+  X:'This meant that the Tang lost many soldiers, money and land, so the emperor became weak and could not control the country.',
+  L:'In conclusion, war and rebellion turned the Tang from strong to weak.',
+  repeat:'This shows that An Lushan fought against Emperor Xuanzong.',
+  vague:'This means that the rebellion was a very bad thing.'},
+ {id:'disunity', unit:'disunity', title:'Period of Disunity',
+  q:'Why was the Period of Disunity a hard time for China?',
+  facts:['Three Kingdoms (220–265 CE): Wei, Shu and Wu','Northern and Southern Dynasties (386–589 CE): China split in two','Western Jin quickly became corrupt'],
+  P:'The Period of Disunity was a hard time because China was split into many parts.',
+  E:'In the Three Kingdoms period, China was divided into Wei, Shu and Wu. Later, it was split between the North and the South for about 200 years.',
+  X:'This meant that the kingdoms often fought each other, so many people died and China could not grow.',
+  L:'Therefore, China was weaker when it was not united.',
+  repeat:'This shows that China had three kingdoms called Wei, Shu and Wu.',
+  vague:'This means that the Period of Disunity was very long.'},
+ {id:'south', unit:'disunity', title:'People move south',
+  q:'How did the Period of Disunity change southern China?',
+  facts:['There was constant war in the north','Many people moved south','The south\'s economy grew'],
+  P:'The Period of Disunity helped southern China to grow.',
+  E:'Because of constant war in the north, many people moved to the south.',
+  X:'This meant that there were more farmers and workers in the south, so the south grew more food and became richer.',
+  L:'In conclusion, war in the north made the south more important to China.',
+  repeat:'This shows that many people moved from the north to the south.',
+  vague:'This means that the south was very interesting.'},
+ {id:'wall', unit:'qinhan', title:'Qin: the Great Wall',
+  q:'How did the Qin Dynasty protect China from outside enemies?',
+  facts:['Qin Shihuang built the Great Wall','Northern nomads on horses attacked China'],
+  P:'The Qin Dynasty protected China by building a defence in the north.',
+  E:'Qin Shihuang built the Great Wall to keep out the northern nomads.',
+  X:'This meant that enemies on horses could not easily attack, so people in northern China were safer.',
+  L:'In conclusion, the Great Wall helped the Qin keep China safe.',
+  repeat:'This shows that Qin Shihuang built the Great Wall.',
+  vague:'This means that the Great Wall was very big.'},
+ {id:'confucius', unit:'qinhan', title:'Han: Confucianism',
+  q:'How did the Han Dynasty use Confucianism?',
+  facts:['The Qin banned Confucianism','Han Wudi made Confucianism the official idea of the state','The Han set up a basic civil service exam'],
+  P:'The Han Dynasty made Confucianism very important, unlike the Qin.',
+  E:'The Qin banned Confucianism, but Han Wudi made it the official idea of the government.',
+  X:'This meant that all officials learned the same ideas about respect and good rule, so the government worked together and stayed stable.',
+  L:'Therefore, Confucianism helped the Han rule China for a long time.',
+  repeat:'This shows that Han Wudi chose Confucianism and the Qin did not.',
+  vague:'This means that Confucianism was a good idea.'},
+];
+const UNITS = [
+  {id:'all', name:'All topics'},
+  {id:'sui', name:'Sui', sub:'Grand Canal, exam'},
+  {id:'tang', name:'Tang', sub:'golden age'},
+  {id:'disunity', name:'Disunity', sub:'Three Kingdoms…'},
+  {id:'qinhan', name:'Qin & Han'},
+];
+const PARTS = [
+  {k:'P', cls:'p', name:'Point'},
+  {k:'E', cls:'e1', name:'Evidence'},
+  {k:'X', cls:'e2', name:'Explain'},
+  {k:'L', cls:'l', name:'Link'},
+];
+
+/* ---------- storage ---------- */
+const KEY = 'kai-peel-v1';
+const store = (()=>{ try{ return JSON.parse(localStorage.getItem(KEY)) || {log:[],writes:[]}; }catch(e){ return {log:[],writes:[]}; } })();
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e){} }
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const MODE_NAME = {order:'🔀 Order it', explain:'💡 So what?', write:'✏️ Write it'};
+function show(id){ ['home','session','done'].forEach(s => $('#'+s).classList.toggle('hidden', s!==id)); window.scrollTo(0,0); }
+function burst(emoji){ const b=document.createElement('div'); b.className='burst'; b.textContent=emoji; $('#card').appendChild(b); setTimeout(()=>b.remove(),1000); }
+function tag(p){ return `<span class="tag ${p.cls}" title="${p.name}">${p.k==='X'?'E':p.k}</span>`; }
+function today(){ const d=new Date(); return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`; }
+
+/* ---------- home ---------- */
+let mode = 'order', unit = 'all';
+$('#units').innerHTML = UNITS.map(u => `<button class="chip" data-unit="${u.id}" aria-pressed="${u.id===unit}">${u.name}${u.sub?`<small>${u.sub}</small>`:''}</button>`).join('');
+$('#modes').onclick = e => { const b=e.target.closest('.mode'); if(!b) return; mode=b.dataset.mode;
+  document.querySelectorAll('.mode').forEach(m => m.setAttribute('aria-pressed', m===b)); };
+$('#units').onclick = e => { const b=e.target.closest('.chip'); if(!b) return; unit=b.dataset.unit;
+  document.querySelectorAll('.chip').forEach(m => m.setAttribute('aria-pressed', m===b)); };
+
+function renderLog(){
+  const L = store.log.slice(-10).reverse();
+  $('#log').innerHTML = L.length ? L.map(r => `<li><span>${r.date} · ${MODE_NAME[r.mode]}${r.redo?' <span class="redo">(redo)</span>':''}</span><span class="s">${r.score}/${r.total}</span></li>`).join('')
+    : '<li class="muted">No scores yet.</li>';
+  const W = store.writes.slice(-10).reverse();
+  $('#writings').classList.toggle('hidden', !W.length);
+  $('#wlist').innerHTML = W.map(w => `<div class="mine"><b>${esc(w.title)}</b> · <span class="muted">${w.date} · self-check ${w.score}/4</span>\n${esc(w.text)}</div>`).join('');
+}
+renderLog();
+
+$('#start').onclick = () => {
+  const pool = TOPICS.filter(t => unit==='all' || t.unit===unit);
+  if(mode==='write') startWrite(pool);
+  else startQuiz(mode, shuffle(pool), false);
+};
+$('#quit').onclick = () => { renderLog(); show('home'); };
+$('#home2').onclick = () => { renderLog(); show('home'); };
+
+/* ---------- quiz engine (order + explain) ---------- */
+let S = null;
+function startQuiz(m, items, redo){
+  S = {mode:m, items, i:0, firstTry:0, missed:[], redo};
+  show('session'); next();
+}
+function progress(){
+  $('#barfill').style.width = (S.i / S.items.length * 100) + '%';
+  $('#count').textContent = `${Math.min(S.i+1, S.items.length)} / ${S.items.length}`;
+}
+function next(){
+  if(S.i >= S.items.length) return finish();
+  progress();
+  (S.mode==='order' ? renderOrder : renderExplain)(S.items[S.i]);
+}
+function record(t, clean){
+  if(clean) S.firstTry++; else S.missed.push(t);
+}
+function nextBtn(){
+  const last = S.i === S.items.length-1;
+  return `<button class="btn wide next" id="nx">${last?'See score':'Next →'}</button>`;
+}
+function bindNext(){ $('#nx').onclick = () => { S.i++; next(); }; $('#nx').focus(); }
+
+/* 🔀 Order: tap the next sentence; a wrong tap shakes and the paragraph no longer counts as first-try */
+function renderOrder(t){
+  const sentences = shuffle(PARTS.map(p => ({k:p.k, text:t[p.k]})));
+  let step = 0, mistakes = 0;
+  const card = $('#card');
+  card.innerHTML = `
+    <div class="q">Put in P‑E‑E‑L order</div>
+    <p class="question">${esc(t.q)}</p>
+    <div id="slots">${PARTS.map((p,i)=>`<div class="slot">${tag(p)}<div class="txt empty" id="s${i}">${p.name}${p.k==='X'?' — so what?':''}</div></div>`).join('')}</div>
+    <div class="opts" id="opts">${sentences.map((s,i)=>`<button class="opt" data-k="${s.k}">${esc(s.text)}</button>`).join('')}</div>
+    <div id="after"></div>`;
+  $('#opts').onclick = e => {
+    const b = e.target.closest('.opt'); if(!b || b.disabled) return;
+    const want = PARTS[step].k;
+    if(b.dataset.k === want){
+      const slot = $('#s'+step); slot.textContent = b.textContent; slot.classList.remove('empty');
+      b.remove(); step++;
+      document.querySelectorAll('#opts .opt').forEach(o => o.classList.remove('wrong'));
+      if(step === 4){
+        const clean = mistakes===0;
+        record(t, clean);
+        burst(clean ? '🌟' : '👍');
+        $('#after').innerHTML = (clean
+          ? `<div class="fb ok"><b>Perfect order!</b>Point → Evidence → Explain → Link.</div>`
+          : `<div class="fb no"><b>Done — ${mistakes} wrong tap${mistakes>1?'s':''}.</b>Remember: the <b>Explain</b> sentence usually starts with "This meant that…" and comes <b>after</b> the facts.</div>`) + nextBtn();
+        bindNext();
+      }
+    } else {
+      mistakes++;
+      b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong');
+      const hints = {P:'The first sentence answers the question.', E:'Now give the facts — names, dates, numbers.', X:'Now explain: what did those facts MEAN for China?', L:'Last: go back to the question — "Therefore… / In conclusion…"'};
+      $('#after').innerHTML = `<div class="fb no">${hints[want]}</div>`;
+    }
+  };
+}
+
+/* 💡 So what?: given P + E, pick the real Explain (not a repeat, not a vague "important") */
+function renderExplain(t){
+  const opts = shuffle([{k:'ok', text:t.X},{k:'repeat', text:t.repeat},{k:'vague', text:t.vague}]);
+  const card = $('#card');
+  card.innerHTML = `
+    <div class="q">${esc(t.title)}</div>
+    <p class="question">${esc(t.q)}</p>
+    <div class="given">
+      <div class="slot">${tag(PARTS[0])}<div class="txt">${esc(t.P)}</div></div>
+      <div class="slot">${tag(PARTS[1])}<div class="txt">${esc(t.E)}</div></div>
+    </div>
+    <p class="ask">Which sentence really <span>explains</span>? <span style="color:var(--muted);font-weight:500">(So what did it mean for China?)</span></p>
+    <div class="opts" id="opts">${opts.map(o=>`<button class="opt" data-k="${o.k}">${esc(o.text)}</button>`).join('')}</div>
+    <div id="after"></div>`;
+  $('#opts').onclick = e => {
+    const b = e.target.closest('.opt'); if(!b || b.disabled) return;
+    const k = b.dataset.k, clean = k==='ok';
+    record(t, clean);
+    document.querySelectorAll('#opts .opt').forEach(o => { o.disabled = true;
+      if(o.dataset.k==='ok') o.classList.add('right'); else if(o!==b) o.classList.add('dim'); });
+    if(!clean) b.classList.add('wrong');
+    burst(clean ? '🌟' : '🤔');
+    const why = {
+      ok:`<div class="fb ok"><b>Yes!</b>It tells us what the facts <b>meant</b> for China — "This meant that… so…".</div>`,
+      repeat:`<div class="fb no"><b>That one just repeats the evidence.</b>It says the same fact again. The green one adds something new: <b>what happened because of it</b>.</div>`,
+      vague:`<div class="fb no"><b>"Important" — but important HOW?</b>That sentence gives no reason. The green one says what changed for China.</div>`};
+    $('#after').innerHTML = why[k] + nextBtn();
+    bindNext();
+  };
+}
+
+function finish(){
+  $('#barfill').style.width = '100%';
+  const total = S.items.length;
+  store.log.push({date:today(), mode:S.mode, score:S.firstTry, total, redo:S.redo});
+  save();
+  $('#score').textContent = `${S.firstTry} / ${total}`;
+  const pct = Math.round(S.firstTry/total*100);
+  $('#scoresub').textContent = (S.redo ? 'Redo · ' : 'First try · ') + pct + '%' + (pct===100 ? ' 🎉' : '');
+  $('#misslist').innerHTML = S.missed.map(t => `<li><b>${esc(t.title)}</b><br><span class="muted">Explain: ${esc(t.X)}</span></li>`).join('');
+  $('#redo').classList.toggle('hidden', !S.missed.length);
+  const missed = S.missed, m = S.mode;
+  $('#redo').onclick = () => startQuiz(m, shuffle(missed), true);
+  show('done');
+}
+
+/* ---------- ✏️ Write it ---------- */
+const STARTERS = {
+  P:{hint:'Answer the question + say why.', start:''},
+  E:{hint:'Use 2 facts from the yellow box.', start:'For example, '},
+  X:{hint:'So what? What did it MEAN for China? Don\'t repeat the fact.', start:'This meant that '},
+  L:{hint:'Go back to the question.', start:'Therefore, '},
+};
+function startWrite(pool){
+  const card = $('#card');
+  show('session');
+  $('#barfill').style.width = '0%'; $('#count').textContent = '✏️';
+  card.innerHTML = `<div class="q">Choose a question</div><div class="opts" id="opts">${pool.map(t=>`<button class="opt" data-id="${t.id}"><b>${esc(t.title)}</b><br>${esc(t.q)}</button>`).join('')}</div>`;
+  $('#opts').onclick = e => { const b=e.target.closest('.opt'); if(b) renderWrite(TOPICS.find(t=>t.id===b.dataset.id)); };
+}
+function renderWrite(t){
+  $('#barfill').style.width = '33%';
+  $('#card').innerHTML = `
+    <div class="q">${esc(t.title)}</div>
+    <p class="question">${esc(t.q)}</p>
+    <div class="facts"><b>📌 Facts you can use</b><ul>${t.facts.map(f=>`<li>${esc(f)}</li>`).join('')}</ul></div>
+    ${PARTS.map(p=>`<div class="wbox">${tag(p)}<div class="in"><div class="hint"><b>${p.name}</b> — ${STARTERS[p.k].hint}</div>
+      <textarea id="w${p.k}" rows="2" autocapitalize="sentences" ${p.k==='P' ? 'placeholder="The ___ was important because ___."' : ''}>${STARTERS[p.k].start}</textarea></div></div>`).join('')}
+    <p class="muted">Writing on paper instead? That's fine — skip the boxes and tap Check.</p>
+    <button class="btn wide" id="chk">Check my paragraph</button>`;
+  $('#chk').onclick = () => renderCheck(t);
+}
+function renderCheck(t){
+  const mine = PARTS.map(p => ($('#w'+p.k).value||'').trim());
+  const real = mine.map((s,i) => s && s !== STARTERS[PARTS[i].k].start.trim() ? s : '');
+  const wrote = real.some(Boolean);
+  const text = real.filter(Boolean).join(' ');
+  $('#barfill').style.width = '66%';
+  const CHECKS = [
+    'My <b>Point</b> answers the question and says <b>why</b>.',
+    'My <b>Evidence</b> has <b>2 facts</b> (a name, date or number).',
+    'My <b>Explain</b> says what it <b>meant for China</b> — not the same fact again.',
+    'My <b>Link</b> goes back to the question.',
+  ];
+  const ans = [null,null,null,null];
+  $('#card').innerHTML = `
+    <div class="q">${esc(t.title)} · check</div>
+    ${wrote ? `<p class="label">My paragraph</p><div class="mine">${esc(text)}</div>` : ''}
+    <p class="label">Model paragraph</p>
+    <div class="given model">${PARTS.map(p=>`<div class="slot">${tag(p)}<div class="txt">${esc(t[p.k])}</div></div>`).join('')}</div>
+    <p class="label" style="margin-top:16px">Be honest — did I…</p>
+    <div class="checks">${CHECKS.map((c,i)=>`<div class="chk"><p>${c}</p><div class="yn"><button class="y" data-i="${i}" data-v="1">✅ Yes</button><button class="n" data-i="${i}" data-v="0">❌ Not yet</button></div></div>`).join('')}</div>
+    <button class="btn wide next" id="fin" disabled>Save</button>`;
+  $('#card').querySelector('.checks').onclick = e => {
+    const b = e.target.closest('button'); if(!b) return;
+    const i = +b.dataset.i; ans[i] = +b.dataset.v;
+    b.parentElement.querySelectorAll('button').forEach(x => x.classList.toggle('on', x===b));
+    $('#fin').disabled = ans.includes(null);
+  };
+  $('#fin').onclick = () => {
+    const score = ans.reduce((a,b)=>a+b,0);
+    store.log.push({date:today(), mode:'write', score, total:4, redo:false});
+    if(wrote) store.writes.push({date:today(), title:t.title, text, score});
+    save();
+    S = {mode:'write', items:[t], firstTry:score, missed:[], redo:false};
+    $('#score').textContent = `${score} / 4`;
+    $('#scoresub').textContent = 'Self-check · ' + (score===4 ? 'all four! 🎉' : ans[2]===0 ? 'Next time: "This meant that… so China…"' : 'Keep going!');
+    $('#misslist').innerHTML = '';
+    $('#redo').classList.add('hidden');
+    show('done');
+  };
+}
+</script>
+</body>
+</html>
