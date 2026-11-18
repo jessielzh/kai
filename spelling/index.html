@@ -745,14 +745,13 @@ const WEEKS = [
       { n:6, name:"Champion Words", emoji:"🏔️", ws:["camouflage","discourage","exoskeleton","defense mechanism"] },
     ],
     /* 🧠 Meaning sets: grouped by idea, not by length, so the words in one
-       set help explain each other. 5–6 each — Kai said the whole list at
-       once was too much. Weeks without `sets` get chunks of 5 in sheet order. */
+       set help explain each other. Kai's rule: no more than 10 per set,
+       and not too many sets. Weeks without `sets` are cut evenly into
+       sets of at most 10, in sheet order. */
     sets: [
-      { t:"身体结构 Body parts",      ws:["structure","exoskeleton","external","internal","hinge"] },
-      { t:"物种与进化 Species",        ws:["species","variety","evolve","survive","behavior","physical"] },
-      { t:"躲藏与防御 Hide & defend",  ws:["camouflage","mimicry","armor","defend","defense mechanism"] },
-      { t:"追与逃 Chase & escape",     ws:["pursue","flee","distance","withdraw","steer","strategy"] },
-      { t:"捕食者的招数 Attack",       ws:["constrict","suffocate","paralyzed","ingest","threaten","discourage"] },
+      { t:"身体与物种 Body & species", ws:["structure","exoskeleton","external","internal","hinge","physical","species","variety","evolve","behavior"] },
+      { t:"躲藏与防御 Hide & defend",  ws:["camouflage","mimicry","armor","defend","defense mechanism","survive","withdraw","threaten","discourage"] },
+      { t:"追捕与攻击 Chase & attack", ws:["pursue","flee","distance","steer","strategy","constrict","suffocate","paralyzed","ingest"] },
     ],
   },
 ];
@@ -905,7 +904,7 @@ function save(){
 /* Must drop the stored copy BEFORE rebuilding — calling load() here would just
    read last week's data straight back in and save() would re-persist it. */
 function wipe(){
-  try{ localStorage.removeItem(KEY); localStorage.removeItem(KEY+":mean"); localStorage.removeItem(KEY+":sets"); }catch(e){}
+  try{ localStorage.removeItem(KEY); localStorage.removeItem(KEY+":mean"); localStorage.removeItem(KEY+":sets10"); }catch(e){}
   stats = {}; stars = {}; wordStars = {}; lastAll = null; toFix = [];
   WORDS.forEach(o=>{ stats[o.w] = fresh(); });
   save();
@@ -1650,21 +1649,27 @@ function goHome(){ renderHome(); renderMean(); show("home"); }
    Pick a set (5–6 words) → 🗣 Read (see word + meaning, read it aloud)
    → 💡 Understand (word only, 5 s to think, reveal, ✅ / ❌).
    Per set, the latest Read and Understand scores are kept under
-   KEY+":sets"; the old whole-list check stays under KEY+":mean".
+   KEY+":sets10" (":sets" held the retired 5-word layout — different set
+   numbers, so not read); the whole-list check stays under KEY+":mean".
    ============================================================ */
 let MQ = null;
 const meanLoad = () => { try{ return JSON.parse(localStorage.getItem(KEY+":mean")) || null; }catch(e){ return null; } };
 const meanSave = r  => { try{ localStorage.setItem(KEY+":mean", JSON.stringify(r)); }catch(e){} };
-const setsLoad = () => { try{ return JSON.parse(localStorage.getItem(KEY+":sets")) || {}; }catch(e){ return {}; } };
-const setsSave = r  => { try{ localStorage.setItem(KEY+":sets", JSON.stringify(r)); }catch(e){} };
+const setsLoad = () => { try{ return JSON.parse(localStorage.getItem(KEY+":sets10")) || {}; }catch(e){ return {}; } };
+const setsSave = r  => { try{ localStorage.setItem(KEY+":sets10", JSON.stringify(r)); }catch(e){} };
 const mshuffle = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
 const today = () => new Date().toLocaleDateString("en-US",{month:"short", day:"numeric"});
 
-/* Older weeks have no hand-made sets: cut the list into fives. */
+/* Older weeks have no hand-made sets: cut the list evenly into as few sets
+   as possible, none over 10 (22 words → 8 + 7 + 7, not 10 + 10 + 2). */
 function chunkSets(words){
-  const out = [];
-  for(let i=0;i<words.length;i+=5)
-    out.push({ t:`Words ${i+1}–${Math.min(i+5,words.length)}`, ws: words.slice(i,i+5).map(o=>o.w) });
+  const out = [], n = Math.ceil(words.length / 10);
+  let i = 0;
+  for(let k=0;k<n;k++){
+    const size = Math.ceil((words.length - i) / (n - k));
+    out.push({ t:`Words ${i+1}–${i+size}`, ws: words.slice(i,i+size).map(o=>o.w) });
+    i += size;
+  }
   return out;
 }
 
