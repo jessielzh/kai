@@ -408,7 +408,7 @@ input.bad{border-color:var(--warn)}
         <p class="mq-ipa" id="mq-ipa"></p>
         <p class="mq-zh" id="mq-zh" hidden></p>
         <p class="mq-en" id="mq-en" hidden></p>
-        <div class="mq-timer" id="mq-timer" title="Tap to skip the wait"></div>
+        <div class="mq-timer" id="mq-timer" title="Tap anywhere to skip the wait"></div>
         <button class="mini" id="mq-say" style="margin-top:14px">🔊 Hear it</button>
       </div>
       <div class="mq-rate" id="mq-rate" hidden>
@@ -1829,7 +1829,9 @@ function finishMean(){
   show("done");
 }
 $("#mean-all").onclick = () => startMean(WORDS, {mode:"und", set:null});
-$("#mq-timer").onclick = revealMean;
+/* Tap anywhere on the screen (not just the timer circle) to skip the wait —
+   he taps the white card and expects it to move on. Buttons keep their own job. */
+$("#meanq").addEventListener("click", e => { if(!e.target.closest("button")) revealMean(); });
 document.addEventListener("keydown", e => {   // space = skip the wait · 1 = knew it · 2 = didn't
   if(!$("#meanq").classList.contains("on") || !MQ) return;
   if(e.key === " "){ e.preventDefault(); revealMean(); }
