@@ -120,6 +120,44 @@ td.acc{width:92px;padding-left:14px;text-align:right;vertical-align:middle}
 .mq-rate .ok{border-color:var(--accent);color:var(--accent)}
 .mq-rate .no{border-color:var(--warn);color:var(--warn)}
 
+/* ---------- 🧠 Meaning: small sets, History-style ---------- */
+.tabs{margin-bottom:16px}
+.tabs button{font-size:18px;padding:13px 8px}
+.seg.sub{box-shadow:none;background:transparent;border-style:dashed}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow);margin-bottom:14px}
+.label{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;font-weight:700}
+.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.chip{border:1.5px solid var(--line);border-radius:14px;padding:11px 8px;text-align:center;font-weight:700;font-size:16px;background:var(--card)}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.chip small{display:block;font-weight:400;font-size:13px;color:var(--muted);margin-top:2px;line-height:1.4}
+.chip .ck{color:var(--accent);font-weight:700}
+.prev{list-style:none;margin-top:6px}
+.prev li{display:flex;gap:12px;align-items:baseline;padding:9px 6px;border-top:1px solid var(--line);cursor:pointer;border-radius:8px}
+.prev li:first-child{border-top:none}
+.prev li:hover,.prev li.on{background:var(--accent-soft)}
+.prev .num{color:var(--muted);font-size:12px;min-width:16px}
+.prev .body{flex:1}
+.prev .hdr{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.prev b{font-size:18px}
+.prev .cn{font-weight:700;color:var(--accent)}
+.prev .ipa{font-size:13px;font-weight:600;color:var(--accent);opacity:.85}
+.prev .def{display:block;color:var(--muted);font-size:14px;line-height:1.4;margin-top:2px}
+.rcnote{color:var(--muted);font-size:13px;margin-top:8px}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mode{border:1.5px solid var(--line);border-radius:14px;padding:14px 8px;background:var(--card);text-align:center}
+.mode b{display:block;font-size:18px}
+.mode small{display:block;font-size:13px;color:var(--muted);margin-top:2px}
+.mode:hover{border-color:var(--accent)}
+.mode[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
+.mode[aria-pressed="true"] b{color:var(--accent)}
+.rc{list-style:none}
+.rc li{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:15px}
+.rc li:first-child{border-top:none}
+.rc .val{font-weight:700;white-space:nowrap}
+.rc .dim{color:var(--muted);font-weight:400}
+.linkbtn{display:block;margin:4px auto 0;color:var(--muted);font-size:14px;text-decoration:underline}
+
 /* ---------- one-by-one rows ---------- */
 .solo{display:flex;align-items:center;gap:12px;background:var(--card);
   border:1px solid var(--line);border-radius:12px;padding:10px 13px;
@@ -250,11 +288,41 @@ input.bad{border-color:var(--warn)}
 
     <div class="weekpick" data-weeks></div>
 
-    <div class="seg" id="seg">
+    <!-- Two jobs, kept apart: 🧠 learn the meanings in small sets (same
+         flow as History Words), ✍️ spell them in difficulty levels. -->
+    <div class="seg tabs" id="tabs">
+      <button data-tab="mean">🧠 Meaning</button>
+      <button data-tab="spell">✍️ Spelling</button>
+    </div>
+
+    <div data-tab-panel="mean" hidden>
+      <div class="panel">
+        <p class="label">Pick a set · a few words at a time</p>
+        <div class="chips" id="sets"></div>
+        <p class="label" id="setTitle" style="margin:16px 0 4px"></p>
+        <ul class="prev" id="setPrev"></ul>
+        <p class="rcnote">Look them over first — tap any word to hear it.</p>
+      </div>
+      <div class="panel">
+        <p class="label">What to practice</p>
+        <div class="modes">
+          <button class="mode" id="mRead"><b>🗣 Read</b><small>see it, read it aloud</small></button>
+          <button class="mode" id="mUnd"><b>💡 Understand</b><small>say what it means</small></button>
+        </div>
+      </div>
+      <button class="btn primary" id="set-go" style="text-align:center">Start →</button>
+      <div class="panel" id="setReport" style="margin-top:14px" hidden></div>
+      <button class="linkbtn" id="mean-all">Before the test: all <span data-count></span> meanings at once</button>
+      <p class="lasttest" id="lastmean" hidden></p>
+      <div id="meanfix" hidden></div>
+      <div style="height:22px"></div>
+    </div>
+
+    <div data-tab-panel="spell" hidden>
+    <div class="seg sub" id="seg">
+      <button data-view="levels">🎮 Levels</button>
       <button data-view="one">1️⃣ One</button>
-      <button data-view="levels">🎮 Level</button>
-      <button data-view="all">📋 All</button>
-      <button data-view="mean">🧠 Meaning</button>
+      <button data-view="all">📋 Test all</button>
     </div>
 
     <div class="stack" data-view-panel="one" hidden>
@@ -278,12 +346,7 @@ input.bad{border-color:var(--warn)}
       </div>
     </div>
 
-    <div class="stack" data-view-panel="mean" hidden>
-      <button class="btn primary" id="mean-all">🧠 Meaning test · <span data-count></span> words
-        <small>See the word, say what it means, then check</small></button>
-      <p class="lasttest" id="lastmean" hidden></p>
-      <div id="meanfix" hidden></div>
-    </div>
+    </div><!-- /spell tab -->
 
     <details class="more">
       <summary>All <span data-count></span> words &amp; how you're doing</summary>
@@ -681,6 +744,16 @@ const WEEKS = [
       { n:5, name:"Big Words",      emoji:"⛰️", ws:["suffocate","constrict","structure","paralyzed"] },
       { n:6, name:"Champion Words", emoji:"🏔️", ws:["camouflage","discourage","exoskeleton","defense mechanism"] },
     ],
+    /* 🧠 Meaning sets: grouped by idea, not by length, so the words in one
+       set help explain each other. 5–6 each — Kai said the whole list at
+       once was too much. Weeks without `sets` get chunks of 5 in sheet order. */
+    sets: [
+      { t:"身体结构 Body parts",      ws:["structure","exoskeleton","external","internal","hinge"] },
+      { t:"物种与进化 Species",        ws:["species","variety","evolve","survive","behavior","physical"] },
+      { t:"躲藏与防御 Hide & defend",  ws:["camouflage","mimicry","armor","defend","defense mechanism"] },
+      { t:"追与逃 Chase & escape",     ws:["pursue","flee","distance","withdraw","steer","strategy"] },
+      { t:"捕食者的招数 Attack",       ws:["constrict","suffocate","paralyzed","ingest","threaten","discourage"] },
+    ],
   },
 ];
 
@@ -768,7 +841,7 @@ WEEKS.forEach(wk => wk.words.forEach(o => {
 }));
 
 /* The active week. Everything below reads these, not WEEKS directly. */
-let WEEK, TEST_DATE, WORDS, LEVELS;
+let WEEK, TEST_DATE, WORDS, LEVELS, SETS;
 
 const byWord  = w => WORDS.find(o => o.w === w);
 const wordsOf = n => LEVELS[n-1].ws.map(byWord);
@@ -804,7 +877,8 @@ let stars = {};      // per level: best star count, 0-3
 /* Per word, from One-by-one. Unlike levels this is the LATEST result, not the
    best — it's meant to show how he'd spell it today. */
 let wordStars = {};
-let view  = "levels";// which home view he last used
+let view  = "levels";// which Spelling view he last used
+let tab   = "mean";  // 🧠 Meaning or ✍️ Spelling, last used
 let lastAll = null;  // last Test all score: {right, total, date}
 /* Words he missed in Test all, listed under it for one-by-one practice.
    Every finished run replaces it; a run stopped early changes nothing. */
@@ -819,17 +893,19 @@ function load(){
   stars = d.stars || {};
   wordStars = d.wordStars || {};
   view  = d.view  || "levels";
+  tab   = d.tab   || "mean";
+  if(view === "mean"){ view = "levels"; tab = "mean"; }   // old 4-tab layout
   lastAll = d.lastAll || null;
   toFix   = (d.toFix || []).filter(byWord);   // drop anything not on this week's list
   WORDS.forEach(o=>{ stats[o.w] = stats[o.w] || fresh(); });
 }
 function save(){
-  try{ localStorage.setItem(KEY, JSON.stringify({stats, stars, wordStars, view, lastAll, toFix})); }catch(e){}
+  try{ localStorage.setItem(KEY, JSON.stringify({stats, stars, wordStars, view, tab, lastAll, toFix})); }catch(e){}
 }
 /* Must drop the stored copy BEFORE rebuilding — calling load() here would just
    read last week's data straight back in and save() would re-persist it. */
 function wipe(){
-  try{ localStorage.removeItem(KEY); localStorage.removeItem(KEY+":mean"); }catch(e){}
+  try{ localStorage.removeItem(KEY); localStorage.removeItem(KEY+":mean"); localStorage.removeItem(KEY+":sets"); }catch(e){}
   stats = {}; stars = {}; wordStars = {}; lastAll = null; toFix = [];
   WORDS.forEach(o=>{ stats[o.w] = fresh(); });
   save();
@@ -844,6 +920,7 @@ function defaultWeek(){
 function setWeek(name){
   const wk = WEEKS.find(w => w.week === name) || WEEKS[WEEKS.length-1];
   WEEK = wk.week; TEST_DATE = wk.date; WORDS = wk.words; LEVELS = wk.levels;
+  SETS = wk.sets || chunkSets(WORDS);
   KEY = "kai-spelling:v2:" + (wk.key || WEEK);
   try{ localStorage.setItem(LAST, WEEK); }catch(e){}
   load();
@@ -1007,8 +1084,10 @@ function renderWeeks(){
     ).join("");
     Array.from(box.children).forEach(b => b.onclick = ()=>{
       setWeek(b.dataset.wk);
+      setNo = nextSet();
       renderAll();
       setView(view);
+      setTab(tab);
     });
   });
 }
@@ -1567,62 +1646,132 @@ function finish(){
 function goHome(){ renderHome(); renderMean(); show("home"); }
 
 /* ============================================================
-   Meaning test — does he know what the word MEANS, not just how
-   to spell it. Every word once, shuffled; half the questions show
-   the meaning and ask for the word, half say/show the word and ask
-   for the meaning. Distractors come from the same week's list.
-   Result is kept per week under KEY+":mean" (last run + missed words).
+   🧠 Meaning — the History Words flow, in small sets.
+   Pick a set (5–6 words) → 🗣 Read (see word + meaning, read it aloud)
+   → 💡 Understand (word only, 5 s to think, reveal, ✅ / ❌).
+   Per set, the latest Read and Understand scores are kept under
+   KEY+":sets"; the old whole-list check stays under KEY+":mean".
    ============================================================ */
 let MQ = null;
 const meanLoad = () => { try{ return JSON.parse(localStorage.getItem(KEY+":mean")) || null; }catch(e){ return null; } };
 const meanSave = r  => { try{ localStorage.setItem(KEY+":mean", JSON.stringify(r)); }catch(e){} };
+const setsLoad = () => { try{ return JSON.parse(localStorage.getItem(KEY+":sets")) || {}; }catch(e){ return {}; } };
+const setsSave = r  => { try{ localStorage.setItem(KEY+":sets", JSON.stringify(r)); }catch(e){} };
 const mshuffle = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+const today = () => new Date().toLocaleDateString("en-US",{month:"short", day:"numeric"});
+
+/* Older weeks have no hand-made sets: cut the list into fives. */
+function chunkSets(words){
+  const out = [];
+  for(let i=0;i<words.length;i+=5)
+    out.push({ t:`Words ${i+1}–${Math.min(i+5,words.length)}`, ws: words.slice(i,i+5).map(o=>o.w) });
+  return out;
+}
+
+let setNo = 0;          // index into SETS
+let mMode = "read";     // "read" | "und"
+
+/* First set whose Understand isn't perfect yet — where he should be. */
+function nextSet(){
+  const r = setsLoad();
+  const i = SETS.findIndex((s,k) => !(r[k] && r[k].und && r[k].und.right === r[k].und.total));
+  return i < 0 ? 0 : i;
+}
+
+function renderSets(){
+  if(setNo >= SETS.length) setNo = 0;
+  const r = setsLoad();
+  $("#sets").innerHTML = SETS.map((s,k) => {
+    const u = r[k] && r[k].und;
+    const badge = u ? (u.right === u.total ? `<span class="ck">✅ ${u.right}/${u.total}</span>` : `💡 ${u.right}/${u.total}`) : `${s.ws.length} words`;
+    return `<button class="chip" data-set="${k}" aria-pressed="${k===setNo}">Set ${k+1}<small>${s.t}<br>${badge}</small></button>`;
+  }).join("");
+  $$("#sets [data-set]").forEach(b => b.onclick = () => { setNo = +b.dataset.set; renderSets(); });
+
+  const s = SETS[setNo];
+  $("#setTitle").textContent = `Set ${setNo+1} · ${s.t} · ${s.ws.length} words`;
+  $("#setPrev").innerHTML = s.ws.map(byWord).map((o,n) =>
+    `<li data-say="${o.w}"><span class="num">${n+1}</span><span class="body"><span class="hdr"><b>${o.w}</b>` +
+    (o.ipa ? `<span class="ipa">${o.ipa}</span>` : "") + `<span class="cn">${o.zh}</span></span>` +
+    `<span class="def">${o.m}</span></span></li>`).join("");
+  $$("#setPrev [data-say]").forEach(li => li.onclick = () => {
+    $$("#setPrev li.on").forEach(x => x.classList.remove("on"));
+    li.classList.add("on"); say(li.dataset.say);
+    setTimeout(() => li.classList.remove("on"), 1400);
+  });
+
+  $("#mRead").setAttribute("aria-pressed", mMode==="read");
+  $("#mUnd").setAttribute("aria-pressed", mMode==="und");
+  $("#set-go").textContent = `Start ${mMode==="read" ? "🗣 Read" : "💡 Understand"} · Set ${setNo+1} →`;
+
+  /* Report card — the parent view: every set he has touched this week. */
+  const rows = SETS.map((s,k) => {
+    const x = r[k]; if(!x) return "";
+    const cell = (ic, v) => v ? `${ic} ${v.right}/${v.total}` : `<span class="dim">${ic} –</span>`;
+    const when = (x.und || x.read).date;
+    return `<li><span>Set ${k+1} <span class="dim">${s.t}</span></span><span class="val">${cell("🗣",x.read)} · ${cell("💡",x.und)} <span class="dim">${when}</span></span></li>`;
+  }).join("");
+  $("#setReport").hidden = !rows;
+  $("#setReport").innerHTML = `<p class="label">Report card</p><ul class="rc">${rows}</ul>`;
+}
+$("#mRead").onclick = () => { mMode = "read"; renderSets(); };
+$("#mUnd").onclick  = () => { mMode = "und";  renderSets(); };
+$("#set-go").onclick = () => startMean(SETS[setNo].ws.map(byWord), {mode:mMode, set:setNo});
 
 function renderMean(){
+  renderSets();
   const r = meanLoad(), lm = $("#lastmean"), fx = $("#meanfix");
   if(!r){ lm.hidden = true; fx.hidden = true; return; }
   lm.hidden = false;
-  lm.innerHTML = `Last meaning test (${r.date}): <b>${r.right} / ${r.total}</b>` + (r.right === r.total ? " 🏆" : r.miss.length ? "" : " · missed ones fixed ✓");
+  lm.innerHTML = `All-words check (${r.date}): <b>${r.right} / ${r.total}</b>` + (r.right === r.total ? " 🏆" : r.miss.length ? "" : " · missed ones fixed ✓");
   const miss = r.miss.map(byWord).filter(Boolean);
   fx.hidden = !miss.length;
   if(!miss.length) return;
   fx.innerHTML = `<p class="legend" style="text-align:left;margin:8px 0 2px">Didn't know these yet — read them, then try just these:</p>
     <ul class="misslist" style="margin-bottom:12px">${miss.map(o =>
       `<li><span><b>${o.w}</b><span class="cn">${o.zh}</span></span><span style="color:var(--muted);text-align:right">${o.m}</span></li>`).join("")}</ul>
-    <button class="btn" id="mean-fix">🔁 Meaning test · just these ${miss.length}</button>`;
-  $("#mean-fix").onclick = () => startMean(miss);
+    <button class="btn" id="mean-fix">🔁 Just these ${miss.length}</button>`;
+  $("#mean-fix").onclick = () => startMean(miss, {mode:"und", set:null});
 }
 
 const MQ_PAUSE = 5;   // seconds to think before the meaning shows (same as History)
 let mqTimer = null;
-function startMean(list){
-  MQ = {qs: mshuffle(list), i:0, right:0, miss:[], full: list.length === WORDS.length};
+/* opts.set = set index, or null for the whole list. A run over fewer words
+   than the set (redoing the missed ones) is extra practice: it doesn't
+   replace the score. */
+function startMean(list, opts){
+  const set = opts.set, size = set === null ? WORDS.length : SETS[set].ws.length;
+  MQ = {qs: mshuffle(list), i:0, right:0, miss:[], mode: opts.mode, set, full: list.length === size};
   show("meanq");
   drawMean();
 }
 function drawMean(){
   clearInterval(mqTimer);
-  const o = MQ.qs[MQ.i];
+  const o = MQ.qs[MQ.i], read = MQ.mode === "read";
   MQ.phase = 0;
-  $("#mq-pos").textContent = `${MQ.i+1} / ${MQ.qs.length}`;
-  $("#mq-cue").textContent = "WHAT DOES IT MEAN?";
+  $("#mq-pos").textContent = `${read ? "🗣 Read" : "💡 Understand"} · ${MQ.i+1} / ${MQ.qs.length}`;
+  $("#mq-cue").textContent = read ? "READ IT OUT LOUD" : "WHAT DOES IT MEAN?";
   $("#mq-word").textContent = o.w;
   $("#mq-ipa").textContent = o.ipa;
-  $("#mq-zh").hidden = $("#mq-en").hidden = $("#mq-rate").hidden = true;
+  $("#mq-zh").textContent = o.zh; $("#mq-en").textContent = o.m;
+  $("#mq-zh").hidden = !read || !o.zh; $("#mq-en").hidden = !read;
+  $("#mq-rate").hidden = true;
   let left = MQ_PAUSE;
   const t = $("#mq-timer"); t.hidden = false; t.textContent = left;
-  say(o.w);
+  if(!read) say(o.w);                 // Read: he says it first, then hears it
   mqTimer = setInterval(() => { left--; if(left <= 0) revealMean(); else t.textContent = left; }, 1000);
 }
 function revealMean(){
   if(!MQ || MQ.phase !== 0) return;
   clearInterval(mqTimer);
   MQ.phase = 1;
-  const o = MQ.qs[MQ.i];
-  $("#mq-cue").textContent = "ANSWER";
+  const o = MQ.qs[MQ.i], read = MQ.mode === "read";
+  $("#mq-cue").textContent = read ? "NOW LISTEN" : "ANSWER";
   $("#mq-timer").hidden = true;
-  $("#mq-zh").textContent = o.zh; $("#mq-en").textContent = o.m;
   $("#mq-zh").hidden = !o.zh; $("#mq-en").hidden = false; $("#mq-rate").hidden = false;
+  $("#mq-ok").innerHTML = read ? "👍 Read it well<small>smooth, no stumble</small>" : "✅ I knew it<small>said the meaning</small>";
+  $("#mq-no").innerHTML = read ? "🔁 Practice again<small>wrong or stuck</small>" : "❌ Didn't know<small>couldn't remember</small>";
+  say(o.w);
 }
 function rateMean(ok){
   if(!MQ || MQ.phase !== 1) return;
@@ -1633,29 +1782,48 @@ function rateMean(ok){
   MQ.i < MQ.qs.length ? drawMean() : finishMean();
 }
 function finishMean(){
-  const total = MQ.qs.length, miss = MQ.miss;
-  // Only a full-list run replaces the saved result; a "just these" retry
-  // clears the words he now got right from the missed list.
-  const prev = meanLoad();
-  const d = new Date(), date = d.toLocaleDateString("en-US",{month:"short", day:"numeric"});
-  if(MQ.full || !prev) meanSave({right:MQ.right, total, date, miss});
-  else meanSave({...prev, miss: prev.miss.filter(w => miss.includes(w))});
+  const total = MQ.qs.length, miss = MQ.miss, set = MQ.set, m = MQ.mode, date = today();
+  if(set === null){
+    // Whole-list check: a full run replaces the result; a retry only
+    // clears the words he now knows from the missed list.
+    const prev = meanLoad();
+    if(MQ.full || !prev) meanSave({right:MQ.right, total, date, miss});
+    else meanSave({...prev, miss: prev.miss.filter(w => miss.includes(w))});
+  }else if(MQ.full){
+    const r = setsLoad();
+    r[set] = r[set] || {};
+    r[set][m] = {right:MQ.right, total, date};
+    setsSave(r);
+  }
   $("#done-emoji").textContent = miss.length ? (MQ.right/total >= .8 ? "👍" : "📖") : "🏆";
   $("#done-stars").textContent = "";
-  $("#done-title").textContent = `${MQ.right} / ${total} meanings`;
-  $("#done-sub").textContent = miss.length ? "Read the ones you missed, then try them again." : "You know what every word means!";
+  $("#done-title").textContent = `${MQ.right} / ${total} ` + (m === "read" ? "read well" : "meanings");
+  $("#done-sub").textContent = (MQ.full ? "" : "Extra practice — not counted in the report card. ") +
+    (miss.length ? (m === "read" ? "Read these again:" : "Remember these meanings:") : (m === "read" ? "Now see if you know what they mean!" : "You know every word in this set!"));
   $("#done-break").hidden = true;
   const ul = $("#done-list");
   ul.hidden = !miss.length;
   ul.innerHTML = miss.map(byWord).map(o => `<li><span><b>${o.w}</b><span class="cn">${o.zh}</span></span><span style="color:var(--muted);text-align:right">${o.m}</span></li>`).join("");
-  $("#done-actions").innerHTML = (miss.length ? `<button class="btn primary" id="mq-again" style="text-align:center">🔁 Try the ${miss.length} missed again</button>` : "")
-    + `<button class="btn" id="mq-home" style="text-align:center">Home</button>`;
-  if(miss.length) $("#mq-again").onclick = () => startMean(miss.map(byWord));
-  $("#mq-home").onclick = goHome;
+
+  /* What next: missed ones first; after Read → Understand the same set;
+     after a clean Understand → the next set. */
+  const acts = [];
+  if(miss.length) acts.push(`<button class="btn primary" id="mq-again" style="text-align:center">🔁 Try the ${miss.length} missed again</button>`);
+  if(set !== null && m === "read") acts.push(`<button class="btn${miss.length?"":" primary"}" id="mq-next" style="text-align:center">💡 Understand · Set ${set+1} →</button>`);
+  if(set !== null && m === "und" && !miss.length && set+1 < SETS.length) acts.push(`<button class="btn primary" id="mq-next" style="text-align:center">🗣 Next: Set ${set+2} →</button>`);
+  acts.push(`<button class="btn" id="mq-home" style="text-align:center">Home</button>`);
+  $("#done-actions").innerHTML = acts.join("");
+  const again = miss.map(byWord), opts = {mode:m, set};
+  if(miss.length) $("#mq-again").onclick = () => startMean(again, opts);
+  if($("#mq-next")) $("#mq-next").onclick = () => {
+    if(m === "read"){ mMode = "und"; startMean(SETS[set].ws.map(byWord), {mode:"und", set}); }
+    else { setNo = set+1; mMode = "read"; startMean(SETS[setNo].ws.map(byWord), {mode:"read", set:setNo}); }
+  };
+  $("#mq-home").onclick = () => { if(set !== null) setNo = set; goHome(); };
   MQ = null;
   show("done");
 }
-$("#mean-all").onclick = () => startMean(WORDS);
+$("#mean-all").onclick = () => startMean(WORDS, {mode:"und", set:null});
 $("#mq-timer").onclick = revealMean;
 document.addEventListener("keydown", e => {   // space = skip the wait · 1 = knew it · 2 = didn't
   if(!$("#meanq").classList.contains("on") || !MQ) return;
@@ -1700,7 +1868,17 @@ function setView(v){
   save();
 }
 $$("#seg button").forEach(b => b.onclick = ()=> setView(b.dataset.view));
+function setTab(t){
+  tab = t;
+  $$("[data-tab-panel]").forEach(p => p.hidden = (p.dataset.tabPanel !== t));
+  $$("#tabs button").forEach(b => b.classList.toggle("on", b.dataset.tab === t));
+  save();
+}
+$$("#tabs button").forEach(b => b.onclick = ()=> setTab(b.dataset.tab));
+setNo = nextSet();
+renderSets();
 setView(view);
+setTab(tab);
 
 $("#ans").addEventListener("keydown", e=>{
   if(e.key==="Enter"){
@@ -1750,7 +1928,9 @@ $("#quit").onclick = ()=> (levelNo || allTest) ? (gen++, goHome()) : finish();
 $("#reset").onclick = ()=>{
   if(!confirm(`Clear progress for ${WEEK}?`)) return;
   wipe();
+  setNo = 0;
   setView(view);
+  setTab(tab);
   renderAll();
 };
 </script>
