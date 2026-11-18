@@ -129,6 +129,24 @@
   .chk .y{color:var(--good);border-color:var(--good)} .chk .n{color:var(--again);border-color:var(--again)}
   .chk .y.on{background:var(--good);color:var(--card)} .chk .n.on{background:var(--again);color:var(--card)}
   .mine{background:var(--bg);border-radius:14px;padding:12px 14px;font-size:16px;white-space:pre-wrap;margin-bottom:12px}
+  .fb{background:var(--good-soft);border-left:4px solid var(--good);border-radius:10px;padding:10px 12px;margin-top:10px;white-space:pre-wrap}
+  .fb b{color:var(--good)}
+  .rub{white-space:normal;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:10px}
+  .rub .tot{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
+  .rub .tot b{font-size:28px;color:var(--accent)}
+  .rrow{display:grid;grid-template-columns:40px 1fr;gap:8px;padding:9px 0;border-top:1px solid var(--line)}
+  .rrow .nm{font-weight:700}
+  .rrow .lv{float:right;font-size:14px;color:var(--muted)}
+  .rrow .dots{letter-spacing:2px;color:var(--accent);font-size:13px}
+  .rrow .note{margin-top:3px}
+  .rrow .up{margin-top:4px;font-size:14px;color:var(--muted)}
+  .rrow.low .dots{color:var(--again)}
+  .tag.g{background:#6f6758}
+  .rub .nx{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--accent-soft);font-weight:600}
+  .fbnew{display:block;width:100%;text-align:left;font:inherit;font-weight:600;color:var(--good);background:var(--good-soft);
+    border:1.5px solid var(--good);border-radius:14px;padding:12px 14px;margin:10px 0;cursor:pointer}
+  .sendbtn{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:5px 12px;margin-top:8px;cursor:pointer}
+  .sent{color:var(--good);font-size:14px}
 
   /* done + history */
   .score{font-size:56px;font-weight:800;text-align:center;letter-spacing:-.02em}
@@ -183,6 +201,7 @@
   <div class="panel" style="margin-top:16px">
     <p class="label">Recent scores (first try)</p>
     <ul class="log" id="log"></ul>
+    <button class="fbnew hidden" id="fbnew"></button>
     <details id="writings" style="margin-top:10px"><summary>📄 My written paragraphs</summary><div id="wlist" style="margin-top:10px"></div></details>
   </div>
 </section>
@@ -346,6 +365,82 @@ const KEY = 'kai-peel-v1';
 const store = (()=>{ try{ return JSON.parse(localStorage.getItem(KEY)) || {log:[],writes:[]}; }catch(e){ return {log:[],writes:[]}; } })();
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e){} }
 
+/* ---------- send to Mum → Claude reads it → feedback comes back ----------
+   📤 opens the iPad share sheet with a small .txt file: AirDrop drops it in the
+   Mac's Downloads, WeChat works when they're apart. Claude reads it and writes
+   feedback into feedback.json next to this page ({id: {feedback, at}}). */
+const newId = () => 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+store.writes.forEach(w => { if(!w.id) w.id = newId(); });
+function sendText(w){
+  return `Kai PEEL · ${w.date}\nid: ${w.id}\nTopic: ${w.title}\n` + (w.q ? `Question: ${w.q}\n` : '') +
+    '\n' + (w.parts ? PARTS.filter(p => w.parts[p.k]).map(p => `[${p.name}] ${w.parts[p.k]}`).join('\n') : w.text) + '\n';
+}
+async function sendWrite(w){
+  const text = sendText(w);
+  const name = `kai-peel-${new Date().toISOString().slice(0,10)}-${w.id}.txt`;
+  try{
+    const file = new File([text], name, {type:'text/plain'});
+    if(navigator.canShare && navigator.canShare({files:[file]})) await navigator.share({files:[file], title:'Kai PEEL'});
+    else if(navigator.share) await navigator.share({title:'Kai PEEL', text});
+    else { await navigator.clipboard.writeText(text); alert('Copied! Paste it to Mum.'); }
+    w.sent = true; save(); renderLog();
+    return true;
+  }catch(e){ return false; }   // he closed the share sheet
+}
+/* Ms Heather's rubric (see rubric.md): 5 rows × levels 1–5 = /25.
+   "To reach the next level" shows her words for the level above his. */
+const LEVELS = ['','Beginning','Satisfactory','Good','Excellent','Outstanding'];
+const RUBRIC = [
+  {k:'P', cls:'p', name:'Point', up:{
+    2:'Say what the paragraph is about.',
+    3:'Take a stand: say the topic was important, not just a fact.',
+    4:'Clearly say it was significant — and be specific.',
+    5:'Make a strong argument: say it was significant AND give a reason why it mattered to China.'}},
+  {k:'E', cls:'e1', name:'Evidence', up:{
+    2:'Give two facts that support your point.',
+    3:'Make your two facts clear and correct.',
+    4:'Two clear, correct facts (names, dates, numbers).',
+    5:'Two detailed facts that show what it was AND how it helped China.'}},
+  {k:'X', cls:'e2', name:'Explain', up:{
+    2:'Don\'t repeat the facts — explain at least one: what did it mean?',
+    3:'Try to explain BOTH facts and start connecting them to China.',
+    4:'Explain both facts clearly — no repeating the same idea.',
+    5:'Connect each fact back to your point: WHY did it shape China\'s development?'}},
+  {k:'L', cls:'l', name:'Link', up:{
+    2:'End with a sentence that sounds like a conclusion.',
+    3:'Make your last sentence go back to the topic.',
+    4:'Wrap up and remind the reader of your main argument.',
+    5:'A powerful last sentence that leaves a big thought about why it mattered to China.'}},
+  {k:'G', cls:'g', name:'Grammar', up:{
+    2:'Organise your sentences so they are easy to follow.',
+    3:'Fewer mistakes so the meaning is always clear.',
+    4:'Only 3–5 small mistakes — check capitals and full stops.',
+    5:'0–2 small mistakes — read it once more before you send.'}},
+];
+function rubricHTML(f){
+  if(!f.scores) return '';
+  const total = RUBRIC.reduce((a,r) => a + (f.scores[r.k]||0), 0);
+  return `<div class="rub"><div class="tot"><b>${total} / 25</b><span class="muted">Ms Heather's rubric</span></div>` +
+    RUBRIC.map(r => { const v = f.scores[r.k]||0, n = (f.notes||{})[r.k];
+      return `<div class="rrow${v<=2?' low':''}"><span class="tag ${r.cls}">${r.k==='X'?'E':r.k}</span><div>
+        <span class="nm">${r.name}</span><span class="lv">${v}/5 · ${LEVELS[v]||''}</span>
+        <div class="dots">${'●'.repeat(v)}${'○'.repeat(5-v)}</div>
+        ${n ? `<div class="note">${esc(n)}</div>` : ''}
+        ${v < 5 ? `<div class="up">⬆️ To get ${v+1}: ${esc(r.up[v+1])}</div>` : '<div class="up">🌟 Top level!</div>'}
+      </div></div>`; }).join('') +
+    (f.next ? `<div class="nx">🎯 Next time: ${esc(f.next)}</div>` : '') + `</div>`;
+}
+async function fetchFeedback(){
+  try{
+    const r = await fetch('feedback.json?t=' + Date.now(), {cache:'no-store'});
+    if(!r.ok) return;
+    const fb = await r.json(); let changed = false;
+    store.writes.forEach(w => { const f = fb[w.id];
+      if(f && JSON.stringify(f) !== JSON.stringify(w.fb)){ w.fb = f; w.fbSeen = false; changed = true; } });
+    if(changed){ save(); renderLog(); }
+  }catch(e){}
+}
+
 /* ---------- helpers ---------- */
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -366,13 +461,26 @@ $('#units').onclick = e => { const b=e.target.closest('.chip'); if(!b) return; u
 
 function renderLog(){
   const L = store.log.slice(-10).reverse();
-  $('#log').innerHTML = L.length ? L.map(r => `<li><span>${r.date} · ${MODE_NAME[r.mode]}${r.redo?' <span class="redo">(redo)</span>':''}</span><span class="s">${r.score}/${r.total}</span></li>`).join('')
+  $('#log').innerHTML = L.length ? L.map(r => `<li><span>${r.date} · ${MODE_NAME[r.mode]}${r.redo?' <span class="redo">(redo)</span>':''}</span><span class="s">${r.mode==='write' && r.id ? (r.sent || (store.writes.find(w=>w.id===r.id)||{}).sent ? '📤 sent' : 'not sent') : r.score+'/'+r.total}</span></li>`).join('')
     : '<li class="muted">No scores yet.</li>';
   const W = store.writes.slice(-10).reverse();
   $('#writings').classList.toggle('hidden', !W.length);
-  $('#wlist').innerHTML = W.map(w => `<div class="mine"><b>${esc(w.title)}</b> · <span class="muted">${w.date} · self-check ${w.score}/4</span>\n${esc(w.text)}</div>`).join('');
+  $('#wlist').innerHTML = W.map(w => `<div class="mine"><b>${esc(w.title)}</b> · <span class="muted">${w.date}</span>\n${esc(w.text)}` +
+    (w.fb ? rubricHTML(w.fb) + (w.fb.feedback ? `<div class="fb"><b>💬 Feedback</b>\n${esc(w.fb.feedback)}</div>` : '')
+      : `\n<button class="sendbtn" data-send="${w.id}">📤 ${w.sent ? 'Send again' : 'Send to Mum'}</button>${w.sent ? ' <span class="sent">✓ sent</span>' : ''}`) + `</div>`).join('');
+  $('#wlist').querySelectorAll('[data-send]').forEach(b => b.onclick = () => sendWrite(store.writes.find(w => w.id === b.dataset.send)));
+  const unseen = store.writes.filter(w => w.fb && !w.fbSeen).length;
+  $('#fbnew').classList.toggle('hidden', !unseen);
+  $('#fbnew').textContent = `💬 New feedback on ${unseen} paragraph${unseen===1?'':'s'} — tap to read`;
 }
 renderLog();
+$('#fbnew').onclick = () => {
+  $('#writings').open = true;
+  store.writes.forEach(w => { if(w.fb) w.fbSeen = true; }); save();
+  $('#fbnew').classList.add('hidden');
+  $('#writings').scrollIntoView({behavior:'smooth'});
+};
+fetchFeedback();
 
 $('#start').onclick = () => {
   const pool = TOPICS.filter(t => unit==='all' || t.unit===unit);
@@ -510,48 +618,34 @@ function renderWrite(t){
     <div class="facts"><b>📌 Facts you can use</b><ul>${t.facts.map(f=>`<li>${esc(f)}</li>`).join('')}</ul></div>
     ${PARTS.map(p=>`<div class="wbox">${tag(p)}<div class="in"><div class="hint"><b>${p.name}</b> — ${STARTERS[p.k].hint}</div>
       <textarea id="w${p.k}" rows="2" autocapitalize="sentences" ${p.k==='P' ? 'placeholder="The ___ was important because ___."' : ''}>${STARTERS[p.k].start}</textarea></div></div>`).join('')}
-    <p class="muted">Writing on paper instead? That's fine — skip the boxes and tap Check.</p>
-    <button class="btn wide" id="chk">Check my paragraph</button>`;
+    <button class="btn wide" id="chk">✅ I'm done</button>`;
   $('#chk').onclick = () => renderCheck(t);
 }
+/* No self-check: he writes, sends it to Mum, and Claude's feedback comes back. */
 function renderCheck(t){
   const mine = PARTS.map(p => ($('#w'+p.k).value||'').trim());
   const real = mine.map((s,i) => s && s !== STARTERS[PARTS[i].k].start.trim() ? s : '');
-  const wrote = real.some(Boolean);
-  const text = real.filter(Boolean).join(' ');
-  $('#barfill').style.width = '66%';
-  const CHECKS = [
-    'My <b>Point</b> answers the question and says <b>why</b>.',
-    'My <b>Evidence</b> has <b>2 facts</b> (a name, date or number).',
-    'My <b>Explain</b> says what it <b>meant for China</b> — not the same fact again.',
-    'My <b>Link</b> goes back to the question.',
-  ];
-  const ans = [null,null,null,null];
+  if(!real.some(Boolean)){ alert('Write your paragraph in the boxes first ✏️'); return; }
+  const parts = Object.fromEntries(PARTS.map((p,i) => [p.k, real[i]]));
+  const w = {id:newId(), date:today(), title:t.title, q:t.q, parts, text: real.filter(Boolean).join(' ')};
+  store.writes.push(w);
+  store.log.push({date:today(), mode:'write', sent:false, id:w.id});
+  save();
+  $('#barfill').style.width = '100%';
   $('#card').innerHTML = `
-    <div class="q">${esc(t.title)} · check</div>
-    ${wrote ? `<p class="label">My paragraph</p><div class="mine">${esc(text)}</div>` : ''}
-    <p class="label">Model paragraph</p>
-    <div class="given model">${PARTS.map(p=>`<div class="slot">${tag(p)}<div class="txt">${esc(t[p.k])}</div></div>`).join('')}</div>
-    <p class="label" style="margin-top:16px">Be honest — did I…</p>
-    <div class="checks">${CHECKS.map((c,i)=>`<div class="chk"><p>${c}</p><div class="yn"><button class="y" data-i="${i}" data-v="1">✅ Yes</button><button class="n" data-i="${i}" data-v="0">❌ Not yet</button></div></div>`).join('')}</div>
-    <button class="btn wide next" id="fin" disabled>Save</button>`;
-  $('#card').querySelector('.checks').onclick = e => {
-    const b = e.target.closest('button'); if(!b) return;
-    const i = +b.dataset.i; ans[i] = +b.dataset.v;
-    b.parentElement.querySelectorAll('button').forEach(x => x.classList.toggle('on', x===b));
-    $('#fin').disabled = ans.includes(null);
-  };
-  $('#fin').onclick = () => {
-    const score = ans.reduce((a,b)=>a+b,0);
-    store.log.push({date:today(), mode:'write', score, total:4, redo:false});
-    if(wrote) store.writes.push({date:today(), title:t.title, text, score});
-    save();
-    S = {mode:'write', items:[t], firstTry:score, missed:[], redo:false};
-    $('#score').textContent = `${score} / 4`;
-    $('#scoresub').textContent = 'Self-check · ' + (score===4 ? 'all four! 🎉' : ans[2]===0 ? 'Next time: "This meant that… so China…"' : 'Keep going!');
-    $('#misslist').innerHTML = '';
-    $('#redo').classList.add('hidden');
-    show('done');
+    <div class="q">${esc(t.title)} · done!</div>
+    <p class="label">My paragraph</p>
+    <div class="mine">${esc(w.text)}</div>
+    <button class="btn wide" id="send">📤 Send to Mum</button>
+    <p class="muted" style="text-align:center" id="sendnote">Choose AirDrop → Mum's Mac (or WeChat). Feedback will show on the home page.</p>`;
+  $('#send').onclick = async () => {
+    if(!await sendWrite(w)) return;
+    const L = store.log.find(r => r.id === w.id); if(L){ L.sent = true; save(); }
+    $('#card').innerHTML = `<div class="q">${esc(t.title)}</div>
+      <div class="score" style="margin:10px 0">📬</div>
+      <p style="text-align:center"><b>Sent!</b><br><span class="muted">Mum will send feedback. Look for 💬 on the home page.</span></p>
+      <button class="btn wide" id="gohome">Back to home</button>`;
+    $('#gohome').onclick = () => { renderLog(); show('home'); };
   };
 }
 </script>
