@@ -268,6 +268,8 @@ input.bad{border-color:var(--warn)}
 .misslist .cn{color:var(--accent);font-weight:700;margin-left:6px}
 .misslist span.typed{color:var(--warn);text-align:right}
 .misslist h3{font-size:14px;color:var(--muted);font-weight:600;padding:10px 0 4px;border:none}
+.misslist .ipa{font-size:13px;font-weight:600;color:var(--accent);opacity:.85}
+.misslist li[data-say]{cursor:pointer}
 .homelink{display:inline-block;margin:0 0 14px;font-size:14px;color:var(--muted);text-decoration:none}
 .homelink:hover{color:var(--accent)}
 </style>
@@ -312,7 +314,8 @@ input.bad{border-color:var(--warn)}
       </div>
       <button class="btn primary" id="set-go" style="text-align:center">Start →</button>
       <div class="panel" id="setReport" style="margin-top:14px" hidden></div>
-      <button class="linkbtn" id="mean-all">Before the test: all <span data-count></span> meanings at once</button>
+      <p class="lasttest" id="lastread" hidden></p>
+      <div id="readfix" hidden></div>
       <p class="lasttest" id="lastmean" hidden></p>
       <div id="meanfix" hidden></div>
       <div style="height:22px"></div>
@@ -320,8 +323,8 @@ input.bad{border-color:var(--warn)}
 
     <div data-tab-panel="spell" hidden>
     <div class="seg sub" id="seg">
-      <button data-view="levels">🎮 Levels</button>
       <button data-view="one">1️⃣ One</button>
+      <button data-view="levels">🎮 Levels</button>
       <button data-view="all">📋 Test all</button>
     </div>
 
@@ -876,7 +879,7 @@ let stars = {};      // per level: best star count, 0-3
 /* Per word, from One-by-one. Unlike levels this is the LATEST result, not the
    best — it's meant to show how he'd spell it today. */
 let wordStars = {};
-let view  = "levels";// which Spelling view he last used
+let view  = "one";   // which Spelling view he last used
 let tab   = "mean";  // 🧠 Meaning or ✍️ Spelling, last used
 let lastAll = null;  // last Test all score: {right, total, date}
 /* Words he missed in Test all, listed under it for one-by-one practice.
@@ -891,7 +894,7 @@ function load(){
   stats = d.stats || {};
   stars = d.stars || {};
   wordStars = d.wordStars || {};
-  view  = d.view  || "levels";
+  view  = d.view  || "one";
   tab   = d.tab   || "mean";
   if(view === "mean"){ view = "levels"; tab = "mean"; }   // old 4-tab layout
   lastAll = d.lastAll || null;
@@ -1655,6 +1658,9 @@ function goHome(){ renderHome(); renderMean(); show("home"); }
 let MQ = null;
 const meanLoad = () => { try{ return JSON.parse(localStorage.getItem(KEY+":mean")) || null; }catch(e){ return null; } };
 const meanSave = r  => { try{ localStorage.setItem(KEY+":mean", JSON.stringify(r)); }catch(e){} };
+/* Whole-list 🗣 Read run, kept apart from the 💡 meanings result. */
+const readLoad = () => { try{ return JSON.parse(localStorage.getItem(KEY+":readall")) || null; }catch(e){ return null; } };
+const readSave = r  => { try{ localStorage.setItem(KEY+":readall", JSON.stringify(r)); }catch(e){} };
 const setsLoad = () => { try{ return JSON.parse(localStorage.getItem(KEY+":sets10")) || {}; }catch(e){ return {}; } };
 const setsSave = r  => { try{ localStorage.setItem(KEY+":sets10", JSON.stringify(r)); }catch(e){} };
 const mshuffle = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
@@ -1690,11 +1696,13 @@ function renderSets(){
     const u = r[k] && r[k].und;
     const badge = u ? (u.right === u.total ? `<span class="ck">✅ ${u.right}/${u.total}</span>` : `💡 ${u.right}/${u.total}`) : `${s.ws.length} words`;
     return `<button class="chip" data-set="${k}" aria-pressed="${k===setNo}">Set ${k+1}<small>${s.t}<br>${badge}</small></button>`;
-  }).join("");
+  }).join("") +
+    /* "All" = the whole week's list in one run — the check before the test. */
+    `<button class="chip" data-set="-1" aria-pressed="${setNo<0}">All<small>Before the test<br>${WORDS.length} words</small></button>`;
   $$("#sets [data-set]").forEach(b => b.onclick = () => { setNo = +b.dataset.set; renderSets(); });
 
-  const s = SETS[setNo];
-  $("#setTitle").textContent = `Set ${setNo+1} · ${s.t} · ${s.ws.length} words`;
+  const all = setNo < 0, s = all ? {t:"Every word this week", ws:WORDS.map(o => o.w)} : SETS[setNo];
+  $("#setTitle").textContent = `${all ? "All" : "Set "+(setNo+1)} · ${s.t} · ${s.ws.length} words`;
   $("#setPrev").innerHTML = s.ws.map(byWord).map((o,n) =>
     `<li data-say="${o.w}"><span class="num">${n+1}</span><span class="body"><span class="hdr"><b>${o.w}</b>` +
     (o.ipa ? `<span class="ipa">${o.ipa}</span>` : "") + `<span class="cn">${o.zh}</span></span>` +
@@ -1707,7 +1715,7 @@ function renderSets(){
 
   $("#mRead").setAttribute("aria-pressed", mMode==="read");
   $("#mUnd").setAttribute("aria-pressed", mMode==="und");
-  $("#set-go").textContent = `Start ${mMode==="read" ? "🗣 Read" : "💡 Understand"} · Set ${setNo+1} →`;
+  $("#set-go").textContent = `Start ${mMode==="read" ? "🗣 Read" : "💡 Understand"} · ${all ? "All "+WORDS.length+" words" : "Set "+(setNo+1)} →`;
 
   /* Report card — the parent view: every set he has touched this week. */
   const rows = SETS.map((s,k) => {
@@ -1721,22 +1729,30 @@ function renderSets(){
 }
 $("#mRead").onclick = () => { mMode = "read"; renderSets(); };
 $("#mUnd").onclick  = () => { mMode = "und";  renderSets(); };
-$("#set-go").onclick = () => startMean(SETS[setNo].ws.map(byWord), {mode:mMode, set:setNo});
+$("#set-go").onclick = () => setNo < 0
+  ? startMean(WORDS, {mode:mMode, set:null})
+  : startMean(SETS[setNo].ws.map(byWord), {mode:mMode, set:setNo});
 
 function renderMean(){
   renderSets();
-  const r = meanLoad(), lm = $("#lastmean"), fx = $("#meanfix");
+  renderAllRun("read", readLoad(), $("#lastread"), $("#readfix"));
+  renderAllRun("und",  meanLoad(), $("#lastmean"), $("#meanfix"));
+}
+/* Last whole-list run (🗣 Read or 💡 Understand) + the words still missed. */
+function renderAllRun(m, r, lm, fx){
   if(!r){ lm.hidden = true; fx.hidden = true; return; }
+  const read = m === "read";
   lm.hidden = false;
-  lm.innerHTML = `All-words check (${r.date}): <b>${r.right} / ${r.total}</b>` + (r.right === r.total ? " 🏆" : r.miss.length ? "" : " · missed ones fixed ✓");
+  lm.innerHTML = `${read ? "Read-all check" : "All-words check"} (${r.date}): <b>${r.right} / ${r.total}</b>` + (r.right === r.total ? " 🏆" : r.miss.length ? "" : " · missed ones fixed ✓");
   const miss = r.miss.map(byWord).filter(Boolean);
   fx.hidden = !miss.length;
   if(!miss.length) return;
-  fx.innerHTML = `<p class="legend" style="text-align:left;margin:8px 0 2px">Didn't know these yet — read them, then try just these:</p>
+  fx.innerHTML = `<p class="legend" style="text-align:left;margin:8px 0 2px">${read ? "Stumbled on these — tap to hear, then try just these:" : "Didn't know these yet — read them, then try just these:"}</p>
     <ul class="misslist" style="margin-bottom:12px">${miss.map(o =>
-      `<li><span><b>${o.w}</b><span class="cn">${o.zh}</span></span><span style="color:var(--muted);text-align:right">${o.m}</span></li>`).join("")}</ul>
-    <button class="btn" id="mean-fix">🔁 Just these ${miss.length}</button>`;
-  $("#mean-fix").onclick = () => startMean(miss, {mode:"und", set:null});
+      `<li data-say="${o.w}"><span><b>${o.w}</b>${o.ipa ? ` <span class="ipa">${o.ipa}</span>` : ""}<span class="cn">${o.zh}</span></span><span style="color:var(--muted);text-align:right">${o.m}</span></li>`).join("")}</ul>
+    <button class="btn" data-fix>🔁 Just these ${miss.length}</button>`;
+  fx.querySelectorAll("[data-say]").forEach(li => li.onclick = () => say(li.dataset.say));
+  fx.querySelector("[data-fix]").onclick = () => startMean(miss, {mode:m, set:null});
 }
 
 const MQ_PAUSE = 5;   // seconds to think before the meaning shows (same as History)
@@ -1791,9 +1807,10 @@ function finishMean(){
   if(set === null){
     // Whole-list check: a full run replaces the result; a retry only
     // clears the words he now knows from the missed list.
-    const prev = meanLoad();
-    if(MQ.full || !prev) meanSave({right:MQ.right, total, date, miss});
-    else meanSave({...prev, miss: prev.miss.filter(w => miss.includes(w))});
+    const load = m === "read" ? readLoad : meanLoad, save = m === "read" ? readSave : meanSave;
+    const prev = load();
+    if(MQ.full || !prev) save({right:MQ.right, total, date, miss});
+    else save({...prev, miss: prev.miss.filter(w => miss.includes(w))});
   }else if(MQ.full){
     const r = setsLoad();
     r[set] = r[set] || {};
@@ -1814,21 +1831,20 @@ function finishMean(){
      after a clean Understand → the next set. */
   const acts = [];
   if(miss.length) acts.push(`<button class="btn primary" id="mq-again" style="text-align:center">🔁 Try the ${miss.length} missed again</button>`);
-  if(set !== null && m === "read") acts.push(`<button class="btn${miss.length?"":" primary"}" id="mq-next" style="text-align:center">💡 Understand · Set ${set+1} →</button>`);
+  if(m === "read" && MQ.full) acts.push(`<button class="btn${miss.length?"":" primary"}" id="mq-next" style="text-align:center">💡 Understand · ${set === null ? "All" : "Set "+(set+1)} →</button>`);
   if(set !== null && m === "und" && !miss.length && set+1 < SETS.length) acts.push(`<button class="btn primary" id="mq-next" style="text-align:center">🗣 Next: Set ${set+2} →</button>`);
   acts.push(`<button class="btn" id="mq-home" style="text-align:center">Home</button>`);
   $("#done-actions").innerHTML = acts.join("");
   const again = miss.map(byWord), opts = {mode:m, set};
   if(miss.length) $("#mq-again").onclick = () => startMean(again, opts);
   if($("#mq-next")) $("#mq-next").onclick = () => {
-    if(m === "read"){ mMode = "und"; startMean(SETS[set].ws.map(byWord), {mode:"und", set}); }
+    if(m === "read"){ mMode = "und"; startMean(set === null ? WORDS : SETS[set].ws.map(byWord), {mode:"und", set}); }
     else { setNo = set+1; mMode = "read"; startMean(SETS[setNo].ws.map(byWord), {mode:"read", set:setNo}); }
   };
   $("#mq-home").onclick = () => { if(set !== null) setNo = set; goHome(); };
   MQ = null;
   show("done");
 }
-$("#mean-all").onclick = () => startMean(WORDS, {mode:"und", set:null});
 /* Tap anywhere on the screen (not just the timer circle) to skip the wait —
    he taps the white card and expects it to move on. Buttons keep their own job. */
 $("#meanq").addEventListener("click", e => { if(!e.target.closest("button")) revealMean(); });
