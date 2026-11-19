@@ -34,5 +34,23 @@
       "G": "Your new sentences are correct. All the mistakes are in the old ones: be cause → because, help → helped, chang → change, it help we → it helped us. Start every sentence with a capital letter (\"it help\" → \"It helped\")."
     },
     "next": "Copy only your NEW sentences into one paragraph. Then add one more sentence after the rice: \"This was important for China because ...\" (for example: the emperor could feed his soldiers and the north and south became one country)."
+  },
+  "pmwnh2grw5frd": {
+    "at": "2026-11-19",
+    "scores": {
+      "P": 4,
+      "E": 4,
+      "X": 2,
+      "L": 3,
+      "G": 3
+    },
+    "notes": {
+      "P": "Good point with a reason: it connected north and south China. Delete the first sentence (\"The Grand Canal was important.\"). It says the same thing twice.",
+      "E": "Well done! Two clear, true facts and no old sentences left. To go higher, add one detail, e.g. it was about 1,700 km long.",
+      "X": "Your last version had \"so northern people had food\". Where did it go? Right now your Explain is just another fact. Explain says WHY it mattered: \"This meant that ...\", then \"so ...\".",
+      "L": "\"Therefore, it joined China together.\" is good. The second sentence is a new idea (boats carrying things). That belongs in Explain, not in Link.",
+      "G": "Start every sentence with a capital letter: boats → Boats. Becuse → Because. Don't use a capital in the middle: It → it. carry → carried, help we → helped us."
+    },
+    "next": "Make your Explain two sentences: \"This meant that boats could carry rice from the south to the north, so people in the north had food. This was important because the emperor could feed his army and rule all of China.\""
   }
 }
