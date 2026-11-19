@@ -52,5 +52,23 @@
       "G": "Start every sentence with a capital letter: boats → Boats. Becuse → Because. Don't use a capital in the middle: It → it. carry → carried, help we → helped us."
     },
     "next": "Make your Explain two sentences: \"This meant that boats could carry rice from the south to the north, so people in the north had food. This was important because the emperor could feed his army and rule all of China.\""
+  },
+  "pmwni4cugxxb3": {
+    "at": "2026-11-19",
+    "scores": {
+      "P": 4,
+      "E": 4,
+      "X": 2,
+      "L": 3,
+      "G": 3
+    },
+    "notes": {
+      "P": "Great: one clear sentence with a reason. To reach 5, say why it mattered for China's development, e.g. \"... because it connected north and south China and helped the country grow.\"",
+      "E": "Two clear, true facts. Well done!",
+      "X": "Good start: \"Boats could carry rice and goods between north and south\". Now say WHY that mattered: \"This meant that ..., so ...\". \"It help two Rivers get together\" just says your Evidence again. Delete it.",
+      "L": "\"Therefore, it joined China together.\" is now in BOTH Explain and Link. Keep it only in Link. Delete \"Because it carried many things helped have more things.\"",
+      "G": "could carried → could carry. It help → It helped. Rivers → rivers (no capital in the middle). End every sentence with a full stop."
+    },
+    "next": "Use your Week 10 words in Explain: \"This meant that transportation between the north and the south became faster, so food and goods could move easily. This helped the economy grow.\" Say it out loud to Mum first, then write it."
   }
 }
