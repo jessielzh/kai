@@ -15,7 +15,51 @@
       "L": "Good try at \"Therefore\". Make it a full sentence and say the main idea again: the canal helped join China together.",
       "G": "Check: be cause → because, help → helped, chang → change, our/we → us. Every sentence needs a subject (\"it helped\")."
     },
-    "next": "Rewrite your Explain with this start: \"This meant that rice from the south could feed people in the north, so ...\" Finish the sentence: why was that good for China?"
+    "next": "Rewrite your Explain with this start: \"This meant that rice from the south could feed people in the north, so ...\" Finish the sentence: why was that good for China?",
+    "fixes": [
+      {
+        "p": "P",
+        "bad": "be cause",
+        "fix": "because",
+        "why": "one word"
+      },
+      {
+        "p": "E",
+        "bad": "it help many",
+        "fix": "it helped many",
+        "why": "past tense: help → helped"
+      },
+      {
+        "p": "E",
+        "bad": "chang their",
+        "fix": "change their",
+        "why": "spelling"
+      },
+      {
+        "p": "E",
+        "bad": "help our chang things",
+        "fix": "helped us change things",
+        "why": "helped us, change"
+      },
+      {
+        "p": "X",
+        "bad": "it help we travel",
+        "fix": "it helped us travel",
+        "why": "helped us (not 'help we')"
+      },
+      {
+        "p": "X",
+        "bad": "some time",
+        "fix": "sometimes",
+        "why": "one word"
+      },
+      {
+        "p": "L",
+        "bad": "Therefore, help people",
+        "fix": "Therefore, it helped people",
+        "why": "every sentence needs a subject: it"
+      }
+    ]
   },
   "pmwn6zjesd2re": {
     "at": "2026-11-19",
@@ -33,7 +77,45 @@
       "L": "\"Therefore, it joined China together.\" says the main idea again. Good! Make it a little bigger: why did a joined China matter?",
       "G": "Your new sentences are correct. All the mistakes are in the old ones: be cause → because, help → helped, chang → change, it help we → it helped us. Start every sentence with a capital letter (\"it help\" → \"It helped\")."
     },
-    "next": "Copy only your NEW sentences into one paragraph. Then add one more sentence after the rice: \"This was important for China because ...\" (for example: the emperor could feed his soldiers and the north and south became one country)."
+    "next": "Copy only your NEW sentences into one paragraph. Then add one more sentence after the rice: \"This was important for China because ...\" (for example: the emperor could feed his soldiers and the north and south became one country).",
+    "fixes": [
+      {
+        "p": "P",
+        "bad": "be cause",
+        "fix": "because",
+        "why": "one word"
+      },
+      {
+        "p": "E",
+        "bad": "It help many",
+        "fix": "It helped many",
+        "why": "past tense: help → helped"
+      },
+      {
+        "p": "E",
+        "bad": "help our chang things",
+        "fix": "helped us change things",
+        "why": "helped us, change"
+      },
+      {
+        "p": "X",
+        "bad": "it help we travel",
+        "fix": "It helped us travel",
+        "why": "capital at the start; helped us"
+      },
+      {
+        "p": "X",
+        "bad": "some time",
+        "fix": "sometimes",
+        "why": "one word"
+      },
+      {
+        "p": "L",
+        "bad": "Therefore, help people",
+        "fix": "Therefore, it helped people",
+        "why": "every sentence needs a subject: it"
+      }
+    ]
   },
   "pmwnh2grw5frd": {
     "at": "2026-11-19",
@@ -51,7 +133,33 @@
       "L": "\"Therefore, it joined China together.\" is good. The second sentence is a new idea (boats carrying things). That belongs in Explain, not in Link.",
       "G": "Start every sentence with a capital letter: boats → Boats. Becuse → Because. Don't use a capital in the middle: It → it. carry → carried, help we → helped us."
     },
-    "next": "Make your Explain two sentences: \"This meant that boats could carry rice from the south to the north, so people in the north had food. This was important because the emperor could feed his army and rule all of China.\""
+    "next": "Make your Explain two sentences: \"This meant that boats could carry rice from the south to the north, so people in the north had food. This was important because the emperor could feed his army and rule all of China.\"",
+    "fixes": [
+      {
+        "p": "X",
+        "bad": "boats could",
+        "fix": "Boats could",
+        "why": "capital letter at the start of a sentence"
+      },
+      {
+        "p": "L",
+        "bad": "Becuse",
+        "fix": "Because",
+        "why": "spelling"
+      },
+      {
+        "p": "L",
+        "bad": "It carry",
+        "fix": "it carried",
+        "why": "no capital in the middle; past tense"
+      },
+      {
+        "p": "L",
+        "bad": "help we",
+        "fix": "helped us",
+        "why": "helped us (not 'help we')"
+      }
+    ]
   },
   "pmwni4cugxxb3": {
     "at": "2026-11-19",
@@ -69,6 +177,38 @@
       "L": "\"Therefore, it joined China together.\" is now in BOTH Explain and Link. Keep it only in Link. Delete \"Because it carried many things helped have more things.\"",
       "G": "could carried → could carry. It help → It helped. Rivers → rivers (no capital in the middle). End every sentence with a full stop."
     },
-    "next": "Use your Week 10 words in Explain: \"This meant that transportation between the north and the south became faster, so food and goods could move easily. This helped the economy grow.\" Say it out loud to Mum first, then write it."
+    "next": "Use your Week 10 words in Explain: \"This meant that transportation between the north and the south became faster, so food and goods could move easily. This helped the economy grow.\" Say it out loud to Mum first, then write it.",
+    "fixes": [
+      {
+        "p": "X",
+        "bad": "could carried",
+        "fix": "could carry",
+        "why": "after 'could', use the plain verb: could carry"
+      },
+      {
+        "p": "X",
+        "bad": "It help",
+        "fix": "It helped",
+        "why": "past tense: help → helped"
+      },
+      {
+        "p": "X",
+        "bad": "two Rivers",
+        "fix": "two rivers",
+        "why": "no capital letter in the middle of a sentence"
+      },
+      {
+        "p": "X",
+        "bad": "get together",
+        "fix": "get together.",
+        "why": "end every sentence with a full stop"
+      },
+      {
+        "p": "L",
+        "bad": "things helped have",
+        "fix": "things, it helped people have",
+        "why": "needs a subject: it helped people"
+      }
+    ]
   }
 }

@@ -140,6 +140,12 @@
   .rrow .lv{float:right;font-size:14px;color:var(--muted)}
   .rrow .dots{letter-spacing:2px;color:var(--accent);font-size:13px}
   .rrow .note{margin-top:3px}
+  .gx del{color:var(--again);text-decoration-thickness:2px} .gx ins{text-decoration:none;color:var(--good);font-weight:700;background:var(--good-soft);border-radius:6px;padding:0 4px;margin-left:3px}
+  .gx sup{color:var(--again);font-weight:800;font-size:11px;margin-left:1px}
+  .ptxt{display:flex;gap:8px;align-items:flex-start;margin:6px 0;white-space:normal} .ptxt .tag{flex:none;transform:scale(.8);transform-origin:top left}
+  .fixes{margin:8px 0 4px;padding:10px 12px;border-radius:10px;border:1.5px dashed var(--again);white-space:normal}
+  .fixes ol{margin:4px 0 0;padding-left:22px} .fixes li{margin:4px 0}
+  .fixes del{color:var(--again)} .fixes ins{text-decoration:none;color:var(--good);font-weight:700}
   .rrow .up{margin-top:4px;font-size:14px;color:var(--muted)}
   .rrow.low .dots{color:var(--again)}
   .tag.g{background:#6f6758}
@@ -476,6 +482,32 @@ function rubricHTML(f){
       </div></div>`; }).join('') +
     (f.next ? `<div class="nx">🎯 Next time: ${esc(f.next)}</div>` : '') + `</div>`;
 }
+/* Grammar fixes shown inside his own sentences.
+   feedback.json: "fixes":[{"p":"X","bad":"could carried","fix":"could carry","why":"after could → carry"}]
+   p = which part (P/E/X/L); bad = exact words he wrote; each is marked where it happens. */
+function markPart(str, fixes, start){
+  let out = '', i = 0, n = start;
+  const hits = [];
+  fixes.forEach(f => { const at = str.indexOf(f.bad); if(at >= 0) hits.push({at, f}); });
+  hits.sort((a,b) => a.at - b.at);
+  hits.forEach(({at, f}) => { if(at < i) return;
+    out += esc(str.slice(i, at)) + `<span class="gx"><del>${esc(f.bad)}</del><ins>${esc(f.fix)}</ins><sup>${++n}</sup></span>`;
+    f._n = n; i = at + f.bad.length; });
+  return {html: out + esc(str.slice(i)), n};
+}
+function markedText(w){
+  const fixes = (w.fb && w.fb.fixes) || [];
+  if(!fixes.length || !w.parts) return esc(w.text);
+  fixes.forEach(f => delete f._n);
+  let n = 0, html = '';
+  PARTS.forEach(p => { const t = w.parts[p.k]; if(!t) return;
+    const r = markPart(t, fixes.filter(f => f.p === p.k), n); n = r.n;
+    html += `<div class="ptxt">${tag(p)}<div>${r.html}</div></div>`; });
+  const done = fixes.filter(f => f._n).sort((a,b) => a._n - b._n);
+  if(done.length) html += `<div class="fixes"><b>✏️ Fix these (${done.length})</b><ol>${done.map(f =>
+    `<li value="${f._n}"><del>${esc(f.bad)}</del> → <ins>${esc(f.fix)}</ins>${f.why ? ` <span class="muted">· ${esc(f.why)}</span>` : ''}</li>`).join('')}</ol></div>`;
+  return html;
+}
 async function fetchFeedback(){
   try{
     const r = await fetch('feedback.json?t=' + Date.now(), {cache:'no-store'});
@@ -511,7 +543,7 @@ function renderLog(){
     : '<li class="muted">No scores yet.</li>';
   const W = store.writes.slice(-10).reverse();
   $('#writings').classList.toggle('hidden', !W.length);
-  $('#wlist').innerHTML = W.map(w => `<div class="mine"><b>${esc(w.title)}</b> · <span class="muted">${w.date}</span>\n${esc(w.text)}` +
+  $('#wlist').innerHTML = W.map(w => `<div class="mine"><b>${esc(w.title)}</b> · <span class="muted">${w.date}</span>\n${markedText(w)}` +
     (w.fb ? rubricHTML(w.fb) + (w.fb.feedback ? `<div class="fb"><b>💬 Feedback</b>\n${esc(w.fb.feedback)}</div>` : '')
       : `\n<button class="sendbtn" data-send="${w.id}">📤 ${w.sent ? 'Send again' : 'Send to Mum'}</button>${w.sent ? ' <span class="sent">✓ sent</span>' : ''}`) + `</div>`).join('');
   $('#wlist').querySelectorAll('[data-send]').forEach(b => b.onclick = () => sendWrite(store.writes.find(w => w.id === b.dataset.send)));
