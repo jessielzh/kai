@@ -1,7 +1,13 @@
 {
   "pmwn68suxiilg": {
     "at": "2026-11-19",
-    "scores": { "P": 2, "E": 1, "X": 1, "L": 2, "G": 2 },
+    "scores": {
+      "P": 2,
+      "E": 1,
+      "X": 1,
+      "L": 2,
+      "G": 2
+    },
     "notes": {
       "P": "\"Useful\" is too vague. Say HOW it helped China: it joined the north and the south.",
       "E": "No real facts yet. Use facts from class: built in the Sui dynasty, linked the Yellow River and the Yangtze River, boats carried rice from the south to the north.",
@@ -10,5 +16,23 @@
       "G": "Check: be cause → because, help → helped, chang → change, our/we → us. Every sentence needs a subject (\"it helped\")."
     },
     "next": "Rewrite your Explain with this start: \"This meant that rice from the south could feed people in the north, so ...\" Finish the sentence: why was that good for China?"
+  },
+  "pmwn6zjesd2re": {
+    "at": "2026-11-19",
+    "scores": {
+      "P": 4,
+      "E": 3,
+      "X": 2,
+      "L": 3,
+      "G": 2
+    },
+    "notes": {
+      "P": "Your new Point is much better: it gives a reason (it connected north and south China). Now delete the old first sentence (\"be cause it is useful\").",
+      "E": "Good, two true facts: built in the Sui dynasty, linked the Yellow and Yangtze Rivers. Delete the old sentence about \"change their place\". To go higher, add how it helped: boats could carry rice and goods between north and south.",
+      "X": "Better: \"Boats carried rice south to north, so northern people had food.\" But that is only one idea, and it doesn't say why that mattered for China. Delete the old travel sentence.",
+      "L": "\"Therefore, it joined China together.\" says the main idea again. Good! Make it a little bigger: why did a joined China matter?",
+      "G": "Your new sentences are correct. All the mistakes are in the old ones: be cause → because, help → helped, chang → change, it help we → it helped us. Start every sentence with a capital letter (\"it help\" → \"It helped\")."
+    },
+    "next": "Copy only your NEW sentences into one paragraph. Then add one more sentence after the rice: \"This was important for China because ...\" (for example: the emperor could feed his soldiers and the north and south became one country)."
   }
 }
