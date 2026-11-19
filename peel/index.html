@@ -73,6 +73,7 @@
 
   /* session */
   .top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .top .count{margin-left:auto}
   .bar{flex:1;height:7px;background:var(--line);border-radius:99px;overflow:hidden}
   .bar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .25s}
   .count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -635,7 +636,7 @@ function storyHTML(t){
 }
 function startLearn(pool){
   show('session');
-  $('#barfill').style.width = '0%'; $('#count').textContent = '📖';
+  $('.bar').classList.add('hidden'); $('#count').textContent = '📖';
   $('#card').innerHTML = `<div class="q">Choose a topic to learn</div><div class="opts" id="opts">${pool.map(t=>`<button class="opt" data-id="${t.id}"><b>${esc(t.title)}</b><br>${esc(t.q)}</button>`).join('')}</div>`;
   $('#opts').onclick = e => { const b=e.target.closest('.opt'); if(b) renderLearn(TOPICS.find(t=>t.id===b.dataset.id), pool); };
 }
@@ -658,6 +659,7 @@ function renderLearn(t, pool){
 /* ---------- quiz engine (order + explain) ---------- */
 let S = null;
 function startQuiz(m, items, redo){
+  $('.bar').classList.remove('hidden');
   S = {mode:m, items, i:0, firstTry:0, missed:[], redo};
   show('session'); next();
 }
@@ -771,7 +773,7 @@ const STARTERS = {
 function startWrite(pool){
   const card = $('#card');
   show('session');
-  $('#barfill').style.width = '0%'; $('#count').textContent = '✏️';
+  $('.bar').classList.add('hidden'); $('#count').textContent = '✏️';
   card.innerHTML = `<div class="q">Choose a question</div><div class="opts" id="opts">${pool.map(t=>`<button class="opt" data-id="${t.id}"><b>${esc(t.title)}</b><br>${esc(t.q)}</button>`).join('')}</div>`;
   $('#opts').onclick = e => { const b=e.target.closest('.opt'); if(b) renderWrite(TOPICS.find(t=>t.id===b.dataset.id)); };
 }
