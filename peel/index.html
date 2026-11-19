@@ -44,7 +44,7 @@
   .chip small,.mode small{display:block;font-weight:400;font-size:12px;color:var(--muted);margin-top:2px;line-height:1.4}
   .chip:hover,.mode:hover{border-color:var(--accent)}
   .chip[aria-pressed="true"],.mode[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
-  .modes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .modes{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
   .mode{text-align:center;padding:14px 8px}
   .mode b{display:block;font-size:17px}
   @media (max-width:520px){.modes{grid-template-columns:1fr}}
@@ -161,6 +161,22 @@
   .muted{color:var(--muted);font-size:14px}
   details summary{cursor:pointer;color:var(--muted);font-size:14px}
   .hidden{display:none!important}
+  .story{margin:0 0 14px}
+  .slabel{font-weight:800;margin:14px 0 6px;font-size:15px}
+  .szh{font-size:17px;line-height:1.7;margin:0;background:var(--accent-soft);border-radius:14px;padding:12px 16px}
+  .smap{width:100%;border-radius:12px;border:1px solid var(--line);margin-top:10px}
+  .chain{display:flex;flex-direction:column;gap:2px}
+  .lk{border:2px solid var(--line);border-radius:14px;padding:10px 14px;font-size:17px;line-height:1.45;background:var(--card)}
+  .lk small{display:block;font-size:12px;font-weight:800;color:var(--muted);letter-spacing:.04em;margin-bottom:2px}
+  .lk i{display:block;font-style:normal;color:var(--muted);font-size:14px;margin-top:4px}
+  .lk.m{border-color:var(--good)} .lk.s{border-color:var(--again);background:var(--again-soft)}
+  .lk .kw{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+  .arr{text-align:center;color:var(--muted);font-size:13px;font-weight:700;padding:2px 0}
+  .kws{display:flex;flex-wrap:wrap;gap:8px}
+  .kws span{border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:15px;background:var(--card)}
+  .src{color:var(--muted);font-size:12px;margin:10px 0 0}
+  .say{background:var(--good-soft);border-radius:14px;padding:12px 16px;margin:6px 0 14px;font-size:16px;line-height:1.5}
+  details.storybox{margin:0 0 12px} details.storybox summary{font-size:16px;font-weight:700;color:var(--ink)}
 </style>
 </head>
 <body>
@@ -185,7 +201,8 @@
   <div class="panel">
     <p class="label">1 · Choose practice</p>
     <div class="modes" id="modes">
-      <button class="mode" data-mode="order" aria-pressed="true"><b>🔀 Order it</b><small>Put the 4 sentences in P‑E‑E‑L order</small></button>
+      <button class="mode" data-mode="learn" aria-pressed="true"><b>📖 Learn it</b><small>Story first: understand it, then say it</small></button>
+      <button class="mode" data-mode="order" aria-pressed="false"><b>🔀 Order it</b><small>Put the 4 sentences in P‑E‑E‑L order</small></button>
       <button class="mode" data-mode="explain" aria-pressed="false"><b>💡 So what?</b><small>Find the sentence that really explains</small></button>
       <button class="mode" data-mode="write" aria-pressed="false"><b>✏️ Write it</b><small>Write your own, then check</small></button>
     </div>
@@ -242,7 +259,7 @@ const TOPICS = [
   facts:['Built in the Sui Dynasty (581–618 CE)','Over 1,700 km long — the longest man‑made waterway in the world','Links Beijing (north) to Hangzhou (south)','Joins the Yellow River and the Yangtze River','The south grew lots of rice'],
   P:'The Grand Canal was very significant because it joined north and south China together.',
   E:'It was built in the Sui Dynasty and is over 1,700 km long. It links Beijing in the north to Hangzhou in the south.',
-  X:'This meant that rice and goods from the rich south could travel by boat to the north, so cities and armies in the north had enough food.',
+  X:'This meant that boats could carry food and goods between the north and the south, so trade and transportation became easier and China\'s economy grew.',
   L:'Therefore, the Grand Canal helped China develop because it tied the north and the south together.',
   repeat:'This shows that the Grand Canal is a very long river that goes from Beijing to Hangzhou.',
   vague:'This means that the Grand Canal is very important.'},
@@ -473,14 +490,14 @@ async function fetchFeedback(){
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const shuffle = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
-const MODE_NAME = {order:'🔀 Order it', explain:'💡 So what?', write:'✏️ Write it'};
+const MODE_NAME = {learn:'📖 Learn it', order:'🔀 Order it', explain:'💡 So what?', write:'✏️ Write it'};
 function show(id){ ['home','session','done'].forEach(s => $('#'+s).classList.toggle('hidden', s!==id)); window.scrollTo(0,0); }
 function burst(emoji){ const b=document.createElement('div'); b.className='burst'; b.textContent=emoji; $('#card').appendChild(b); setTimeout(()=>b.remove(),1000); }
 function tag(p){ return `<span class="tag ${p.cls}" title="${p.name}">${p.k==='X'?'E':p.k}</span>`; }
 function today(){ const d=new Date(); return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`; }
 
 /* ---------- home ---------- */
-let mode = 'order', unit = 'all';
+let mode = 'learn', unit = 'all';
 $('#units').innerHTML = UNITS.map(u => `<button class="chip" data-unit="${u.id}" aria-pressed="${u.id===unit}">${u.name}${u.sub?`<small>${u.sub}</small>`:''}</button>`).join('');
 $('#modes').onclick = e => { const b=e.target.closest('.mode'); if(!b) return; mode=b.dataset.mode;
   document.querySelectorAll('.mode').forEach(m => m.setAttribute('aria-pressed', m===b)); };
@@ -512,11 +529,131 @@ fetchFeedback();
 
 $('#start').onclick = () => {
   const pool = TOPICS.filter(t => unit==='all' || t.unit===unit);
-  if(mode==='write') startWrite(pool);
+  if(mode==='learn') startLearn(pool);
+  else if(mode==='write') startWrite(pool);
   else startQuiz(mode, shuffle(pool), false);
 };
 $('#quit').onclick = () => { renderLog(); show('home'); };
 $('#home2').onclick = () => { renderLog(); show('home'); };
+
+/* ---------- 📖 Story first: understand it before writing ----------
+   Built from Ms Heather's class materials: Grand Canal handout + mind map,
+   Tang mind map + class Tang PEEL, weekly Key Vocabulary, course reader,
+   and Tim's timeline. *word* = a class vocabulary word (shown bold). */
+const STORY = {
+ canal:{src:'Ms Heather\'s Grand Canal handout & mind map · Week 10 words',
+  zh:'隋朝以前，中国分裂了将近 300 年，隋朝把中国重新统一（unify）。中国的大河都是东西流；南方粮食多，北方有首都和军队。隋朝挖了大运河，把北边的黄河和南边的长江连起来，从北京一直通到杭州。船可以南北运粮食和货物，贸易和交通（trade and transportation）方便多了，南北也连成了一体。不过修运河让老百姓非常辛苦，隋炀帝最后被农民起义推翻。',
+  fact:'The Grand Canal linked the Yellow River in the north to the Yangtze River in the south.', factZh:'大运河把北方的黄河和南方的长江连了起来。',
+  meant:'boats could carry food and goods between the north and the south', meantZh:'船可以在南北之间运粮食和货物',
+  so:'*trade* and *transportation* became easier, the *economy* grew, and China was *unified*.', soZh:'贸易和交通更方便，经济发展，中国更统一。',
+  words:[['unify','统一'],['transportation','交通运输'],['trade','贸易'],['economy','经济'],['resources','资源']]},
+ exam:{src:'Course reader · Tang mind map (Taizong) · Week 12 words',
+  zh:'以前，当官主要靠家里有权有势。隋朝把科举考试正式定下来：想当官，先考试。唐太宗更多地用考试来选官员。这样，读书好的普通人也能为国家做事，政府里的人更有本事。',
+  fact:'The Sui made the civil service exam formal, and Taizong used it to hire government officials.', factZh:'隋朝正式设立科举，唐太宗用它来选官员。',
+  meant:'officials were chosen because they studied hard, not only because of their family', meantZh:'官员是因为读书好被选上的，而不只是靠家里',
+  so:'the *government* had clever, educated officials, and China was run better.', soZh:'政府里都是有学问的人，国家管得更好。',
+  words:[['examinations','科举考试'],['government','政府'],['official','官员']]},
+ poetry:{src:'Your class Tang PEEL & Tang mind map · Week 11–12 words',
+  zh:'唐朝国家强大又富有（prosperity），人们有时间、有钱去发展艺术。诗歌成了中国文化很重要的一部分，最有名的诗人李白、杜甫都是唐朝人。人们读诗既快乐又能学到东西，也为自己有这么有才华的诗人感到骄傲。到今天，我们还在背唐诗。',
+  fact:'Li Bai and Du Fu, two of the most famous Chinese poets, were from the Tang Dynasty.', factZh:'李白和杜甫这两位最有名的诗人都是唐朝人。',
+  meant:'people could be entertained and informed by their poems', meantZh:'人们读他们的诗，既开心又能学到东西',
+  so:'people were proud of their talented artists, and *poetry* became an important part of Chinese *culture*.', soZh:'人们为有才华的诗人骄傲，诗歌成了中国文化的重要部分。',
+  words:[['culture','文化'],['poetry','诗歌'],['prosperity','繁荣'],['achievement','成就']]},
+ invent:{src:'Course reader · Tang mind map · Week 12 words',
+  zh:'唐朝发明了雕版印刷：把字刻在木板上，刷上墨，再印到纸上。以前书都要用手抄，又慢又少。有了印刷，一本书可以印很多份，更多人能读书学习。唐朝还发明了火药，后来被用在烟花和武器上。',
+  fact:'Woodblock printing was invented in the Tang. Before that, books were copied by hand.', factZh:'唐朝发明了雕版印刷。以前书都是手抄的。',
+  meant:'books could be printed quickly and cheaply', meantZh:'书可以印得又快又便宜',
+  so:'more people could read and learn, and knowledge spread across China.', soZh:'更多人能读书学习，知识传遍中国。',
+  words:[['woodblock printing','雕版印刷'],['advancement','进步'],['technology','技术']]},
+ taizong:{src:'Ms Heather\'s Tang mind map · Week 11–12 words',
+  zh:'唐太宗是中国历史上最伟大的皇帝之一，唐朝盛世从他开始。他扩大科举，用考试选官员；在首都长安办了很好的学校；还改革法律，让法律更公平。后来的皇帝都把他当成"公平、平衡地治理国家"的榜样。',
+  fact:'Taizong used exams to hire officials, built good schools in the capital and made the laws fairer.', factZh:'太宗用考试选官员，在首都办好学校，让法律更公平。',
+  meant:'the government had skilled officials and fair rules', meantZh:'政府有能干的官员和公平的规矩',
+  so:'the Tang became stable and full of *prosperity*, and later rulers used him as a model for fair rule.', soZh:'唐朝安定繁荣，后来的皇帝都学他。',
+  words:[['government','政府'],['examinations','科举考试'],['capital','首都'],['prosperity','繁荣']]},
+ tribute:{src:'Ms Heather\'s Tang mind map (Tribute & Trade) · Week 11 words',
+  zh:'唐朝很强大，周边很多国家派重要的人带着礼物来见唐朝皇帝，这叫"进贡"（tribute）。他们这样做，是为了和唐朝保持和平，还能和唐朝做生意。商人沿着丝绸之路来来往往，首都长安住着来自很多国家的人，非常国际化（cosmopolitan）。',
+  fact:'Many countries paid tribute to the Tang for peace and trading opportunities.', factZh:'很多国家向唐朝进贡，为了和平和做生意的机会。',
+  meant:'the Tang had peace with its neighbours and could *trade* along the *Silk Road*', meantZh:'唐朝和邻国和平相处，还能沿丝绸之路做生意',
+  so:'new goods and ideas came into China, and the Tang became richer and more *cosmopolitan*.', soZh:'新的货物和想法进入中国，唐朝更富有、更国际化。',
+  words:[['tribute','进贡'],['trade','贸易'],['Silk Road','丝绸之路'],['cosmopolitan','国际化的']]},
+ wu:{src:'Course reader · Week 11 words',
+  zh:'武则天是中国历史上唯一的女皇帝（empress）。在古代，通常只有男人能当皇帝。她在盛唐时期统治，继续了唐太宗开始的盛世，国家仍然强大、繁荣。',
+  fact:'Wu Zetian was the only female emperor in Chinese history, and she continued the golden age.', factZh:'武则天是中国唯一的女皇帝，她延续了盛世。',
+  meant:'the Tang stayed strong and full of *prosperity* while she ruled', meantZh:'她统治时唐朝依然强大繁荣',
+  so:'she showed that a woman could rule China well.', soZh:'她证明了女人也能把中国治理好。',
+  words:[['empress','女皇'],['prosperity','繁荣'],['golden age','盛世']]},
+ anlushan:{src:'Course reader · Week 11–12 words',
+  zh:'唐玄宗时，唐朝军队在怛罗斯之战输给了阿拉伯人，唐朝从此不再向外扩张（expansion）。后来将军安禄山起兵造反（安史之乱），打了很多年仗，死了很多人，国家花了大量的钱。从此唐朝开始衰落（decline），盛唐结束了。',
+  fact:'The Tang lost the Battle of Talas, and then General An Lushan rebelled.', factZh:'唐朝输了怛罗斯之战，后来安禄山造反。',
+  meant:'the Tang lost soldiers, money and land, and many people died in the war', meantZh:'唐朝损失了士兵、钱和土地，很多人死于战争',
+  so:'the emperor became weak, and the Tang began to *decline*.', soZh:'皇帝变弱，唐朝开始衰落。',
+  words:[['expansion','扩张'],['rebellion','叛乱'],['decline','衰落']]},
+ disunity:{src:'Course reader · timeline · Week 9 words',
+  zh:'汉朝灭亡后，中国分裂了将近 400 年（220–589 年）。先是三国：北边的魏、四川的蜀、东南的吴，各有军队，互相打仗。晋朝统一后很快就腐败了，北方游牧民族打进来，中国又分成南北两半。国家不统一，战争不断，老百姓生活很苦。',
+  fact:'After the Han, China split into the Three Kingdoms, and later into the Northern and Southern Dynasties.', factZh:'汉朝之后中国分成三国，后来又分成南北朝。',
+  meant:'kingdoms and *warlords* kept fighting each other for *territory*', meantZh:'各国和军阀为了抢地盘不停打仗',
+  so:'many people died, life was hard, and China stayed weak until the Sui *unified* it again.', soZh:'很多人死去，生活艰难，直到隋朝重新统一中国。',
+  words:[['division','分裂'],['warlord','军阀'],['territory','领土'],['unify','统一']]},
+ south:{src:'Timeline: "Shift of economic center" · Week 10 words',
+  zh:'南北朝时，北方一直打仗，很多人逃到南方（长江一带）去住。南方本来地多、雨多，适合种水稻。人多了，种地、干活的人就多了，南方的粮食和财富越来越多。中国的经济中心慢慢从北方移到了南方。这也是后来隋朝要挖大运河的原因之一！',
+  fact:'Because of constant war in the north, many people moved south.', factZh:'因为北方一直打仗，很多人搬到了南方。',
+  meant:'the south had more farmers and workers', meantZh:'南方的农民和工人变多了',
+  so:'the south grew more food and became richer, and China\'s *economy* centre moved to the south.', soZh:'南方粮食更多、更富，中国的经济中心移到了南方。',
+  words:[['economy','经济'],['resources','资源'],['shift','转移']]},
+ wall:{src:'Timeline (Qin) · Week 4–5 words',
+  zh:'秦朝北边有骑马的游牧民族，常常冲进来抢东西。秦始皇把以前各国的城墙连起来，修成长城，像一道屏障（barrier）挡住敌人。长城上有烽火台，看到敌人就点烟报信（signal）。但修长城非常辛苦，很多工人死了。',
+  fact:'Qin Shihuang built the Great Wall to stop the northern nomads.', factZh:'秦始皇修长城来挡住北方游牧民族。',
+  meant:'enemies on horses could not easily ride into China, and towers could send smoke *signals*', meantZh:'骑马的敌人很难冲进来，烽火台还能报信',
+  so:'northern China was safer, and the empire was better protected.', soZh:'北方更安全，国家得到保护。',
+  words:[['barrier','屏障'],['signal','信号'],['sacrifice','牺牲'],['legacy','遗产']]},
+ confucius:{src:'Timeline (Qin & Han) · Week 3 words',
+  zh:'孔子教人要孝顺父母（filial piety）、对人仁爱（benevolence）、各尽本分，社会就会和谐（harmony）。秦朝不喜欢儒家，烧书、杀儒生。汉武帝正好相反，把儒家定为国家的正式思想，还用考试选懂儒家的人当官。',
+  fact:'Han Wudi made Confucianism the official idea of the state and used a basic exam to choose officials.', factZh:'汉武帝把儒家定为国家思想，并用考试选官。',
+  meant:'officials all learned the same ideas about respect, *duty* and good rule', meantZh:'官员们都学同样的道理：尊重、责任、好好治理',
+  so:'the government worked well together, and the Han stayed stable for a long time.', soZh:'政府团结，汉朝长期稳定。',
+  words:[['filial piety','孝'],['benevolence','仁'],['harmony','和谐'],['duty','责任']]},
+};
+const bold = s => esc(s).replace(/\*([^*]+)\*/g,'<b class="kw">$1</b>');
+function storyHTML(t){
+  const s = STORY[t.id]; if(!s) return '';
+  return `<div class="story">
+    <p class="slabel">🇨🇳 先看懂</p><p class="szh">${esc(s.zh)}</p>
+    ${t.map ? `<a href="${t.map}" target="_blank"><img src="${t.map}" alt="Map: ${esc(t.title)}" class="smap"></a>` : ''}
+    <p class="slabel">🔗 So what? chain</p>
+    <div class="chain">
+      <div class="lk f"><small>📌 Fact (Evidence)</small>${esc(s.fact)}<i>${esc(s.factZh)}</i></div>
+      <div class="arr">⬇ so what?</div>
+      <div class="lk m"><small>💡 This meant that…</small>This meant that ${bold(s.meant)},<i>${esc(s.meantZh)}</i></div>
+      <div class="arr">⬇ so what?</div>
+      <div class="lk s"><small>🇨🇳 …so (why it mattered for China)</small>so ${bold(s.so)}<i>${esc(s.soZh)}</i></div>
+    </div>
+    <p class="slabel">🔑 Class words to use</p>
+    <div class="kws">${s.words.map(([e,z])=>`<span><b>${esc(e)}</b> ${esc(z)}</span>`).join('')}</div>
+    <p class="src">From: ${esc(s.src)}</p>
+  </div>`;
+}
+function startLearn(pool){
+  show('session');
+  $('#barfill').style.width = '0%'; $('#count').textContent = '📖';
+  $('#card').innerHTML = `<div class="q">Choose a topic to learn</div><div class="opts" id="opts">${pool.map(t=>`<button class="opt" data-id="${t.id}"><b>${esc(t.title)}</b><br>${esc(t.q)}</button>`).join('')}</div>`;
+  $('#opts').onclick = e => { const b=e.target.closest('.opt'); if(b) renderLearn(TOPICS.find(t=>t.id===b.dataset.id), pool); };
+}
+function renderLearn(t, pool){
+  $('#barfill').style.width = '50%';
+  $('#card').innerHTML = `
+    <div class="q">📖 Story first · ${esc(t.title)}</div>
+    <p class="question">${esc(t.q)}</p>
+    ${storyHTML(t)}
+    <div class="say"><b>🗣️ Say it to Mum</b><br>Cover the chain. Tell Mum the fact, then:<br><i>"This meant that ______, so ______."</i></div>
+    <div class="row">
+      <button class="btn" id="lwrite">✏️ Now write it</button>
+      <button class="btn ghost" id="lback">Other topics</button>
+    </div>`;
+  $('#lwrite').onclick = () => renderWrite(t);
+  $('#lback').onclick = () => startLearn(pool);
+  window.scrollTo(0,0);
+}
 
 /* ---------- quiz engine (order + explain) ---------- */
 let S = null;
@@ -643,7 +780,7 @@ function renderWrite(t){
   $('#card').innerHTML = `
     <div class="q">${esc(t.title)}</div>
     <p class="question">${esc(t.q)}</p>
-    ${t.map ? `<a href="${t.map}" target="_blank"><img src="${t.map}" alt="Map: ${esc(t.title)}" style="width:100%;border-radius:12px;border:1px solid var(--line);margin:4px 0 6px"></a><p class="muted" style="margin:0 0 10px;font-size:14px">🗺️ Look at the map first. Tap it to make it bigger.</p>` : ''}
+    ${STORY[t.id] ? `<details class="storybox"><summary>📖 Read the story first (先看懂)</summary>${storyHTML(t)}</details>` : ''}
     <div class="facts"><b>📌 Facts you can use</b><ul>${t.facts.map(f=>`<li>${esc(f)}</li>`).join('')}</ul></div>
     ${PARTS.map(p=>`<div class="wbox">${tag(p)}<div class="in"><div class="hint"><b>${p.name}</b> — ${STARTERS[p.k].hint}</div>
       <textarea id="w${p.k}" rows="2" autocapitalize="sentences" ${p.k==='P' ? 'placeholder="The ___ was important because ___."' : ''}>${STARTERS[p.k].start}</textarea></div></div>`).join('')}
