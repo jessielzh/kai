@@ -370,22 +370,50 @@ function save(){ try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e
    Mac's Downloads, WeChat works when they're apart. Claude reads it and writes
    feedback into feedback.json next to this page ({id: {feedback, at}}). */
 const newId = () => 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
-store.writes.forEach(w => { if(!w.id) w.id = newId(); });
+if(store.writes.some(w => !w.id)){ store.writes.forEach(w => { if(!w.id) w.id = newId(); }); save(); }
 function sendText(w){
   return `Kai PEEL · ${w.date}\nid: ${w.id}\nTopic: ${w.title}\n` + (w.q ? `Question: ${w.q}\n` : '') +
     '\n' + (w.parts ? PARTS.filter(p => w.parts[p.k]).map(p => `[${p.name}] ${w.parts[p.k]}`).join('\n') : w.text) + '\n';
 }
 async function sendWrite(w){
+  if(!w){ alert('Could not find this paragraph — reload the page and try again.'); return false; }
   const text = sendText(w);
   const name = `kai-peel-${new Date().toISOString().slice(0,10)}-${w.id}.txt`;
   try{
     const file = new File([text], name, {type:'text/plain'});
     if(navigator.canShare && navigator.canShare({files:[file]})) await navigator.share({files:[file], title:'Kai PEEL'});
     else if(navigator.share) await navigator.share({title:'Kai PEEL', text});
-    else { await navigator.clipboard.writeText(text); alert('Copied! Paste it to Mum.'); }
-    w.sent = true; save(); renderLog();
+    else { sendFallback(w, text); return false; }
+    markSent(w);
     return true;
-  }catch(e){ return false; }   // he closed the share sheet
+  }catch(e){
+    if(e && e.name === 'AbortError') return false;   // he closed the share sheet
+    // iPad Safari sometimes refuses a 2nd share ("earlier share not finished") — never fail silently
+    sendFallback(w, text); return false;
+  }
+}
+function markSent(w){ w.sent = true; save(); renderLog(); }
+/* share sheet didn't open: show the text with Copy, so he can paste it into WeChat */
+function sendFallback(w, text){
+  let box = document.getElementById('sendfb');
+  if(!box){ box = document.createElement('div'); box.id = 'sendfb';
+    box.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:99;padding:16px';
+    document.body.appendChild(box); }
+  box.innerHTML = `<div style="background:var(--card);color:var(--ink);border-radius:16px;padding:18px;max-width:560px;width:100%">
+    <b>The share sheet didn't open.</b>
+    <p class="muted" style="margin:6px 0 10px">Tap <b>Copy</b> and paste it to Mum in WeChat — or reload the page and tap Send again.</p>
+    <textarea readonly style="width:100%;height:180px;font:inherit;font-size:14px;box-sizing:border-box">${esc(text)}</textarea>
+    <div style="display:flex;gap:10px;margin-top:10px">
+      <button class="btn" id="sfcopy">📋 Copy</button>
+      <button class="btn ghost" id="sfreload">↻ Reload</button>
+      <button class="btn ghost" id="sfclose">Close</button></div></div>`;
+  box.querySelector('#sfclose').onclick = () => box.remove();
+  box.querySelector('#sfreload').onclick = () => location.reload();
+  box.querySelector('#sfcopy').onclick = async () => {
+    const ta = box.querySelector('textarea');
+    try{ await navigator.clipboard.writeText(text); }catch(e){ ta.select(); document.execCommand('copy'); }
+    markSent(w); box.querySelector('#sfcopy').textContent = '✓ Copied';
+  };
 }
 /* Ms Heather's rubric (see rubric.md): 5 rows × levels 1–5 = /25.
    "To reach the next level" shows her words for the level above his. */
