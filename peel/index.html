@@ -237,7 +237,7 @@
    repeat = an "Explain" that only repeats the fact (Kai's habit).
    vague  = an "Explain" that only says "important" with no reason. */
 const TOPICS = [
- {id:'canal', unit:'sui', title:'The Grand Canal',
+ {id:'canal', unit:'sui', title:'The Grand Canal', map:'maps/grand-canal-map.png',
   q:'How significant was the Grand Canal to the development of China?',
   facts:['Built in the Sui Dynasty (581–618 CE)','Over 1,700 km long — the longest man‑made waterway in the world','Links Beijing (north) to Hangzhou (south)','Joins the Yellow River and the Yangtze River','The south grew lots of rice'],
   P:'The Grand Canal was very significant because it joined north and south China together.',
@@ -643,6 +643,7 @@ function renderWrite(t){
   $('#card').innerHTML = `
     <div class="q">${esc(t.title)}</div>
     <p class="question">${esc(t.q)}</p>
+    ${t.map ? `<a href="${t.map}" target="_blank"><img src="${t.map}" alt="Map: ${esc(t.title)}" style="width:100%;border-radius:12px;border:1px solid var(--line);margin:4px 0 6px"></a><p class="muted" style="margin:0 0 10px;font-size:14px">🗺️ Look at the map first. Tap it to make it bigger.</p>` : ''}
     <div class="facts"><b>📌 Facts you can use</b><ul>${t.facts.map(f=>`<li>${esc(f)}</li>`).join('')}</ul></div>
     ${PARTS.map(p=>`<div class="wbox">${tag(p)}<div class="in"><div class="hint"><b>${p.name}</b> — ${STARTERS[p.k].hint}</div>
       <textarea id="w${p.k}" rows="2" autocapitalize="sentences" ${p.k==='P' ? 'placeholder="The ___ was important because ___."' : ''}>${STARTERS[p.k].start}</textarea></div></div>`).join('')}
