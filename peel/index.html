@@ -118,6 +118,10 @@
   .wbox{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
   .wbox .in{flex:1}
   .wbox .hint{font-size:13px;color:var(--muted);margin-bottom:4px}
+  .revbar{background:var(--accent-soft);border-radius:14px;padding:12px 16px;margin-bottom:14px;font-size:15px;line-height:1.5}
+  .revbar button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:3px 10px;margin-left:6px;cursor:pointer}
+  .pnote{font-size:14px;line-height:1.45;background:var(--again-soft);border-radius:10px;padding:6px 10px;margin-bottom:6px}
+  .pnote del{color:var(--again)} .pnote ins{text-decoration:none;color:var(--good);font-weight:700}
   textarea{width:100%;font:inherit;font-size:17px;line-height:1.45;border:1.5px solid var(--line);border-radius:12px;
     padding:10px 12px;background:var(--card);color:var(--ink);resize:vertical;min-height:72px}
   textarea:focus{outline:none;border-color:var(--accent)}
@@ -396,7 +400,7 @@ function save(){ try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e
 const newId = () => 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 if(store.writes.some(w => !w.id)){ store.writes.forEach(w => { if(!w.id) w.id = newId(); }); save(); }
 function sendText(w){
-  return `Kai PEEL · ${w.date}\nid: ${w.id}\nTopic: ${w.title}\n` + (w.q ? `Question: ${w.q}\n` : '') +
+  return `Kai PEEL · ${w.date}\nid: ${w.id}\n` + (w.prev ? `Revision of: ${w.prev}\n` : '') + `Topic: ${w.title}\n` + (w.q ? `Question: ${w.q}\n` : '') +
     '\n' + (w.parts ? PARTS.filter(p => w.parts[p.k]).map(p => `[${p.name}] ${w.parts[p.k]}`).join('\n') : w.text) + '\n';
 }
 async function sendWrite(w){
@@ -544,8 +548,12 @@ function renderLog(){
   const W = store.writes.slice(-10).reverse();
   $('#writings').classList.toggle('hidden', !W.length);
   $('#wlist').innerHTML = W.map(w => `<div class="mine"><b>${esc(w.title)}</b> · <span class="muted">${w.date}</span>\n${markedText(w)}` +
-    (w.fb ? rubricHTML(w.fb) + (w.fb.feedback ? `<div class="fb"><b>💬 Feedback</b>\n${esc(w.fb.feedback)}</div>` : '')
+    (w.fb ? rubricHTML(w.fb) + (w.fb.feedback ? `<div class="fb"><b>💬 Feedback</b>\n${esc(w.fb.feedback)}</div>` : '') +
+        (w.parts && TOPICS.some(t => t.title === w.title) ? `<button class="btn wide" data-rev="${w.id}" style="margin-top:10px">✏️ Rewrite this paragraph</button>` : '')
       : `\n<button class="sendbtn" data-send="${w.id}">📤 ${w.sent ? 'Send again' : 'Send to Mum'}</button>${w.sent ? ' <span class="sent">✓ sent</span>' : ''}`) + `</div>`).join('');
+  $('#wlist').querySelectorAll('[data-rev]').forEach(b => b.onclick = () => {
+    const w = store.writes.find(x => x.id === b.dataset.rev), t = TOPICS.find(x => x.title === w.title);
+    show('session'); $('.bar').classList.add('hidden'); $('#count').textContent = '✏️'; renderWrite(t, w); });
   $('#wlist').querySelectorAll('[data-send]').forEach(b => b.onclick = () => sendWrite(store.writes.find(w => w.id === b.dataset.send)));
   const unseen = store.writes.filter(w => w.fb && !w.fbSeen).length;
   $('#fbnew').classList.toggle('hidden', !unseen);
@@ -809,25 +817,43 @@ function startWrite(pool){
   card.innerHTML = `<div class="q">Choose a question</div><div class="opts" id="opts">${pool.map(t=>`<button class="opt" data-id="${t.id}"><b>${esc(t.title)}</b><br>${esc(t.q)}</button>`).join('')}</div>`;
   $('#opts').onclick = e => { const b=e.target.closest('.opt'); if(b) renderWrite(TOPICS.find(t=>t.id===b.dataset.id)); };
 }
-function renderWrite(t){
-  $('#barfill').style.width = '33%';
+/* Rewrite builds on his last version of the same topic: boxes start with his
+   own sentences, and each box shows that part's note + grammar fixes. */
+function lastWrite(t){ return store.writes.filter(w => w.title === t.title && w.parts).slice(-1)[0] || null; }
+function renderWrite(t, base){
+  if(base === undefined) base = lastWrite(t);
+  const fb = base && base.fb, notes = (fb && fb.notes) || {}, fixes = (fb && fb.fixes) || [];
+  const boxNote = k => {
+    const fx = fixes.filter(f => f.p === k && base.parts[k] && base.parts[k].includes(f.bad));
+    const n = notes[k];
+    if(!n && !fx.length) return '';
+    return `<div class="pnote">${n ? esc(n) : ''}${fx.length ? `${n ? '<br>' : ''}✏️ ${fx.map(f => `<del>${esc(f.bad)}</del> → <ins>${esc(f.fix)}</ins>`).join(' · ')}` : ''}</div>`;
+  };
+  const val = k => base && base.parts[k] ? base.parts[k] : STARTERS[k].start;
   $('#card').innerHTML = `
     <div class="q">${esc(t.title)}</div>
     <p class="question">${esc(t.q)}</p>
+    ${base ? `<div class="revbar">✏️ <b>This is your last version (${esc(base.date)}).</b> Don't start again: change only what the notes say.
+      ${fb && fb.next ? `<br>🎯 ${esc(fb.next)}` : (fb ? '' : '<br><span class="muted">Feedback is not back yet.</span>')}
+      <button id="fresh">Start fresh</button></div>` : ''}
     ${STORY[t.id] ? `<details class="storybox"><summary>📖 Read the story first (先看懂)</summary>${storyHTML(t)}</details>` : ''}
     <div class="facts"><b>📌 Facts you can use</b><ul>${t.facts.map(f=>`<li>${esc(f)}</li>`).join('')}</ul></div>
     ${PARTS.map(p=>`<div class="wbox">${tag(p)}<div class="in"><div class="hint"><b>${p.name}</b> — ${STARTERS[p.k].hint}</div>
-      <textarea id="w${p.k}" rows="2" autocapitalize="sentences" ${p.k==='P' ? 'placeholder="The ___ was important because ___."' : ''}>${STARTERS[p.k].start}</textarea></div></div>`).join('')}
+      ${base ? boxNote(p.k) : ''}
+      <textarea id="w${p.k}" rows="${base ? 3 : 2}" autocapitalize="sentences" ${p.k==='P' ? 'placeholder="The ___ was important because ___."' : ''}>${esc(val(p.k))}</textarea></div></div>`).join('')}
     <button class="btn wide" id="chk">✅ I'm done</button>`;
-  $('#chk').onclick = () => renderCheck(t);
+  $('#chk').onclick = () => renderCheck(t, base);
+  if(base) $('#fresh').onclick = () => { if(confirm('Clear the boxes and start fresh?')) renderWrite(t, null); };
+  window.scrollTo(0,0);
 }
 /* No self-check: he writes, sends it to Mum, and Claude's feedback comes back. */
-function renderCheck(t){
+function renderCheck(t, base){
   const mine = PARTS.map(p => ($('#w'+p.k).value||'').trim());
   const real = mine.map((s,i) => s && s !== STARTERS[PARTS[i].k].start.trim() ? s : '');
   if(!real.some(Boolean)){ alert('Write your paragraph in the boxes first ✏️'); return; }
   const parts = Object.fromEntries(PARTS.map((p,i) => [p.k, real[i]]));
   const w = {id:newId(), date:today(), title:t.title, q:t.q, parts, text: real.filter(Boolean).join(' ')};
+  if(base) w.prev = base.id;
   store.writes.push(w);
   store.log.push({date:today(), mode:'write', sent:false, id:w.id});
   save();
