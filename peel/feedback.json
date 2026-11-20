@@ -941,5 +941,44 @@
       }
     ],
     "goal": 20
+  },
+  "pmwow61y6bl4r": {
+    "at": "2026-11-20",
+    "scores": {
+      "P": 5,
+      "E": 3,
+      "X": 2,
+      "L": 4,
+      "G": 5
+    },
+    "notes": {
+      "P": "5/5! \"exam\", \"significant\" and a clear reason: it helped China choose good officials. Only 2 small fixes.",
+      "E": "🌟 3/5 = the TOP for now! You fixed the full stop. Don't change it.",
+      "X": "🌟 2/5 = the TOP for now! You fixed the space. Don't change it.",
+      "L": "Big jump: 2 → 4! It says \"civil service exam\" and the same reason as your Point. To get 5: add a big thought about what it meant for CHINA (see fix 3).",
+      "G": "Only 2 small mistakes (see fixes 1 and 2). 0 to 2 = 5/5! Fix them anyway."
+    },
+    "next": "🎉 19/25! Up 5! Only ONE point to full marks (20).\nYou filled the blank in your Point and your Link all by yourself. That was the hard part. Super!\n\nLast job (Link): Fix 3 has a BLANK ______.\nOpen \"📖 Read the story first\" and read the last line (\"so ...\"). Then say to Mum: \"China had clever officials, so China was ______.\"\nPut your words in the blank.\n\nAlso fix 1 and 2 in your Point (small ones).",
+    "fixes": [
+      {
+        "p": "P",
+        "bad": "It helped",
+        "fix": "it helped",
+        "why": "1 mistake: small i after \"because\""
+      },
+      {
+        "p": "P",
+        "bad": "more good",
+        "fix": "better",
+        "why": "1 mistake: \"more good\" → better"
+      },
+      {
+        "p": "L",
+        "bad": "good officials.",
+        "fix": "good officials, so China was ______.",
+        "why": "not grammar: add a BIG thought. What happens to a country with clever officials? Read the last line of the story (\"so ...\")"
+      }
+    ],
+    "goal": 20
   }
 }
