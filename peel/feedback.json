@@ -497,5 +497,31 @@
         "why": "China always has a capital C"
       }
     ]
+  },
+  "pmwof6hn9uytm": {
+    "at": "2026-11-20",
+    "scores": {
+      "P": 5,
+      "E": 4,
+      "X": 4,
+      "L": 5,
+      "G": 5
+    },
+    "notes": {
+      "P": "5/5. Clear and strong. You fixed China with a capital C!",
+      "E": "Good, you added a date (605 AD). That makes your fact more exact.",
+      "X": "Your Explain is a full chain of WHY: linked rivers → boats carry rice → the north has food → the emperor can feed his army and rule China.",
+      "L": "5/5. Strong ending!",
+      "G": "Only a tiny slip: 605AD → 605 AD (put a space). Grammar 5/5."
+    },
+    "next": "This paragraph is finished. Well done! Next time, with a new topic: pick ONE fact, then write \"This meant that ..., so ...\" in your own words. Say it out loud to Mum first.",
+    "fixes": [
+      {
+        "p": "E",
+        "bad": "605AD",
+        "fix": "605 AD",
+        "why": "put a space between the number and AD"
+      }
+    ]
   }
 }
