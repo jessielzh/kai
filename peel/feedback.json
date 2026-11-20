@@ -711,5 +711,24 @@
         "why": "1 mistake: comma after an \"After ...\" part"
       }
     ]
+  },
+  "pmwokp9w1ilqn": {
+    "at": "2026-11-20",
+    "scores": {
+      "P": 5,
+      "E": 4,
+      "X": 2,
+      "L": 4,
+      "G": 5
+    },
+    "notes": {
+      "P": "5/5. Clear, uses \"significant\", and gives a reason: it joined north and south China.",
+      "E": "Good, exact facts: Sui dynasty, over 1,700 km, Beijing to Hangzhou. To reach 5, the facts should also show how it helped China.",
+      "X": "Your sentence is very clear: boats → trade → the economy grew. But it explains only ONE fact (Beijing to Hangzhou). The Sui dynasty fact has no explanation. One fact explained = 2. Your OWN idea from before fits here: China was in two parts, and the Sui emperor wanted it together!",
+      "L": "Good wrap-up. To reach 5, add a big thought, e.g. people still use it today.",
+      "G": "0 mistakes. 5/5!"
+    },
+    "next": "Add ONE more part to your Explain, about the Sui dynasty. Use your own idea from before: \"Before the Sui, China was in two parts, so the emperor ...\" Finish it: why did he build the canal?\n\nAlso: tell Mum in your own words what \"China's economy grew\" means.",
+    "fixes": []
   }
 }
