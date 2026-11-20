@@ -248,5 +248,24 @@
         "why": "delete the stray number 5"
       }
     ]
+  },
+  "pmwocvaz88t14": {
+    "at": "2026-11-20",
+    "scores": {
+      "P": 4,
+      "E": 4,
+      "X": 2,
+      "L": 3,
+      "G": 5
+    },
+    "notes": {
+      "P": "Same strong Point. To reach 5, add why it mattered for China's development: \"... and helped the country grow.\"",
+      "E": "Two clear, true facts. For a 5, add one more detail, e.g. Emperor Yang of Sui had it built.",
+      "X": "Your Explain has not changed. Delete \"Therefore, it joined China together.\" (that is your Link) and \"It helped two rivers get together.\" (that is your Evidence again). Then add ONE new sentence: \"This meant that ..., so ...\".",
+      "L": "Same as last time. Make it one strong sentence: \"Therefore, the Grand Canal joined China together and helped it grow richer.\"",
+      "G": "No mistakes! You fixed every slip. Grammar is now 5/5. Well done!"
+    },
+    "next": "Only change your Explain this time. Keep the first sentence about boats. Delete the other two. Then write: \"This meant that food from the south could reach the north quickly, so ...\" and finish it yourself (hint: the army, the emperor, the economy).",
+    "fixes": []
   }
 }
