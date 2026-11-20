@@ -523,5 +523,55 @@
         "why": "put a space between the number and AD"
       }
     ]
+  },
+  "pmwofw5w6y820": {
+    "at": "2026-11-20",
+    "scores": {
+      "P": 5,
+      "E": 4,
+      "X": 3,
+      "L": 5,
+      "G": 3
+    },
+    "notes": {
+      "P": "5/5. Don't change it!",
+      "E": "Two good facts. Keep them!",
+      "X": "WOW, you explained Fact 1 in YOUR OWN words: China was in two parts, and the emperor wanted it together. That is real thinking! Explain went up from 2 to 3. But you deleted Part 2 (boats carry rice) by mistake. Put it back and you will explain BOTH facts.",
+      "L": "5/5. Don't change it!",
+      "G": "Grammar went down because of the new sentences. That's OK! Look at the numbered fixes: who wanted? The emperor. China always has a capital C. Use past tense: want → wanted."
+    },
+    "next": "Only change your Explain. Two jobs:\n\nJob 1: Fix your new sentences with the numbered fixes. Keep YOUR idea!\n\nJob 2: Delete \"after two part together they use it to carry things.\" In its place, put Part 2 back: \"Boats could carry rice and goods between north and south. This meant that people everywhere in China had more food, so the emperor could feed his army and rule the whole country.\"\n\nThen your Explain = Part 1 (your new idea) + Part 2 (boats and rice).",
+    "fixes": [
+      {
+        "p": "X",
+        "bad": "It want",
+        "fix": "The emperor wanted",
+        "why": "say WHO: the emperor; past tense: wanted"
+      },
+      {
+        "p": "X",
+        "bad": "china together before",
+        "fix": "China together. Before",
+        "why": "capital C; start a new sentence"
+      },
+      {
+        "p": "X",
+        "bad": "build Grand Canal",
+        "fix": "the Grand Canal was built,",
+        "why": "the Grand Canal was built"
+      },
+      {
+        "p": "X",
+        "bad": "china are two part",
+        "fix": "China was in two parts.",
+        "why": "capital C; was in two parts; full stop"
+      },
+      {
+        "p": "X",
+        "bad": "it want china be",
+        "fix": "The emperor wanted China to be",
+        "why": "new sentence; wanted China to be"
+      }
+    ]
   }
 }
