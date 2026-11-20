@@ -471,5 +471,31 @@
         "why": "past tense: move → moved"
       }
     ]
+  },
+  "pmwoet6jv9tac": {
+    "at": "2026-11-20",
+    "scores": {
+      "P": 5,
+      "E": 4,
+      "X": 4,
+      "L": 5,
+      "G": 5
+    },
+    "notes": {
+      "P": "5/5! One clear sentence, the word \"significant\", and a reason. You fixed \"grow\" → \"move\". Great job!",
+      "E": "Two clear facts. To reach 5, add one detail, e.g. \"Emperor Yang of the Sui dynasty built it in about 605 AD.\"",
+      "X": "Great Explain. To reach 5, add one more \"This meant that\" about trade: goods could be sold all over China, so the economy grew.",
+      "L": "5/5. Strong ending!",
+      "G": "Only one slip: china → China (always a capital C). Grammar 5/5."
+    },
+    "next": "23/25! Your paragraph is ready to hand in. Want 25? Add Emperor Yang to Evidence, and one trade sentence to Explain, in your own words.",
+    "fixes": [
+      {
+        "p": "P",
+        "bad": "south china",
+        "fix": "south China",
+        "why": "China always has a capital C"
+      }
+    ]
   }
 }
