@@ -731,5 +731,56 @@
     "next": "🌟🌟🌟 20/25 = FULL MARKS for this stage! 🌟🌟🌟\nRight now our goal is 20, not 25. You did it! Super job today. You wrote 16 versions and never gave up!\n\nThe Grand Canal is DONE. No more rewrites.\n\nJust for reading (no need to type it): here is the paragraph made from your own sentences.\n\n[Point] The Grand Canal was very significant because it connected north and south China and helped the country move food.\n\n[Evidence] It was built in the Sui dynasty in about 605 AD. It linked the Yellow River and the Yangtze River, from Beijing in the north to Hangzhou in the south.\n\n[Explain] Before the Sui, China was in two parts for almost 300 years. This meant that the emperor needed a way to hold the north and the south together, so he built the canal to join them. Boats could carry rice and goods between the north and the south. This meant that people everywhere in China had more food, so the emperor could feed his army and rule the whole country.\n\n[Link] Therefore, the Grand Canal was very significant because it joined north and south China into one country, and people still use it today, more than 1,400 years later.",
     "fixes": [],
     "goal": 20
+  },
+  "pmwoqx733hwwc": {
+    "at": "2026-11-20",
+    "scores": {
+      "P": 3,
+      "E": 2,
+      "X": 1,
+      "L": 2,
+      "G": 3
+    },
+    "notes": {
+      "P": "Good start: you say it was important AND give a reason. But it is a bit unclear. The topic is the civil service EXAM, so say \"exam\". And \"helped dynasty not fall\" is vague. HOW did the exam help? Say it in the Point.",
+      "E": "Your fact is correct: officials were chosen by a test, not only by family. But it is ONE simple fact = 2. Add detail to make it 3: WHO took the test? WHAT was on it? WHICH dynasty?",
+      "X": "This part just says your Point again (\"the dynasty will not fall\"). It does not explain your fact. Ask: if officials are picked by a test, what kind of people become officials? What do they do for China? That is the chain we need. \"officials will not stubbed\" is hard to understand. Did you mean \"stupid\"?",
+      "L": "You tried to wrap up, but \"the dynasty be more good\" does not mention the exam or the reason. Use the same idea as your Point.",
+      "G": "I count 11 mistakes (see the numbered fixes): 1 in Point, 8 in Explain, 2 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3. Many come from the Explain, which you will rewrite anyway."
+    },
+    "next": "New topic, first try. 11/25 is a normal start. Our goal for this stage is 20/25 = full marks.\n\nJob 1 (Point): Keep \"The civil service exam was important because ...\" Change the reason. Think: what did the exam help the emperor to choose? Tell Mum, then write it.\n\nJob 2 (Evidence): Keep your fact. Add detail: which dynasty started it, and what did people study for it? Ask Mum or look in your notes.\n\nJob 3 (Explain): Delete both sentences. Answer out loud to Mum first: \"If you must pass a hard test, are the officials clever or not? Then what do clever officials do for the country?\"\nThen write ONE chain. Start with: \"This meant that ..., so ...\"\n\nJob 4 (Link): Start with \"Therefore, the civil service exam was important because ...\" Use the same reason as your Point.",
+    "fixes": [
+      {
+        "p": "P",
+        "bad": "helped dynasty",
+        "fix": "helped the dynasty",
+        "why": "1 mistake: add \"the\""
+      },
+      {
+        "p": "X",
+        "bad": "china dynasty will",
+        "fix": "the Chinese dynasty would",
+        "why": "3 mistakes: add \"the\"; capital C (Chinese); will → would (past)"
+      },
+      {
+        "p": "X",
+        "bad": "Keep dynasty safe,",
+        "fix": "It kept the dynasty safe.",
+        "why": "3 mistakes: needs \"It\"; keep → kept; add \"the\" (and end with a full stop)"
+      },
+      {
+        "p": "X",
+        "bad": "will not stubbed",
+        "fix": "would not be stupid",
+        "why": "2 mistakes: will → would; add \"be\""
+      },
+      {
+        "p": "L",
+        "bad": "be more good",
+        "fix": "was stronger",
+        "why": "2 mistakes: be → was; \"more good\" is not a word → better / stronger"
+      }
+    ],
+    "goal": 20
   }
 }
