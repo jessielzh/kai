@@ -482,17 +482,29 @@ const RUBRIC = [
     4:'Only 3–5 small mistakes — check capitals and full stops.',
     5:'0–2 small mistakes — read it once more before you send.'}},
 ];
+/* One-fact stage (goal 20): Evidence can reach 3 and Explain 2 at most —
+   20 = Point 5 + Evidence 3 + Explain 2 + Link 5 + Grammar 5. */
+const capOf = (f, k) => f && f.goal === 20 ? ({E:3, X:2})[k] || 5 : 5;
+function upLine(f, r, v){
+  const cap = capOf(f, r.k);
+  if(v >= 5) return '🌟 Top level!';
+  if(v >= cap) return `🌟 ${cap}/5 is the TOP for now (one fact). ${v+1} needs a second fact — not yet!`;
+  return `⬆️ To get ${v+1}${v+1 === cap && cap < 5 ? ' (the top for now)' : ''}: ${esc(r.up[v+1])}`;
+}
+const capTag = (f, k) => capOf(f, k) < 5 ? ` · <b>max ${capOf(f, k)} for now</b>` : '';
+const STAGE_LINE = '🎯 Goal for now: 20/25 = Point 5 + Evidence 3 + Explain 2 + Link 5 + Grammar 5. With ONE fact, Evidence can only get 3 and Explain only 2.';
+
 function rubricHTML(f){
   if(!f.scores) return '';
   const total = RUBRIC.reduce((a,r) => a + (f.scores[r.k]||0), 0);
   return `<div class="rub"><div class="tot"><b>${total} / 25</b><span class="muted">Ms Heather's rubric</span></div>` +
-    (f.goal && total >= f.goal ? `<div class="goal">🌟 ${total} / 25 = full marks for this stage! 🌟</div>` : '') +
+    (f.goal && total >= f.goal ? `<div class="goal">🌟 ${total} / 25 = full marks for this stage! 🌟</div>` : (f.goal === 20 ? `<div class="up" style="margin:4px 0 8px">${STAGE_LINE}</div>` : '')) +
     RUBRIC.map(r => { const v = f.scores[r.k]||0, n = (f.notes||{})[r.k];
       return `<div class="rrow${v<=2?' low':''}"><span class="tag ${r.cls}">${r.k==='X'?'E':r.k}</span><div>
-        <span class="nm">${r.name}</span><span class="lv">${v}/5 · ${LEVELS[v]||''}</span>
+        <span class="nm">${r.name}</span><span class="lv">${v}/5 · ${LEVELS[v]||''}${capTag(f, r.k)}</span>
         <div class="dots">${'●'.repeat(v)}${'○'.repeat(5-v)}</div>
         ${n ? `<div class="note">${esc(n)}</div>` : ''}
-        ${v < 5 ? `<div class="up">⬆️ To get ${v+1}: ${esc(r.up[v+1])}</div>` : '<div class="up">🌟 Top level!</div>'}
+        <div class="up">${upLine(f, r, v)}</div>
       </div></div>`; }).join('') +
     (f.next ? `<div class="nx">🎯 Next time: ${esc(f.next)}</div>` : '') + `</div>`;
 }
@@ -588,7 +600,7 @@ function topicLogHTML(t){
 function scoreUp(fb, k){
   if(!fb || !fb.scores) return '';
   const r = RUBRIC.find(r => r.k === k), v = fb.scores[k] || 0;
-  return `<div class="pup"><b>${r.name} ${v}/5</b> · ${LEVELS[v]||''}<br>${v < 5 ? `⬆️ To get ${v+1}: ${esc(r.up[v+1])}` : '🌟 Top level! Keep it.'}</div>`;
+  return `<div class="pup"><b>${r.name} ${v}/5</b> · ${LEVELS[v]||''}${capTag(fb, k)}<br>${upLine(fb, r, v)}</div>`;
 }
 function bindTopicLog(t){
   const d = $('#tlog'); if(!d) return;
@@ -886,7 +898,7 @@ function finish(){
 /* ---------- ✏️ Write it ---------- */
 const STARTERS = {
   P:{hint:'Answer the question + say why.', start:''},
-  E:{hint:'Use 2 facts from the yellow box.', start:'For example, '},
+  E:{hint:'For now: ONE fact from the yellow box, with detail (names, dates, numbers).', start:'For example, '},
   X:{hint:'So what? What did it MEAN for China? Don\'t repeat the fact.', start:'This meant that '},
   L:{hint:'Go back to the question.', start:'Therefore, '},
 };
@@ -926,7 +938,7 @@ function renderWrite(t, base){
           ? `<br>⏳ <b>Mum's feedback on this version is not back yet.</b> <button id="fbcheck">↻ Check now</button>`
           : `<br>📤 <b>This version is not sent to Mum yet.</b> <button id="wsend">📤 Send to Mum</button>`) +
         (fb ? `<br><span class="muted">The notes below are from your version at ${esc(fbW.date)}.</span>` : '') : ''}
-      ${fb && fb.scores ? `<br><b>Score: ${wtotal(fbW)}</b>${fb.goal ? ` (goal for now: ${fb.goal}/25)` : ''}${scoreUp(fb, 'G')}` : ''}
+      ${fb && fb.scores ? `<br><b>Score: ${wtotal(fbW)}</b>${fb.goal === 20 ? `<br>${STAGE_LINE}` : fb.goal ? ` (goal for now: ${fb.goal}/25)` : ''}${scoreUp(fb, 'G')}` : ''}
       ${fb && fb.next ? `<br>🎯 ${esc(fb.next).replace(/\n/g,'<br>')}` : ''}
       <button id="fresh">Start fresh</button></div>` : ''}
     ${topicLogHTML(t)}
