@@ -503,18 +503,18 @@
     "scores": {
       "P": 5,
       "E": 4,
-      "X": 4,
+      "X": 2,
       "L": 5,
       "G": 5
     },
     "notes": {
-      "P": "5/5. Clear and strong. You fixed China with a capital C!",
-      "E": "Good, you added a date (605 AD). That makes your fact more exact.",
-      "X": "Your Explain is a full chain of WHY: linked rivers → boats carry rice → the north has food → the emperor can feed his army and rule China.",
-      "L": "5/5. Strong ending!",
+      "P": "5/5. Clear and strong. Don't change it!",
+      "E": "Good: you have TWO facts. Fact 1: built in the Sui dynasty, about 605 AD. Fact 2: linked the Yellow and Yangtze Rivers. Keep them.",
+      "X": "Why only 2? You did NOT get worse! Ms Heather's rule: Explain must explain BOTH facts. You explained Fact 2 (the rivers) very well. But Fact 1 (Sui dynasty, 605 AD) has no explanation yet. So: one fact explained = 2.",
+      "L": "5/5. Strong ending. Don't change it!",
       "G": "Only a tiny slip: 605AD → 605 AD (put a space). Grammar 5/5."
     },
-    "next": "This paragraph is finished. Well done! Next time, with a new topic: pick ONE fact, then write \"This meant that ..., so ...\" in your own words. Say it out loud to Mum first.",
+    "next": "Only change your Explain. It needs TWO parts:\n\nPart 1 (NEW, for Fact 1): Think first: before the Sui, China was split into north and south for almost 300 years. The Sui emperor just joined it back together. Why would he want a canal? Say your answer to Mum, then write: \"The Sui had just joined China together again, so ...\"\n\nPart 2 (you already have it, keep it): \"Boats could carry rice and goods between north and south. This meant that people everywhere in China had more food, so the emperor could feed his army and rule the whole country.\"\n\nOrder: Part 1 first, then Part 2 (same order as your Evidence).",
     "fixes": [
       {
         "p": "E",
