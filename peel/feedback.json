@@ -369,5 +369,24 @@
         "why": "end every sentence with a full stop"
       }
     ]
+  },
+  "pmwodxmfh9iy8": {
+    "at": "2026-11-20",
+    "scores": {
+      "P": 4,
+      "E": 4,
+      "X": 4,
+      "L": 4,
+      "G": 5
+    },
+    "notes": {
+      "P": "Last job! The canal didn't GROW food, it MOVED food. Change \"grow more food\" to \"grow\": \"... and helped the country grow.\"",
+      "E": "Nice and clean now: two clear facts, no repeats. To reach 5, add one detail, e.g. \"Emperor Yang of the Sui dynasty built it in about 605 AD.\"",
+      "X": "Great Explain, and the full stop is fixed. To reach 5, add one more \"This meant that\" about trade: goods could be sold all over China, so the economy grew.",
+      "L": "Short and strong. Well done!",
+      "G": "No mistakes at all. Grammar 5/5!"
+    },
+    "next": "One last change: in your Point, \"grow more food\" → \"grow\". Then it's ready to hand in. Want to aim higher? Add Emperor Yang to Evidence and one trade sentence to Explain.",
+    "fixes": []
   }
 }
