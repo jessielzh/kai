@@ -782,5 +782,62 @@
       }
     ],
     "goal": 20
+  },
+  "pmwosd8mm2drq": {
+    "at": "2026-11-20",
+    "scores": {
+      "P": 3,
+      "E": 2,
+      "X": 1,
+      "L": 2,
+      "G": 3
+    },
+    "notes": {
+      "P": "You fixed \"the dynasty\". Good! But nothing else changed. Still \"civil service\" (add \"exam\"), and \"not fall\" does not say HOW the exam helped. Still 3.",
+      "E": "New: you added the Sui dynasty. Good idea! But the new part \"in Sui dynasty made exam want dynasty more peace\" is hard to understand. Use the words in the yellow box \"📌 Facts you can use\": The Sui Dynasty made the exam formal. Still 2.",
+      "X": "Look! You wrote two GOOD ideas: \"officials would not be stupid\" and \"This will kind for every one\" (fair for everyone?). These are the right ideas! But the first two sentences still just say your Point again (\"not fall\", \"safe\"). Still 1.",
+      "L": "You fixed the grammar from last time. But it still doesn't say \"civil service exam\" or the reason. Still 2.",
+      "G": "You fixed ALL 5 mistakes from last time. Well done! The new sentences have 14 new mistakes (see the numbered fixes): 6 in Evidence, 4 in Explain, 4 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3. Short, simple sentences = fewer mistakes."
+    },
+    "next": "Same score, 11. You did NOT get worse! You fixed every grammar mistake I marked. But the 4 Jobs are not done yet, and the new sentences brought new mistakes.\n\nYour BEST idea is in your Explain: \"officials would not be stupid\". Build everything on it.\n\nJob 1 (Point): Change \"civil service\" to \"civil service exam\". Change \"helped the dynasty not fall\" to your best idea. Start with: \"... because it helped China choose ______ officials.\" (What is the opposite of stupid?)\n\nJob 2 (Evidence): Keep your first sentence. Delete \"in Sui dynasty made exam want dynasty more peace\". Copy the first fact from the yellow box \"📌 Facts you can use\" as a new sentence.\n\nJob 3 (Explain): Delete the first two sentences. Read \"📖 Read the story first\" with Mum. Then say out loud: \"With a test, who gets the job: someone who studied hard, or someone with a rich family? Is that fair?\"\nThen write ONE chain. Start with: \"This meant that officials were people who ______, so ______.\"\n\nJob 4 (Link): Start with \"Therefore, the civil service exam was important because ...\" Use the same reason as your Point.",
+    "fixes": [
+      {
+        "p": "E",
+        "bad": "family, in Sui",
+        "fix": "family. The Sui",
+        "why": "2 mistakes: full stop (new sentence); start with \"The\""
+      },
+      {
+        "p": "E",
+        "bad": "made exam",
+        "fix": "made the exam",
+        "why": "1 mistake: add \"the\""
+      },
+      {
+        "p": "E",
+        "bad": "want dynasty more peace",
+        "fix": "formal",
+        "why": "3 mistakes: want → wanted; add \"the\"; more peace → more peaceful. Easier: use the yellow box words"
+      },
+      {
+        "p": "X",
+        "bad": "safe, officials",
+        "fix": "safe. Officials",
+        "why": "1 mistake: two sentences → full stop + capital O"
+      },
+      {
+        "p": "X",
+        "bad": "This will kind for every one",
+        "fix": "This was fair for everyone",
+        "why": "3 mistakes: will → was; kind → fair (did you mean fair?); every one → everyone"
+      },
+      {
+        "p": "L",
+        "bad": "stronger, dynasty will not fall",
+        "fix": "stronger. The dynasty would not fall.",
+        "why": "4 mistakes: full stop; add \"The\"; will → would; full stop at the end"
+      }
+    ],
+    "goal": 20
   }
 }
