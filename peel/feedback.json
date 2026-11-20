@@ -890,5 +890,56 @@
       }
     ],
     "goal": 20
+  },
+  "pmwoviqum5zlm": {
+    "at": "2026-11-20",
+    "scores": {
+      "P": 3,
+      "E": 3,
+      "X": 2,
+      "L": 2,
+      "G": 4
+    },
+    "notes": {
+      "P": "You added \"because\". Good! But the reason is still \"more peaceful\", and \"exam\" is still missing. The story says the exam helped China choose clever officials. Still 3.",
+      "E": "🌟 3/5 = the TOP for now! Don't change your facts. 1 full stop is still missing (see the fix).",
+      "X": "🌟 2/5 = the TOP for now! Keep it. Just add a space after \"safe.\"",
+      "L": "You added the full stop. Good! But it still doesn't say \"civil service exam\" or your reason. Still 2.",
+      "G": "Grammar went UP to 4! I count 4 mistakes (see the numbered fixes): 2 in Point, 1 in Evidence, 1 in Explain. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3."
+    },
+    "next": "14/25. Up 1! Grammar went up to 4. 🎉\nEvidence 3 and Explain 2 are the TOP for now. Don't touch them, only the 2 small fixes.\n\nOnly TWO jobs left. They are in the numbered fixes this time:\n\nJob 1 (Point): Fix 1 and 2. There is a BLANK ______. Don't type it yet!\nSay to Mum: \"Officials would not be stupid. So the exam helped China choose ______ officials.\" What word is the opposite of stupid?\nThen put that word in the blank.\n\nJob 2 (Link): Fix 5. Use the SAME word in the blank.\n\nDo these 2 jobs and you can get about 19 or 20!",
+    "fixes": [
+      {
+        "p": "P",
+        "bad": "civil service was",
+        "fix": "civil service exam was",
+        "why": "not grammar: the topic is the EXAM"
+      },
+      {
+        "p": "P",
+        "bad": "It helped China more peaceful",
+        "fix": "it helped China choose ______ officials",
+        "why": "2 mistakes: It → it (small i after because); \"helped China more peaceful\" is not a sentence. Fill the blank yourself: not stupid = ?"
+      },
+      {
+        "p": "E",
+        "bad": "family, The Sui",
+        "fix": "family. The Sui",
+        "why": "1 mistake: full stop before a new sentence (from last time!)"
+      },
+      {
+        "p": "X",
+        "bad": "safe.Officials",
+        "fix": "safe. Officials",
+        "why": "1 mistake: a space after the full stop"
+      },
+      {
+        "p": "L",
+        "bad": "the dynasty was stronger. The dynasty would not fall.",
+        "fix": "the civil service exam was important because it helped China choose ______ officials.",
+        "why": "not grammar: a Link says the SAME reason as your Point. Same blank!"
+      }
+    ],
+    "goal": 20
   }
 }
