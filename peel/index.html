@@ -118,7 +118,7 @@
   .wbox{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
   .wbox .in{flex:1}
   .wbox .hint{font-size:13px;color:var(--muted);margin-bottom:4px}
-  .revbar{background:var(--accent-soft);border-radius:14px;padding:12px 16px;margin-bottom:14px;font-size:15px;line-height:1.5;white-space:pre-line}
+  .revbar{background:var(--accent-soft);border-radius:14px;padding:12px 16px;margin-bottom:14px;font-size:15px;line-height:1.5}
   .revbar button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:3px 10px;margin-left:6px;cursor:pointer}
   .pnote{font-size:14px;line-height:1.45;background:var(--again-soft);border-radius:10px;padding:6px 10px;margin-bottom:6px}
   .pnote del{color:var(--again)} .pnote ins{text-decoration:none;color:var(--good);font-weight:700}
@@ -137,6 +137,7 @@
   .tgrp>summary{cursor:pointer;font-size:17px;padding:4px 0}
   .tgrp[open]>summary{margin-bottom:8px}
   .oldv{margin:4px 0}
+  .pup{font-size:14px;margin:2px 0 6px;padding:6px 10px;border-radius:8px;background:var(--card);white-space:normal}
   .tbadge{display:block;margin-top:6px;font-size:13px;color:var(--muted)}
   .oldv>summary{cursor:pointer;font-size:15px;padding:6px 4px;color:var(--ink)}
   .newdot{font-size:14px;font-weight:600}
@@ -462,7 +463,7 @@ const RUBRIC = [
     5:'Make a strong argument: say it was significant AND give a reason why it mattered to China.'}},
   {k:'E', cls:'e1', name:'Evidence', up:{
     2:'Give two facts that support your point.',
-    3:'Make your two facts clear and correct.',
+    3:'Two simple facts, OR one fact with more detail (who, when, where, how many).',
     4:'Two clear, correct facts (names, dates, numbers).',
     5:'Two detailed facts that show what it was AND how it helped China.'}},
   {k:'X', cls:'e2', name:'Explain', up:{
@@ -568,15 +569,25 @@ function topicBadge(t){
   return `<span class="tbadge">📄 ${ws.length} version${ws.length===1?'':'s'} · latest ${wtotal(ws[0])}${isNewT(t) ? ' · 💬 new' : ''}</span>`;
 }
 /* all versions of one topic: newest in full, older ones folded (v1, v2 …) */
+/* one topic's versions: newest in full, older ones folded (v1, v2 …) */
+function groupInner(ws, rewriteT){
+  return `<p class="label" style="margin:6px 0">Latest version</p>${wcard(ws[0], true)}` +
+    (rewriteT ? `<button class="btn wide" data-rev="${esc(rewriteT.id)}" style="margin-top:10px">✏️ Rewrite this paragraph</button>` : '') +
+    (ws.length > 1 ? `<p class="label" style="margin:10px 0 6px">Older versions</p>` + ws.slice(1).map((w, i) =>
+      `<details class="oldv"><summary>v${ws.length - 1 - i} · ${w.date} · ${wtotal(w)}</summary>${wcard(w, false)}</details>`).join('') : '');
+}
 function topicLogHTML(t){
   const ws = topicWrites(t); if(!ws.length) return '';
   const open = isNewT(t);
   return `<details class="tgrp" id="tlog"${open ? ' open' : ''}><summary><b>📄 My paragraphs on this topic</b>
     <span class="muted">· ${ws.length} version${ws.length===1?'':'s'} · latest ${wtotal(ws[0])}</span>${open ? ' <span class="newdot">💬 new</span>' : ''}</summary>
-    <p class="label" style="margin:6px 0">Latest version</p>${wcard(ws[0], true)}` +
-    (ws.length > 1 ? `<p class="label" style="margin:6px 0">Older versions</p>` + ws.slice(1).map((w, i) =>
-      `<details class="oldv"><summary>v${ws.length - 1 - i} · ${w.date} · ${wtotal(w)}</summary>${wcard(w, false)}</details>`).join('') : '') +
-    `</details>`;
+    ${groupInner(ws, null)}</details>`;
+}
+/* score of one rubric row + Ms Heather's words for the next level */
+function scoreUp(fb, k){
+  if(!fb || !fb.scores) return '';
+  const r = RUBRIC.find(r => r.k === k), v = fb.scores[k] || 0;
+  return `<div class="pup"><b>${r.name} ${v}/5</b> · ${LEVELS[v]||''}<br>${v < 5 ? `⬆️ To get ${v+1}: ${esc(r.up[v+1])}` : '🌟 Top level! Keep it.'}</div>`;
 }
 function bindTopicLog(t){
   const d = $('#tlog'); if(!d) return;
@@ -589,11 +600,21 @@ function renderLog(){
   const L = store.log.slice(-10).reverse();
   $('#log').innerHTML = L.length ? L.map(r => `<li><span>${r.date} · ${MODE_NAME[r.mode]}${r.redo?' <span class="redo">(redo)</span>':''}</span><span class="s">${r.mode==='write' && r.id ? (r.sent || (store.writes.find(w=>w.id===r.id)||{}).sent ? '📤 sent' : 'not sent') : r.score+'/'+r.total}</span></li>`).join('')
     : '<li class="muted">No scores yet.</li>';
-  /* paragraphs now live under their own topic (topicLogHTML); home only keeps any whose topic is gone */
-  const orphans = store.writes.filter(w => !TOPICS.some(t => t.title === w.title)).slice().reverse();
-  $('#writings').classList.toggle('hidden', !orphans.length);
-  $('#wlist').innerHTML = orphans.map(w => wcard(w, false)).join('');
+  /* home: my paragraphs grouped by topic (the same list also shows inside each topic) */
+  const wasOpen = new Set([...document.querySelectorAll('#wlist details.tgrp')].filter(d => d.open).map(d => d.dataset.title));
+  const groups = [];
+  store.writes.slice().reverse().forEach(w => { let g = groups.find(x => x.title === w.title);
+    if(!g){ g = {title:w.title, ws:[]}; groups.push(g); } g.ws.push(w); });
+  $('#writings').classList.toggle('hidden', !groups.length);
+  $('#wlist').innerHTML = groups.map((g, gi) => {
+    const t = TOPICS.find(t => t.title === g.title), isNew = g.ws.some(w => w.fb && !w.fbSeen);
+    const open = wasOpen.size ? wasOpen.has(g.title) : (gi === 0 || isNew);
+    return `<details class="tgrp" data-title="${esc(g.title)}"${open ? ' open' : ''}><summary><b>${esc(g.title)}</b>
+      <span class="muted">· ${g.ws.length} version${g.ws.length===1?'':'s'} · latest ${wtotal(g.ws[0])}</span>${isNew ? ' <span class="newdot">💬 new</span>' : ''}</summary>
+      ${groupInner(g.ws, t && g.ws[0].parts ? t : null)}</details>`; }).join('');
   bindCards($('#wlist'));
+  $('#wlist').querySelectorAll('[data-rev]').forEach(b => b.onclick = () => {
+    const t = TOPICS.find(x => x.id === b.dataset.rev); go(() => renderWrite(t)); });
   const unseen = store.writes.filter(w => w.fb && !w.fbSeen).length;
   $('#fbnew').classList.toggle('hidden', !unseen);
   $('#fbnew').textContent = `💬 New feedback on ${unseen} paragraph${unseen===1?'':'s'} — tap to read`;
@@ -883,16 +904,17 @@ function renderWrite(t, base){
   const fb = base && base.fb, notes = (fb && fb.notes) || {}, fixes = (fb && fb.fixes) || [];
   const boxNote = k => {
     const fx = fixes.filter(f => f.p === k && base.parts[k] && base.parts[k].includes(f.bad));
-    const n = notes[k];
-    if(!n && !fx.length) return '';
-    return `<div class="pnote">${n ? esc(n) : ''}${fx.length ? `${n ? '<br>' : ''}✏️ ${fx.map(f => `<del>${esc(f.bad)}</del> → <ins>${esc(f.fix)}</ins>`).join(' · ')}` : ''}</div>`;
+    const n = notes[k], up = scoreUp(fb, k);
+    if(!n && !fx.length && !up) return '';
+    return `<div class="pnote">${up}${n ? esc(n) : ''}${fx.length ? `${n ? '<br>' : ''}✏️ ${fx.map(f => `<del>${esc(f.bad)}</del> → <ins>${esc(f.fix)}</ins>`).join(' · ')}` : ''}</div>`;
   };
   const val = k => base && base.parts[k] ? base.parts[k] : STARTERS[k].start;
   $('#card').innerHTML = `
     <div class="q">${esc(t.title)}</div>
     <p class="question">${esc(t.q)}</p>
     ${base ? `<div class="revbar">✏️ <b>This is your last version (${esc(base.date)}).</b> Don't start again: change only what the notes say.
-      ${fb && fb.next ? `<br>🎯 ${esc(fb.next)}` : (fb ? '' : '<br><span class="muted">Feedback is not back yet.</span>')}
+      ${fb && fb.scores ? `<br><b>Score: ${wtotal(base)}</b>${fb.goal ? ` (goal for now: ${fb.goal}/25)` : ''}${scoreUp(fb, 'G')}` : ''}
+      ${fb && fb.next ? `<br>🎯 ${esc(fb.next).replace(/\n/g,'<br>')}` : (fb ? '' : '<br><span class="muted">Feedback is not back yet.</span>')}
       <button id="fresh">Start fresh</button></div>` : ''}
     ${topicLogHTML(t)}
     ${STORY[t.id] ? `<details class="storybox"><summary>📖 Read the story first (先看懂)</summary>${storyHTML(t)}</details>` : ''}
