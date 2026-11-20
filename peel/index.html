@@ -580,7 +580,7 @@ function groupInner(ws, rewriteT){
 function topicLogHTML(t){
   const ws = topicWrites(t); if(!ws.length) return '';
   const open = isNewT(t);
-  return `<details class="tgrp" id="tlog"${open ? ' open' : ''}><summary><b>📄 My paragraphs on this topic</b>
+  return `<details class="tgrp" id="tlog"><summary><b>📄 My paragraphs on this topic</b>
     <span class="muted">· ${ws.length} version${ws.length===1?'':'s'} · latest ${wtotal(ws[0])}</span>${open ? ' <span class="newdot">💬 new</span>' : ''}</summary>
     ${groupInner(ws, null)}</details>`;
 }
@@ -904,7 +904,11 @@ function lastWrite(t){ return store.writes.filter(w => w.title === t.title && w.
 function renderWrite(t, base){
   show('session'); $('.bar').classList.add('hidden'); $('#count').textContent = '✏️';
   if(base === undefined) base = lastWrite(t);
-  const fb = base && base.fb, notes = (fb && fb.notes) || {}, fixes = (fb && fb.fixes) || [];
+  /* boxes start with his newest text; notes come from the newest version that has feedback
+     (an unsent or not-yet-marked version must not hide them) */
+  const fbW = base && (base.fb ? base : store.writes.filter(w => w.title === t.title && w.fb && w.parts).slice(-1)[0]);
+  const fb = fbW && fbW.fb, notes = (fb && fb.notes) || {}, fixes = (fb && fb.fixes) || [];
+  const waiting = base && !base.fb;
   const boxNote = k => {
     const fx = fixes.filter(f => f.p === k && base.parts[k] && base.parts[k].includes(f.bad));
     const n = notes[k], up = scoreUp(fb, k);
@@ -916,8 +920,14 @@ function renderWrite(t, base){
     <div class="q">${esc(t.title)}</div>
     <p class="question">${esc(t.q)}</p>
     ${base ? `<div class="revbar">✏️ <b>This is your last version (${esc(base.date)}).</b> Don't start again: change only what the notes say.
-      ${fb && fb.scores ? `<br><b>Score: ${wtotal(base)}</b>${fb.goal ? ` (goal for now: ${fb.goal}/25)` : ''}${scoreUp(fb, 'G')}` : ''}
-      ${fb && fb.next ? `<br>🎯 ${esc(fb.next).replace(/\n/g,'<br>')}` : (fb ? '' : '<br>⏳ <b>Mum\'s feedback on this version is not back yet.</b> The notes will show above each box when it comes. <button id="fbcheck">↻ Check now</button>')}
+      ${waiting && fb && PARTS.every(p => (base.parts[p.k]||'').trim() === (fbW.parts[p.k]||'').trim())
+        ? `<br>🔁 <b>This is the same as your version at ${esc(fbW.date)}.</b> Nothing changed yet. Follow the notes above each box.`
+      : waiting ? (base.sent
+          ? `<br>⏳ <b>Mum's feedback on this version is not back yet.</b> <button id="fbcheck">↻ Check now</button>`
+          : `<br>📤 <b>This version is not sent to Mum yet.</b> <button id="wsend">📤 Send to Mum</button>`) +
+        (fb ? `<br><span class="muted">The notes below are from your version at ${esc(fbW.date)}.</span>` : '') : ''}
+      ${fb && fb.scores ? `<br><b>Score: ${wtotal(fbW)}</b>${fb.goal ? ` (goal for now: ${fb.goal}/25)` : ''}${scoreUp(fb, 'G')}` : ''}
+      ${fb && fb.next ? `<br>🎯 ${esc(fb.next).replace(/\n/g,'<br>')}` : ''}
       <button id="fresh">Start fresh</button></div>` : ''}
     ${topicLogHTML(t)}
     ${STORY[t.id] ? `<details class="storybox"><summary>📖 Read the story first (先看懂)</summary>${storyHTML(t)}</details>` : ''}
@@ -928,7 +938,8 @@ function renderWrite(t, base){
     <button class="btn wide" id="chk">✅ I'm done</button>`;
   bindTopicLog(t);
   /* no feedback on this version yet: fetch it, and redraw if he hasn't started typing */
-  if(base && !fb){
+  if($('#wsend')) $('#wsend').onclick = async () => { if(await sendWrite(base)) renderWrite(t, base); };
+  if(waiting && base.sent){
     const untouched = () => PARTS.every(p => ($('#w'+p.k)||{}).value === val(p.k));
     const recheck = async manual => { await fetchFeedback();
       if(base.fb && $('#fbcheck') && (manual || untouched())) renderWrite(t, base);
@@ -945,6 +956,8 @@ function renderCheck(t, base){
   const mine = PARTS.map(p => ($('#w'+p.k).value||'').trim());
   const real = mine.map((s,i) => s && s !== STARTERS[PARTS[i].k].start.trim() ? s : '');
   if(!real.some(Boolean)){ alert('Write your paragraph in the boxes first ✏️'); return; }
+  if(base && base.parts && PARTS.every((p,i) => (real[i]||'') === (base.parts[p.k]||'').trim())){
+    alert('You have not changed anything yet. Read the notes above each box, then change your sentences ✏️'); history.back(); return; }
   const parts = Object.fromEntries(PARTS.map((p,i) => [p.k, real[i]]));
   const w = {id:newId(), date:today(), title:t.title, q:t.q, parts, text: real.filter(Boolean).join(' ')};
   if(base) w.prev = base.id;
