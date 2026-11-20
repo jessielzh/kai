@@ -210,5 +210,43 @@
         "why": "needs a subject: it helped people"
       }
     ]
+  },
+  "pmwocm3oumopy": {
+    "at": "2026-11-20",
+    "scores": {
+      "P": 4,
+      "E": 4,
+      "X": 2,
+      "L": 3,
+      "G": 4
+    },
+    "notes": {
+      "P": "Same strong Point: clear, with a reason. To reach 5, add why it mattered for China's development: \"... and helped the country grow.\"",
+      "E": "Two clear, true facts. Well done! For a 5, add one more detail, e.g. Emperor Yang of Sui had it built.",
+      "X": "You fixed \"could carry\". Good! But the two sentences after it are the same as last time. \"Therefore, it joined China together.\" is your Link, and \"It helped two rivers get together\" repeats your Evidence. Delete both. Explain says WHY boats carrying rice mattered: \"This meant that ..., so ...\".",
+      "L": "Better: \"Because it carried many things, it helped people have more things\" now has a subject. But it is a new idea and a bit vague. Try: \"Therefore, the Grand Canal joined China together and helped it grow richer.\"",
+      "G": "Big improvement! You fixed could carry, helped, rivers and the full stop. Only small slips now: stray numbers (helped2, have5) and a double space."
+    },
+    "next": "Delete the last two sentences of your Explain. Write instead: \"This meant that food from the south could reach the north quickly, so ...\" Finish it yourself: why was that good for China? (Hint: the army, the emperor, the economy.)",
+    "fixes": [
+      {
+        "p": "X",
+        "bad": "helped2",
+        "fix": "helped",
+        "why": "delete the stray number 2"
+      },
+      {
+        "p": "X",
+        "bad": "get  together",
+        "fix": "get together",
+        "why": "one space between words"
+      },
+      {
+        "p": "L",
+        "bad": "have5",
+        "fix": "have",
+        "why": "delete the stray number 5"
+      }
+    ]
   }
 }
