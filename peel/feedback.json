@@ -407,5 +407,37 @@
     },
     "next": "Change \"grow more food\" → \"grow\" in your Point. Ask yourself: did the canal GROW rice, or CARRY rice?",
     "fixes": []
+  },
+  "pmwoeigx346lm": {
+    "at": "2026-11-20",
+    "scores": {
+      "P": 3,
+      "E": 4,
+      "X": 4,
+      "L": 5,
+      "G": 4
+    },
+    "notes": {
+      "P": "Good thinking: you wrote your OWN reason (water, moving food). But now your Point is long and has three ideas, so it is less clear. A Point needs ONE clear reason. The canal's main job was to MOVE food, and you said that yourself! Try: \"The Grand Canal was very significant because it connected north and south China and helped the country move food.\"",
+      "E": "Two clear facts. To reach 5, add one detail, e.g. \"Emperor Yang of the Sui dynasty built it in about 605 AD.\"",
+      "X": "Great Explain. To reach 5, add one more \"This meant that\" about trade: goods could be sold all over China, so the economy grew.",
+      "L": "5/5. Strong ending!",
+      "G": "The new part has a few slips: the country had, it also moved, and don't use \"because\" twice in one sentence."
+    },
+    "next": "Make your Point one short sentence with your own word \"move\": \"... because it connected north and south China and helped the country move food.\" Delete \"grow more food\" and the water part.",
+    "fixes": [
+      {
+        "p": "P",
+        "bad": "because country have",
+        "fix": "because the country had",
+        "why": "the country; past tense: have → had"
+      },
+      {
+        "p": "P",
+        "bad": "it also move",
+        "fix": "it also moved",
+        "why": "past tense: move → moved"
+      }
+    ]
   }
 }
