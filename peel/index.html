@@ -118,7 +118,7 @@
   .wbox{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
   .wbox .in{flex:1}
   .wbox .hint{font-size:13px;color:var(--muted);margin-bottom:4px}
-  .revbar{background:var(--accent-soft);border-radius:14px;padding:12px 16px;margin-bottom:14px;font-size:15px;line-height:1.5}
+  .revbar{background:var(--accent-soft);border-radius:14px;padding:12px 16px;margin-bottom:14px;font-size:15px;line-height:1.5;white-space:pre-line}
   .revbar button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:3px 10px;margin-left:6px;cursor:pointer}
   .pnote{font-size:14px;line-height:1.45;background:var(--again-soft);border-radius:10px;padding:6px 10px;margin-bottom:6px}
   .pnote del{color:var(--again)} .pnote ins{text-decoration:none;color:var(--good);font-weight:700}
@@ -137,6 +137,7 @@
   .tgrp>summary{cursor:pointer;font-size:17px;padding:4px 0}
   .tgrp[open]>summary{margin-bottom:8px}
   .oldv{margin:4px 0}
+  .tbadge{display:block;margin-top:6px;font-size:13px;color:var(--muted)}
   .oldv>summary{cursor:pointer;font-size:15px;padding:6px 4px;color:var(--ink)}
   .newdot{font-size:14px;font-weight:600}
   .mine{background:var(--bg);border-radius:14px;padding:12px 14px;font-size:16px;white-space:pre-wrap;margin-bottom:12px}
@@ -549,40 +550,59 @@ $('#modes').onclick = e => { const b=e.target.closest('.mode'); if(!b) return; m
 $('#units').onclick = e => { const b=e.target.closest('.chip'); if(!b) return; unit=b.dataset.unit;
   document.querySelectorAll('.chip').forEach(m => m.setAttribute('aria-pressed', m===b)); };
 
+/* ---------- my paragraphs, shown under each topic ---------- */
+const wtotal = w => w.fb && w.fb.scores ? RUBRIC.reduce((a,r) => a + (w.fb.scores[r.k]||0), 0) + '/25' : (w.sent ? 'sent' : 'not sent');
+const topicWrites = t => store.writes.filter(w => w.title === t.title).slice().reverse();   // newest first
+const isNewT = t => topicWrites(t).some(w => w.fb && !w.fbSeen);
+function wcard(w, latest){
+  return `<div class="mine"><span class="muted">${w.date}</span>\n${markedText(w)}` +
+    (w.fb ? rubricHTML(w.fb) + (w.fb.feedback ? `<div class="fb"><b>💬 Feedback</b>\n${esc(w.fb.feedback)}</div>` : '')
+      : `\n<button class="sendbtn" data-send="${w.id}">📤 ${w.sent ? 'Send again' : 'Send to Mum'}</button>${w.sent ? ' <span class="sent">✓ sent</span>' : ''}`) + `</div>`;
+}
+function bindCards(root){
+  root.querySelectorAll('[data-send]').forEach(b => b.onclick = () => sendWrite(store.writes.find(w => w.id === b.dataset.send)));
+}
+/* badge on the topic buttons: "3 versions · latest 11/25 · 💬 new" */
+function topicBadge(t){
+  const ws = topicWrites(t); if(!ws.length) return '';
+  return `<span class="tbadge">📄 ${ws.length} version${ws.length===1?'':'s'} · latest ${wtotal(ws[0])}${isNewT(t) ? ' · 💬 new' : ''}</span>`;
+}
+/* all versions of one topic: newest in full, older ones folded (v1, v2 …) */
+function topicLogHTML(t){
+  const ws = topicWrites(t); if(!ws.length) return '';
+  const open = isNewT(t);
+  return `<details class="tgrp" id="tlog"${open ? ' open' : ''}><summary><b>📄 My paragraphs on this topic</b>
+    <span class="muted">· ${ws.length} version${ws.length===1?'':'s'} · latest ${wtotal(ws[0])}</span>${open ? ' <span class="newdot">💬 new</span>' : ''}</summary>
+    <p class="label" style="margin:6px 0">Latest version</p>${wcard(ws[0], true)}` +
+    (ws.length > 1 ? `<p class="label" style="margin:6px 0">Older versions</p>` + ws.slice(1).map((w, i) =>
+      `<details class="oldv"><summary>v${ws.length - 1 - i} · ${w.date} · ${wtotal(w)}</summary>${wcard(w, false)}</details>`).join('') : '') +
+    `</details>`;
+}
+function bindTopicLog(t){
+  const d = $('#tlog'); if(!d) return;
+  bindCards(d);
+  const seen = () => { let ch = false; topicWrites(t).forEach(w => { if(w.fb && !w.fbSeen){ w.fbSeen = true; ch = true; } }); if(ch) save(); };
+  if(d.open) seen(); else d.addEventListener('toggle', () => { if(d.open) seen(); });
+}
+
 function renderLog(){
   const L = store.log.slice(-10).reverse();
   $('#log').innerHTML = L.length ? L.map(r => `<li><span>${r.date} · ${MODE_NAME[r.mode]}${r.redo?' <span class="redo">(redo)</span>':''}</span><span class="s">${r.mode==='write' && r.id ? (r.sent || (store.writes.find(w=>w.id===r.id)||{}).sent ? '📤 sent' : 'not sent') : r.score+'/'+r.total}</span></li>`).join('')
     : '<li class="muted">No scores yet.</li>';
-  /* paragraphs grouped by topic: newest version shown in full, older versions folded */
-  const wasOpen = new Set([...document.querySelectorAll('#wlist details[data-key]')].filter(d => d.open).map(d => d.dataset.key));
-  const groups = [];
-  store.writes.slice().reverse().forEach(w => { let g = groups.find(x => x.title === w.title);
-    if(!g){ g = {title:w.title, ws:[]}; groups.push(g); } g.ws.push(w); });
-  const total = w => w.fb && w.fb.scores ? RUBRIC.reduce((a,r) => a + (w.fb.scores[r.k]||0), 0) + '/25' : (w.sent ? 'sent' : 'not sent');
-  const card = (w, latest) => `<div class="mine"><b>${esc(w.title)}</b> · <span class="muted">${w.date}</span>\n${markedText(w)}` +
-    (w.fb ? rubricHTML(w.fb) + (w.fb.feedback ? `<div class="fb"><b>💬 Feedback</b>\n${esc(w.fb.feedback)}</div>` : '') +
-        (latest && w.parts && TOPICS.some(t => t.title === w.title) ? `<button class="btn wide" data-rev="${w.id}" style="margin-top:10px">✏️ Rewrite this paragraph</button>` : '')
-      : `\n<button class="sendbtn" data-send="${w.id}">📤 ${w.sent ? 'Send again' : 'Send to Mum'}</button>${w.sent ? ' <span class="sent">✓ sent</span>' : ''}`) + `</div>`;
-  $('#writings').classList.toggle('hidden', !groups.length);
-  $('#wlist').innerHTML = groups.map((g, gi) => {
-    const isNew = g.ws.some(w => w.fb && !w.fbSeen), key = 't:' + g.title;
-    const open = wasOpen.size ? wasOpen.has(key) : (gi === 0 || isNew);
-    return `<details class="tgrp" data-key="${esc(key)}"${open ? ' open' : ''}><summary><b>${esc(g.title)}</b>
-      <span class="muted">· ${g.ws.length} version${g.ws.length===1?'':'s'} · latest ${total(g.ws[0])}</span>${isNew ? ' <span class="newdot">💬 new</span>' : ''}</summary>
-      ${card(g.ws[0], true)}` +
-      (g.ws.length > 1 ? `<p class="label" style="margin:6px 0">Older versions</p>` + g.ws.slice(1).map((w, i) =>
-        `<details class="oldv" data-key="${esc(w.id)}"${wasOpen.has(w.id) ? ' open' : ''}><summary>v${g.ws.length - 1 - i} · ${w.date} · ${total(w)}</summary>${card(w, false)}</details>`).join('') : '') +
-      `</details>`; }).join('');
-  $('#wlist').querySelectorAll('[data-rev]').forEach(b => b.onclick = () => {
-    const w = store.writes.find(x => x.id === b.dataset.rev), t = TOPICS.find(x => x.title === w.title);
-    show('session'); $('.bar').classList.add('hidden'); $('#count').textContent = '✏️'; renderWrite(t, w); });
-  $('#wlist').querySelectorAll('[data-send]').forEach(b => b.onclick = () => sendWrite(store.writes.find(w => w.id === b.dataset.send)));
+  /* paragraphs now live under their own topic (topicLogHTML); home only keeps any whose topic is gone */
+  const orphans = store.writes.filter(w => !TOPICS.some(t => t.title === w.title)).slice().reverse();
+  $('#writings').classList.toggle('hidden', !orphans.length);
+  $('#wlist').innerHTML = orphans.map(w => wcard(w, false)).join('');
+  bindCards($('#wlist'));
   const unseen = store.writes.filter(w => w.fb && !w.fbSeen).length;
   $('#fbnew').classList.toggle('hidden', !unseen);
   $('#fbnew').textContent = `💬 New feedback on ${unseen} paragraph${unseen===1?'':'s'} — tap to read`;
 }
 renderLog();
 $('#fbnew').onclick = () => {
+  const w = store.writes.slice().reverse().find(w => w.fb && !w.fbSeen);
+  const t = w && TOPICS.find(t => t.title === w.title);
+  if(t){ go(() => renderWrite(t)); setTimeout(() => { const d = $('#tlog'); if(d) d.scrollIntoView({behavior:'smooth'}); }, 50); return; }
   $('#writings').open = true;
   store.writes.forEach(w => { if(w.fb) w.fbSeen = true; }); save();
   $('#fbnew').classList.add('hidden');
@@ -592,12 +612,22 @@ fetchFeedback();
 
 $('#start').onclick = () => {
   const pool = TOPICS.filter(t => unit==='all' || t.unit===unit);
-  if(mode==='learn') startLearn(pool);
-  else if(mode==='write') startWrite(pool);
-  else startQuiz(mode, shuffle(pool), false);
+  if(mode==='learn') go(() => startLearn(pool));
+  else if(mode==='write') go(() => startWrite(pool));
+  else go(() => startQuiz(mode, shuffle(pool), false));
 };
-$('#quit').onclick = () => { renderLog(); show('home'); };
-$('#home2').onclick = () => { renderLog(); show('home'); };
+/* Each screen inside a session is pushed on NAV and into browser history,
+   so ✕ and the iPad's back swipe go one screen back (topic → topic list → home). */
+const NAV = [];
+function go(fn){ NAV.push(fn); history.pushState({peel:NAV.length}, ''); fn(); }
+function goHome(){ NAV.length = 0; renderLog(); show('home'); }
+window.addEventListener('popstate', e => {
+  NAV.length = Math.min(NAV.length, (e.state && e.state.peel) || 0);   // history.go(-n) fires only once
+  if(NAV.length) NAV[NAV.length-1](); else goHome();
+});
+function back(){ if(NAV.length) history.back(); else goHome(); }
+$('#quit').onclick = back;
+$('#home2').onclick = () => { if(NAV.length) history.go(-NAV.length); else goHome(); };
 
 /* ---------- 📖 Story first: understand it before writing ----------
    Built from Ms Heather's class materials: Grand Canal handout + mind map,
@@ -699,10 +729,12 @@ function storyHTML(t){
 function startLearn(pool){
   show('session');
   $('.bar').classList.add('hidden'); $('#count').textContent = '📖';
-  $('#card').innerHTML = `<div class="q">Choose a topic to learn</div><div class="opts" id="opts">${pool.map(t=>`<button class="opt" data-id="${t.id}"><b>${esc(t.title)}</b><br>${esc(t.q)}</button>`).join('')}</div>`;
-  $('#opts').onclick = e => { const b=e.target.closest('.opt'); if(b) renderLearn(TOPICS.find(t=>t.id===b.dataset.id), pool); };
+  $('#card').innerHTML = `<div class="q">Choose a topic to learn</div><div class="opts" id="opts">${pool.map(t=>`<button class="opt" data-id="${t.id}"><b>${esc(t.title)}</b><br>${esc(t.q)}${topicBadge(t)}</button>`).join('')}</div>`;
+  $('#opts').onclick = e => { const b=e.target.closest('.opt'); if(b){ const t = TOPICS.find(t=>t.id===b.dataset.id); go(() => renderLearn(t, pool)); } };
+  window.scrollTo(0,0);
 }
 function renderLearn(t, pool){
+  show('session'); $('.bar').classList.add('hidden'); $('#count').textContent = '📖';
   $('#barfill').style.width = '50%';
   $('#card').innerHTML = `
     <div class="q">📖 Story first · ${esc(t.title)}</div>
@@ -712,9 +744,11 @@ function renderLearn(t, pool){
     <div class="row">
       <button class="btn" id="lwrite">✏️ Now write it</button>
       <button class="btn ghost" id="lback">Other topics</button>
-    </div>`;
-  $('#lwrite').onclick = () => renderWrite(t);
-  $('#lback').onclick = () => startLearn(pool);
+    </div>
+    ${topicLogHTML(t)}`;
+  bindTopicLog(t);
+  $('#lwrite').onclick = () => go(() => renderWrite(t));
+  $('#lback').onclick = back;
   window.scrollTo(0,0);
 }
 
@@ -836,13 +870,15 @@ function startWrite(pool){
   const card = $('#card');
   show('session');
   $('.bar').classList.add('hidden'); $('#count').textContent = '✏️';
-  card.innerHTML = `<div class="q">Choose a question</div><div class="opts" id="opts">${pool.map(t=>`<button class="opt" data-id="${t.id}"><b>${esc(t.title)}</b><br>${esc(t.q)}</button>`).join('')}</div>`;
-  $('#opts').onclick = e => { const b=e.target.closest('.opt'); if(b) renderWrite(TOPICS.find(t=>t.id===b.dataset.id)); };
+  card.innerHTML = `<div class="q">Choose a question</div><div class="opts" id="opts">${pool.map(t=>`<button class="opt" data-id="${t.id}"><b>${esc(t.title)}</b><br>${esc(t.q)}${topicBadge(t)}</button>`).join('')}</div>`;
+  $('#opts').onclick = e => { const b=e.target.closest('.opt'); if(b){ const t = TOPICS.find(t=>t.id===b.dataset.id); go(() => renderWrite(t)); } };
+  window.scrollTo(0,0);
 }
 /* Rewrite builds on his last version of the same topic: boxes start with his
    own sentences, and each box shows that part's note + grammar fixes. */
 function lastWrite(t){ return store.writes.filter(w => w.title === t.title && w.parts).slice(-1)[0] || null; }
 function renderWrite(t, base){
+  show('session'); $('.bar').classList.add('hidden'); $('#count').textContent = '✏️';
   if(base === undefined) base = lastWrite(t);
   const fb = base && base.fb, notes = (fb && fb.notes) || {}, fixes = (fb && fb.fixes) || [];
   const boxNote = k => {
@@ -858,14 +894,16 @@ function renderWrite(t, base){
     ${base ? `<div class="revbar">✏️ <b>This is your last version (${esc(base.date)}).</b> Don't start again: change only what the notes say.
       ${fb && fb.next ? `<br>🎯 ${esc(fb.next)}` : (fb ? '' : '<br><span class="muted">Feedback is not back yet.</span>')}
       <button id="fresh">Start fresh</button></div>` : ''}
+    ${topicLogHTML(t)}
     ${STORY[t.id] ? `<details class="storybox"><summary>📖 Read the story first (先看懂)</summary>${storyHTML(t)}</details>` : ''}
     <div class="facts"><b>📌 Facts you can use</b><ul>${t.facts.map(f=>`<li>${esc(f)}</li>`).join('')}</ul></div>
     ${PARTS.map(p=>`<div class="wbox">${tag(p)}<div class="in"><div class="hint"><b>${p.name}</b> — ${STARTERS[p.k].hint}</div>
       ${base ? boxNote(p.k) : ''}
       <textarea id="w${p.k}" rows="${base ? 3 : 2}" autocapitalize="sentences" ${p.k==='P' ? 'placeholder="The ___ was important because ___."' : ''}>${esc(val(p.k))}</textarea></div></div>`).join('')}
     <button class="btn wide" id="chk">✅ I'm done</button>`;
-  $('#chk').onclick = () => renderCheck(t, base);
-  if(base) $('#fresh').onclick = () => { if(confirm('Clear the boxes and start fresh?')) renderWrite(t, null); };
+  bindTopicLog(t);
+  $('#chk').onclick = () => go(() => renderCheck(t, base));
+  if(base) $('#fresh').onclick = () => { if(confirm('Clear the boxes and start fresh?')){ NAV[NAV.length-1] = () => renderWrite(t, null); renderWrite(t, null); } };
   window.scrollTo(0,0);
 }
 /* No self-check: he writes, sends it to Mum, and Claude's feedback comes back. */
@@ -893,7 +931,7 @@ function renderCheck(t, base){
       <div class="score" style="margin:10px 0">📬</div>
       <p style="text-align:center"><b>Sent!</b><br><span class="muted">Mum will send feedback. Look for 💬 on the home page.</span></p>
       <button class="btn wide" id="gohome">Back to home</button>`;
-    $('#gohome').onclick = () => { renderLog(); show('home'); };
+    $('#gohome').onclick = () => history.go(-NAV.length);
   };
 }
 </script>
