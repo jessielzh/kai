@@ -530,7 +530,8 @@ async function fetchFeedback(){
     store.writes.forEach(w => { const f = fb[w.id];
       if(f && JSON.stringify(f) !== JSON.stringify(w.fb)){ w.fb = f; w.fbSeen = false; changed = true; } });
     if(changed){ save(); renderLog(); }
-  }catch(e){}
+    return changed;
+  }catch(e){ return false; }
 }
 
 /* ---------- helpers ---------- */
@@ -630,6 +631,8 @@ $('#fbnew').onclick = () => {
   $('#writings').scrollIntoView({behavior:'smooth'});
 };
 fetchFeedback();
+/* iPad keeps the page open for hours: check again whenever he comes back to it */
+document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible') fetchFeedback(); });
 
 $('#start').onclick = () => {
   const pool = TOPICS.filter(t => unit==='all' || t.unit===unit);
@@ -914,7 +917,7 @@ function renderWrite(t, base){
     <p class="question">${esc(t.q)}</p>
     ${base ? `<div class="revbar">✏️ <b>This is your last version (${esc(base.date)}).</b> Don't start again: change only what the notes say.
       ${fb && fb.scores ? `<br><b>Score: ${wtotal(base)}</b>${fb.goal ? ` (goal for now: ${fb.goal}/25)` : ''}${scoreUp(fb, 'G')}` : ''}
-      ${fb && fb.next ? `<br>🎯 ${esc(fb.next).replace(/\n/g,'<br>')}` : (fb ? '' : '<br><span class="muted">Feedback is not back yet.</span>')}
+      ${fb && fb.next ? `<br>🎯 ${esc(fb.next).replace(/\n/g,'<br>')}` : (fb ? '' : '<br>⏳ <b>Mum\'s feedback on this version is not back yet.</b> The notes will show above each box when it comes. <button id="fbcheck">↻ Check now</button>')}
       <button id="fresh">Start fresh</button></div>` : ''}
     ${topicLogHTML(t)}
     ${STORY[t.id] ? `<details class="storybox"><summary>📖 Read the story first (先看懂)</summary>${storyHTML(t)}</details>` : ''}
@@ -924,6 +927,15 @@ function renderWrite(t, base){
       <textarea id="w${p.k}" rows="${base ? 3 : 2}" autocapitalize="sentences" ${p.k==='P' ? 'placeholder="The ___ was important because ___."' : ''}>${esc(val(p.k))}</textarea></div></div>`).join('')}
     <button class="btn wide" id="chk">✅ I'm done</button>`;
   bindTopicLog(t);
+  /* no feedback on this version yet: fetch it, and redraw if he hasn't started typing */
+  if(base && !fb){
+    const untouched = () => PARTS.every(p => ($('#w'+p.k)||{}).value === val(p.k));
+    const recheck = async manual => { await fetchFeedback();
+      if(base.fb && $('#fbcheck') && (manual || untouched())) renderWrite(t, base);
+      else if(manual && $('#fbcheck')) $('#fbcheck').textContent = 'Not back yet — try later'; };
+    $('#fbcheck').onclick = () => recheck(true);
+    recheck(false);
+  }
   $('#chk').onclick = () => go(() => renderCheck(t, base));
   if(base) $('#fresh').onclick = () => { if(confirm('Clear the boxes and start fresh?')){ NAV[NAV.length-1] = () => renderWrite(t, null); renderWrite(t, null); } };
   window.scrollTo(0,0);
