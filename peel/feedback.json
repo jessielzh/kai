@@ -267,5 +267,55 @@
     },
     "next": "Only change your Explain this time. Keep the first sentence about boats. Delete the other two. Then write: \"This meant that food from the south could reach the north quickly, so ...\" and finish it yourself (hint: the army, the emperor, the economy).",
     "fixes": []
+  },
+  "pmwodby9yinmh": {
+    "at": "2026-11-20",
+    "scores": {
+      "P": 4,
+      "E": 4,
+      "X": 3,
+      "L": 3,
+      "G": 3
+    },
+    "notes": {
+      "P": "Good, you added why it mattered! One fix: the canal didn't GROW food, it MOVED food. Try: \"... and helped the country grow.\"",
+      "E": "Your two facts are still good. The new sentence (\"It helped two rivers get together, to get more food\") says \"linked the rivers\" again. Delete it.",
+      "X": "Big step! You used \"This meant that ..., so ...\" and you deleted the old sentences. This is the first time you explain WHY. To go higher, be more exact than \"more energy\": food could feed the emperor's army in the north, so he could protect and rule all of China.",
+      "L": "\"Therefore, it joined China together and helped it grow richer.\" is a strong ending. Stop there! The second sentence (\"Because it carried many things...\") is extra and vague. Delete it.",
+      "G": "Grammar went down because you wrote new sentences. That's OK! Check: China always has a capital C. every were → everywhere. have → had (it's in the past). well → would."
+    },
+    "next": "Make your \"so\" part more exact: \"This meant that people everywhere in China had more food, so the emperor could feed his army and rule the whole country.\" Then delete the extra sentences in Evidence and Link.",
+    "fixes": [
+      {
+        "p": "P",
+        "bad": "China ,and",
+        "fix": "China, and",
+        "why": "comma goes right after the word, then a space"
+      },
+      {
+        "p": "E",
+        "bad": "Rivers.  It",
+        "fix": "Rivers. It",
+        "why": "one space between sentences"
+      },
+      {
+        "p": "X",
+        "bad": "china every were",
+        "fix": "people everywhere in China",
+        "why": "China has a capital C; everywhere is one word"
+      },
+      {
+        "p": "X",
+        "bad": "have more food",
+        "fix": "had more food",
+        "why": "past tense: have → had"
+      },
+      {
+        "p": "X",
+        "bad": "china well have",
+        "fix": "China would have",
+        "why": "capital C; well → would"
+      }
+    ]
   }
 }
