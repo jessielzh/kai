@@ -543,16 +543,20 @@ $('#modes').onclick = e => { const b=e.target.closest('.mode'); if(!b) return; m
 $('#units').onclick = e => { const b=e.target.closest('.chip'); if(!b) return; unit=b.dataset.unit;
   document.querySelectorAll('.chip').forEach(m => m.setAttribute('aria-pressed', m===b)); };
 
+let showAllW = false;
 function renderLog(){
   const L = store.log.slice(-10).reverse();
   $('#log').innerHTML = L.length ? L.map(r => `<li><span>${r.date} · ${MODE_NAME[r.mode]}${r.redo?' <span class="redo">(redo)</span>':''}</span><span class="s">${r.mode==='write' && r.id ? (r.sent || (store.writes.find(w=>w.id===r.id)||{}).sent ? '📤 sent' : 'not sent') : r.score+'/'+r.total}</span></li>`).join('')
     : '<li class="muted">No scores yet.</li>';
-  const W = store.writes.slice(-10).reverse();
+  const W = (showAllW ? store.writes : store.writes.slice(-10)).slice().reverse();
+  const older = store.writes.length - W.length;
   $('#writings').classList.toggle('hidden', !W.length);
   $('#wlist').innerHTML = W.map(w => `<div class="mine"><b>${esc(w.title)}</b> · <span class="muted">${w.date}</span>\n${markedText(w)}` +
     (w.fb ? rubricHTML(w.fb) + (w.fb.feedback ? `<div class="fb"><b>💬 Feedback</b>\n${esc(w.fb.feedback)}</div>` : '') +
         (w.parts && TOPICS.some(t => t.title === w.title) ? `<button class="btn wide" data-rev="${w.id}" style="margin-top:10px">✏️ Rewrite this paragraph</button>` : '')
-      : `\n<button class="sendbtn" data-send="${w.id}">📤 ${w.sent ? 'Send again' : 'Send to Mum'}</button>${w.sent ? ' <span class="sent">✓ sent</span>' : ''}`) + `</div>`).join('');
+      : `\n<button class="sendbtn" data-send="${w.id}">📤 ${w.sent ? 'Send again' : 'Send to Mum'}</button>${w.sent ? ' <span class="sent">✓ sent</span>' : ''}`) + `</div>`).join('') +
+    (older > 0 ? `<button class="btn ghost wide" id="wolder">📂 Show ${older} older paragraphs</button>` : '');
+  const ob = $('#wolder'); if(ob) ob.onclick = () => { showAllW = true; renderLog(); };
   $('#wlist').querySelectorAll('[data-rev]').forEach(b => b.onclick = () => {
     const w = store.writes.find(x => x.id === b.dataset.rev), t = TOPICS.find(x => x.title === w.title);
     show('session'); $('.bar').classList.add('hidden'); $('#count').textContent = '✏️'; renderWrite(t, w); });
