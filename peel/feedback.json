@@ -317,5 +317,31 @@
         "why": "capital C; well → would"
       }
     ]
+  },
+  "pmwodk44vukkg": {
+    "at": "2026-11-20",
+    "scores": {
+      "P": 4,
+      "E": 4,
+      "X": 3,
+      "L": 3,
+      "G": 5
+    },
+    "notes": {
+      "P": "Not changed yet. The canal didn't GROW food, it MOVED food. Change \"grow more food\" to \"grow\": \"... and helped the country grow.\"",
+      "E": "Not changed yet. Delete \"It helped two rivers get together, to get more food.\" It says \"linked the rivers\" again.",
+      "X": "Grammar fixed, well done! Now make the \"so\" part exact. \"More energy\" is too vague. WHO got the food, and what could they do? Try: \"so the emperor could feed his army and rule the whole country.\"",
+      "L": "Not changed yet. Stop after \"helped it grow richer.\" Delete \"Because it carried many things, it helped people have more things.\"",
+      "G": "Excellent! You fixed every mistake. Only one double space left. Grammar 5/5."
+    },
+    "next": "Four small jobs, no new writing: (1) Point: \"grow more food\" → \"grow\". (2) Evidence: delete the second sentence. (3) Explain: \"more energy\" → \"the emperor could feed his army and rule the whole country\". (4) Link: delete the second sentence.",
+    "fixes": [
+      {
+        "p": "X",
+        "bad": "everywhere  in",
+        "fix": "everywhere in",
+        "why": "one space between words"
+      }
+    ]
   }
 }
