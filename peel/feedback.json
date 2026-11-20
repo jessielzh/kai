@@ -388,5 +388,24 @@
     },
     "next": "One last change: in your Point, \"grow more food\" → \"grow\". Then it's ready to hand in. Want to aim higher? Add Emperor Yang to Evidence and one trade sentence to Explain.",
     "fixes": []
+  },
+  "pmwoe8jiv3h3y": {
+    "at": "2026-11-20",
+    "scores": {
+      "P": 4,
+      "E": 4,
+      "X": 4,
+      "L": 5,
+      "G": 5
+    },
+    "notes": {
+      "P": "Still one job left! The canal didn't GROW food, it MOVED food. Change \"grow more food\" to \"grow\": \"... and helped the country grow.\"",
+      "E": "Two clear facts. To reach 5, add one detail, e.g. \"Emperor Yang of the Sui dynasty built it in about 605 AD.\"",
+      "X": "Great Explain. To reach 5, add one more \"This meant that\" about trade: goods could be sold all over China, so the economy grew.",
+      "L": "5/5! Your Link has all 3 parts: Therefore + \"significant\" + a big thought (still used 1,400 years later). Next time, try writing the big thought in your own words.",
+      "G": "No mistakes. Grammar 5/5!"
+    },
+    "next": "Change \"grow more food\" → \"grow\" in your Point. Ask yourself: did the canal GROW rice, or CARRY rice?",
+    "fixes": []
   }
 }
