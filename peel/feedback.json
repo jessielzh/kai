@@ -673,5 +673,43 @@
         "why": "1 mistake: past tense: use → used"
       }
     ]
+  },
+  "pmwok31w46u7u": {
+    "at": "2026-11-20",
+    "scores": {
+      "P": 5,
+      "E": 4,
+      "X": 3,
+      "L": 5,
+      "G": 4
+    },
+    "notes": {
+      "P": "5/5. Don't change it!",
+      "E": "Your two facts are good. The new bit \", it let two part together\" is not a new fact. It says \"linked\" again. Delete it.",
+      "X": "You fixed your sentences. Well done! Still 3 because two things are said twice: (1) \"The emperor wanted China together.\" and \"The emperor wanted China to be together.\" are the same. (2) \"they used it to carry things\" is the same as your boats sentence. Saying the same idea twice = 3.",
+      "L": "5/5. Don't change it!",
+      "G": "Grammar went up to 4! I count 5 small mistakes (see the numbered fixes): 3 in Evidence, 2 in Explain. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3. Delete the Evidence bit and fix the 2 in Explain → 0 mistakes → 5/5."
+    },
+    "next": "Three small jobs:\n\nJob 1 (Evidence): Delete \", it let two part together\". End with \"... Yangtze Rivers.\"\n\nJob 2 (Explain): Delete \"The emperor wanted China to be together.\" You already said it.\n\nJob 3 (Explain): Change your LAST sentence. Don't say \"carry things\" again. Say what happened to CHINA. Start with: \"The canal joined the two parts, so ...\" Think: did China stay one country? Tell Mum first, then write.",
+    "fixes": [
+      {
+        "p": "E",
+        "bad": "Rivers, it let two part together",
+        "fix": "Rivers. It joined the two parts together",
+        "why": "3 mistakes: full stop + capital I; parts; joined (not let)"
+      },
+      {
+        "p": "X",
+        "bad": "china was",
+        "fix": "China was",
+        "why": "1 mistake: China always has a capital C"
+      },
+      {
+        "p": "X",
+        "bad": "were together they",
+        "fix": "were together, they",
+        "why": "1 mistake: comma after an \"After ...\" part"
+      }
+    ]
   }
 }
