@@ -153,6 +153,7 @@
   .rrow .up{margin-top:4px;font-size:14px;color:var(--muted)}
   .rrow.low .dots{color:var(--again)}
   .tag.g{background:#6f6758}
+  .rub .goal{margin:6px 0 10px;padding:10px 12px;border-radius:10px;background:#fff4c2;font-weight:700;font-size:18px;text-align:center}
   .rub .nx{white-space:pre-line;margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--accent-soft);font-weight:600}
   .fbnew{display:block;width:100%;text-align:left;font:inherit;font-weight:600;color:var(--good);background:var(--good-soft);
     border:1.5px solid var(--good);border-radius:14px;padding:12px 14px;margin:10px 0;cursor:pointer}
@@ -477,6 +478,7 @@ function rubricHTML(f){
   if(!f.scores) return '';
   const total = RUBRIC.reduce((a,r) => a + (f.scores[r.k]||0), 0);
   return `<div class="rub"><div class="tot"><b>${total} / 25</b><span class="muted">Ms Heather's rubric</span></div>` +
+    (f.goal && total >= f.goal ? `<div class="goal">🌟 ${total} / 25 = full marks for this stage! 🌟</div>` : '') +
     RUBRIC.map(r => { const v = f.scores[r.k]||0, n = (f.notes||{})[r.k];
       return `<div class="rrow${v<=2?' low':''}"><span class="tag ${r.cls}">${r.k==='X'?'E':r.k}</span><div>
         <span class="nm">${r.name}</span><span class="lv">${v}/5 · ${LEVELS[v]||''}</span>
