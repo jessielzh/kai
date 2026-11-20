@@ -343,5 +343,31 @@
         "why": "one space between words"
       }
     ]
+  },
+  "pmwodtjtmpqzs": {
+    "at": "2026-11-20",
+    "scores": {
+      "P": 4,
+      "E": 4,
+      "X": 4,
+      "L": 4,
+      "G": 5
+    },
+    "notes": {
+      "P": "Still to do: the canal didn't GROW food, it MOVED food. Change \"grow more food\" to \"grow\": \"... and helped the country grow.\"",
+      "E": "Still to do: delete \"It helped two rivers get together, to get more food.\" It says \"linked the rivers\" again.",
+      "X": "Great Explain! \"so the emperor could feed his army and rule the whole country\" says exactly WHY the canal mattered. To reach 5, add one more \"This meant that\" about trade: goods could be sold all over China, so the economy grew.",
+      "L": "Perfect. You stopped after \"grow richer\". Short and strong!",
+      "G": "Only one slip: a full stop at the end of Explain. Grammar 5/5."
+    },
+    "next": "Two quick jobs left: (1) Point: \"grow more food\" → \"grow\". (2) Evidence: delete the second sentence. Then your paragraph is ready to hand in!",
+    "fixes": [
+      {
+        "p": "X",
+        "bad": "whole country",
+        "fix": "whole country.",
+        "why": "end every sentence with a full stop"
+      }
+    ]
   }
 }
