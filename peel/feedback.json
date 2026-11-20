@@ -839,5 +839,56 @@
       }
     ],
     "goal": 20
+  },
+  "pmwotapgtqvr2": {
+    "at": "2026-11-20",
+    "scores": {
+      "P": 3,
+      "E": 3,
+      "X": 2,
+      "L": 2,
+      "G": 3
+    },
+    "notes": {
+      "P": "You changed the reason to \"more peace\". But the story does not say the exam made China peaceful. It says the exam helped China choose clever officials. And you still need the word \"exam\". Still 3.",
+      "E": "🌟 3/5 = the TOP for now! You used the facts from the yellow box. Great! Don't change your facts. Only fix 1 full stop.",
+      "X": "🌟 2/5 = the TOP for now! \"Officials would not be stupid. This was fair for everyone.\" explains your test fact. Well done! Keep it. Only fix 1 full stop.",
+      "L": "Still no \"civil service exam\" and no reason. A Link must say the SAME reason as your Point. Still 2.",
+      "G": "I count 8 mistakes (see the numbered fixes): 5 in Point, 1 in Evidence, 1 in Explain, 1 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3. Most are in your new Point. Job 1 will fix them."
+    },
+    "next": "13/25. Up 2! 🎉\nEvidence 3 and Explain 2 are now the TOP for this stage. Don't change them, only the small fixes.\nThe 7 points you can still get are in Point (+2), Link (+3) and Grammar (+2).\n\nJob 1 (Point): Your best idea is \"officials would not be stupid\". Say to Mum: \"The exam helped China choose officials who were ______.\" (not stupid = ?)\nThen write: \"The civil service exam was important because it helped China choose ______ officials.\"\n\nJob 2 (Link): Delete both Link sentences. Start with \"Therefore, the civil service exam was important because ...\" Finish it with the SAME reason as your new Point.\n\nJob 3: Fix the small mistakes in Evidence, Explain and Link (see the numbers).",
+    "fixes": [
+      {
+        "p": "P",
+        "bad": "important, It",
+        "fix": "important because it",
+        "why": "1 mistake: comma + capital I. Use \"because\" to give the reason"
+      },
+      {
+        "p": "P",
+        "bad": "help china more peace",
+        "fix": "helped make China more peaceful",
+        "why": "4 mistakes: help → helped; add \"make\"; China has a capital C; peace → peaceful"
+      },
+      {
+        "p": "E",
+        "bad": "family, The Sui",
+        "fix": "family. The Sui",
+        "why": "1 mistake: full stop before a new sentence"
+      },
+      {
+        "p": "X",
+        "bad": "safe, Officials",
+        "fix": "safe. Officials",
+        "why": "1 mistake: full stop (not comma) before a new sentence"
+      },
+      {
+        "p": "L",
+        "bad": "would not fall",
+        "fix": "would not fall.",
+        "why": "1 mistake: full stop at the end"
+      }
+    ],
+    "goal": 20
   }
 }
