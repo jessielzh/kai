@@ -644,7 +644,7 @@
       "E": "Two good facts, and 605 AD is fixed. Keep it!",
       "X": "Great work! You fixed most of your new sentences. Now they make sense: \"The emperor wanted China together. Before the Grand Canal was built, ...\" Only one problem left: the LAST sentence says the same things again (emperor wanted China together, carry things). Repeating = 3. Delete it and you get 4!",
       "L": "5/5. Don't change it!",
-      "G": "Much better! Only one fix left: China in two parts (capital C, parts). The other mistakes are all in the last sentence, which you will delete."
+      "G": "You asked: why 3? Count the numbered fixes: 8 small mistakes, not 1. (Sorry! Last time the page only showed 1, because the other 7 are in the last sentence.) Ms Heather: more than 5 mistakes = 3; 3 to 5 = 4; 0 to 2 = 5. Fix #1 and delete the last sentence → 0 mistakes → 5/5!"
     },
     "next": "You are very close! Only two small jobs in your Explain:\n\nJob 1: china was in two part → China was in two parts.\n\nJob 2: Delete the whole last sentence: \"the emperor wanted china to be together, after two part together they use it to carry things.\"\n\nYour Explain ends with: \"... China was in two parts.\" That's it!",
     "fixes": [
@@ -652,7 +652,25 @@
         "p": "X",
         "bad": "china was in two part",
         "fix": "China was in two parts",
-        "why": "capital C; two parts (more than one)"
+        "why": "2 mistakes: capital C; parts"
+      },
+      {
+        "p": "X",
+        "bad": "the emperor wanted china",
+        "fix": "The emperor wanted China",
+        "why": "2 mistakes: capital T at the start; capital C"
+      },
+      {
+        "p": "X",
+        "bad": "together, after two part together",
+        "fix": "together. After the two parts were together,",
+        "why": "3 mistakes: full stop + capital A; parts; were"
+      },
+      {
+        "p": "X",
+        "bad": "they use it",
+        "fix": "they used it",
+        "why": "1 mistake: past tense: use → used"
       }
     ]
   }
