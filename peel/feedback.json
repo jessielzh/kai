@@ -629,5 +629,31 @@
         "why": "new sentence; wanted China to be"
       }
     ]
+  },
+  "pmwoga9vqvmcg": {
+    "at": "2026-11-20",
+    "scores": {
+      "P": 5,
+      "E": 4,
+      "X": 3,
+      "L": 5,
+      "G": 3
+    },
+    "notes": {
+      "P": "5/5. Don't change it!",
+      "E": "Two good facts, and 605 AD is fixed. Keep it!",
+      "X": "Great work! You fixed most of your new sentences. Now they make sense: \"The emperor wanted China together. Before the Grand Canal was built, ...\" Only one problem left: the LAST sentence says the same things again (emperor wanted China together, carry things). Repeating = 3. Delete it and you get 4!",
+      "L": "5/5. Don't change it!",
+      "G": "Much better! Only one fix left: China in two parts (capital C, parts). The other mistakes are all in the last sentence, which you will delete."
+    },
+    "next": "You are very close! Only two small jobs in your Explain:\n\nJob 1: china was in two part → China was in two parts.\n\nJob 2: Delete the whole last sentence: \"the emperor wanted china to be together, after two part together they use it to carry things.\"\n\nYour Explain ends with: \"... China was in two parts.\" That's it!",
+    "fixes": [
+      {
+        "p": "X",
+        "bad": "china was in two part",
+        "fix": "China was in two parts",
+        "why": "capital C; two parts (more than one)"
+      }
+    ]
   }
 }
