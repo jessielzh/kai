@@ -1270,5 +1270,32 @@
       }
     ],
     "goal": 20
+  },
+  "pmwqdvpej9ffy": {
+    "at": "2026-11-21",
+    "scores": {
+      "P": 5,
+      "E": 3,
+      "X": 2,
+      "L": 5,
+      "G": 5
+    },
+    "notes": {
+      "P": "5/5. You fixed \"poetry\". Perfect!",
+      "E": "🌟 3/5 = the TOP for now! You found \"famous\" by yourself. Only one tiny thing: poet → poets.",
+      "X": "🌟 2/5 = the TOP for now!",
+      "L": "5/5. You fixed both small mistakes. Great!",
+      "G": "1 mistake (poet → poets). Ms Heather: 0 to 2 = 5. 5/5!"
+    },
+    "next": "🌟🌟🌟 20/25 = FULL MARKS for this stage! 🌟🌟🌟\nYou went from 10 to 20 today. You never gave up!\n\nTang poetry is DONE. No more rewrites.\n\nJust for reading (no need to type it): your paragraph.\n\n[Point] The Tang Dynasty's golden age was very significant because art and poetry grew a lot.\n\n[Evidence] For example, Li Bai and Du Fu, two of the most famous Chinese poets, helped China have a rich culture and amazing poems.\n\n[Explain] This meant that people felt better when they read Li Bai's poems, so poetry became a significant part of Chinese culture.\n\n[Link] Therefore, the Tang Dynasty was a golden age of culture, so we still learn Tang poems today.",
+    "fixes": [
+      {
+        "p": "E",
+        "bad": "Chinese poet,",
+        "fix": "Chinese poets,",
+        "why": "1 mistake: two of them → poets"
+      }
+    ],
+    "goal": 20
   }
 }
