@@ -1000,5 +1000,110 @@
     "next": "🌟🌟🌟 20/25 = FULL MARKS for this stage! 🌟🌟🌟\nYou went from 11 to 20 in one evening. You never gave up!\n\nThe civil service exam is DONE. No more rewrites.\n\nJust for reading (no need to type it): your paragraph, all in your own words.\n\n[Point] The civil service exam was significant because it helped China choose better officials.\n\n[Evidence] For example, officials were chosen by a test, not only by family. The Sui Dynasty made the exam formal.\n\n[Explain] This meant that officials were not stupid, and this was fair for everyone.\n\n[Link] Therefore, the civil service exam was important because it helped China choose good officials, so China was stronger.",
     "fixes": [],
     "goal": 20
+  },
+  "pmwq7pg49rr28": {
+    "at": "2026-11-21",
+    "scores": {
+      "P": 3,
+      "E": 2,
+      "X": 1,
+      "L": 2,
+      "G": 2
+    },
+    "notes": {
+      "P": "3/5. Good: you say it was important AND give a reason. But \"it helped China have more culture\" goes in a circle. The question asks WHY the Tang was a golden age of culture. Say WHAT grew a lot in the Tang. Look in \"📌 Facts you can use\".",
+      "E": "2/5. Li Bai and Du Fu is a correct fact. Great! But it is ONE simple fact = 2. To get 3 (the top for now), add detail: who were they? Your peace sentence is a good idea from the story, but it is hard to understand, and for now we use only ONE fact. So delete it.",
+      "X": "1/5. You wrote \"This meant that\" all by yourself. Good! But this sentence says your peace sentence again (more money and time). It does not explain Li Bai and Du Fu. Think: when people read their poems, what did they get? Look in \"📖 Read the story first\".",
+      "L": "2/5. Good \"Therefore\", and you used a word-list word (prosperity)! But this sentence does not talk about culture or poetry, so it does not link back to your Point. Use the same reason as your Point.",
+      "G": "I count 24 mistakes (see the numbered fixes): 3 in Point, 14 in Evidence, 3 in Explain, 4 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3, and many mistakes that make it hard to understand = 2. \"no many fight every peace\" was hard to understand. The most common one: china → China (5 times!). Many mistakes are in the peace sentence, which you will delete anyway."
+    },
+    "next": "New topic, and you wrote it ALL by yourself. That is the most important thing! 10/25 is a normal first try (Grand Canal 8, Civil service exam 11). You did NOT get worse. Our goal for this stage is 20/25 = full marks.\n\nFirst: open \"📖 Read the story first\" on the writing page and read it with Mum.\n\nJob 1 (Point): Keep \"... because ...\". Change the reason. Think: WHAT grew a lot in the Tang? (Look in \"📌 Facts you can use\".)\nStart with: \"The Tang Dynasty was a golden age of culture because ...\"\n\nJob 2 (Evidence): Keep ONLY your Li Bai and Du Fu sentence. Add who they were: how famous were they? Delete the \"And that time ...\" sentence.\n\nJob 3 (Explain): Delete your sentence. Answer out loud to Mum first: \"When people read Li Bai's poems, how did they feel? Did they learn something? So were poems a big or a small part of Chinese culture?\"\nThen write ONE chain. Start with: \"This meant that people ..., so ...\"\n\nJob 4 (Link): Start with \"Therefore, the Tang Dynasty was a golden age of culture because ...\" Use the same reason as your Point.",
+    "fixes": [
+      {
+        "p": "P",
+        "bad": "Tang dynasty golden age",
+        "fix": "Tang dynasty's golden age",
+        "why": "1 mistake: add 's (the golden age OF the Tang dynasty)"
+      },
+      {
+        "p": "P",
+        "bad": "important, because",
+        "fix": "important because",
+        "why": "1 mistake: no comma before \"because\""
+      },
+      {
+        "p": "P",
+        "bad": "helped china",
+        "fix": "helped China",
+        "why": "1 mistake: China always has a big C"
+      },
+      {
+        "p": "E",
+        "bad": "Li bai, Du fu they",
+        "fix": "Li Bai and Du Fu",
+        "why": "4 mistakes: big B (Bai); big F (Fu); put \"and\" between two names; delete \"they\""
+      },
+      {
+        "p": "E",
+        "bad": "help china",
+        "fix": "helped China",
+        "why": "2 mistakes: help → helped (past); big C"
+      },
+      {
+        "p": "E",
+        "bad": "many culture",
+        "fix": "a rich culture",
+        "why": "1 mistake: you can't count culture, so not \"many\""
+      },
+      {
+        "p": "E",
+        "bad": "amazing poem.",
+        "fix": "amazing poems.",
+        "why": "1 mistake: lots of poems → poems"
+      },
+      {
+        "p": "E",
+        "bad": "And that time",
+        "fix": "At that time,",
+        "why": "1 mistake: \"At that time\""
+      },
+      {
+        "p": "E",
+        "bad": "no many fight every peace then",
+        "fix": "there were not many wars and it was peaceful, so",
+        "why": "3 mistakes, and hard to understand: there were not many wars; it was peaceful; then → so"
+      },
+      {
+        "p": "E",
+        "bad": "they have more time to have money",
+        "fix": "they had more time and money",
+        "why": "2 mistakes: have → had (past); \"more time and money\""
+      },
+      {
+        "p": "X",
+        "bad": "that china",
+        "fix": "that China",
+        "why": "1 mistake: big C"
+      },
+      {
+        "p": "X",
+        "bad": "to better china",
+        "fix": "to make China better",
+        "why": "2 mistakes: \"make China better\"; big C"
+      },
+      {
+        "p": "L",
+        "bad": "china be more strong",
+        "fix": "China became stronger",
+        "why": "3 mistakes: big C; be → became; more strong → stronger"
+      },
+      {
+        "p": "L",
+        "bad": "and prosperity",
+        "fix": "and more prosperous",
+        "why": "1 mistake: prosperity = 繁荣 (a thing); prosperous = 繁荣的 (describes China)"
+      }
+    ],
+    "goal": 20
   }
 }
