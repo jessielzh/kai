@@ -1168,5 +1168,56 @@
       }
     ],
     "goal": 20
+  },
+  "pmwqd5q29eeut": {
+    "at": "2026-11-21",
+    "scores": {
+      "P": 3,
+      "E": 3,
+      "X": 1,
+      "L": 3,
+      "G": 4
+    },
+    "notes": {
+      "P": "3/5. \"significant\" is a great History word. You changed that yourself! But the reason is the same as last time: \"more culture\" goes in a circle. Fix 1 has a blank for you.",
+      "E": "🌟 3/5 = the TOP for now! Fix 2: add how famous Li Bai and Du Fu were. Fix 3: delete the peace sentence (one fact for now). It will still be 3.",
+      "X": "1/5. \"China could China will be more significant\" is hard to understand, and it does not explain Li Bai and Du Fu. Fix 4 makes a chain for you, but YOU fill the 2 blanks. First answer out loud to Mum: \"How did people feel when they read Li Bai's poems?\"",
+      "L": "3/5, up from 2! Now your Link talks about culture again, so it links back to your Point. You did that by yourself. To get higher: say the Tang Dynasty and end with a big thought. Fix 5.",
+      "G": "5 mistakes: 1 in Evidence (\"poems.At\": put a space after a full stop), 2 in Explain, 2 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3."
+    },
+    "next": "14/25, up from 13. Your Link now links back to culture, and you did that by yourself. Great!\n\nThis time the Jobs are INSIDE the fixes. Do ALL 5 fixes, in order.\nSome fixes have a ______ blank. YOU fill it in with your own word. Ask Mum if you are stuck.\n\nFix 1 (Point): What grew a lot in the Tang? Look in \"📌 Facts you can use\".\nFix 2 (Evidence): How famous were Li Bai and Du Fu?\nFix 3 (Evidence): Delete the whole \"At that time ...\" sentence.\nFix 4 (Explain): Answer out loud to Mum first: \"How did people feel when they read the poems?\" Then fill both blanks. Blank 2 is a word from your own Point.\nFix 5 (Link): What do we still learn today?",
+    "fixes": [
+      {
+        "p": "P",
+        "bad": "it helped China have more culture",
+        "fix": "art and ______ grew a lot",
+        "why": "Not grammar: say WHAT grew. Fill the blank yourself: look in \"📌 Facts you can use\"."
+      },
+      {
+        "p": "E",
+        "bad": "Li Bai and Du Fu helped",
+        "fix": "Li Bai and Du Fu, two of the most ______ Chinese poets, helped",
+        "why": "Not grammar: how famous were they? Fill the blank yourself."
+      },
+      {
+        "p": "E",
+        "bad": "At that time, there were not many wars and it was peaceful, so they had more time and money.",
+        "fix": "✂️ delete this sentence",
+        "why": "Not grammar: for now we use ONE fact. (Also 1 grammar mistake: after a full stop, put a space: \"poems. At\".)"
+      },
+      {
+        "p": "X",
+        "bad": "China could China will be more significant",
+        "fix": "people felt ______ when they read Li Bai's poems, so poetry became a ______ part of Chinese culture",
+        "why": "2 grammar mistakes: \"China\" twice; could + will (use only one). Not grammar: fill the 2 blanks yourself. Blank 1: how did people feel when they read the poems? (📖 story). Blank 2: the big word you used in your Point."
+      },
+      {
+        "p": "L",
+        "bad": "China became stronger and more prosperous, help China have more culture",
+        "fix": "the Tang Dynasty was a golden age of culture, so we still learn Tang ______ today",
+        "why": "2 grammar mistakes: \", help\" → \", so it helped\" (needs \"so it\"; help → helped). Not grammar: say the main idea again. Blank: what do we still learn today? (📌 Facts you can use)"
+      }
+    ],
+    "goal": 20
   }
 }
