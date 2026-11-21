@@ -1123,5 +1123,50 @@
       }
     ],
     "goal": 20
+  },
+  "pmwq86f90tp2j": {
+    "at": "2026-11-21",
+    "scores": {
+      "P": 3,
+      "E": 3,
+      "X": 1,
+      "L": 2,
+      "G": 4
+    },
+    "notes": {
+      "P": "3/5. Same Point as last time, so same score. \"it helped China have more culture\" still goes in a circle. Do Job 1 below: say WHAT grew a lot in the Tang.",
+      "E": "🌟 3/5 = the TOP for now! Your peace sentence is now easy to understand, so you have two simple facts = 3. But for now we use ONE fact. Do Job 2: keep Li Bai and Du Fu, say how famous they were, and delete the peace sentence. That is still 3 (one detailed fact = 3).",
+      "X": "1/5. Same sentence as last time, so same score. It says the Evidence again (more money and time). It does not explain Li Bai and Du Fu. This is the part that gives you the most points. Do Job 3!",
+      "L": "2/5. \"became stronger and more prosperous\" is better English. But it still does not talk about culture or poetry, so it does not link back to your Point. Do Job 4.",
+      "G": "4 mistakes (see the numbered fixes): 2 in Evidence, 2 in Link. Last time 24, now 4. You fixed 20 mistakes. Great work! Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3."
+    },
+    "next": "You fixed almost ALL the grammar: 10 → 13. Well done!\nBut you only did the struck-through fixes. The 4 Jobs are what give you the big points. Our goal is 20/25.\n\nFirst: open \"📖 Read the story first\" on the writing page and read it with Mum.\n\nJob 1 (Point): Change the reason. Think: WHAT grew a lot in the Tang? (Look in \"📌 Facts you can use\".)\nStart with: \"The Tang Dynasty was a golden age of culture because ...\"\n\nJob 2 (Evidence): Keep ONLY the Li Bai and Du Fu sentence. Say how famous they were. Delete the \"At that time ...\" sentence.\n\nJob 3 (Explain): Delete your sentence. Answer out loud to Mum first: \"When people read Li Bai's poems, how did they feel? Did they learn something? So were poems a big or a small part of Chinese culture?\"\nThen write ONE chain. Start with: \"This meant that people ..., so ...\"\n\nJob 4 (Link): Start with \"Therefore, the Tang Dynasty was a golden age of culture because ...\" Use the same reason as your Point.",
+    "fixes": [
+      {
+        "p": "E",
+        "bad": "Du Fu they",
+        "fix": "Du Fu",
+        "why": "1 mistake: delete \"they\" (\"Li Bai and Du Fu\" is already who did it)"
+      },
+      {
+        "p": "E",
+        "bad": "peaceful,so",
+        "fix": "peaceful, so",
+        "why": "1 mistake: put a space after a comma"
+      },
+      {
+        "p": "L",
+        "bad": "china became",
+        "fix": "China became",
+        "why": "1 mistake: big C"
+      },
+      {
+        "p": "L",
+        "bad": "properous",
+        "fix": "prosperous",
+        "why": "1 mistake: spelling: pro-SPER-ous"
+      }
+    ],
+    "goal": 20
   }
 }
