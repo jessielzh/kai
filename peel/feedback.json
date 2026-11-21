@@ -1219,5 +1219,56 @@
       }
     ],
     "goal": 20
+  },
+  "pmwqdpbl0bdj7": {
+    "at": "2026-11-21",
+    "scores": {
+      "P": 5,
+      "E": 3,
+      "X": 2,
+      "L": 5,
+      "G": 3
+    },
+    "notes": {
+      "P": "5/5! Now your Point gives a real reason: art and poetry grew a lot. Only one small word to fix (Fix 1).",
+      "E": "🌟 3/5 = the TOP for now! One fact with detail. You deleted the peace sentence. But \"the most writer\" is the wrong word in the blank. Fix 2.",
+      "X": "🌟 2/5 = the TOP for now! \"This meant that people felt better ..., so poetry became a significant part of Chinese culture.\" That is a real chain. You filled both blanks yourself!",
+      "L": "5/5! You say the main idea again AND end with a big thought: we still learn Tang poems today, more than 1,000 years later.",
+      "G": "6 mistakes (see the numbered fixes): 1 in Point, 2 in Evidence, 1 in Explain, 2 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3. Fix them all and Grammar = 5. Watch out: poem → poems (3 times)."
+    },
+    "next": "18/25! Up from 14. You did ALL 5 fixes and filled the blanks yourself. Point and Link are now 5/5!\n\nOnly grammar is left. Do the 5 fixes → 20/25 = FULL MARKS for this stage.\n\nFix 2 has a blank. \"writer\" is not right. Ask yourself: how well-known were Li Bai and Du Fu? Look in \"📖 Read the story first\".",
+    "fixes": [
+      {
+        "p": "P",
+        "bad": "write poem",
+        "fix": "poetry",
+        "why": "1 mistake: \"write poem\" → \"poetry\" (the thing that grew)"
+      },
+      {
+        "p": "E",
+        "bad": "most writer in Chinese poet",
+        "fix": "most ______ Chinese poets",
+        "why": "2 mistakes: after \"the most\" you need a describing word: HOW well-known were they? Fill the blank yourself (📖 story); poet → poets (there are two)"
+      },
+      {
+        "p": "X",
+        "bad": "Li Bai’s poem,",
+        "fix": "Li Bai’s poems,",
+        "why": "1 mistake: he wrote many poems → poems"
+      },
+      {
+        "p": "L",
+        "bad": "culture , so",
+        "fix": "culture, so",
+        "why": "1 mistake: no space BEFORE a comma"
+      },
+      {
+        "p": "L",
+        "bad": "Tang poem today",
+        "fix": "Tang poems today",
+        "why": "1 mistake: many poems → poems"
+      }
+    ],
+    "goal": 20
   }
 }
