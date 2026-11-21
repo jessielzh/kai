@@ -64,56 +64,74 @@
   "pmwn6zjesd2re": {
     "at": "2026-11-19",
     "scores": {
-      "P": 4,
-      "E": 3,
+      "P": 3,
+      "E": 4,
       "X": 2,
       "L": 3,
       "G": 2
     },
     "notes": {
-      "P": "Your new Point is much better: it gives a reason (it connected north and south China). Now delete the old first sentence (\"be cause it is useful\").",
-      "E": "Good, two true facts: built in the Sui dynasty, linked the Yellow and Yangtze Rivers. Delete the old sentence about \"change their place\". To go higher, add how it helped: boats could carry rice and goods between north and south.",
-      "X": "Better: \"Boats carried rice south to north, so northern people had food.\" But that is only one idea, and it doesn't say why that mattered for China. Delete the old travel sentence.",
-      "L": "\"Therefore, it joined China together.\" says the main idea again. Good! Make it a little bigger: why did a joined China matter?",
-      "G": "Your new sentences are correct. All the mistakes are in the old ones: be cause → because, help → helped, chang → change, it help we → it helped us. Start every sentence with a capital letter (\"it help\" → \"It helped\")."
+      "P": "3/5. Your second sentence is good: it gives a reason (it connected north and south China). But your FIRST sentence says \"it is useful\", and that is vague. The first sentence is your Point. Two Point sentences that say different things = a bit unclear. Delete the first one.",
+      "E": "4/5. Two clear, correct facts: built in the Sui dynasty, and linked the Yellow and Yangtze Rivers. To get 5: add detail that shows HOW it helped China (boats carried rice and goods). Delete the old sentence about \"change their place\".",
+      "X": "2/5. \"Boats carried rice south to north, so northern people had food.\" is a good chain. But it explains only ONE fact. Ms Heather: only one fact explained = 2. The travel sentence does not explain a fact. Delete it.",
+      "L": "3/5. \"Therefore, it joined China together.\" reminds us of the main idea. Good! But it is simple, and the first sentence (\"help people in many ways\") is vague. To get 4: say the Grand Canal and your reason again.",
+      "G": "I count 19 mistakes (see the numbered fixes): 3 in Point, 5 in Evidence, 9 in Explain, 2 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3, and many mistakes that make it hard to understand = 2. \"change their place\" and \"like go home some time need Grand Canal\" were hard to understand. Your NEW sentences have only 1 mistake (\"from\"). All the others are in old sentences."
     },
     "next": "Copy only your NEW sentences into one paragraph. Then add one more sentence after the rice: \"This was important for China because ...\" (for example: the emperor could feed his soldiers and the north and south became one country).",
     "fixes": [
       {
         "p": "P",
-        "bad": "be cause",
-        "fix": "because",
-        "why": "one word"
+        "bad": "important, be cause",
+        "fix": "important because",
+        "why": "2 mistakes: no comma before \"because\"; \"because\" is one word"
+      },
+      {
+        "p": "P",
+        "bad": "it is useful",
+        "fix": "it was useful",
+        "why": "1 mistake: is → was (history = past)"
       },
       {
         "p": "E",
         "bad": "It help many",
         "fix": "It helped many",
-        "why": "past tense: help → helped"
+        "why": "1 mistake: help → helped (past)"
       },
       {
         "p": "E",
-        "bad": "help our chang things",
-        "fix": "helped us change things",
-        "why": "helped us, change"
+        "bad": "change their place",
+        "fix": "move from place to place",
+        "why": "1 mistake, hard to understand: \"move from place to place\""
+      },
+      {
+        "p": "E",
+        "bad": "and help our chang things",
+        "fix": "and helped us trade things",
+        "why": "3 mistakes: help → helped; our → us; chang (换东西) → trade"
       },
       {
         "p": "X",
-        "bad": "it help we travel",
-        "fix": "It helped us travel",
-        "why": "capital at the start; helped us"
+        "bad": "it help we travel,",
+        "fix": "It helped us travel.",
+        "why": "3 mistakes: big I at the start; help → helped; we → us"
       },
       {
         "p": "X",
-        "bad": "some time",
-        "fix": "sometimes",
-        "why": "one word"
+        "bad": "like go home some time need Grand Canal",
+        "fix": "For example, people sometimes needed the Grand Canal to go home",
+        "why": "5 mistakes, hard to understand: \"For example\", not \"like\"; who? → people; some time → sometimes; need → needed; add \"the\""
+      },
+      {
+        "p": "X",
+        "bad": "rice south to north",
+        "fix": "rice from south to north",
+        "why": "1 mistake: add \"from\""
       },
       {
         "p": "L",
         "bad": "Therefore, help people",
         "fix": "Therefore, it helped people",
-        "why": "every sentence needs a subject: it"
+        "why": "2 mistakes: every sentence needs a subject (it); help → helped"
       }
     ]
   },
