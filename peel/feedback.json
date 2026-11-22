@@ -1591,5 +1591,32 @@
       }
     ],
     "goal": 20
+  },
+  "pmwr837gcm9in": {
+    "at": "2026-11-22",
+    "scores": {
+      "P": 5,
+      "E": 3,
+      "X": 2,
+      "L": 4,
+      "G": 5
+    },
+    "notes": {
+      "P": "5/5.",
+      "E": "🌟 3/5 = the TOP for now!",
+      "X": "🌟 2/5 = the TOP for now!",
+      "L": "4/5. Your own new words, and now with perfect grammar! One step to 5: a BIGGER thought about China at the end. Fix 1.",
+      "G": "0 mistakes! You fixed all 7. Ms Heather: 0 to 2 = 5. 5/5!"
+    },
+    "next": "19/25! Grammar is now PERFECT: 0 mistakes. 🎉\n\nONE step left to 20/25 = FULL MARKS for this stage.\nAnswer out loud to Mum first: \"If lots of people in China could read and learn, what happened to China? Stronger? Smarter? Richer?\"\nThen fill the blank in Fix 1 with YOUR answer.",
+    "fixes": [
+      {
+        "p": "L",
+        "bad": "learn from books.",
+        "fix": "learn from books, and China became ______.",
+        "why": "Not grammar: the bigger thought. What happened to China when many people could learn? Fill the blank yourself."
+      }
+    ],
+    "goal": 20
   }
 }
