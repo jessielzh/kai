@@ -1546,5 +1546,50 @@
       }
     ],
     "goal": 20
+  },
+  "pmwr7rqrxsx8a": {
+    "at": "2026-11-22",
+    "scores": {
+      "P": 5,
+      "E": 3,
+      "X": 2,
+      "L": 4,
+      "G": 3
+    },
+    "notes": {
+      "P": "5/5. You fixed books. Perfect!",
+      "E": "🌟 3/5 = the TOP for now!",
+      "X": "🌟 2/5 = the TOP for now!",
+      "L": "4/5. 🌟 You wrote it in NEW words by yourself: \"information spread all over China\" is the same idea as your Point. That is exactly what a Link should do! To get 5: the end (\"more students could learn\") says your Explain again. End with a BIGGER thought about China.",
+      "G": "7 mistakes, all in your new Link (see the numbered fixes). Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3. New sentences often have new mistakes. That is normal!"
+    },
+    "next": "17/25. You did NOT get worse! You wrote a brand-new Link in your OWN words. That is the hard part, and you did it. The new sentence just has new grammar mistakes.\n\nStep 1: do fixes 1 to 4 (grammar).\n\nStep 2 (the bigger thought): answer out loud to Mum first: \"If lots of people in China could read and learn, what happened to China? Did it become stronger, smarter, richer?\"\nThen change the end of your Link. Start with: \"..., so China became ...\"",
+    "fixes": [
+      {
+        "p": "L",
+        "bad": "significant information",
+        "fix": "significant because information",
+        "why": "1 mistake: you need \"because\" to give the reason"
+      },
+      {
+        "p": "L",
+        "bad": "all the china",
+        "fix": "all over China",
+        "why": "2 mistakes: \"all over\"; China always has a big C"
+      },
+      {
+        "p": "L",
+        "bad": "china more student",
+        "fix": "so more students in China",
+        "why": "3 mistakes: add \"so\"; big C; student → students"
+      },
+      {
+        "p": "L",
+        "bad": "learn books",
+        "fix": "learn from books",
+        "why": "1 mistake: learn FROM books"
+      }
+    ],
+    "goal": 20
   }
 }
