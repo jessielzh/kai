@@ -483,22 +483,28 @@ const RUBRIC = [
     5:'0–2 small mistakes — read it once more before you send.'}},
 ];
 /* One-fact stage (goal 20): Evidence can reach 3 and Explain 2 at most —
-   20 = Point 5 + Evidence 3 + Explain 2 + Link 5 + Grammar 5. */
-const capOf = (f, k) => f && f.goal === 20 ? ({E:3, X:2})[k] || 5 : 5;
+   20 = Point 5 + Evidence 3 + Explain 2 + Link 5 + Grammar 5.
+   Goal 19 (from 22 Nov 2026): also no "bigger thought" in the Link yet, so Link max 4 —
+   19 = Point 5 + Evidence 3 + Explain 2 + Link 4 + Grammar 5. */
+const CAPS = {20:{E:3, X:2}, 19:{E:3, X:2, L:4}};
+const capOf = (f, k) => f && CAPS[f.goal] ? CAPS[f.goal][k] || 5 : 5;
 function upLine(f, r, v){
   const cap = capOf(f, r.k);
   if(v >= 5) return '🌟 Top level!';
-  if(v >= cap) return `🌟 ${cap}/5 is the TOP for now (one fact). ${v+1} needs a second fact — not yet!`;
+  if(v >= cap) return r.k === 'L' ? `🌟 ${cap}/5 is the TOP for now. ${v+1} needs a "bigger thought" — not yet!` : `🌟 ${cap}/5 is the TOP for now (one fact). ${v+1} needs a second fact — not yet!`;
   return `⬆️ To get ${v+1}${v+1 === cap && cap < 5 ? ' (the top for now)' : ''}: ${esc(r.up[v+1])}`;
 }
 const capTag = (f, k) => capOf(f, k) < 5 ? ` · <b>max ${capOf(f, k)} for now</b>` : '';
-const STAGE_LINE = '🎯 Goal for now: 20/25 = Point 5 + Evidence 3 + Explain 2 + Link 5 + Grammar 5. With ONE fact, Evidence can only get 3 and Explain only 2.';
+const STAGE_LINES = {
+  20: '🎯 Goal for now: 20/25 = Point 5 + Evidence 3 + Explain 2 + Link 5 + Grammar 5. With ONE fact, Evidence can only get 3 and Explain only 2.',
+  19: '🎯 Goal for now: 19/25 = Point 5 + Evidence 3 + Explain 2 + Link 4 + Grammar 5. With ONE fact, Evidence can only get 3 and Explain only 2. Link: say your Point again with "Therefore, …" (4 is the top for now).'};
+const stageLine = f => f && STAGE_LINES[f.goal] || '';
 
 function rubricHTML(f){
   if(!f.scores) return '';
   const total = RUBRIC.reduce((a,r) => a + (f.scores[r.k]||0), 0);
   return `<div class="rub"><div class="tot"><b>${total} / 25</b><span class="muted">Ms Heather's rubric</span></div>` +
-    (f.goal && total >= f.goal ? `<div class="goal">🌟 ${total} / 25 = full marks for this stage! 🌟</div>` : (f.goal === 20 ? `<div class="up" style="margin:4px 0 8px">${STAGE_LINE}</div>` : '')) +
+    (f.goal && total >= f.goal ? `<div class="goal">🌟 ${total} / 25 = full marks for this stage! 🌟</div>` : (stageLine(f) ? `<div class="up" style="margin:4px 0 8px">${stageLine(f)}</div>` : '')) +
     RUBRIC.map(r => { const v = f.scores[r.k]||0, n = (f.notes||{})[r.k];
       return `<div class="rrow${v<=2?' low':''}"><span class="tag ${r.cls}">${r.k==='X'?'E':r.k}</span><div>
         <span class="nm">${r.name}</span><span class="lv">${v}/5 · ${LEVELS[v]||''}${capTag(f, r.k)}</span>
@@ -938,7 +944,7 @@ function renderWrite(t, base){
           ? `<br>⏳ <b>Mum's feedback on this version is not back yet.</b> <button id="fbcheck">↻ Check now</button>`
           : `<br>📤 <b>This version is not sent to Mum yet.</b> <button id="wsend">📤 Send to Mum</button>`) +
         (fb ? `<br><span class="muted">The notes below are from your version at ${esc(fbW.date)}.</span>` : '') : ''}
-      ${fb && fb.scores ? `<br><b>Score: ${wtotal(fbW)}</b>${fb.goal === 20 ? `<br>${STAGE_LINE}` : fb.goal ? ` (goal for now: ${fb.goal}/25)` : ''}${scoreUp(fb, 'G')}` : ''}
+      ${fb && fb.scores ? `<br><b>Score: ${wtotal(fbW)}</b>${stageLine(fb) ? `<br>${stageLine(fb)}` : fb.goal ? ` (goal for now: ${fb.goal}/25)` : ''}${scoreUp(fb, 'G')}` : ''}
       ${fb && fb.next ? `<br>🎯 ${esc(fb.next).replace(/\n/g,'<br>')}` : ''}
       <button id="fresh">Start fresh</button></div>` : ''}
     ${topicLogHTML(t)}

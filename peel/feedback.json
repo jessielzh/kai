@@ -1731,7 +1731,7 @@
         "why": "1 mistake: only one full stop"
       }
     ],
-    "goal": 20
+    "goal": 19
   },
   "pmwrt28h4xaj7": {
     "at": "2026-11-22",
@@ -1788,7 +1788,7 @@
         "why": "1 个错误：Tang dynasty 前面要加 the"
       }
     ],
-    "goal": 20
+    "goal": 19
   },
   "pmwrthrt3omzh": {
     "at": "2026-11-22",
@@ -1803,7 +1803,7 @@
       "P": "3/5. 语法改对了！但还是没有「为什么」。Fix 1 和 Fix 2：照着题目答，再加上 because…",
       "E": "🌟 3/5 = 现在的满分！只有一件事，只写太宗做了什么。完美！不用再改。",
       "X": "🌟 2/5 = 现在的满分！「官员更能干」是结果，写对了地方。\nFix 3 和 Fix 4 把链条接完整：This meant that …, so …",
-      "L": "2/5. Link 里没有太宗，读者不知道是谁让唐朝繁荣的。Fix 5：只要把太宗加进去就行。",
+      "L": "2/5. Link 里没有太宗，读者不知道是谁让唐朝繁荣的。Fix 5：只要把太宗加进去就行。现在 Link 最高 4 分，不用「升华」。",
       "G": "1 个错误：the Chinese history → Chinese history。Ms Heather：0–2 个 = 5。5/5！其他错误全改对了！"
     },
     "next": "15/25。语法全部改对了，Grammar 5/5！🎉\n\n现在只差逻辑。5 个 Fix 都有空格，要你自己想、自己填，不能只删掉。\n\n先说给妈妈听：\n• 太宗用考试选官员 → 官员更能干 → 国家会怎样？\n• 最后唐朝变成什么样了？\n\n然后填 5 个 Fix：\nFix 1、2：Point 照着题目答，加上原因（because …）\nFix 3、4：Explain 用 This meant that …, so … 接完整\nFix 5：Link 里加上太宗",
@@ -1839,6 +1839,6 @@
         "why": "不是语法：Link 里要有太宗！是太宗的什么让唐朝繁荣？看你的 Evidence。"
       }
     ],
-    "goal": 20
+    "goal": 19
   }
 }
