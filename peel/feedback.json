@@ -1740,22 +1740,52 @@
       "E": 3,
       "X": 2,
       "L": 2,
-      "G": 0
+      "G": 3
     },
     "notes": {
       "P": "3/5. 你说了太宗是最重要的皇帝，很好。但没说「为什么」。要拿 5：在后面加 because…，原因就是你 Link 里的那个词（prosperity）。",
       "E": "🌟 3/5 = 现在的满分！只有一件事，只写太宗「做了什么」（用考试选官员）。这次 Evidence 和 Explain 分开了，这是最大的进步！只改一个地方：删掉 better（见 Fix 1）。",
       "X": "🌟 2/5 = 现在的满分！你写的是「结果」（有了更能干的官员），不是重复太宗做了什么。这就是 Explain！\n还差一步：能干的官员又带来了什么？用「This meant that …, so …」把链条接下去。",
       "L": "2/5. prosperity 是很好的「大想法」！但 Link 里没有太宗，读者不知道是谁让唐朝繁荣的。要拿更多：先用新的话再说一遍太宗为什么重要，再说「…, so the Tang …」。",
-      "G": "这一版先只看逻辑，语法不算分（0 分，不是你写错了）。这一阶段满分 = 5+3+2+5 = 15。逻辑对了，再改英文语法。"
+      "G": "6 个语法错误（见编号的 Fix）。Ms Heather：0–2 个 = 5，3–5 个 = 4，超过 5 个 = 3。最常见的两个：过去的事要用过去式（is → was，have → had）；名字前面不加 The，但 Tang dynasty 前面要加 the。"
     },
-    "next": "10/15（不算语法）。🌟 你这次分清了 Evidence 和 Explain！\n\n你的链条是对的：\n考试选官员 → 官员更能干 → 唐朝繁荣\n\n第 1 步：做 Fix 1（删掉 better）。为什么？better 是「结果」，结果要放在 Explain 里。\n\n第 2 步（Explain）：先说给妈妈听：「官员更能干了，国家会变成什么样？」（📖 先读故事）\n然后接在后面写：「…, so …」\n\n第 3 步（Point）：在后面加 because…，说太宗为什么重要。答案就在你链条的最后一个词。\n\n第 4 步（Link）：用新的话说太宗为什么重要（不要抄 Point），最后说唐朝变成了什么样。",
+    "next": "13/25。🌟 你这次分清了 Evidence 和 Explain！\n\n你的链条是对的：\n考试选官员 → 官员更能干 → 唐朝繁荣\n\n第 1 步：做 Fix 1（删掉 better）。为什么？better 是「结果」，结果要放在 Explain 里。\n\n第 2 步（Explain）：先说给妈妈听：「官员更能干了，国家会变成什么样？」（📖 先读故事）\n然后接在后面写：「…, so …」\n\n第 3 步（Point）：在后面加 because…，说太宗为什么重要。答案就在你链条的最后一个词。\n\n第 4 步（Link）：用新的话说太宗为什么重要（不要抄 Point），最后说唐朝变成了什么样。",
     "fixes": [
       {
         "p": "E",
         "bad": "the better officials",
         "fix": "officials",
         "why": "不是语法：better 是结果，放到 Explain 里。Evidence 只写太宗做了什么。"
+      },
+      {
+        "p": "P",
+        "bad": "is the most",
+        "fix": "was the most",
+        "why": "1 个错误：太宗是过去的人 → was"
+      },
+      {
+        "p": "P",
+        "bad": "the China history",
+        "fix": "Chinese history",
+        "why": "1 个错误：中国历史 = Chinese history"
+      },
+      {
+        "p": "E",
+        "bad": "exam to",
+        "fix": "exams to",
+        "why": "1 个错误：考试不止一次 → exams"
+      },
+      {
+        "p": "X",
+        "bad": "The Taizong have",
+        "fix": "Taizong had",
+        "why": "2 个错误：名字前不加 The；过去式 have → had"
+      },
+      {
+        "p": "L",
+        "bad": "Tang dynasty",
+        "fix": "the Tang dynasty",
+        "why": "1 个错误：Tang dynasty 前面要加 the"
       }
     ],
     "goal": 20
