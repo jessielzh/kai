@@ -1,1649 +1,1736 @@
 {
-  "pmwn68suxiilg": {
-    "at": "2026-11-19",
-    "scores": {
-      "P": 2,
-      "E": 1,
-      "X": 1,
-      "L": 2,
-      "G": 2
-    },
-    "notes": {
-      "P": "\"Useful\" is too vague. Say HOW it helped China: it joined the north and the south.",
-      "E": "No real facts yet. Use facts from class: built in the Sui dynasty, linked the Yellow River and the Yangtze River, boats carried rice from the south to the north.",
-      "X": "This part says the same thing again (travel). Explain WHY a fact mattered: what changed for China because of it?",
-      "L": "Good try at \"Therefore\". Make it a full sentence and say the main idea again: the canal helped join China together.",
-      "G": "Check: be cause → because, help → helped, chang → change, our/we → us. Every sentence needs a subject (\"it helped\")."
-    },
-    "next": "Rewrite your Explain with this start: \"This meant that rice from the south could feed people in the north, so ...\" Finish the sentence: why was that good for China?",
-    "fixes": [
-      {
-        "p": "P",
-        "bad": "be cause",
-        "fix": "because",
-        "why": "one word"
-      },
-      {
-        "p": "E",
-        "bad": "it help many",
-        "fix": "it helped many",
-        "why": "past tense: help → helped"
-      },
-      {
-        "p": "E",
-        "bad": "chang their",
-        "fix": "change their",
-        "why": "spelling"
-      },
-      {
-        "p": "E",
-        "bad": "help our chang things",
-        "fix": "helped us change things",
-        "why": "helped us, change"
-      },
-      {
-        "p": "X",
-        "bad": "it help we travel",
-        "fix": "it helped us travel",
-        "why": "helped us (not 'help we')"
-      },
-      {
-        "p": "X",
-        "bad": "some time",
-        "fix": "sometimes",
-        "why": "one word"
-      },
-      {
-        "p": "L",
-        "bad": "Therefore, help people",
-        "fix": "Therefore, it helped people",
-        "why": "every sentence needs a subject: it"
-      }
-    ]
+ "pmwn68suxiilg": {
+  "at": "2026-11-19",
+  "scores": {
+   "P": 2,
+   "E": 1,
+   "X": 1,
+   "L": 2,
+   "G": 2
   },
-  "pmwn6zjesd2re": {
-    "at": "2026-11-19",
-    "scores": {
-      "P": 3,
-      "E": 4,
-      "X": 2,
-      "L": 3,
-      "G": 2
-    },
-    "notes": {
-      "P": "3/5. Your second sentence is good: it gives a reason (it connected north and south China). But your FIRST sentence says \"it is useful\", and that is vague. The first sentence is your Point. Two Point sentences that say different things = a bit unclear. Delete the first one.",
-      "E": "4/5. Two clear, correct facts: built in the Sui dynasty, and linked the Yellow and Yangtze Rivers. To get 5: add detail that shows HOW it helped China (boats carried rice and goods). Delete the old sentence about \"change their place\".",
-      "X": "2/5. \"Boats carried rice south to north, so northern people had food.\" is a good chain. But it explains only ONE fact. Ms Heather: only one fact explained = 2. The travel sentence does not explain a fact. Delete it.",
-      "L": "3/5. \"Therefore, it joined China together.\" reminds us of the main idea. Good! But it is simple, and the first sentence (\"help people in many ways\") is vague. To get 4: say the Grand Canal and your reason again.",
-      "G": "I count 19 mistakes (see the numbered fixes): 3 in Point, 5 in Evidence, 9 in Explain, 2 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3, and many mistakes that make it hard to understand = 2. \"change their place\" and \"like go home some time need Grand Canal\" were hard to understand. Your NEW sentences have only 1 mistake (\"from\"). All the others are in old sentences."
-    },
-    "next": "Copy only your NEW sentences into one paragraph. Then add one more sentence after the rice: \"This was important for China because ...\" (for example: the emperor could feed his soldiers and the north and south became one country).",
-    "fixes": [
-      {
-        "p": "P",
-        "bad": "important, be cause",
-        "fix": "important because",
-        "why": "2 mistakes: no comma before \"because\"; \"because\" is one word"
-      },
-      {
-        "p": "P",
-        "bad": "it is useful",
-        "fix": "it was useful",
-        "why": "1 mistake: is → was (history = past)"
-      },
-      {
-        "p": "E",
-        "bad": "It help many",
-        "fix": "It helped many",
-        "why": "1 mistake: help → helped (past)"
-      },
-      {
-        "p": "E",
-        "bad": "change their place",
-        "fix": "move from place to place",
-        "why": "1 mistake, hard to understand: \"move from place to place\""
-      },
-      {
-        "p": "E",
-        "bad": "and help our chang things",
-        "fix": "and helped us trade things",
-        "why": "3 mistakes: help → helped; our → us; chang (换东西) → trade"
-      },
-      {
-        "p": "X",
-        "bad": "it help we travel,",
-        "fix": "It helped us travel.",
-        "why": "3 mistakes: big I at the start; help → helped; we → us"
-      },
-      {
-        "p": "X",
-        "bad": "like go home some time need Grand Canal",
-        "fix": "For example, people sometimes needed the Grand Canal to go home",
-        "why": "5 mistakes, hard to understand: \"For example\", not \"like\"; who? → people; some time → sometimes; need → needed; add \"the\""
-      },
-      {
-        "p": "X",
-        "bad": "rice south to north",
-        "fix": "rice from south to north",
-        "why": "1 mistake: add \"from\""
-      },
-      {
-        "p": "L",
-        "bad": "Therefore, help people",
-        "fix": "Therefore, it helped people",
-        "why": "2 mistakes: every sentence needs a subject (it); help → helped"
-      }
-    ]
+  "notes": {
+   "P": "\"Useful\" is too vague. Say HOW it helped China: it joined the north and the south.",
+   "E": "No real facts yet. Use facts from class: built in the Sui dynasty, linked the Yellow River and the Yangtze River, boats carried rice from the south to the north.",
+   "X": "This part says the same thing again (travel). Explain WHY a fact mattered: what changed for China because of it?",
+   "L": "Good try at \"Therefore\". Make it a full sentence and say the main idea again: the canal helped join China together.",
+   "G": "Check: be cause → because, help → helped, chang → change, our/we → us. Every sentence needs a subject (\"it helped\")."
   },
-  "pmwnh2grw5frd": {
-    "at": "2026-11-19",
-    "scores": {
-      "P": 4,
-      "E": 4,
-      "X": 2,
-      "L": 3,
-      "G": 3
-    },
-    "notes": {
-      "P": "Good point with a reason: it connected north and south China. Delete the first sentence (\"The Grand Canal was important.\"). It says the same thing twice.",
-      "E": "Well done! Two clear, true facts and no old sentences left. To go higher, add one detail, e.g. Emperor Yang of Sui had it built.",
-      "X": "Your last version had \"so northern people had food\". Where did it go? Right now your Explain is just another fact. Explain says WHY it mattered: \"This meant that ...\", then \"so ...\".",
-      "L": "\"Therefore, it joined China together.\" is good. The second sentence is a new idea (boats carrying things). That belongs in Explain, not in Link.",
-      "G": "Start every sentence with a capital letter: boats → Boats. Becuse → Because. Don't use a capital in the middle: It → it. carry → carried, help we → helped us."
-    },
-    "next": "Make your Explain two sentences: \"This meant that boats could carry rice from the south to the north, so people in the north had food. This was important because the emperor could feed his army and rule all of China.\"",
-    "fixes": [
-      {
-        "p": "X",
-        "bad": "boats could",
-        "fix": "Boats could",
-        "why": "capital letter at the start of a sentence"
-      },
-      {
-        "p": "L",
-        "bad": "Becuse",
-        "fix": "Because",
-        "why": "spelling"
-      },
-      {
-        "p": "L",
-        "bad": "It carry",
-        "fix": "it carried",
-        "why": "no capital in the middle; past tense"
-      },
-      {
-        "p": "L",
-        "bad": "help we",
-        "fix": "helped us",
-        "why": "helped us (not 'help we')"
-      }
-    ]
+  "next": "Rewrite your Explain with this start: \"This meant that rice from the south could feed people in the north, so ...\" Finish the sentence: why was that good for China?",
+  "fixes": [
+   {
+    "p": "P",
+    "bad": "be cause",
+    "fix": "because",
+    "why": "one word"
+   },
+   {
+    "p": "E",
+    "bad": "it help many",
+    "fix": "it helped many",
+    "why": "past tense: help → helped"
+   },
+   {
+    "p": "E",
+    "bad": "chang their",
+    "fix": "change their",
+    "why": "spelling"
+   },
+   {
+    "p": "E",
+    "bad": "help our chang things",
+    "fix": "helped us change things",
+    "why": "helped us, change"
+   },
+   {
+    "p": "X",
+    "bad": "it help we travel",
+    "fix": "it helped us travel",
+    "why": "helped us (not 'help we')"
+   },
+   {
+    "p": "X",
+    "bad": "some time",
+    "fix": "sometimes",
+    "why": "one word"
+   },
+   {
+    "p": "L",
+    "bad": "Therefore, help people",
+    "fix": "Therefore, it helped people",
+    "why": "every sentence needs a subject: it"
+   }
+  ]
+ },
+ "pmwn6zjesd2re": {
+  "at": "2026-11-19",
+  "scores": {
+   "P": 3,
+   "E": 4,
+   "X": 2,
+   "L": 3,
+   "G": 2
   },
-  "pmwni4cugxxb3": {
-    "at": "2026-11-19",
-    "scores": {
-      "P": 4,
-      "E": 4,
-      "X": 2,
-      "L": 3,
-      "G": 3
-    },
-    "notes": {
-      "P": "Great: one clear sentence with a reason. To reach 5, say why it mattered for China's development, e.g. \"... because it connected north and south China and helped the country grow.\"",
-      "E": "Two clear, true facts. Well done!",
-      "X": "Good start: \"Boats could carry rice and goods between north and south\". Now say WHY that mattered: \"This meant that ..., so ...\". \"It help two Rivers get together\" just says your Evidence again. Delete it.",
-      "L": "\"Therefore, it joined China together.\" is now in BOTH Explain and Link. Keep it only in Link. Delete \"Because it carried many things helped have more things.\"",
-      "G": "could carried → could carry. It help → It helped. Rivers → rivers (no capital in the middle). End every sentence with a full stop."
-    },
-    "next": "Use your Week 10 words in Explain: \"This meant that transportation between the north and the south became faster, so food and goods could move easily. This helped the economy grow.\" Say it out loud to Mum first, then write it.",
-    "fixes": [
-      {
-        "p": "X",
-        "bad": "could carried",
-        "fix": "could carry",
-        "why": "after 'could', use the plain verb: could carry"
-      },
-      {
-        "p": "X",
-        "bad": "It help",
-        "fix": "It helped",
-        "why": "past tense: help → helped"
-      },
-      {
-        "p": "X",
-        "bad": "two Rivers",
-        "fix": "two rivers",
-        "why": "no capital letter in the middle of a sentence"
-      },
-      {
-        "p": "X",
-        "bad": "get together",
-        "fix": "get together.",
-        "why": "end every sentence with a full stop"
-      },
-      {
-        "p": "L",
-        "bad": "things helped have",
-        "fix": "things, it helped people have",
-        "why": "needs a subject: it helped people"
-      }
-    ]
+  "notes": {
+   "P": "3/5. Your second sentence is good: it gives a reason (it connected north and south China). But your FIRST sentence says \"it is useful\", and that is vague. The first sentence is your Point. Two Point sentences that say different things = a bit unclear. Delete the first one.",
+   "E": "4/5. Two clear, correct facts: built in the Sui dynasty, and linked the Yellow and Yangtze Rivers. To get 5: add detail that shows HOW it helped China (boats carried rice and goods). Delete the old sentence about \"change their place\".",
+   "X": "2/5. \"Boats carried rice south to north, so northern people had food.\" is a good chain. But it explains only ONE fact. Ms Heather: only one fact explained = 2. The travel sentence does not explain a fact. Delete it.",
+   "L": "3/5. \"Therefore, it joined China together.\" reminds us of the main idea. Good! But it is simple, and the first sentence (\"help people in many ways\") is vague. To get 4: say the Grand Canal and your reason again.",
+   "G": "I count 19 mistakes (see the numbered fixes): 3 in Point, 5 in Evidence, 9 in Explain, 2 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3, and many mistakes that make it hard to understand = 2. \"change their place\" and \"like go home some time need Grand Canal\" were hard to understand. Your NEW sentences have only 1 mistake (\"from\"). All the others are in old sentences."
   },
-  "pmwocm3oumopy": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 4,
-      "E": 4,
-      "X": 2,
-      "L": 3,
-      "G": 4
-    },
-    "notes": {
-      "P": "Same strong Point: clear, with a reason. To reach 5, add why it mattered for China's development: \"... and helped the country grow.\"",
-      "E": "Two clear, true facts. Well done! For a 5, add one more detail, e.g. Emperor Yang of Sui had it built.",
-      "X": "You fixed \"could carry\". Good! But the two sentences after it are the same as last time. \"Therefore, it joined China together.\" is your Link, and \"It helped two rivers get together\" repeats your Evidence. Delete both. Explain says WHY boats carrying rice mattered: \"This meant that ..., so ...\".",
-      "L": "Better: \"Because it carried many things, it helped people have more things\" now has a subject. But it is a new idea and a bit vague. Try: \"Therefore, the Grand Canal joined China together and helped it grow richer.\"",
-      "G": "Big improvement! You fixed could carry, helped, rivers and the full stop. Only small slips now: stray numbers (helped2, have5) and a double space."
-    },
-    "next": "Delete the last two sentences of your Explain. Write instead: \"This meant that food from the south could reach the north quickly, so ...\" Finish it yourself: why was that good for China? (Hint: the army, the emperor, the economy.)",
-    "fixes": [
-      {
-        "p": "X",
-        "bad": "helped2",
-        "fix": "helped",
-        "why": "delete the stray number 2"
-      },
-      {
-        "p": "X",
-        "bad": "get  together",
-        "fix": "get together",
-        "why": "one space between words"
-      },
-      {
-        "p": "L",
-        "bad": "have5",
-        "fix": "have",
-        "why": "delete the stray number 5"
-      }
-    ]
+  "next": "Copy only your NEW sentences into one paragraph. Then add one more sentence after the rice: \"This was important for China because ...\" (for example: the emperor could feed his soldiers and the north and south became one country).",
+  "fixes": [
+   {
+    "p": "P",
+    "bad": "important, be cause",
+    "fix": "important because",
+    "why": "2 mistakes: no comma before \"because\"; \"because\" is one word"
+   },
+   {
+    "p": "P",
+    "bad": "it is useful",
+    "fix": "it was useful",
+    "why": "1 mistake: is → was (history = past)"
+   },
+   {
+    "p": "E",
+    "bad": "It help many",
+    "fix": "It helped many",
+    "why": "1 mistake: help → helped (past)"
+   },
+   {
+    "p": "E",
+    "bad": "change their place",
+    "fix": "move from place to place",
+    "why": "1 mistake, hard to understand: \"move from place to place\""
+   },
+   {
+    "p": "E",
+    "bad": "and help our chang things",
+    "fix": "and helped us trade things",
+    "why": "3 mistakes: help → helped; our → us; chang (换东西) → trade"
+   },
+   {
+    "p": "X",
+    "bad": "it help we travel,",
+    "fix": "It helped us travel.",
+    "why": "3 mistakes: big I at the start; help → helped; we → us"
+   },
+   {
+    "p": "X",
+    "bad": "like go home some time need Grand Canal",
+    "fix": "For example, people sometimes needed the Grand Canal to go home",
+    "why": "5 mistakes, hard to understand: \"For example\", not \"like\"; who? → people; some time → sometimes; need → needed; add \"the\""
+   },
+   {
+    "p": "X",
+    "bad": "rice south to north",
+    "fix": "rice from south to north",
+    "why": "1 mistake: add \"from\""
+   },
+   {
+    "p": "L",
+    "bad": "Therefore, help people",
+    "fix": "Therefore, it helped people",
+    "why": "2 mistakes: every sentence needs a subject (it); help → helped"
+   }
+  ]
+ },
+ "pmwnh2grw5frd": {
+  "at": "2026-11-19",
+  "scores": {
+   "P": 4,
+   "E": 4,
+   "X": 2,
+   "L": 3,
+   "G": 3
   },
-  "pmwocvaz88t14": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 4,
-      "E": 4,
-      "X": 2,
-      "L": 3,
-      "G": 5
-    },
-    "notes": {
-      "P": "Same strong Point. To reach 5, add why it mattered for China's development: \"... and helped the country grow.\"",
-      "E": "Two clear, true facts. For a 5, add one more detail, e.g. Emperor Yang of Sui had it built.",
-      "X": "Your Explain has not changed. Delete \"Therefore, it joined China together.\" (that is your Link) and \"It helped two rivers get together.\" (that is your Evidence again). Then add ONE new sentence: \"This meant that ..., so ...\".",
-      "L": "Same as last time. Make it one strong sentence: \"Therefore, the Grand Canal joined China together and helped it grow richer.\"",
-      "G": "No mistakes! You fixed every slip. Grammar is now 5/5. Well done!"
-    },
-    "next": "Only change your Explain this time. Keep the first sentence about boats. Delete the other two. Then write: \"This meant that food from the south could reach the north quickly, so ...\" and finish it yourself (hint: the army, the emperor, the economy).",
-    "fixes": []
+  "notes": {
+   "P": "Good point with a reason: it connected north and south China. Delete the first sentence (\"The Grand Canal was important.\"). It says the same thing twice.",
+   "E": "Well done! Two clear, true facts and no old sentences left. To go higher, add one detail, e.g. Emperor Yang of Sui had it built.",
+   "X": "Your last version had \"so northern people had food\". Where did it go? Right now your Explain is just another fact. Explain says WHY it mattered: \"This meant that ...\", then \"so ...\".",
+   "L": "\"Therefore, it joined China together.\" is good. The second sentence is a new idea (boats carrying things). That belongs in Explain, not in Link.",
+   "G": "Start every sentence with a capital letter: boats → Boats. Becuse → Because. Don't use a capital in the middle: It → it. carry → carried, help we → helped us."
   },
-  "pmwodby9yinmh": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 4,
-      "E": 4,
-      "X": 3,
-      "L": 3,
-      "G": 3
-    },
-    "notes": {
-      "P": "Good, you added why it mattered! One fix: the canal didn't GROW food, it MOVED food. Try: \"... and helped the country grow.\"",
-      "E": "Your two facts are still good. The new sentence (\"It helped two rivers get together, to get more food\") says \"linked the rivers\" again. Delete it.",
-      "X": "Big step! You used \"This meant that ..., so ...\" and you deleted the old sentences. This is the first time you explain WHY. To go higher, be more exact than \"more energy\": food could feed the emperor's army in the north, so he could protect and rule all of China.",
-      "L": "\"Therefore, it joined China together and helped it grow richer.\" is a strong ending. Stop there! The second sentence (\"Because it carried many things...\") is extra and vague. Delete it.",
-      "G": "Grammar went down because you wrote new sentences. That's OK! Check: China always has a capital C. every were → everywhere. have → had (it's in the past). well → would."
-    },
-    "next": "Make your \"so\" part more exact: \"This meant that people everywhere in China had more food, so the emperor could feed his army and rule the whole country.\" Then delete the extra sentences in Evidence and Link.",
-    "fixes": [
-      {
-        "p": "P",
-        "bad": "China ,and",
-        "fix": "China, and",
-        "why": "comma goes right after the word, then a space"
-      },
-      {
-        "p": "E",
-        "bad": "Rivers.  It",
-        "fix": "Rivers. It",
-        "why": "one space between sentences"
-      },
-      {
-        "p": "X",
-        "bad": "china every were",
-        "fix": "people everywhere in China",
-        "why": "China has a capital C; everywhere is one word"
-      },
-      {
-        "p": "X",
-        "bad": "have more food",
-        "fix": "had more food",
-        "why": "past tense: have → had"
-      },
-      {
-        "p": "X",
-        "bad": "china well have",
-        "fix": "China would have",
-        "why": "capital C; well → would"
-      }
-    ]
+  "next": "Make your Explain two sentences: \"This meant that boats could carry rice from the south to the north, so people in the north had food. This was important because the emperor could feed his army and rule all of China.\"",
+  "fixes": [
+   {
+    "p": "X",
+    "bad": "boats could",
+    "fix": "Boats could",
+    "why": "capital letter at the start of a sentence"
+   },
+   {
+    "p": "L",
+    "bad": "Becuse",
+    "fix": "Because",
+    "why": "spelling"
+   },
+   {
+    "p": "L",
+    "bad": "It carry",
+    "fix": "it carried",
+    "why": "no capital in the middle; past tense"
+   },
+   {
+    "p": "L",
+    "bad": "help we",
+    "fix": "helped us",
+    "why": "helped us (not 'help we')"
+   }
+  ]
+ },
+ "pmwni4cugxxb3": {
+  "at": "2026-11-19",
+  "scores": {
+   "P": 4,
+   "E": 4,
+   "X": 2,
+   "L": 3,
+   "G": 3
   },
-  "pmwodk44vukkg": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 4,
-      "E": 4,
-      "X": 3,
-      "L": 3,
-      "G": 5
-    },
-    "notes": {
-      "P": "Not changed yet. The canal didn't GROW food, it MOVED food. Change \"grow more food\" to \"grow\": \"... and helped the country grow.\"",
-      "E": "Not changed yet. Delete \"It helped two rivers get together, to get more food.\" It says \"linked the rivers\" again.",
-      "X": "Grammar fixed, well done! Now make the \"so\" part exact. \"More energy\" is too vague. WHO got the food, and what could they do? Try: \"so the emperor could feed his army and rule the whole country.\"",
-      "L": "Not changed yet. Stop after \"helped it grow richer.\" Delete \"Because it carried many things, it helped people have more things.\"",
-      "G": "Excellent! You fixed every mistake. Only one double space left. Grammar 5/5."
-    },
-    "next": "Four small jobs, no new writing: (1) Point: \"grow more food\" → \"grow\". (2) Evidence: delete the second sentence. (3) Explain: \"more energy\" → \"the emperor could feed his army and rule the whole country\". (4) Link: delete the second sentence.",
-    "fixes": [
-      {
-        "p": "X",
-        "bad": "everywhere  in",
-        "fix": "everywhere in",
-        "why": "one space between words"
-      }
-    ]
+  "notes": {
+   "P": "Great: one clear sentence with a reason. To reach 5, say why it mattered for China's development, e.g. \"... because it connected north and south China and helped the country grow.\"",
+   "E": "Two clear, true facts. Well done!",
+   "X": "Good start: \"Boats could carry rice and goods between north and south\". Now say WHY that mattered: \"This meant that ..., so ...\". \"It help two Rivers get together\" just says your Evidence again. Delete it.",
+   "L": "\"Therefore, it joined China together.\" is now in BOTH Explain and Link. Keep it only in Link. Delete \"Because it carried many things helped have more things.\"",
+   "G": "could carried → could carry. It help → It helped. Rivers → rivers (no capital in the middle). End every sentence with a full stop."
   },
-  "pmwodtjtmpqzs": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 4,
-      "E": 4,
-      "X": 4,
-      "L": 4,
-      "G": 5
-    },
-    "notes": {
-      "P": "Still to do: the canal didn't GROW food, it MOVED food. Change \"grow more food\" to \"grow\": \"... and helped the country grow.\"",
-      "E": "Still to do: delete \"It helped two rivers get together, to get more food.\" It says \"linked the rivers\" again.",
-      "X": "Great Explain! \"so the emperor could feed his army and rule the whole country\" says exactly WHY the canal mattered. To reach 5, add one more \"This meant that\" about trade: goods could be sold all over China, so the economy grew.",
-      "L": "Perfect. You stopped after \"grow richer\". Short and strong!",
-      "G": "Only one slip: a full stop at the end of Explain. Grammar 5/5."
-    },
-    "next": "Two quick jobs left: (1) Point: \"grow more food\" → \"grow\". (2) Evidence: delete the second sentence. Then your paragraph is ready to hand in!",
-    "fixes": [
-      {
-        "p": "X",
-        "bad": "whole country",
-        "fix": "whole country.",
-        "why": "end every sentence with a full stop"
-      }
-    ]
+  "next": "Use your Week 10 words in Explain: \"This meant that transportation between the north and the south became faster, so food and goods could move easily. This helped the economy grow.\" Say it out loud to Mum first, then write it.",
+  "fixes": [
+   {
+    "p": "X",
+    "bad": "could carried",
+    "fix": "could carry",
+    "why": "after 'could', use the plain verb: could carry"
+   },
+   {
+    "p": "X",
+    "bad": "It help",
+    "fix": "It helped",
+    "why": "past tense: help → helped"
+   },
+   {
+    "p": "X",
+    "bad": "two Rivers",
+    "fix": "two rivers",
+    "why": "no capital letter in the middle of a sentence"
+   },
+   {
+    "p": "X",
+    "bad": "get together",
+    "fix": "get together.",
+    "why": "end every sentence with a full stop"
+   },
+   {
+    "p": "L",
+    "bad": "things helped have",
+    "fix": "things, it helped people have",
+    "why": "needs a subject: it helped people"
+   }
+  ]
+ },
+ "pmwocm3oumopy": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 4,
+   "E": 4,
+   "X": 2,
+   "L": 3,
+   "G": 4
   },
-  "pmwodxmfh9iy8": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 4,
-      "E": 4,
-      "X": 4,
-      "L": 4,
-      "G": 5
-    },
-    "notes": {
-      "P": "Last job! The canal didn't GROW food, it MOVED food. Change \"grow more food\" to \"grow\": \"... and helped the country grow.\"",
-      "E": "Nice and clean now: two clear facts, no repeats. To reach 5, add one detail, e.g. \"Emperor Yang of the Sui dynasty built it in about 605 AD.\"",
-      "X": "Great Explain, and the full stop is fixed. To reach 5, add one more \"This meant that\" about trade: goods could be sold all over China, so the economy grew.",
-      "L": "Good! To reach 5, a Link has 3 parts: (1) Therefore, (2) your Point again, using the question's word \"significant\", (3) one BIG thought: how long did it matter? Try: \"Therefore, the Grand Canal was very significant because it joined north and south China into one country, and people still use it today, more than 1,400 years later.\"",
-      "G": "No mistakes at all. Grammar 5/5!"
-    },
-    "next": "One last change: in your Point, \"grow more food\" → \"grow\". Then it's ready to hand in. Want to aim higher? Add Emperor Yang to Evidence and one trade sentence to Explain.",
-    "fixes": []
+  "notes": {
+   "P": "Same strong Point: clear, with a reason. To reach 5, add why it mattered for China's development: \"... and helped the country grow.\"",
+   "E": "Two clear, true facts. Well done! For a 5, add one more detail, e.g. Emperor Yang of Sui had it built.",
+   "X": "You fixed \"could carry\". Good! But the two sentences after it are the same as last time. \"Therefore, it joined China together.\" is your Link, and \"It helped two rivers get together\" repeats your Evidence. Delete both. Explain says WHY boats carrying rice mattered: \"This meant that ..., so ...\".",
+   "L": "Better: \"Because it carried many things, it helped people have more things\" now has a subject. But it is a new idea and a bit vague. Try: \"Therefore, the Grand Canal joined China together and helped it grow richer.\"",
+   "G": "Big improvement! You fixed could carry, helped, rivers and the full stop. Only small slips now: stray numbers (helped2, have5) and a double space."
   },
-  "pmwoe8jiv3h3y": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 4,
-      "E": 4,
-      "X": 4,
-      "L": 5,
-      "G": 5
-    },
-    "notes": {
-      "P": "Still one job left! The canal didn't GROW food, it MOVED food. Change \"grow more food\" to \"grow\": \"... and helped the country grow.\"",
-      "E": "Two clear facts. To reach 5, add one detail, e.g. \"Emperor Yang of the Sui dynasty built it in about 605 AD.\"",
-      "X": "Great Explain. To reach 5, add one more \"This meant that\" about trade: goods could be sold all over China, so the economy grew.",
-      "L": "5/5! Your Link has all 3 parts: Therefore + \"significant\" + a big thought (still used 1,400 years later). Next time, try writing the big thought in your own words.",
-      "G": "No mistakes. Grammar 5/5!"
-    },
-    "next": "Change \"grow more food\" → \"grow\" in your Point. Ask yourself: did the canal GROW rice, or CARRY rice?",
-    "fixes": []
+  "next": "Delete the last two sentences of your Explain. Write instead: \"This meant that food from the south could reach the north quickly, so ...\" Finish it yourself: why was that good for China? (Hint: the army, the emperor, the economy.)",
+  "fixes": [
+   {
+    "p": "X",
+    "bad": "helped2",
+    "fix": "helped",
+    "why": "delete the stray number 2"
+   },
+   {
+    "p": "X",
+    "bad": "get  together",
+    "fix": "get together",
+    "why": "one space between words"
+   },
+   {
+    "p": "L",
+    "bad": "have5",
+    "fix": "have",
+    "why": "delete the stray number 5"
+   }
+  ]
+ },
+ "pmwocvaz88t14": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 4,
+   "E": 4,
+   "X": 2,
+   "L": 3,
+   "G": 5
   },
-  "pmwoeigx346lm": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 3,
-      "E": 4,
-      "X": 4,
-      "L": 5,
-      "G": 4
-    },
-    "notes": {
-      "P": "Good thinking: you wrote your OWN reason (water, moving food). But now your Point is long and has three ideas, so it is less clear. A Point needs ONE clear reason. The canal's main job was to MOVE food, and you said that yourself! Try: \"The Grand Canal was very significant because it connected north and south China and helped the country move food.\"",
-      "E": "Two clear facts. To reach 5, add one detail, e.g. \"Emperor Yang of the Sui dynasty built it in about 605 AD.\"",
-      "X": "Great Explain. To reach 5, add one more \"This meant that\" about trade: goods could be sold all over China, so the economy grew.",
-      "L": "5/5. Strong ending!",
-      "G": "The new part has a few slips: the country had, it also moved, and don't use \"because\" twice in one sentence."
-    },
-    "next": "Make your Point one short sentence with your own word \"move\": \"... because it connected north and south China and helped the country move food.\" Delete \"grow more food\" and the water part.",
-    "fixes": [
-      {
-        "p": "P",
-        "bad": "because country have",
-        "fix": "because the country had",
-        "why": "the country; past tense: have → had"
-      },
-      {
-        "p": "P",
-        "bad": "it also move",
-        "fix": "it also moved",
-        "why": "past tense: move → moved"
-      }
-    ]
+  "notes": {
+   "P": "Same strong Point. To reach 5, add why it mattered for China's development: \"... and helped the country grow.\"",
+   "E": "Two clear, true facts. For a 5, add one more detail, e.g. Emperor Yang of Sui had it built.",
+   "X": "Your Explain has not changed. Delete \"Therefore, it joined China together.\" (that is your Link) and \"It helped two rivers get together.\" (that is your Evidence again). Then add ONE new sentence: \"This meant that ..., so ...\".",
+   "L": "Same as last time. Make it one strong sentence: \"Therefore, the Grand Canal joined China together and helped it grow richer.\"",
+   "G": "No mistakes! You fixed every slip. Grammar is now 5/5. Well done!"
   },
-  "pmwoempyeb90c": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 3,
-      "E": 4,
-      "X": 4,
-      "L": 5,
-      "G": 4
-    },
-    "notes": {
-      "P": "This is the same as your last version: nothing changed yet. Read the note below, then change your Point. Good thinking: you wrote your OWN reason (water, moving food). But now your Point is long and has three ideas, so it is less clear. A Point needs ONE clear reason. The canal's main job was to MOVE food, and you said that yourself! Try: \"The Grand Canal was very significant because it connected north and south China and helped the country move food.\"",
-      "E": "Two clear facts. To reach 5, add one detail, e.g. \"Emperor Yang of the Sui dynasty built it in about 605 AD.\"",
-      "X": "Great Explain. To reach 5, add one more \"This meant that\" about trade: goods could be sold all over China, so the economy grew.",
-      "L": "5/5. Strong ending!",
-      "G": "The new part has a few slips: the country had, it also moved, and don't use \"because\" twice in one sentence."
-    },
-    "next": "Make your Point one short sentence with your own word \"move\": \"... because it connected north and south China and helped the country move food.\" Delete \"grow more food\" and the water part.",
-    "fixes": [
-      {
-        "p": "P",
-        "bad": "because country have",
-        "fix": "because the country had",
-        "why": "the country; past tense: have → had"
-      },
-      {
-        "p": "P",
-        "bad": "it also move",
-        "fix": "it also moved",
-        "why": "past tense: move → moved"
-      }
-    ]
+  "next": "Only change your Explain this time. Keep the first sentence about boats. Delete the other two. Then write: \"This meant that food from the south could reach the north quickly, so ...\" and finish it yourself (hint: the army, the emperor, the economy).",
+  "fixes": []
+ },
+ "pmwodby9yinmh": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 4,
+   "E": 4,
+   "X": 3,
+   "L": 3,
+   "G": 3
   },
-  "pmwoet6jv9tac": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 5,
-      "E": 4,
-      "X": 4,
-      "L": 5,
-      "G": 5
-    },
-    "notes": {
-      "P": "5/5! One clear sentence, the word \"significant\", and a reason. You fixed \"grow\" → \"move\". Great job!",
-      "E": "Good! Your key fact is: it linked the Yellow and Yangtze Rivers. One clear fact is enough for now.",
-      "X": "Well done! Your Explain matches your fact: linked rivers → boats carry rice → the north has food → the emperor can feed his army and rule China. That is a full chain of WHY.",
-      "L": "5/5. Strong ending!",
-      "G": "Only one slip: china → China (always a capital C). Grammar 5/5."
-    },
-    "next": "23/25! This paragraph is finished. Next time, with a new topic: pick ONE fact, then write \"This meant that ..., so ...\" in your own words. Say it out loud to Mum first.",
-    "fixes": [
-      {
-        "p": "P",
-        "bad": "south china",
-        "fix": "south China",
-        "why": "China always has a capital C"
-      }
-    ]
+  "notes": {
+   "P": "Good, you added why it mattered! One fix: the canal didn't GROW food, it MOVED food. Try: \"... and helped the country grow.\"",
+   "E": "Your two facts are still good. The new sentence (\"It helped two rivers get together, to get more food\") says \"linked the rivers\" again. Delete it.",
+   "X": "Big step! You used \"This meant that ..., so ...\" and you deleted the old sentences. This is the first time you explain WHY. To go higher, be more exact than \"more energy\": food could feed the emperor's army in the north, so he could protect and rule all of China.",
+   "L": "\"Therefore, it joined China together and helped it grow richer.\" is a strong ending. Stop there! The second sentence (\"Because it carried many things...\") is extra and vague. Delete it.",
+   "G": "Grammar went down because you wrote new sentences. That's OK! Check: China always has a capital C. every were → everywhere. have → had (it's in the past). well → would."
   },
-  "pmwof6hn9uytm": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 5,
-      "E": 4,
-      "X": 2,
-      "L": 5,
-      "G": 5
-    },
-    "notes": {
-      "P": "5/5. Clear and strong. Don't change it!",
-      "E": "Good: you have TWO facts. Fact 1: built in the Sui dynasty, about 605 AD. Fact 2: linked the Yellow and Yangtze Rivers. Keep them.",
-      "X": "Why only 2? You did NOT get worse! Ms Heather's rule: Explain must explain BOTH facts. You explained Fact 2 (the rivers) very well. But Fact 1 (Sui dynasty, 605 AD) has no explanation yet. So: one fact explained = 2.",
-      "L": "5/5. Strong ending. Don't change it!",
-      "G": "Only a tiny slip: 605AD → 605 AD (put a space). Grammar 5/5."
-    },
-    "next": "Only change your Explain. It needs TWO parts:\n\nPart 1 (NEW, for Fact 1): Think first: before the Sui, China was split into north and south for almost 300 years. The Sui emperor just joined it back together. Why would he want a canal? Say your answer to Mum, then write: \"The Sui had just joined China together again, so ...\"\n\nPart 2 (you already have it, keep it): \"Boats could carry rice and goods between north and south. This meant that people everywhere in China had more food, so the emperor could feed his army and rule the whole country.\"\n\nOrder: Part 1 first, then Part 2 (same order as your Evidence).",
-    "fixes": [
-      {
-        "p": "E",
-        "bad": "605AD",
-        "fix": "605 AD",
-        "why": "put a space between the number and AD"
-      }
-    ]
+  "next": "Make your \"so\" part more exact: \"This meant that people everywhere in China had more food, so the emperor could feed his army and rule the whole country.\" Then delete the extra sentences in Evidence and Link.",
+  "fixes": [
+   {
+    "p": "P",
+    "bad": "China ,and",
+    "fix": "China, and",
+    "why": "comma goes right after the word, then a space"
+   },
+   {
+    "p": "E",
+    "bad": "Rivers.  It",
+    "fix": "Rivers. It",
+    "why": "one space between sentences"
+   },
+   {
+    "p": "X",
+    "bad": "china every were",
+    "fix": "people everywhere in China",
+    "why": "China has a capital C; everywhere is one word"
+   },
+   {
+    "p": "X",
+    "bad": "have more food",
+    "fix": "had more food",
+    "why": "past tense: have → had"
+   },
+   {
+    "p": "X",
+    "bad": "china well have",
+    "fix": "China would have",
+    "why": "capital C; well → would"
+   }
+  ]
+ },
+ "pmwodk44vukkg": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 4,
+   "E": 4,
+   "X": 3,
+   "L": 3,
+   "G": 5
   },
-  "pmwofw5w6y820": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 5,
-      "E": 4,
-      "X": 3,
-      "L": 5,
-      "G": 3
-    },
-    "notes": {
-      "P": "5/5. Don't change it!",
-      "E": "Two good facts. Keep them!",
-      "X": "WOW, you explained Fact 1 in YOUR OWN words: China was in two parts, and the emperor wanted it together. That is real thinking! Explain went up from 2 to 3. But you deleted Part 2 (boats carry rice) by mistake. Put it back and you will explain BOTH facts.",
-      "L": "5/5. Don't change it!",
-      "G": "Grammar went down because of the new sentences. That's OK! Look at the numbered fixes: who wanted? The emperor. China always has a capital C. Use past tense: want → wanted."
-    },
-    "next": "Only change your Explain. Two jobs:\n\nJob 1: Fix your new sentences with the numbered fixes. Keep YOUR idea!\n\nJob 2: Delete \"after two part together they use it to carry things.\" In its place, put Part 2 back: \"Boats could carry rice and goods between north and south. This meant that people everywhere in China had more food, so the emperor could feed his army and rule the whole country.\"\n\nThen your Explain = Part 1 (your new idea) + Part 2 (boats and rice).",
-    "fixes": [
-      {
-        "p": "X",
-        "bad": "It want",
-        "fix": "The emperor wanted",
-        "why": "say WHO: the emperor; past tense: wanted"
-      },
-      {
-        "p": "X",
-        "bad": "china together before",
-        "fix": "China together. Before",
-        "why": "capital C; start a new sentence"
-      },
-      {
-        "p": "X",
-        "bad": "build Grand Canal",
-        "fix": "the Grand Canal was built,",
-        "why": "the Grand Canal was built"
-      },
-      {
-        "p": "X",
-        "bad": "china are two part",
-        "fix": "China was in two parts.",
-        "why": "capital C; was in two parts; full stop"
-      },
-      {
-        "p": "X",
-        "bad": "it want china be",
-        "fix": "The emperor wanted China to be",
-        "why": "new sentence; wanted China to be"
-      }
-    ]
+  "notes": {
+   "P": "Not changed yet. The canal didn't GROW food, it MOVED food. Change \"grow more food\" to \"grow\": \"... and helped the country grow.\"",
+   "E": "Not changed yet. Delete \"It helped two rivers get together, to get more food.\" It says \"linked the rivers\" again.",
+   "X": "Grammar fixed, well done! Now make the \"so\" part exact. \"More energy\" is too vague. WHO got the food, and what could they do? Try: \"so the emperor could feed his army and rule the whole country.\"",
+   "L": "Not changed yet. Stop after \"helped it grow richer.\" Delete \"Because it carried many things, it helped people have more things.\"",
+   "G": "Excellent! You fixed every mistake. Only one double space left. Grammar 5/5."
   },
-  "pmwofzxz3etgo": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 5,
-      "E": 4,
-      "X": 3,
-      "L": 5,
-      "G": 3
-    },
-    "notes": {
-      "P": "5/5. Don't change it!",
-      "E": "Two good facts. Keep them! Small slip: 605AD → 605 AD.",
-      "X": "Yes! Now your Explain has BOTH parts: boats and rice (Fact 2) AND your own idea, China in two parts (Fact 1). Great! To get higher, your new sentences must be clear. Fix them with the numbered fixes. Also delete \"after two part together they use it to carry things.\" It says the boats part again.",
-      "L": "5/5. Don't change it!",
-      "G": "Most mistakes are in your new sentences. Look at the numbered fixes: who wanted? The emperor. China always has a capital C. Use past tense: want → wanted."
-    },
-    "next": "Only change your Explain. Keep the boats and rice part. Then:\n\nJob 1: Fix your new sentences with the numbered fixes (1 to 5).\n\nJob 2: Delete the last bit: \"after two part together they use it to carry things.\"\n\nRead your Explain out loud to Mum. Does every sentence make sense?",
-    "fixes": [
-      {
-        "p": "E",
-        "bad": "605AD",
-        "fix": "605 AD",
-        "why": "put a space between the number and AD"
-      },
-      {
-        "p": "X",
-        "bad": "It want",
-        "fix": "The emperor wanted",
-        "why": "say WHO: the emperor; past tense: wanted"
-      },
-      {
-        "p": "X",
-        "bad": "china together before",
-        "fix": "China together. Before",
-        "why": "capital C; start a new sentence"
-      },
-      {
-        "p": "X",
-        "bad": "build Grand Canal",
-        "fix": "the Grand Canal was built,",
-        "why": "the Grand Canal was built"
-      },
-      {
-        "p": "X",
-        "bad": "china are two part",
-        "fix": "China was in two parts.",
-        "why": "capital C; was in two parts; full stop"
-      },
-      {
-        "p": "X",
-        "bad": "it want china be",
-        "fix": "The emperor wanted China to be",
-        "why": "new sentence; wanted China to be"
-      }
-    ]
+  "next": "Four small jobs, no new writing: (1) Point: \"grow more food\" → \"grow\". (2) Evidence: delete the second sentence. (3) Explain: \"more energy\" → \"the emperor could feed his army and rule the whole country\". (4) Link: delete the second sentence.",
+  "fixes": [
+   {
+    "p": "X",
+    "bad": "everywhere  in",
+    "fix": "everywhere in",
+    "why": "one space between words"
+   }
+  ]
+ },
+ "pmwodtjtmpqzs": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 4,
+   "E": 4,
+   "X": 4,
+   "L": 4,
+   "G": 5
   },
-  "pmwoga9vqvmcg": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 5,
-      "E": 4,
-      "X": 3,
-      "L": 5,
-      "G": 3
-    },
-    "notes": {
-      "P": "5/5. Don't change it!",
-      "E": "Two good facts, and 605 AD is fixed. Keep it!",
-      "X": "Great work! You fixed most of your new sentences. Now they make sense: \"The emperor wanted China together. Before the Grand Canal was built, ...\" Only one problem left: the LAST sentence says the same things again (emperor wanted China together, carry things). Repeating = 3. Delete it and you get 4!",
-      "L": "5/5. Don't change it!",
-      "G": "You asked: why 3? Count the numbered fixes: 8 small mistakes, not 1. (Sorry! Last time the page only showed 1, because the other 7 are in the last sentence.) Ms Heather: more than 5 mistakes = 3; 3 to 5 = 4; 0 to 2 = 5. Fix #1 and delete the last sentence → 0 mistakes → 5/5!"
-    },
-    "next": "You are very close! Only two small jobs in your Explain:\n\nJob 1: china was in two part → China was in two parts.\n\nJob 2: Delete the whole last sentence: \"the emperor wanted china to be together, after two part together they use it to carry things.\"\n\nYour Explain ends with: \"... China was in two parts.\" That's it!",
-    "fixes": [
-      {
-        "p": "X",
-        "bad": "china was in two part",
-        "fix": "China was in two parts",
-        "why": "2 mistakes: capital C; parts"
-      },
-      {
-        "p": "X",
-        "bad": "the emperor wanted china",
-        "fix": "The emperor wanted China",
-        "why": "2 mistakes: capital T at the start; capital C"
-      },
-      {
-        "p": "X",
-        "bad": "together, after two part together",
-        "fix": "together. After the two parts were together,",
-        "why": "3 mistakes: full stop + capital A; parts; were"
-      },
-      {
-        "p": "X",
-        "bad": "they use it",
-        "fix": "they used it",
-        "why": "1 mistake: past tense: use → used"
-      }
-    ]
+  "notes": {
+   "P": "Still to do: the canal didn't GROW food, it MOVED food. Change \"grow more food\" to \"grow\": \"... and helped the country grow.\"",
+   "E": "Still to do: delete \"It helped two rivers get together, to get more food.\" It says \"linked the rivers\" again.",
+   "X": "Great Explain! \"so the emperor could feed his army and rule the whole country\" says exactly WHY the canal mattered. To reach 5, add one more \"This meant that\" about trade: goods could be sold all over China, so the economy grew.",
+   "L": "Perfect. You stopped after \"grow richer\". Short and strong!",
+   "G": "Only one slip: a full stop at the end of Explain. Grammar 5/5."
   },
-  "pmwok31w46u7u": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 5,
-      "E": 4,
-      "X": 3,
-      "L": 5,
-      "G": 4
-    },
-    "notes": {
-      "P": "5/5. Don't change it!",
-      "E": "Your two facts are good. The new bit \", it let two part together\" is not a new fact. It says \"linked\" again. Delete it.",
-      "X": "You fixed your sentences. Well done! Still 3 because two things are said twice: (1) \"The emperor wanted China together.\" and \"The emperor wanted China to be together.\" are the same. (2) \"they used it to carry things\" is the same as your boats sentence. Saying the same idea twice = 3.",
-      "L": "5/5. Don't change it!",
-      "G": "Grammar went up to 4! I count 5 small mistakes (see the numbered fixes): 3 in Evidence, 2 in Explain. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3. Delete the Evidence bit and fix the 2 in Explain → 0 mistakes → 5/5."
-    },
-    "next": "Three small jobs:\n\nJob 1 (Evidence): Delete \", it let two part together\". End with \"... Yangtze Rivers.\"\n\nJob 2 (Explain): Delete \"The emperor wanted China to be together.\" You already said it.\n\nJob 3 (Explain): Change your LAST sentence. Don't say \"carry things\" again. Say what happened to CHINA. Start with: \"The canal joined the two parts, so ...\" Think: did China stay one country? Tell Mum first, then write.",
-    "fixes": [
-      {
-        "p": "E",
-        "bad": "Rivers, it let two part together",
-        "fix": "Rivers. It joined the two parts together",
-        "why": "3 mistakes: full stop + capital I; parts; joined (not let)"
-      },
-      {
-        "p": "X",
-        "bad": "china was",
-        "fix": "China was",
-        "why": "1 mistake: China always has a capital C"
-      },
-      {
-        "p": "X",
-        "bad": "were together they",
-        "fix": "were together, they",
-        "why": "1 mistake: comma after an \"After ...\" part"
-      }
-    ]
+  "next": "Two quick jobs left: (1) Point: \"grow more food\" → \"grow\". (2) Evidence: delete the second sentence. Then your paragraph is ready to hand in!",
+  "fixes": [
+   {
+    "p": "X",
+    "bad": "whole country",
+    "fix": "whole country.",
+    "why": "end every sentence with a full stop"
+   }
+  ]
+ },
+ "pmwodxmfh9iy8": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 4,
+   "E": 4,
+   "X": 4,
+   "L": 4,
+   "G": 5
   },
-  "pmwokp9w1ilqn": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 5,
-      "E": 4,
-      "X": 2,
-      "L": 4,
-      "G": 5
-    },
-    "notes": {
-      "P": "5/5. Clear, uses \"significant\", and gives a reason: it joined north and south China.",
-      "E": "Good, exact facts: Sui dynasty, over 1,700 km, Beijing to Hangzhou. To reach 5, the facts should also show how it helped China.",
-      "X": "Your sentence is very clear: boats → trade → the economy grew. But it explains only ONE fact (Beijing to Hangzhou). The Sui dynasty fact has no explanation. One fact explained = 2. Your OWN idea from before fits here: China was in two parts, and the Sui emperor wanted it together!",
-      "L": "Good wrap-up. To reach 5, add a big thought, e.g. people still use it today.",
-      "G": "0 mistakes. 5/5!"
-    },
-    "next": "🌟🌟🌟 20/25 = FULL MARKS for this stage! 🌟🌟🌟\nRight now our goal is 20, not 25. You did it! Super job today. You wrote 16 versions and never gave up!\n\nThe Grand Canal is DONE. No more rewrites.\n\nJust for reading (no need to type it): here is the paragraph made from your own sentences.\n\n[Point] The Grand Canal was very significant because it connected north and south China and helped the country move food.\n\n[Evidence] It was built in the Sui dynasty in about 605 AD. It linked the Yellow River and the Yangtze River, from Beijing in the north to Hangzhou in the south.\n\n[Explain] Before the Sui, China was in two parts for almost 300 years. This meant that the emperor needed a way to hold the north and the south together, so he built the canal to join them. Boats could carry rice and goods between the north and the south. This meant that people everywhere in China had more food, so the emperor could feed his army and rule the whole country.\n\n[Link] Therefore, the Grand Canal was very significant because it joined north and south China into one country, and people still use it today, more than 1,400 years later.",
-    "fixes": [],
-    "goal": 20
+  "notes": {
+   "P": "Last job! The canal didn't GROW food, it MOVED food. Change \"grow more food\" to \"grow\": \"... and helped the country grow.\"",
+   "E": "Nice and clean now: two clear facts, no repeats. To reach 5, add one detail, e.g. \"Emperor Yang of the Sui dynasty built it in about 605 AD.\"",
+   "X": "Great Explain, and the full stop is fixed. To reach 5, add one more \"This meant that\" about trade: goods could be sold all over China, so the economy grew.",
+   "L": "Good! To reach 5, a Link has 3 parts: (1) Therefore, (2) your Point again, using the question's word \"significant\", (3) one BIG thought: how long did it matter? Try: \"Therefore, the Grand Canal was very significant because it joined north and south China into one country, and people still use it today, more than 1,400 years later.\"",
+   "G": "No mistakes at all. Grammar 5/5!"
   },
-  "pmwoqx733hwwc": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 3,
-      "E": 2,
-      "X": 1,
-      "L": 2,
-      "G": 3
-    },
-    "notes": {
-      "P": "Good start: you say it was important AND give a reason. But it is a bit unclear. The topic is the civil service EXAM, so say \"exam\". And \"helped dynasty not fall\" is vague. HOW did the exam help? Say it in the Point.",
-      "E": "Your fact is correct: officials were chosen by a test, not only by family. But it is ONE simple fact = 2. To get 3, add more detail: WHICH dynasty made the exam? The answer is in the yellow box \"📌 Facts you can use\" on the writing page.",
-      "X": "This part just says your Point again (\"the dynasty will not fall\"). It does not explain your fact. Open \"📖 Read the story first\" on the writing page. It tells you what kind of people became officials and what that did for China. That is the chain we need. \"officials will not stubbed\" is hard to understand. Did you mean \"stupid\"?",
-      "L": "You tried to wrap up, but \"the dynasty be more good\" does not mention the exam or the reason. Use the same idea as your Point.",
-      "G": "I count 11 mistakes (see the numbered fixes): 1 in Point, 8 in Explain, 2 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3. Many come from the Explain, which you will rewrite anyway."
-    },
-    "next": "New topic, first try. 11/25 is a normal start. Our goal for this stage is 20/25 = full marks.\n\nFirst: open \"📖 Read the story first\" on the writing page and read it with Mum. All the answers are there or in the \"📌 Facts you can use\" box.\n\nJob 1 (Point): Keep \"The civil service exam was important because ...\" Change the reason. Think: the exam helped China choose what kind of officials? (The story tells you.)\n\nJob 2 (Evidence): Keep your fact. Add WHICH dynasty made the exam formal. Look in \"📌 Facts you can use\".\n\nJob 3 (Explain): Delete both sentences. Answer out loud to Mum first: \"If you must pass a test to get the job, who gets the job: people who studied hard, or people with a rich family? Then is the government better or worse?\"\nThen write ONE chain. Start with: \"This meant that ..., so ...\"\n\nJob 4 (Link): Start with \"Therefore, the civil service exam was important because ...\" Use the same reason as your Point.",
-    "fixes": [
-      {
-        "p": "P",
-        "bad": "helped dynasty",
-        "fix": "helped the dynasty",
-        "why": "1 mistake: add \"the\""
-      },
-      {
-        "p": "X",
-        "bad": "china dynasty will",
-        "fix": "the Chinese dynasty would",
-        "why": "3 mistakes: add \"the\"; capital C (Chinese); will → would (past)"
-      },
-      {
-        "p": "X",
-        "bad": "Keep dynasty safe,",
-        "fix": "It kept the dynasty safe.",
-        "why": "3 mistakes: needs \"It\"; keep → kept; add \"the\" (and end with a full stop)"
-      },
-      {
-        "p": "X",
-        "bad": "will not stubbed",
-        "fix": "would not be stupid",
-        "why": "2 mistakes: will → would; add \"be\""
-      },
-      {
-        "p": "L",
-        "bad": "be more good",
-        "fix": "was stronger",
-        "why": "2 mistakes: be → was; \"more good\" is not a word → better / stronger"
-      }
-    ],
-    "goal": 20
+  "next": "One last change: in your Point, \"grow more food\" → \"grow\". Then it's ready to hand in. Want to aim higher? Add Emperor Yang to Evidence and one trade sentence to Explain.",
+  "fixes": []
+ },
+ "pmwoe8jiv3h3y": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 4,
+   "E": 4,
+   "X": 4,
+   "L": 5,
+   "G": 5
   },
-  "pmwosd8mm2drq": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 3,
-      "E": 2,
-      "X": 1,
-      "L": 2,
-      "G": 3
-    },
-    "notes": {
-      "P": "You fixed \"the dynasty\". Good! But nothing else changed. Still \"civil service\" (add \"exam\"), and \"not fall\" does not say HOW the exam helped. Still 3.",
-      "E": "New: you added the Sui dynasty. Good idea! But the new part \"in Sui dynasty made exam want dynasty more peace\" is hard to understand. Use the words in the yellow box \"📌 Facts you can use\": The Sui Dynasty made the exam formal. Still 2.",
-      "X": "Look! You wrote two GOOD ideas: \"officials would not be stupid\" and \"This will kind for every one\" (fair for everyone?). These are the right ideas! But the first two sentences still just say your Point again (\"not fall\", \"safe\"). Still 1.",
-      "L": "You fixed the grammar from last time. But it still doesn't say \"civil service exam\" or the reason. Still 2.",
-      "G": "You fixed ALL 5 mistakes from last time. Well done! The new sentences have 14 new mistakes (see the numbered fixes): 6 in Evidence, 4 in Explain, 4 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3. Short, simple sentences = fewer mistakes."
-    },
-    "next": "Same score, 11. You did NOT get worse! You fixed every grammar mistake I marked. But the 4 Jobs are not done yet, and the new sentences brought new mistakes.\n\nYour BEST idea is in your Explain: \"officials would not be stupid\". Build everything on it.\n\nJob 1 (Point): Change \"civil service\" to \"civil service exam\". Change \"helped the dynasty not fall\" to your best idea. Start with: \"... because it helped China choose ______ officials.\" (What is the opposite of stupid?)\n\nJob 2 (Evidence): Keep your first sentence. Delete \"in Sui dynasty made exam want dynasty more peace\". Copy the first fact from the yellow box \"📌 Facts you can use\" as a new sentence.\n\nJob 3 (Explain): Delete the first two sentences. Read \"📖 Read the story first\" with Mum. Then say out loud: \"With a test, who gets the job: someone who studied hard, or someone with a rich family? Is that fair?\"\nThen write ONE chain. Start with: \"This meant that officials were people who ______, so ______.\"\n\nJob 4 (Link): Start with \"Therefore, the civil service exam was important because ...\" Use the same reason as your Point.",
-    "fixes": [
-      {
-        "p": "E",
-        "bad": "family, in Sui",
-        "fix": "family. The Sui",
-        "why": "2 mistakes: full stop (new sentence); start with \"The\""
-      },
-      {
-        "p": "E",
-        "bad": "made exam",
-        "fix": "made the exam",
-        "why": "1 mistake: add \"the\""
-      },
-      {
-        "p": "E",
-        "bad": "want dynasty more peace",
-        "fix": "formal",
-        "why": "3 mistakes: want → wanted; add \"the\"; more peace → more peaceful. Easier: use the yellow box words"
-      },
-      {
-        "p": "X",
-        "bad": "safe, officials",
-        "fix": "safe. Officials",
-        "why": "1 mistake: two sentences → full stop + capital O"
-      },
-      {
-        "p": "X",
-        "bad": "This will kind for every one",
-        "fix": "This was fair for everyone",
-        "why": "3 mistakes: will → was; kind → fair (did you mean fair?); every one → everyone"
-      },
-      {
-        "p": "L",
-        "bad": "stronger, dynasty will not fall",
-        "fix": "stronger. The dynasty would not fall.",
-        "why": "4 mistakes: full stop; add \"The\"; will → would; full stop at the end"
-      }
-    ],
-    "goal": 20
+  "notes": {
+   "P": "Still one job left! The canal didn't GROW food, it MOVED food. Change \"grow more food\" to \"grow\": \"... and helped the country grow.\"",
+   "E": "Two clear facts. To reach 5, add one detail, e.g. \"Emperor Yang of the Sui dynasty built it in about 605 AD.\"",
+   "X": "Great Explain. To reach 5, add one more \"This meant that\" about trade: goods could be sold all over China, so the economy grew.",
+   "L": "5/5! Your Link has all 3 parts: Therefore + \"significant\" + a big thought (still used 1,400 years later). Next time, try writing the big thought in your own words.",
+   "G": "No mistakes. Grammar 5/5!"
   },
-  "pmwotapgtqvr2": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 3,
-      "E": 3,
-      "X": 2,
-      "L": 2,
-      "G": 3
-    },
-    "notes": {
-      "P": "You changed the reason to \"more peace\". But the story does not say the exam made China peaceful. It says the exam helped China choose clever officials. And you still need the word \"exam\". Still 3.",
-      "E": "🌟 3/5 = the TOP for now! You used the facts from the yellow box. Great! Don't change your facts. Only fix 1 full stop.",
-      "X": "🌟 2/5 = the TOP for now! \"Officials would not be stupid. This was fair for everyone.\" explains your test fact. Well done! Keep it. Only fix 1 full stop.",
-      "L": "Still no \"civil service exam\" and no reason. A Link must say the SAME reason as your Point. Still 2.",
-      "G": "I count 8 mistakes (see the numbered fixes): 5 in Point, 1 in Evidence, 1 in Explain, 1 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3. Most are in your new Point. Job 1 will fix them."
-    },
-    "next": "13/25. Up 2! 🎉\nEvidence 3 and Explain 2 are now the TOP for this stage. Don't change them, only the small fixes.\nThe 7 points you can still get are in Point (+2), Link (+3) and Grammar (+2).\n\nJob 1 (Point): Your best idea is \"officials would not be stupid\". Say to Mum: \"The exam helped China choose officials who were ______.\" (not stupid = ?)\nThen write: \"The civil service exam was important because it helped China choose ______ officials.\"\n\nJob 2 (Link): Delete both Link sentences. Start with \"Therefore, the civil service exam was important because ...\" Finish it with the SAME reason as your new Point.\n\nJob 3: Fix the small mistakes in Evidence, Explain and Link (see the numbers).",
-    "fixes": [
-      {
-        "p": "P",
-        "bad": "important, It",
-        "fix": "important because it",
-        "why": "1 mistake: comma + capital I. Use \"because\" to give the reason"
-      },
-      {
-        "p": "P",
-        "bad": "help china more peace",
-        "fix": "helped make China more peaceful",
-        "why": "4 mistakes: help → helped; add \"make\"; China has a capital C; peace → peaceful"
-      },
-      {
-        "p": "E",
-        "bad": "family, The Sui",
-        "fix": "family. The Sui",
-        "why": "1 mistake: full stop before a new sentence"
-      },
-      {
-        "p": "X",
-        "bad": "safe, Officials",
-        "fix": "safe. Officials",
-        "why": "1 mistake: full stop (not comma) before a new sentence"
-      },
-      {
-        "p": "L",
-        "bad": "would not fall",
-        "fix": "would not fall.",
-        "why": "1 mistake: full stop at the end"
-      }
-    ],
-    "goal": 20
+  "next": "Change \"grow more food\" → \"grow\" in your Point. Ask yourself: did the canal GROW rice, or CARRY rice?",
+  "fixes": []
+ },
+ "pmwoeigx346lm": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 3,
+   "E": 4,
+   "X": 4,
+   "L": 5,
+   "G": 4
   },
-  "pmwoviqum5zlm": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 3,
-      "E": 3,
-      "X": 2,
-      "L": 2,
-      "G": 4
-    },
-    "notes": {
-      "P": "You added \"because\". Good! But the reason is still \"more peaceful\", and \"exam\" is still missing. The story says the exam helped China choose clever officials. Still 3.",
-      "E": "🌟 3/5 = the TOP for now! Don't change your facts. 1 full stop is still missing (see the fix).",
-      "X": "🌟 2/5 = the TOP for now! Keep it. Just add a space after \"safe.\"",
-      "L": "You added the full stop. Good! But it still doesn't say \"civil service exam\" or your reason. Still 2.",
-      "G": "Grammar went UP to 4! I count 4 mistakes (see the numbered fixes): 2 in Point, 1 in Evidence, 1 in Explain. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3."
-    },
-    "next": "14/25. Up 1! Grammar went up to 4. 🎉\nEvidence 3 and Explain 2 are the TOP for now. Don't touch them, only the 2 small fixes.\n\nOnly TWO jobs left. They are in the numbered fixes this time:\n\nJob 1 (Point): Fix 1 and 2. There is a BLANK ______. Don't type it yet!\nSay to Mum: \"Officials would not be stupid. So the exam helped China choose ______ officials.\" What word is the opposite of stupid?\nThen put that word in the blank.\n\nJob 2 (Link): Fix 5. Use the SAME word in the blank.\n\nDo these 2 jobs and you can get about 19 or 20!",
-    "fixes": [
-      {
-        "p": "P",
-        "bad": "civil service was",
-        "fix": "civil service exam was",
-        "why": "not grammar: the topic is the EXAM"
-      },
-      {
-        "p": "P",
-        "bad": "It helped China more peaceful",
-        "fix": "it helped China choose ______ officials",
-        "why": "2 mistakes: It → it (small i after because); \"helped China more peaceful\" is not a sentence. Fill the blank yourself: not stupid = ?"
-      },
-      {
-        "p": "E",
-        "bad": "family, The Sui",
-        "fix": "family. The Sui",
-        "why": "1 mistake: full stop before a new sentence (from last time!)"
-      },
-      {
-        "p": "X",
-        "bad": "safe.Officials",
-        "fix": "safe. Officials",
-        "why": "1 mistake: a space after the full stop"
-      },
-      {
-        "p": "L",
-        "bad": "the dynasty was stronger. The dynasty would not fall.",
-        "fix": "the civil service exam was important because it helped China choose ______ officials.",
-        "why": "not grammar: a Link says the SAME reason as your Point. Same blank!"
-      }
-    ],
-    "goal": 20
+  "notes": {
+   "P": "Good thinking: you wrote your OWN reason (water, moving food). But now your Point is long and has three ideas, so it is less clear. A Point needs ONE clear reason. The canal's main job was to MOVE food, and you said that yourself! Try: \"The Grand Canal was very significant because it connected north and south China and helped the country move food.\"",
+   "E": "Two clear facts. To reach 5, add one detail, e.g. \"Emperor Yang of the Sui dynasty built it in about 605 AD.\"",
+   "X": "Great Explain. To reach 5, add one more \"This meant that\" about trade: goods could be sold all over China, so the economy grew.",
+   "L": "5/5. Strong ending!",
+   "G": "The new part has a few slips: the country had, it also moved, and don't use \"because\" twice in one sentence."
   },
-  "pmwow61y6bl4r": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 5,
-      "E": 3,
-      "X": 2,
-      "L": 4,
-      "G": 5
-    },
-    "notes": {
-      "P": "5/5! \"exam\", \"significant\" and a clear reason: it helped China choose good officials. Only 2 small fixes.",
-      "E": "🌟 3/5 = the TOP for now! You fixed the full stop. Don't change it.",
-      "X": "🌟 2/5 = the TOP for now! You fixed the space. Don't change it.",
-      "L": "Big jump: 2 → 4! It says \"civil service exam\" and the same reason as your Point. To get 5: add a big thought about what it meant for CHINA (see fix 3).",
-      "G": "Only 2 small mistakes (see fixes 1 and 2). 0 to 2 = 5/5! Fix them anyway."
-    },
-    "next": "🎉 19/25! Up 5! Only ONE point to full marks (20).\nYou filled the blank in your Point and your Link all by yourself. That was the hard part. Super!\n\nLast job (Link): Fix 3 has a BLANK ______.\nOpen \"📖 Read the story first\" and read the last line (\"so ...\"). Then say to Mum: \"China had clever officials, so China was ______.\"\nPut your words in the blank.\n\nAlso fix 1 and 2 in your Point (small ones).",
-    "fixes": [
-      {
-        "p": "P",
-        "bad": "It helped",
-        "fix": "it helped",
-        "why": "1 mistake: small i after \"because\""
-      },
-      {
-        "p": "P",
-        "bad": "more good",
-        "fix": "better",
-        "why": "1 mistake: \"more good\" → better"
-      },
-      {
-        "p": "L",
-        "bad": "good officials.",
-        "fix": "good officials, so China was ______.",
-        "why": "not grammar: add a BIG thought. What happens to a country with clever officials? Read the last line of the story (\"so ...\")"
-      }
-    ],
-    "goal": 20
+  "next": "Make your Point one short sentence with your own word \"move\": \"... because it connected north and south China and helped the country move food.\" Delete \"grow more food\" and the water part.",
+  "fixes": [
+   {
+    "p": "P",
+    "bad": "because country have",
+    "fix": "because the country had",
+    "why": "the country; past tense: have → had"
+   },
+   {
+    "p": "P",
+    "bad": "it also move",
+    "fix": "it also moved",
+    "why": "past tense: move → moved"
+   }
+  ]
+ },
+ "pmwoempyeb90c": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 3,
+   "E": 4,
+   "X": 4,
+   "L": 5,
+   "G": 4
   },
-  "pmwowfwim80mk": {
-    "at": "2026-11-20",
-    "scores": {
-      "P": 5,
-      "E": 3,
-      "X": 2,
-      "L": 5,
-      "G": 5
-    },
-    "notes": {
-      "P": "5/5. You fixed both small mistakes. Perfect!",
-      "E": "🌟 3/5 = the TOP for now!",
-      "X": "🌟 2/5 = the TOP for now!",
-      "L": "5/5! \"so China was stronger\" is the big thought about China. You chose the word yourself. Great!",
-      "G": "0 mistakes. 5/5!"
-    },
-    "next": "🌟🌟🌟 20/25 = FULL MARKS for this stage! 🌟🌟🌟\nYou went from 11 to 20 in one evening. You never gave up!\n\nThe civil service exam is DONE. No more rewrites.\n\nJust for reading (no need to type it): your paragraph, all in your own words.\n\n[Point] The civil service exam was significant because it helped China choose better officials.\n\n[Evidence] For example, officials were chosen by a test, not only by family. The Sui Dynasty made the exam formal.\n\n[Explain] This meant that officials were not stupid, and this was fair for everyone.\n\n[Link] Therefore, the civil service exam was important because it helped China choose good officials, so China was stronger.",
-    "fixes": [],
-    "goal": 20
+  "notes": {
+   "P": "This is the same as your last version: nothing changed yet. Read the note below, then change your Point. Good thinking: you wrote your OWN reason (water, moving food). But now your Point is long and has three ideas, so it is less clear. A Point needs ONE clear reason. The canal's main job was to MOVE food, and you said that yourself! Try: \"The Grand Canal was very significant because it connected north and south China and helped the country move food.\"",
+   "E": "Two clear facts. To reach 5, add one detail, e.g. \"Emperor Yang of the Sui dynasty built it in about 605 AD.\"",
+   "X": "Great Explain. To reach 5, add one more \"This meant that\" about trade: goods could be sold all over China, so the economy grew.",
+   "L": "5/5. Strong ending!",
+   "G": "The new part has a few slips: the country had, it also moved, and don't use \"because\" twice in one sentence."
   },
-  "pmwq7pg49rr28": {
-    "at": "2026-11-21",
-    "scores": {
-      "P": 3,
-      "E": 2,
-      "X": 1,
-      "L": 2,
-      "G": 2
-    },
-    "notes": {
-      "P": "3/5. Good: you say it was important AND give a reason. But \"it helped China have more culture\" goes in a circle. The question asks WHY the Tang was a golden age of culture. Say WHAT grew a lot in the Tang. Look in \"📌 Facts you can use\".",
-      "E": "2/5. Li Bai and Du Fu is a correct fact. Great! But it is ONE simple fact = 2. To get 3 (the top for now), add detail: who were they? Your peace sentence is a good idea from the story, but it is hard to understand, and for now we use only ONE fact. So delete it.",
-      "X": "1/5. You wrote \"This meant that\" all by yourself. Good! But this sentence says your peace sentence again (more money and time). It does not explain Li Bai and Du Fu. Think: when people read their poems, what did they get? Look in \"📖 Read the story first\".",
-      "L": "2/5. Good \"Therefore\", and you used a word-list word (prosperity)! But this sentence does not talk about culture or poetry, so it does not link back to your Point. Use the same reason as your Point.",
-      "G": "I count 24 mistakes (see the numbered fixes): 3 in Point, 14 in Evidence, 3 in Explain, 4 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3, and many mistakes that make it hard to understand = 2. \"no many fight every peace\" was hard to understand. The most common one: china → China (5 times!). Many mistakes are in the peace sentence, which you will delete anyway."
-    },
-    "next": "New topic, and you wrote it ALL by yourself. That is the most important thing! 10/25 is a normal first try (Grand Canal 8, Civil service exam 11). You did NOT get worse. Our goal for this stage is 20/25 = full marks.\n\nFirst: open \"📖 Read the story first\" on the writing page and read it with Mum.\n\nJob 1 (Point): Keep \"... because ...\". Change the reason. Think: WHAT grew a lot in the Tang? (Look in \"📌 Facts you can use\".)\nStart with: \"The Tang Dynasty was a golden age of culture because ...\"\n\nJob 2 (Evidence): Keep ONLY your Li Bai and Du Fu sentence. Add who they were: how famous were they? Delete the \"And that time ...\" sentence.\n\nJob 3 (Explain): Delete your sentence. Answer out loud to Mum first: \"When people read Li Bai's poems, how did they feel? Did they learn something? So were poems a big or a small part of Chinese culture?\"\nThen write ONE chain. Start with: \"This meant that people ..., so ...\"\n\nJob 4 (Link): Start with \"Therefore, the Tang Dynasty was a golden age of culture because ...\" Use the same reason as your Point.",
-    "fixes": [
-      {
-        "p": "P",
-        "bad": "Tang dynasty golden age",
-        "fix": "Tang dynasty's golden age",
-        "why": "1 mistake: add 's (the golden age OF the Tang dynasty)"
-      },
-      {
-        "p": "P",
-        "bad": "important, because",
-        "fix": "important because",
-        "why": "1 mistake: no comma before \"because\""
-      },
-      {
-        "p": "P",
-        "bad": "helped china",
-        "fix": "helped China",
-        "why": "1 mistake: China always has a big C"
-      },
-      {
-        "p": "E",
-        "bad": "Li bai, Du fu they",
-        "fix": "Li Bai and Du Fu",
-        "why": "4 mistakes: big B (Bai); big F (Fu); put \"and\" between two names; delete \"they\""
-      },
-      {
-        "p": "E",
-        "bad": "help china",
-        "fix": "helped China",
-        "why": "2 mistakes: help → helped (past); big C"
-      },
-      {
-        "p": "E",
-        "bad": "many culture",
-        "fix": "a rich culture",
-        "why": "1 mistake: you can't count culture, so not \"many\""
-      },
-      {
-        "p": "E",
-        "bad": "amazing poem.",
-        "fix": "amazing poems.",
-        "why": "1 mistake: lots of poems → poems"
-      },
-      {
-        "p": "E",
-        "bad": "And that time",
-        "fix": "At that time,",
-        "why": "1 mistake: \"At that time\""
-      },
-      {
-        "p": "E",
-        "bad": "no many fight every peace then",
-        "fix": "there were not many wars and it was peaceful, so",
-        "why": "3 mistakes, and hard to understand: there were not many wars; it was peaceful; then → so"
-      },
-      {
-        "p": "E",
-        "bad": "they have more time to have money",
-        "fix": "they had more time and money",
-        "why": "2 mistakes: have → had (past); \"more time and money\""
-      },
-      {
-        "p": "X",
-        "bad": "that china",
-        "fix": "that China",
-        "why": "1 mistake: big C"
-      },
-      {
-        "p": "X",
-        "bad": "to better china",
-        "fix": "to make China better",
-        "why": "2 mistakes: \"make China better\"; big C"
-      },
-      {
-        "p": "L",
-        "bad": "china be more strong",
-        "fix": "China became stronger",
-        "why": "3 mistakes: big C; be → became; more strong → stronger"
-      },
-      {
-        "p": "L",
-        "bad": "and prosperity",
-        "fix": "and more prosperous",
-        "why": "1 mistake: prosperity = 繁荣 (a thing); prosperous = 繁荣的 (describes China)"
-      }
-    ],
-    "goal": 20
+  "next": "Make your Point one short sentence with your own word \"move\": \"... because it connected north and south China and helped the country move food.\" Delete \"grow more food\" and the water part.",
+  "fixes": [
+   {
+    "p": "P",
+    "bad": "because country have",
+    "fix": "because the country had",
+    "why": "the country; past tense: have → had"
+   },
+   {
+    "p": "P",
+    "bad": "it also move",
+    "fix": "it also moved",
+    "why": "past tense: move → moved"
+   }
+  ]
+ },
+ "pmwoet6jv9tac": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 5,
+   "E": 4,
+   "X": 4,
+   "L": 5,
+   "G": 5
   },
-  "pmwq86f90tp2j": {
-    "at": "2026-11-21",
-    "scores": {
-      "P": 3,
-      "E": 3,
-      "X": 1,
-      "L": 2,
-      "G": 4
-    },
-    "notes": {
-      "P": "3/5. Same Point as last time, so same score. \"it helped China have more culture\" still goes in a circle. Do Job 1 below: say WHAT grew a lot in the Tang.",
-      "E": "🌟 3/5 = the TOP for now! Your peace sentence is now easy to understand, so you have two simple facts = 3. But for now we use ONE fact. Do Job 2: keep Li Bai and Du Fu, say how famous they were, and delete the peace sentence. That is still 3 (one detailed fact = 3).",
-      "X": "1/5. Same sentence as last time, so same score. It says the Evidence again (more money and time). It does not explain Li Bai and Du Fu. This is the part that gives you the most points. Do Job 3!",
-      "L": "2/5. \"became stronger and more prosperous\" is better English. But it still does not talk about culture or poetry, so it does not link back to your Point. Do Job 4.",
-      "G": "4 mistakes (see the numbered fixes): 2 in Evidence, 2 in Link. Last time 24, now 4. You fixed 20 mistakes. Great work! Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3."
-    },
-    "next": "You fixed almost ALL the grammar: 10 → 13. Well done!\nBut you only did the struck-through fixes. The 4 Jobs are what give you the big points. Our goal is 20/25.\n\nFirst: open \"📖 Read the story first\" on the writing page and read it with Mum.\n\nJob 1 (Point): Change the reason. Think: WHAT grew a lot in the Tang? (Look in \"📌 Facts you can use\".)\nStart with: \"The Tang Dynasty was a golden age of culture because ...\"\n\nJob 2 (Evidence): Keep ONLY the Li Bai and Du Fu sentence. Say how famous they were. Delete the \"At that time ...\" sentence.\n\nJob 3 (Explain): Delete your sentence. Answer out loud to Mum first: \"When people read Li Bai's poems, how did they feel? Did they learn something? So were poems a big or a small part of Chinese culture?\"\nThen write ONE chain. Start with: \"This meant that people ..., so ...\"\n\nJob 4 (Link): Start with \"Therefore, the Tang Dynasty was a golden age of culture because ...\" Use the same reason as your Point.",
-    "fixes": [
-      {
-        "p": "E",
-        "bad": "Du Fu they",
-        "fix": "Du Fu",
-        "why": "1 mistake: delete \"they\" (\"Li Bai and Du Fu\" is already who did it)"
-      },
-      {
-        "p": "E",
-        "bad": "peaceful,so",
-        "fix": "peaceful, so",
-        "why": "1 mistake: put a space after a comma"
-      },
-      {
-        "p": "L",
-        "bad": "china became",
-        "fix": "China became",
-        "why": "1 mistake: big C"
-      },
-      {
-        "p": "L",
-        "bad": "properous",
-        "fix": "prosperous",
-        "why": "1 mistake: spelling: pro-SPER-ous"
-      }
-    ],
-    "goal": 20
+  "notes": {
+   "P": "5/5! One clear sentence, the word \"significant\", and a reason. You fixed \"grow\" → \"move\". Great job!",
+   "E": "Good! Your key fact is: it linked the Yellow and Yangtze Rivers. One clear fact is enough for now.",
+   "X": "Well done! Your Explain matches your fact: linked rivers → boats carry rice → the north has food → the emperor can feed his army and rule China. That is a full chain of WHY.",
+   "L": "5/5. Strong ending!",
+   "G": "Only one slip: china → China (always a capital C). Grammar 5/5."
   },
-  "pmwqd5q29eeut": {
-    "at": "2026-11-21",
-    "scores": {
-      "P": 3,
-      "E": 3,
-      "X": 1,
-      "L": 3,
-      "G": 4
-    },
-    "notes": {
-      "P": "3/5. \"significant\" is a great History word. You changed that yourself! But the reason is the same as last time: \"more culture\" goes in a circle. Fix 1 has a blank for you.",
-      "E": "🌟 3/5 = the TOP for now! Fix 2: add how famous Li Bai and Du Fu were. Fix 3: delete the peace sentence (one fact for now). It will still be 3.",
-      "X": "1/5. \"China could China will be more significant\" is hard to understand, and it does not explain Li Bai and Du Fu. Fix 4 makes a chain for you, but YOU fill the 2 blanks. First answer out loud to Mum: \"How did people feel when they read Li Bai's poems?\"",
-      "L": "3/5, up from 2! Now your Link talks about culture again, so it links back to your Point. You did that by yourself. To get higher: say the Tang Dynasty and end with a big thought. Fix 5.",
-      "G": "5 mistakes: 1 in Evidence (\"poems.At\": put a space after a full stop), 2 in Explain, 2 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3."
-    },
-    "next": "14/25, up from 13. Your Link now links back to culture, and you did that by yourself. Great!\n\nThis time the Jobs are INSIDE the fixes. Do ALL 5 fixes, in order.\nSome fixes have a ______ blank. YOU fill it in with your own word. Ask Mum if you are stuck.\n\nFix 1 (Point): What grew a lot in the Tang? Look in \"📌 Facts you can use\".\nFix 2 (Evidence): How famous were Li Bai and Du Fu?\nFix 3 (Evidence): Delete the whole \"At that time ...\" sentence.\nFix 4 (Explain): Answer out loud to Mum first: \"How did people feel when they read the poems?\" Then fill both blanks. Blank 2 is a word from your own Point.\nFix 5 (Link): What do we still learn today?",
-    "fixes": [
-      {
-        "p": "P",
-        "bad": "it helped China have more culture",
-        "fix": "art and ______ grew a lot",
-        "why": "Not grammar: say WHAT grew. Fill the blank yourself: look in \"📌 Facts you can use\"."
-      },
-      {
-        "p": "E",
-        "bad": "Li Bai and Du Fu helped",
-        "fix": "Li Bai and Du Fu, two of the most ______ Chinese poets, helped",
-        "why": "Not grammar: how famous were they? Fill the blank yourself."
-      },
-      {
-        "p": "E",
-        "bad": "At that time, there were not many wars and it was peaceful, so they had more time and money.",
-        "fix": "✂️ delete this sentence",
-        "why": "Not grammar: for now we use ONE fact. (Also 1 grammar mistake: after a full stop, put a space: \"poems. At\".)"
-      },
-      {
-        "p": "X",
-        "bad": "China could China will be more significant",
-        "fix": "people felt ______ when they read Li Bai's poems, so poetry became a ______ part of Chinese culture",
-        "why": "2 grammar mistakes: \"China\" twice; could + will (use only one). Not grammar: fill the 2 blanks yourself. Blank 1: how did people feel when they read the poems? (📖 story). Blank 2: the big word you used in your Point."
-      },
-      {
-        "p": "L",
-        "bad": "China became stronger and more prosperous, help China have more culture",
-        "fix": "the Tang Dynasty was a golden age of culture, so we still learn Tang ______ today",
-        "why": "2 grammar mistakes: \", help\" → \", so it helped\" (needs \"so it\"; help → helped). Not grammar: say the main idea again. Blank: what do we still learn today? (📌 Facts you can use)"
-      }
-    ],
-    "goal": 20
+  "next": "23/25! This paragraph is finished. Next time, with a new topic: pick ONE fact, then write \"This meant that ..., so ...\" in your own words. Say it out loud to Mum first.",
+  "fixes": [
+   {
+    "p": "P",
+    "bad": "south china",
+    "fix": "south China",
+    "why": "China always has a capital C"
+   }
+  ]
+ },
+ "pmwof6hn9uytm": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 5,
+   "E": 4,
+   "X": 2,
+   "L": 5,
+   "G": 5
   },
-  "pmwqdpbl0bdj7": {
-    "at": "2026-11-21",
-    "scores": {
-      "P": 5,
-      "E": 3,
-      "X": 2,
-      "L": 5,
-      "G": 3
-    },
-    "notes": {
-      "P": "5/5! Now your Point gives a real reason: art and poetry grew a lot. Only one small word to fix (Fix 1).",
-      "E": "🌟 3/5 = the TOP for now! One fact with detail. You deleted the peace sentence. But \"the most writer\" is the wrong word in the blank. Fix 2.",
-      "X": "🌟 2/5 = the TOP for now! \"This meant that people felt better ..., so poetry became a significant part of Chinese culture.\" That is a real chain. You filled both blanks yourself!",
-      "L": "5/5! You say the main idea again AND end with a big thought: we still learn Tang poems today, more than 1,000 years later.",
-      "G": "6 mistakes (see the numbered fixes): 1 in Point, 2 in Evidence, 1 in Explain, 2 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3. Fix them all and Grammar = 5. Watch out: poem → poems (3 times)."
-    },
-    "next": "18/25! Up from 14. You did ALL 5 fixes and filled the blanks yourself. Point and Link are now 5/5!\n\nOnly grammar is left. Do the 5 fixes → 20/25 = FULL MARKS for this stage.\n\nFix 2 has a blank. \"writer\" is not right. Ask yourself: how well-known were Li Bai and Du Fu? Look in \"📖 Read the story first\".",
-    "fixes": [
-      {
-        "p": "P",
-        "bad": "write poem",
-        "fix": "poetry",
-        "why": "1 mistake: \"write poem\" → \"poetry\" (the thing that grew)"
-      },
-      {
-        "p": "E",
-        "bad": "most writer in Chinese poet",
-        "fix": "most ______ Chinese poets",
-        "why": "2 mistakes: after \"the most\" you need a describing word: HOW well-known were they? Fill the blank yourself (📖 story); poet → poets (there are two)"
-      },
-      {
-        "p": "X",
-        "bad": "Li Bai’s poem,",
-        "fix": "Li Bai’s poems,",
-        "why": "1 mistake: he wrote many poems → poems"
-      },
-      {
-        "p": "L",
-        "bad": "culture , so",
-        "fix": "culture, so",
-        "why": "1 mistake: no space BEFORE a comma"
-      },
-      {
-        "p": "L",
-        "bad": "Tang poem today",
-        "fix": "Tang poems today",
-        "why": "1 mistake: many poems → poems"
-      }
-    ],
-    "goal": 20
+  "notes": {
+   "P": "5/5. Clear and strong. Don't change it!",
+   "E": "Good: you have TWO facts. Fact 1: built in the Sui dynasty, about 605 AD. Fact 2: linked the Yellow and Yangtze Rivers. Keep them.",
+   "X": "Why only 2? You did NOT get worse! Ms Heather's rule: Explain must explain BOTH facts. You explained Fact 2 (the rivers) very well. But Fact 1 (Sui dynasty, 605 AD) has no explanation yet. So: one fact explained = 2.",
+   "L": "5/5. Strong ending. Don't change it!",
+   "G": "Only a tiny slip: 605AD → 605 AD (put a space). Grammar 5/5."
   },
-  "pmwqdvpej9ffy": {
-    "at": "2026-11-21",
-    "scores": {
-      "P": 5,
-      "E": 3,
-      "X": 2,
-      "L": 5,
-      "G": 5
-    },
-    "notes": {
-      "P": "5/5. You fixed \"poetry\". Perfect!",
-      "E": "🌟 3/5 = the TOP for now! You found \"famous\" by yourself. Only one tiny thing: poet → poets.",
-      "X": "🌟 2/5 = the TOP for now!",
-      "L": "5/5. You fixed both small mistakes. Great!",
-      "G": "1 mistake (poet → poets). Ms Heather: 0 to 2 = 5. 5/5!"
-    },
-    "next": "🌟🌟🌟 20/25 = FULL MARKS for this stage! 🌟🌟🌟\nYou went from 10 to 20 today. You never gave up!\n\nTang poetry is DONE. No more rewrites.\n\nJust for reading (no need to type it): your paragraph.\n\n[Point] The Tang Dynasty's golden age was very significant because art and poetry grew a lot.\n\n[Evidence] For example, Li Bai and Du Fu, two of the most famous Chinese poets, helped China have a rich culture and amazing poems.\n\n[Explain] This meant that people felt better when they read Li Bai's poems, so poetry became a significant part of Chinese culture.\n\n[Link] Therefore, the Tang Dynasty was a golden age of culture, so we still learn Tang poems today.",
-    "fixes": [
-      {
-        "p": "E",
-        "bad": "Chinese poet,",
-        "fix": "Chinese poets,",
-        "why": "1 mistake: two of them → poets"
-      }
-    ],
-    "goal": 20
+  "next": "Only change your Explain. It needs TWO parts:\n\nPart 1 (NEW, for Fact 1): Think first: before the Sui, China was split into north and south for almost 300 years. The Sui emperor just joined it back together. Why would he want a canal? Say your answer to Mum, then write: \"The Sui had just joined China together again, so ...\"\n\nPart 2 (you already have it, keep it): \"Boats could carry rice and goods between north and south. This meant that people everywhere in China had more food, so the emperor could feed his army and rule the whole country.\"\n\nOrder: Part 1 first, then Part 2 (same order as your Evidence).",
+  "fixes": [
+   {
+    "p": "E",
+    "bad": "605AD",
+    "fix": "605 AD",
+    "why": "put a space between the number and AD"
+   }
+  ]
+ },
+ "pmwofw5w6y820": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 5,
+   "E": 4,
+   "X": 3,
+   "L": 5,
+   "G": 3
   },
-  "pmwr5q3j60hhg": {
-    "at": "2026-11-22",
-    "scores": {
-      "P": 3,
-      "E": 2,
-      "X": 1,
-      "L": 2,
-      "G": 2
-    },
-    "notes": {
-      "P": "3/5. Good: \"significant\" and \"because\", all by yourself! But \"printing helped printing faster\" goes in a circle. Say what got faster: making BOOKS. Look in \"📌 Facts you can use\": how were books made BEFORE printing?",
-      "E": "2/5. \"more books\" is a good idea, but it is a RESULT (what printing CAUSED). Results go in Explain, not Evidence. Your fact should say WHAT was invented and WHEN. Look in \"📌 Facts you can use\". (\"more students can go to schools\" is not in the story.) One fact with detail = 3 = the top for now.",
-      "X": "1/5. You wrote \"This meant that\" by yourself. Good! But it says your Evidence again (more people study), and there is no \"so ...\". Good news: your Link idea (people have information, so they get smarter) is real Explain thinking! It is just in the wrong place.",
-      "L": "2/5. Good \"Therefore\". But it does not say woodblock printing, and \"smart\" is a new idea, so it does not link back to your Point. Use the same reason as your Point.",
-      "G": "19 mistakes (see the numbered fixes): 5 in Point, 7 in Evidence, 2 in Explain, 5 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3, and many mistakes that make it hard to understand = 2. \"helped student study have more book\" was hard to understand. Watch out: student → students, book → books (many = add s)."
-    },
-    "next": "New topic, and you wrote it ALL by yourself. 10/25 = the same as your Tang poetry first try. You did NOT get worse. Our goal for this stage is 20/25 = full marks.\nGood news: \"information\" and \"smarter\" are the RIGHT ideas. They just need to move.\n\nEvidence or Explain?\n📌 Evidence = WHAT happened. A fact from the book: what was invented, and when. No \"helped\", no \"more people\".\n💡 Explain = what that fact CAUSED: \"This meant that ..., so ...\".\nTest: if your sentence has \"helped\" or \"more people\", it is Explain, not Evidence.\n\nFirst: open \"📖 Read the story first\" on the writing page and read it with Mum.\n\nJob 1 (Point): Keep \"significant because\". Change the reason. Think: before printing, how were books made? Fast or slow?\nStart with: \"Woodblock printing was significant because ...\"\n\nJob 2 (Evidence): Delete your sentence. Write the fact: WHAT was invented, and in which dynasty? How were books made before that? (📌 Facts you can use)\nStart with: \"For example, ...\"\n\nJob 3 (Explain): Answer out loud to Mum first: \"With woodblock printing, could ONE book be printed many times? Fast or slow? So could more people read?\"\nThen write ONE chain. Start with: \"This meant that books could ..., so more people ...\"\n\nJob 4 (Link): Start with \"Therefore, woodblock printing was significant because ...\" Use the same reason as your Point.\n\nAnd do all the numbered fixes too.",
-    "fixes": [
-      {
-        "p": "P",
-        "bad": "The Woodblock printing",
-        "fix": "Woodblock printing",
-        "why": "2 mistakes: no \"The\" here; small w in the middle of a sentence (here it starts the sentence, so W)"
-      },
-      {
-        "p": "P",
-        "bad": "helped printing",
-        "fix": "helped people print",
-        "why": "1 mistake: helped + WHO + do (helped people print)"
-      },
-      {
-        "p": "P",
-        "bad": "more fast..",
-        "fix": "faster.",
-        "why": "2 mistakes: more fast → faster; only ONE full stop"
-      },
-      {
-        "p": "E",
-        "bad": "they helped",
-        "fix": "it helped",
-        "why": "1 mistake: woodblock printing is ONE thing → it"
-      },
-      {
-        "p": "E",
-        "bad": "student study have more book",
-        "fix": "students have more books to study",
-        "why": "3 mistakes, and hard to understand: student → students; word order; book → books"
-      },
-      {
-        "p": "E",
-        "bad": "more student can go to schools",
-        "fix": "more students could go to school",
-        "why": "3 mistakes: student → students; can → could (past); go to school (no s)"
-      },
-      {
-        "p": "X",
-        "bad": "will have good study",
-        "fix": "would learn more",
-        "why": "2 mistakes: will → would (past); \"have good study\" is not English → learn more"
-      },
-      {
-        "p": "L",
-        "bad": "get more smart, because",
-        "fix": "became smarter because",
-        "why": "3 mistakes: get → became (past); more smart → smarter; no comma before \"because\""
-      },
-      {
-        "p": "L",
-        "bad": "they have imformation",
-        "fix": "they had information",
-        "why": "2 mistakes: have → had (past); spelling: in-for-ma-tion"
-      }
-    ],
-    "goal": 20
+  "notes": {
+   "P": "5/5. Don't change it!",
+   "E": "Two good facts. Keep them!",
+   "X": "WOW, you explained Fact 1 in YOUR OWN words: China was in two parts, and the emperor wanted it together. That is real thinking! Explain went up from 2 to 3. But you deleted Part 2 (boats carry rice) by mistake. Put it back and you will explain BOTH facts.",
+   "L": "5/5. Don't change it!",
+   "G": "Grammar went down because of the new sentences. That's OK! Look at the numbered fixes: who wanted? The emperor. China always has a capital C. Use past tense: want → wanted."
   },
-  "pmwr6s08mw9ka": {
-    "at": "2026-11-22",
-    "scores": {
-      "P": 3,
-      "E": 3,
-      "X": 2,
-      "L": 2,
-      "G": 3
-    },
-    "notes": {
-      "P": "3/5. Same Point as last time, so same score. \"printing helped printing faster\" still goes in a circle. Also the 3 fixes here are still not done. Do Job 1.",
-      "E": "🌟 3/5 = the TOP for now! A clear fact, with \"Before that ...\" to show what changed. 0 mistakes. Great!",
-      "X": "🌟 2/5 = the TOP for now! \"books could be printed quickly and cheaply\" says what the fact CHANGED. That is real Explain. But your second half (\"they can printing more book\") says the same thing again. Make it a \"so ...\": WHO could now read more? Do Job 2.",
-      "L": "2/5. \"students can get more information\" is a good idea, but it is the END of your Explain chain, not a Link. A Link says the Point again: woodblock printing + your reason. Do Job 3.",
-      "G": "11 mistakes (see the numbered fixes): 5 in Point (same as last time), 0 in Evidence, 5 in Explain, 1 in Link. Last time 19, now 11. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3. It is easy to understand now, so 3 (up from 2)."
-    },
-    "next": "13/25, up from 10. You did the Evidence and Explain Jobs. Evidence is now 3 = the top!\n\nEvidence = the fact (what happened).\nExplain = so what? What did the fact change, and for WHO?\n\nJob 1 (Point): Answer out loud to Mum first: \"Why did fast printing matter? Who could read more books now?\" (📖 Read the story first)\nStart with: \"Woodblock printing was significant because ...\" Do NOT say \"printing\" again after because.\n\nJob 2 (Explain): Keep \"This meant that books could be printed quickly and cheaply\". Delete \", they can printing more book\". Add your own \"so ...\": who could read more, and what did they get? (Your Link idea goes HERE.)\nStart with: \"..., so more people ...\"\n\nJob 3 (Link): Start with \"Therefore, woodblock printing was significant because ...\" Use the SAME reason as your new Point.\n\nAnd do fixes 1 to 3 in your Point.",
-    "fixes": [
-      {
-        "p": "P",
-        "bad": "The Woodblock printing",
-        "fix": "Woodblock printing",
-        "why": "2 mistakes: no \"The\" here; small w in the middle of a sentence (here it starts the sentence, so W)"
-      },
-      {
-        "p": "P",
-        "bad": "helped printing",
-        "fix": "helped people print",
-        "why": "1 mistake: helped + WHO + do (helped people print)"
-      },
-      {
-        "p": "P",
-        "bad": "more fast..",
-        "fix": "faster.",
-        "why": "2 mistakes: more fast → faster; only ONE full stop"
-      },
-      {
-        "p": "X",
-        "bad": ", they can printing",
-        "fix": ", so they could print",
-        "why": "3 mistakes: two sentences joined with only a comma → add \"so\"; can → could (past); can printing → could print"
-      },
-      {
-        "p": "X",
-        "bad": "more                          book.",
-        "fix": "more books.",
-        "why": "2 mistakes: too many spaces; book → books (many)"
-      },
-      {
-        "p": "L",
-        "bad": "can get",
-        "fix": "could get",
-        "why": "1 mistake: can → could (past)"
-      }
-    ],
-    "goal": 20
+  "next": "Only change your Explain. Two jobs:\n\nJob 1: Fix your new sentences with the numbered fixes. Keep YOUR idea!\n\nJob 2: Delete \"after two part together they use it to carry things.\" In its place, put Part 2 back: \"Boats could carry rice and goods between north and south. This meant that people everywhere in China had more food, so the emperor could feed his army and rule the whole country.\"\n\nThen your Explain = Part 1 (your new idea) + Part 2 (boats and rice).",
+  "fixes": [
+   {
+    "p": "X",
+    "bad": "It want",
+    "fix": "The emperor wanted",
+    "why": "say WHO: the emperor; past tense: wanted"
+   },
+   {
+    "p": "X",
+    "bad": "china together before",
+    "fix": "China together. Before",
+    "why": "capital C; start a new sentence"
+   },
+   {
+    "p": "X",
+    "bad": "build Grand Canal",
+    "fix": "the Grand Canal was built,",
+    "why": "the Grand Canal was built"
+   },
+   {
+    "p": "X",
+    "bad": "china are two part",
+    "fix": "China was in two parts.",
+    "why": "capital C; was in two parts; full stop"
+   },
+   {
+    "p": "X",
+    "bad": "it want china be",
+    "fix": "The emperor wanted China to be",
+    "why": "new sentence; wanted China to be"
+   }
+  ]
+ },
+ "pmwofzxz3etgo": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 5,
+   "E": 4,
+   "X": 3,
+   "L": 5,
+   "G": 3
   },
-  "pmwr6y2x73tai": {
-    "at": "2026-11-22",
-    "scores": {
-      "P": 3,
-      "E": 3,
-      "X": 2,
-      "L": 2,
-      "G": 4
-    },
-    "notes": {
-      "P": "3/5. You fixed \"The Woodblock\" and \"..\". Good! But the reason is the same as last time: printing faster. That is only the START of the story. WHY did faster printing matter for China? Fix 1 has a blank for you.",
-      "E": "🌟 3/5 = the TOP for now!",
-      "X": "🌟 2/5 = the TOP for now. You added \"so\". Good! But \"they can printing more books\" says \"printed quickly\" again. Fix 2: say WHO could now read, and fill the blank.",
-      "L": "2/5. Same Link as last time, so same score. It does not say woodblock printing and does not say the Point again. Fix 3 keeps your own idea (students get more information) at the end.",
-      "G": "4 mistakes: 1 in Point (\"more faster\" → \"faster\"), 3 in Explain (\"sothey\" needs a space; can → could; can printing → could print). Last time 11, now 4. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3."
-    },
-    "next": "14/25, up from 13. You fixed lots of grammar: 11 → 4 mistakes!\nBut you did not do the Jobs this time. So now the Jobs are INSIDE the fixes. Do ALL 3 fixes, in order.\nSome fixes have a ______ blank. YOU fill it in with your own word.\n\nFirst, answer out loud to Mum: \"When books were cheap, who could read them? What did people get from books?\" (📖 Read the story first)\n\nFix 1 (Point): What spread across China? Your own word from your Link is a good answer!\nFix 2 (Explain): Who could do what with the cheap books?\nFix 3 (Link): Use the SAME word as in Fix 1.",
-    "fixes": [
-      {
-        "p": "P",
-        "bad": "it helped people print more faster",
-        "fix": "it helped ______ spread across China",
-        "why": "1 grammar mistake: more faster → faster. Not grammar: fast printing is only the start. What spread across China? Fill the blank yourself."
-      },
-      {
-        "p": "X",
-        "bad": "sothey can printing more books",
-        "fix": "so more people could ______ and learn",
-        "why": "3 grammar mistakes: so they (space); can → could; can printing → could print. Not grammar: say WHO and WHAT. Fill the blank yourself."
-      },
-      {
-        "p": "L",
-        "bad": "students could get more information",
-        "fix": "woodblock printing was significant because it helped ______ spread across China, so students could get more information",
-        "why": "Not grammar: a Link says the Point again, then your big idea. Blank = the same word as Fix 1."
-      }
-    ],
-    "goal": 20
+  "notes": {
+   "P": "5/5. Don't change it!",
+   "E": "Two good facts. Keep them! Small slip: 605AD → 605 AD.",
+   "X": "Yes! Now your Explain has BOTH parts: boats and rice (Fact 2) AND your own idea, China in two parts (Fact 1). Great! To get higher, your new sentences must be clear. Fix them with the numbered fixes. Also delete \"after two part together they use it to carry things.\" It says the boats part again.",
+   "L": "5/5. Don't change it!",
+   "G": "Most mistakes are in your new sentences. Look at the numbered fixes: who wanted? The emperor. China always has a capital C. Use past tense: want → wanted."
   },
-  "pmwr7alg1j9ff": {
-    "at": "2026-11-22",
-    "scores": {
-      "P": 3,
-      "E": 3,
-      "X": 2,
-      "L": 3,
-      "G": 4
-    },
-    "notes": {
-      "P": "3/5. You did the fix. Good! But \"Woodblock printing ... helped woodblock spread\" goes in a circle again: printing helped printing. The wooden blocks did not travel. Something INSIDE the books spread across China. Fix 1.",
-      "E": "🌟 3/5 = the TOP for now!",
-      "X": "🌟 2/5 = the TOP for now! \"so more people could go to school and learn\": that is YOUR OWN idea, not copied. A real chain: cheap books → more people learn. Well done!",
-      "L": "3/5, up from 2! Now your Link says woodblock printing and the Point again, and ends with your own idea. It will go up when your Point is not a circle (Fix 3 = the same word as Fix 1).",
-      "G": "3 mistakes: big W in the middle of a sentence, 3 times (woodblock). Ms Heather: 0 to 2 = 5, 3 to 5 = 4. Fix them and Grammar = 5."
-    },
-    "next": "15/25, up from 14. Your Explain chain is now your OWN idea. That is the most important part!\n\nOnly ONE thinking job left: the word in Fix 1.\nAnswer out loud to Mum first: \"Did the wooden blocks travel across China? Or did something from the books travel? What do students get from books?\"\nLook at the LAST word of your own Link. 😉\n\nThen do all 3 fixes. Fix 3 = the same word as Fix 1.",
-    "fixes": [
-      {
-        "p": "P",
-        "bad": "helped Woodblock spread",
-        "fix": "helped ______ spread",
-        "why": "1 grammar mistake: small w (woodblock). Not grammar: printing helped printing is a circle. What is INSIDE books that spread? Fill the blank yourself."
-      },
-      {
-        "p": "L",
-        "bad": "Woodblock printing was",
-        "fix": "woodblock printing was",
-        "why": "1 mistake: small w in the middle of a sentence"
-      },
-      {
-        "p": "L",
-        "bad": "helped Woodblock spread",
-        "fix": "helped ______ spread",
-        "why": "1 grammar mistake: small w. Not grammar: the same word as Fix 1."
-      }
-    ],
-    "goal": 20
+  "next": "Only change your Explain. Keep the boats and rice part. Then:\n\nJob 1: Fix your new sentences with the numbered fixes (1 to 5).\n\nJob 2: Delete the last bit: \"after two part together they use it to carry things.\"\n\nRead your Explain out loud to Mum. Does every sentence make sense?",
+  "fixes": [
+   {
+    "p": "E",
+    "bad": "605AD",
+    "fix": "605 AD",
+    "why": "put a space between the number and AD"
+   },
+   {
+    "p": "X",
+    "bad": "It want",
+    "fix": "The emperor wanted",
+    "why": "say WHO: the emperor; past tense: wanted"
+   },
+   {
+    "p": "X",
+    "bad": "china together before",
+    "fix": "China together. Before",
+    "why": "capital C; start a new sentence"
+   },
+   {
+    "p": "X",
+    "bad": "build Grand Canal",
+    "fix": "the Grand Canal was built,",
+    "why": "the Grand Canal was built"
+   },
+   {
+    "p": "X",
+    "bad": "china are two part",
+    "fix": "China was in two parts.",
+    "why": "capital C; was in two parts; full stop"
+   },
+   {
+    "p": "X",
+    "bad": "it want china be",
+    "fix": "The emperor wanted China to be",
+    "why": "new sentence; wanted China to be"
+   }
+  ]
+ },
+ "pmwoga9vqvmcg": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 5,
+   "E": 4,
+   "X": 3,
+   "L": 5,
+   "G": 3
   },
-  "pmwr7klpylk2b": {
-    "at": "2026-11-22",
-    "scores": {
-      "P": 5,
-      "E": 3,
-      "X": 2,
-      "L": 4,
-      "G": 4
-    },
-    "notes": {
-      "P": "5/5! No more circle. \"it helped books spread across China\" is a real change to China. You found the word yourself. Only one small fix: book → books.",
-      "E": "🌟 3/5 = the TOP for now!",
-      "X": "🌟 2/5 = the TOP for now! Your own chain: cheap books → more people go to school and learn.",
-      "L": "4/5, up from 3! Your Link says the Point again. To get 5: do NOT copy your Point word for word. Say the SAME idea in NEW words, then end with a BIGGER thought. Fix 3.",
-      "G": "3 mistakes: book → books (2 times), big W in the middle of a sentence (1). Ms Heather: 0 to 2 = 5, 3 to 5 = 4."
-    },
-    "next": "18/25, up from 15! Your Point is now 5/5 and there is no circle. Great thinking!\n\nLast job: the Link (Fix 3). This time there is NO blank. You write it yourself.\nA good Link = the SAME idea as your Point, but in NEW words + a BIGGER thought.\n\nAnswer out loud to Mum first:\n1. \"Before printing, were there many books or only a few?\"\n2. \"After printing, could lots of people learn? What spread across China?\" (📖 Read the story first)\n\nStart with: \"Therefore, woodblock printing changed China because ...\"\nDo NOT write \"helped books spread\" again. Use new words.\n\nThen do Fix 1 and Fix 2 → 20/25 = FULL MARKS for this stage.",
-    "fixes": [
-      {
-        "p": "P",
-        "bad": "helped book spread",
-        "fix": "helped books spread",
-        "why": "1 mistake: many books → books"
-      },
-      {
-        "p": "L",
-        "bad": "Woodblock printing was",
-        "fix": "woodblock printing was",
-        "why": "1 mistake: small w in the middle of a sentence"
-      },
-      {
-        "p": "L",
-        "bad": "was significant because it helped book spread across China, so students could get more information",
-        "fix": "✏️ YOUR new words (see the Job)",
-        "why": "1 grammar mistake: book → books. Not grammar: don't copy your Point. Same idea, NEW words, then a BIGGER thought."
-      }
-    ],
-    "goal": 20
+  "notes": {
+   "P": "5/5. Don't change it!",
+   "E": "Two good facts, and 605 AD is fixed. Keep it!",
+   "X": "Great work! You fixed most of your new sentences. Now they make sense: \"The emperor wanted China together. Before the Grand Canal was built, ...\" Only one problem left: the LAST sentence says the same things again (emperor wanted China together, carry things). Repeating = 3. Delete it and you get 4!",
+   "L": "5/5. Don't change it!",
+   "G": "You asked: why 3? Count the numbered fixes: 8 small mistakes, not 1. (Sorry! Last time the page only showed 1, because the other 7 are in the last sentence.) Ms Heather: more than 5 mistakes = 3; 3 to 5 = 4; 0 to 2 = 5. Fix #1 and delete the last sentence → 0 mistakes → 5/5!"
   },
-  "pmwr7rqrxsx8a": {
-    "at": "2026-11-22",
-    "scores": {
-      "P": 5,
-      "E": 3,
-      "X": 2,
-      "L": 4,
-      "G": 3
-    },
-    "notes": {
-      "P": "5/5. You fixed books. Perfect!",
-      "E": "🌟 3/5 = the TOP for now!",
-      "X": "🌟 2/5 = the TOP for now!",
-      "L": "4/5. 🌟 You wrote it in NEW words by yourself: \"information spread all over China\" is the same idea as your Point. That is exactly what a Link should do! To get 5: the end (\"more students could learn\") says your Explain again. End with a BIGGER thought about China.",
-      "G": "7 mistakes, all in your new Link (see the numbered fixes). Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3. New sentences often have new mistakes. That is normal!"
-    },
-    "next": "17/25. You did NOT get worse! You wrote a brand-new Link in your OWN words. That is the hard part, and you did it. The new sentence just has new grammar mistakes.\n\nStep 1: do fixes 1 to 4 (grammar).\n\nStep 2 (the bigger thought): answer out loud to Mum first: \"If lots of people in China could read and learn, what happened to China? Did it become stronger, smarter, richer?\"\nThen change the end of your Link. Start with: \"..., so China became ...\"",
-    "fixes": [
-      {
-        "p": "L",
-        "bad": "significant information",
-        "fix": "significant because information",
-        "why": "1 mistake: you need \"because\" to give the reason"
-      },
-      {
-        "p": "L",
-        "bad": "all the china",
-        "fix": "all over China",
-        "why": "2 mistakes: \"all over\"; China always has a big C"
-      },
-      {
-        "p": "L",
-        "bad": "china more student",
-        "fix": "so more students in China",
-        "why": "3 mistakes: add \"so\"; big C; student → students"
-      },
-      {
-        "p": "L",
-        "bad": "learn books",
-        "fix": "learn from books",
-        "why": "1 mistake: learn FROM books"
-      }
-    ],
-    "goal": 20
+  "next": "You are very close! Only two small jobs in your Explain:\n\nJob 1: china was in two part → China was in two parts.\n\nJob 2: Delete the whole last sentence: \"the emperor wanted china to be together, after two part together they use it to carry things.\"\n\nYour Explain ends with: \"... China was in two parts.\" That's it!",
+  "fixes": [
+   {
+    "p": "X",
+    "bad": "china was in two part",
+    "fix": "China was in two parts",
+    "why": "2 mistakes: capital C; parts"
+   },
+   {
+    "p": "X",
+    "bad": "the emperor wanted china",
+    "fix": "The emperor wanted China",
+    "why": "2 mistakes: capital T at the start; capital C"
+   },
+   {
+    "p": "X",
+    "bad": "together, after two part together",
+    "fix": "together. After the two parts were together,",
+    "why": "3 mistakes: full stop + capital A; parts; were"
+   },
+   {
+    "p": "X",
+    "bad": "they use it",
+    "fix": "they used it",
+    "why": "1 mistake: past tense: use → used"
+   }
+  ]
+ },
+ "pmwok31w46u7u": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 5,
+   "E": 4,
+   "X": 3,
+   "L": 5,
+   "G": 4
   },
-  "pmwr837gcm9in": {
-    "at": "2026-11-22",
-    "scores": {
-      "P": 5,
-      "E": 3,
-      "X": 2,
-      "L": 4,
-      "G": 5
-    },
-    "notes": {
-      "P": "5/5.",
-      "E": "🌟 3/5 = the TOP for now!",
-      "X": "🌟 2/5 = the TOP for now!",
-      "L": "4/5. Your own new words, and now with perfect grammar! One step to 5: a BIGGER thought about China at the end. Fix 1.",
-      "G": "0 mistakes! You fixed all 7. Ms Heather: 0 to 2 = 5. 5/5!"
-    },
-    "next": "19/25! Grammar is now PERFECT: 0 mistakes. 🎉\n\nONE step left to 20/25 = FULL MARKS for this stage.\nAnswer out loud to Mum first: \"If lots of people in China could read and learn, what happened to China? Stronger? Smarter? Richer?\"\nThen fill the blank in Fix 1 with YOUR answer.",
-    "fixes": [
-      {
-        "p": "L",
-        "bad": "learn from books.",
-        "fix": "learn from books, and China became ______.",
-        "why": "Not grammar: the bigger thought. What happened to China when many people could learn? Fill the blank yourself."
-      }
-    ],
-    "goal": 20
+  "notes": {
+   "P": "5/5. Don't change it!",
+   "E": "Your two facts are good. The new bit \", it let two part together\" is not a new fact. It says \"linked\" again. Delete it.",
+   "X": "You fixed your sentences. Well done! Still 3 because two things are said twice: (1) \"The emperor wanted China together.\" and \"The emperor wanted China to be together.\" are the same. (2) \"they used it to carry things\" is the same as your boats sentence. Saying the same idea twice = 3.",
+   "L": "5/5. Don't change it!",
+   "G": "Grammar went up to 4! I count 5 small mistakes (see the numbered fixes): 3 in Evidence, 2 in Explain. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3. Delete the Evidence bit and fix the 2 in Explain → 0 mistakes → 5/5."
   },
-  "pmwr899nawtm0": {
-    "at": "2026-11-22",
-    "scores": {
-      "P": 5,
-      "E": 3,
-      "X": 2,
-      "L": 4,
-      "G": 5
-    },
-    "notes": {
-      "P": "5/5.",
-      "E": "🌟 3/5 = the TOP for now!",
-      "X": "🌟 2/5 = the TOP for now! And it is YOUR OWN chain (go to school and learn).",
-      "L": "4/5. Your Link is in your OWN new words. That is what we practised today. Delete the unfinished end (Fix 1). Your sentence is good without it.",
-      "G": "1 mistake: the sentence stops in the middle (\"and China became.\"). Ms Heather: 0 to 2 = 5. 5/5!"
-    },
-    "next": "🌟 19/25. Tang inventions is DONE. No more rewrites! 🌟\n\nToday YOU wrote:\n• your own Explain chain: cheap books → more people go to school and learn\n• your own Link, in new words\n• perfect grammar\nThat is more important than one more point.\n\nNext topic: think about the \"bigger thought\" yourself in your first draft: what happened to China?\n\nJust for reading: your paragraph.\n\n[Point] Woodblock printing was significant because it helped books spread across China.\n\n[Evidence] Woodblock printing was invented in the Tang. Before that, books were copied by hand.\n\n[Explain] This meant that books could be printed quickly and cheaply, so more people could go to school and learn.\n\n[Link] Therefore, woodblock printing was significant because information spread all over China, so more students in China could learn from books.",
-    "fixes": [
-      {
-        "p": "L",
-        "bad": ", and China became.",
-        "fix": ".",
-        "why": "1 mistake: the sentence stops in the middle. Delete it."
-      }
-    ],
-    "goal": 20
-  }
+  "next": "Three small jobs:\n\nJob 1 (Evidence): Delete \", it let two part together\". End with \"... Yangtze Rivers.\"\n\nJob 2 (Explain): Delete \"The emperor wanted China to be together.\" You already said it.\n\nJob 3 (Explain): Change your LAST sentence. Don't say \"carry things\" again. Say what happened to CHINA. Start with: \"The canal joined the two parts, so ...\" Think: did China stay one country? Tell Mum first, then write.",
+  "fixes": [
+   {
+    "p": "E",
+    "bad": "Rivers, it let two part together",
+    "fix": "Rivers. It joined the two parts together",
+    "why": "3 mistakes: full stop + capital I; parts; joined (not let)"
+   },
+   {
+    "p": "X",
+    "bad": "china was",
+    "fix": "China was",
+    "why": "1 mistake: China always has a capital C"
+   },
+   {
+    "p": "X",
+    "bad": "were together they",
+    "fix": "were together, they",
+    "why": "1 mistake: comma after an \"After ...\" part"
+   }
+  ]
+ },
+ "pmwokp9w1ilqn": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 5,
+   "E": 4,
+   "X": 2,
+   "L": 4,
+   "G": 5
+  },
+  "notes": {
+   "P": "5/5. Clear, uses \"significant\", and gives a reason: it joined north and south China.",
+   "E": "Good, exact facts: Sui dynasty, over 1,700 km, Beijing to Hangzhou. To reach 5, the facts should also show how it helped China.",
+   "X": "Your sentence is very clear: boats → trade → the economy grew. But it explains only ONE fact (Beijing to Hangzhou). The Sui dynasty fact has no explanation. One fact explained = 2. Your OWN idea from before fits here: China was in two parts, and the Sui emperor wanted it together!",
+   "L": "Good wrap-up. To reach 5, add a big thought, e.g. people still use it today.",
+   "G": "0 mistakes. 5/5!"
+  },
+  "next": "🌟🌟🌟 20/25 = FULL MARKS for this stage! 🌟🌟🌟\nRight now our goal is 20, not 25. You did it! Super job today. You wrote 16 versions and never gave up!\n\nThe Grand Canal is DONE. No more rewrites.\n\nJust for reading (no need to type it): here is the paragraph made from your own sentences.\n\n[Point] The Grand Canal was very significant because it connected north and south China and helped the country move food.\n\n[Evidence] It was built in the Sui dynasty in about 605 AD. It linked the Yellow River and the Yangtze River, from Beijing in the north to Hangzhou in the south.\n\n[Explain] Before the Sui, China was in two parts for almost 300 years. This meant that the emperor needed a way to hold the north and the south together, so he built the canal to join them. Boats could carry rice and goods between the north and the south. This meant that people everywhere in China had more food, so the emperor could feed his army and rule the whole country.\n\n[Link] Therefore, the Grand Canal was very significant because it joined north and south China into one country, and people still use it today, more than 1,400 years later.",
+  "fixes": [],
+  "goal": 20
+ },
+ "pmwoqx733hwwc": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 3,
+   "E": 2,
+   "X": 1,
+   "L": 2,
+   "G": 3
+  },
+  "notes": {
+   "P": "Good start: you say it was important AND give a reason. But it is a bit unclear. The topic is the civil service EXAM, so say \"exam\". And \"helped dynasty not fall\" is vague. HOW did the exam help? Say it in the Point.",
+   "E": "Your fact is correct: officials were chosen by a test, not only by family. But it is ONE simple fact = 2. To get 3, add more detail: WHICH dynasty made the exam? The answer is in the yellow box \"📌 Facts you can use\" on the writing page.",
+   "X": "This part just says your Point again (\"the dynasty will not fall\"). It does not explain your fact. Open \"📖 Read the story first\" on the writing page. It tells you what kind of people became officials and what that did for China. That is the chain we need. \"officials will not stubbed\" is hard to understand. Did you mean \"stupid\"?",
+   "L": "You tried to wrap up, but \"the dynasty be more good\" does not mention the exam or the reason. Use the same idea as your Point.",
+   "G": "I count 11 mistakes (see the numbered fixes): 1 in Point, 8 in Explain, 2 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3. Many come from the Explain, which you will rewrite anyway."
+  },
+  "next": "New topic, first try. 11/25 is a normal start. Our goal for this stage is 20/25 = full marks.\n\nFirst: open \"📖 Read the story first\" on the writing page and read it with Mum. All the answers are there or in the \"📌 Facts you can use\" box.\n\nJob 1 (Point): Keep \"The civil service exam was important because ...\" Change the reason. Think: the exam helped China choose what kind of officials? (The story tells you.)\n\nJob 2 (Evidence): Keep your fact. Add WHICH dynasty made the exam formal. Look in \"📌 Facts you can use\".\n\nJob 3 (Explain): Delete both sentences. Answer out loud to Mum first: \"If you must pass a test to get the job, who gets the job: people who studied hard, or people with a rich family? Then is the government better or worse?\"\nThen write ONE chain. Start with: \"This meant that ..., so ...\"\n\nJob 4 (Link): Start with \"Therefore, the civil service exam was important because ...\" Use the same reason as your Point.",
+  "fixes": [
+   {
+    "p": "P",
+    "bad": "helped dynasty",
+    "fix": "helped the dynasty",
+    "why": "1 mistake: add \"the\""
+   },
+   {
+    "p": "X",
+    "bad": "china dynasty will",
+    "fix": "the Chinese dynasty would",
+    "why": "3 mistakes: add \"the\"; capital C (Chinese); will → would (past)"
+   },
+   {
+    "p": "X",
+    "bad": "Keep dynasty safe,",
+    "fix": "It kept the dynasty safe.",
+    "why": "3 mistakes: needs \"It\"; keep → kept; add \"the\" (and end with a full stop)"
+   },
+   {
+    "p": "X",
+    "bad": "will not stubbed",
+    "fix": "would not be stupid",
+    "why": "2 mistakes: will → would; add \"be\""
+   },
+   {
+    "p": "L",
+    "bad": "be more good",
+    "fix": "was stronger",
+    "why": "2 mistakes: be → was; \"more good\" is not a word → better / stronger"
+   }
+  ],
+  "goal": 20
+ },
+ "pmwosd8mm2drq": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 3,
+   "E": 2,
+   "X": 1,
+   "L": 2,
+   "G": 3
+  },
+  "notes": {
+   "P": "You fixed \"the dynasty\". Good! But nothing else changed. Still \"civil service\" (add \"exam\"), and \"not fall\" does not say HOW the exam helped. Still 3.",
+   "E": "New: you added the Sui dynasty. Good idea! But the new part \"in Sui dynasty made exam want dynasty more peace\" is hard to understand. Use the words in the yellow box \"📌 Facts you can use\": The Sui Dynasty made the exam formal. Still 2.",
+   "X": "Look! You wrote two GOOD ideas: \"officials would not be stupid\" and \"This will kind for every one\" (fair for everyone?). These are the right ideas! But the first two sentences still just say your Point again (\"not fall\", \"safe\"). Still 1.",
+   "L": "You fixed the grammar from last time. But it still doesn't say \"civil service exam\" or the reason. Still 2.",
+   "G": "You fixed ALL 5 mistakes from last time. Well done! The new sentences have 14 new mistakes (see the numbered fixes): 6 in Evidence, 4 in Explain, 4 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3. Short, simple sentences = fewer mistakes."
+  },
+  "next": "Same score, 11. You did NOT get worse! You fixed every grammar mistake I marked. But the 4 Jobs are not done yet, and the new sentences brought new mistakes.\n\nYour BEST idea is in your Explain: \"officials would not be stupid\". Build everything on it.\n\nJob 1 (Point): Change \"civil service\" to \"civil service exam\". Change \"helped the dynasty not fall\" to your best idea. Start with: \"... because it helped China choose ______ officials.\" (What is the opposite of stupid?)\n\nJob 2 (Evidence): Keep your first sentence. Delete \"in Sui dynasty made exam want dynasty more peace\". Copy the first fact from the yellow box \"📌 Facts you can use\" as a new sentence.\n\nJob 3 (Explain): Delete the first two sentences. Read \"📖 Read the story first\" with Mum. Then say out loud: \"With a test, who gets the job: someone who studied hard, or someone with a rich family? Is that fair?\"\nThen write ONE chain. Start with: \"This meant that officials were people who ______, so ______.\"\n\nJob 4 (Link): Start with \"Therefore, the civil service exam was important because ...\" Use the same reason as your Point.",
+  "fixes": [
+   {
+    "p": "E",
+    "bad": "family, in Sui",
+    "fix": "family. The Sui",
+    "why": "2 mistakes: full stop (new sentence); start with \"The\""
+   },
+   {
+    "p": "E",
+    "bad": "made exam",
+    "fix": "made the exam",
+    "why": "1 mistake: add \"the\""
+   },
+   {
+    "p": "E",
+    "bad": "want dynasty more peace",
+    "fix": "formal",
+    "why": "3 mistakes: want → wanted; add \"the\"; more peace → more peaceful. Easier: use the yellow box words"
+   },
+   {
+    "p": "X",
+    "bad": "safe, officials",
+    "fix": "safe. Officials",
+    "why": "1 mistake: two sentences → full stop + capital O"
+   },
+   {
+    "p": "X",
+    "bad": "This will kind for every one",
+    "fix": "This was fair for everyone",
+    "why": "3 mistakes: will → was; kind → fair (did you mean fair?); every one → everyone"
+   },
+   {
+    "p": "L",
+    "bad": "stronger, dynasty will not fall",
+    "fix": "stronger. The dynasty would not fall.",
+    "why": "4 mistakes: full stop; add \"The\"; will → would; full stop at the end"
+   }
+  ],
+  "goal": 20
+ },
+ "pmwotapgtqvr2": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 3,
+   "E": 3,
+   "X": 2,
+   "L": 2,
+   "G": 3
+  },
+  "notes": {
+   "P": "You changed the reason to \"more peace\". But the story does not say the exam made China peaceful. It says the exam helped China choose clever officials. And you still need the word \"exam\". Still 3.",
+   "E": "🌟 3/5 = the TOP for now! You used the facts from the yellow box. Great! Don't change your facts. Only fix 1 full stop.",
+   "X": "🌟 2/5 = the TOP for now! \"Officials would not be stupid. This was fair for everyone.\" explains your test fact. Well done! Keep it. Only fix 1 full stop.",
+   "L": "Still no \"civil service exam\" and no reason. A Link must say the SAME reason as your Point. Still 2.",
+   "G": "I count 8 mistakes (see the numbered fixes): 5 in Point, 1 in Evidence, 1 in Explain, 1 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3. Most are in your new Point. Job 1 will fix them."
+  },
+  "next": "13/25. Up 2! 🎉\nEvidence 3 and Explain 2 are now the TOP for this stage. Don't change them, only the small fixes.\nThe 7 points you can still get are in Point (+2), Link (+3) and Grammar (+2).\n\nJob 1 (Point): Your best idea is \"officials would not be stupid\". Say to Mum: \"The exam helped China choose officials who were ______.\" (not stupid = ?)\nThen write: \"The civil service exam was important because it helped China choose ______ officials.\"\n\nJob 2 (Link): Delete both Link sentences. Start with \"Therefore, the civil service exam was important because ...\" Finish it with the SAME reason as your new Point.\n\nJob 3: Fix the small mistakes in Evidence, Explain and Link (see the numbers).",
+  "fixes": [
+   {
+    "p": "P",
+    "bad": "important, It",
+    "fix": "important because it",
+    "why": "1 mistake: comma + capital I. Use \"because\" to give the reason"
+   },
+   {
+    "p": "P",
+    "bad": "help china more peace",
+    "fix": "helped make China more peaceful",
+    "why": "4 mistakes: help → helped; add \"make\"; China has a capital C; peace → peaceful"
+   },
+   {
+    "p": "E",
+    "bad": "family, The Sui",
+    "fix": "family. The Sui",
+    "why": "1 mistake: full stop before a new sentence"
+   },
+   {
+    "p": "X",
+    "bad": "safe, Officials",
+    "fix": "safe. Officials",
+    "why": "1 mistake: full stop (not comma) before a new sentence"
+   },
+   {
+    "p": "L",
+    "bad": "would not fall",
+    "fix": "would not fall.",
+    "why": "1 mistake: full stop at the end"
+   }
+  ],
+  "goal": 20
+ },
+ "pmwoviqum5zlm": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 3,
+   "E": 3,
+   "X": 2,
+   "L": 2,
+   "G": 4
+  },
+  "notes": {
+   "P": "You added \"because\". Good! But the reason is still \"more peaceful\", and \"exam\" is still missing. The story says the exam helped China choose clever officials. Still 3.",
+   "E": "🌟 3/5 = the TOP for now! Don't change your facts. 1 full stop is still missing (see the fix).",
+   "X": "🌟 2/5 = the TOP for now! Keep it. Just add a space after \"safe.\"",
+   "L": "You added the full stop. Good! But it still doesn't say \"civil service exam\" or your reason. Still 2.",
+   "G": "Grammar went UP to 4! I count 4 mistakes (see the numbered fixes): 2 in Point, 1 in Evidence, 1 in Explain. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3."
+  },
+  "next": "14/25. Up 1! Grammar went up to 4. 🎉\nEvidence 3 and Explain 2 are the TOP for now. Don't touch them, only the 2 small fixes.\n\nOnly TWO jobs left. They are in the numbered fixes this time:\n\nJob 1 (Point): Fix 1 and 2. There is a BLANK ______. Don't type it yet!\nSay to Mum: \"Officials would not be stupid. So the exam helped China choose ______ officials.\" What word is the opposite of stupid?\nThen put that word in the blank.\n\nJob 2 (Link): Fix 5. Use the SAME word in the blank.\n\nDo these 2 jobs and you can get about 19 or 20!",
+  "fixes": [
+   {
+    "p": "P",
+    "bad": "civil service was",
+    "fix": "civil service exam was",
+    "why": "not grammar: the topic is the EXAM"
+   },
+   {
+    "p": "P",
+    "bad": "It helped China more peaceful",
+    "fix": "it helped China choose ______ officials",
+    "why": "2 mistakes: It → it (small i after because); \"helped China more peaceful\" is not a sentence. Fill the blank yourself: not stupid = ?"
+   },
+   {
+    "p": "E",
+    "bad": "family, The Sui",
+    "fix": "family. The Sui",
+    "why": "1 mistake: full stop before a new sentence (from last time!)"
+   },
+   {
+    "p": "X",
+    "bad": "safe.Officials",
+    "fix": "safe. Officials",
+    "why": "1 mistake: a space after the full stop"
+   },
+   {
+    "p": "L",
+    "bad": "the dynasty was stronger. The dynasty would not fall.",
+    "fix": "the civil service exam was important because it helped China choose ______ officials.",
+    "why": "not grammar: a Link says the SAME reason as your Point. Same blank!"
+   }
+  ],
+  "goal": 20
+ },
+ "pmwow61y6bl4r": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 5,
+   "E": 3,
+   "X": 2,
+   "L": 4,
+   "G": 5
+  },
+  "notes": {
+   "P": "5/5! \"exam\", \"significant\" and a clear reason: it helped China choose good officials. Only 2 small fixes.",
+   "E": "🌟 3/5 = the TOP for now! You fixed the full stop. Don't change it.",
+   "X": "🌟 2/5 = the TOP for now! You fixed the space. Don't change it.",
+   "L": "Big jump: 2 → 4! It says \"civil service exam\" and the same reason as your Point. To get 5: add a big thought about what it meant for CHINA (see fix 3).",
+   "G": "Only 2 small mistakes (see fixes 1 and 2). 0 to 2 = 5/5! Fix them anyway."
+  },
+  "next": "🎉 19/25! Up 5! Only ONE point to full marks (20).\nYou filled the blank in your Point and your Link all by yourself. That was the hard part. Super!\n\nLast job (Link): Fix 3 has a BLANK ______.\nOpen \"📖 Read the story first\" and read the last line (\"so ...\"). Then say to Mum: \"China had clever officials, so China was ______.\"\nPut your words in the blank.\n\nAlso fix 1 and 2 in your Point (small ones).",
+  "fixes": [
+   {
+    "p": "P",
+    "bad": "It helped",
+    "fix": "it helped",
+    "why": "1 mistake: small i after \"because\""
+   },
+   {
+    "p": "P",
+    "bad": "more good",
+    "fix": "better",
+    "why": "1 mistake: \"more good\" → better"
+   },
+   {
+    "p": "L",
+    "bad": "good officials.",
+    "fix": "good officials, so China was ______.",
+    "why": "not grammar: add a BIG thought. What happens to a country with clever officials? Read the last line of the story (\"so ...\")"
+   }
+  ],
+  "goal": 20
+ },
+ "pmwowfwim80mk": {
+  "at": "2026-11-20",
+  "scores": {
+   "P": 5,
+   "E": 3,
+   "X": 2,
+   "L": 5,
+   "G": 5
+  },
+  "notes": {
+   "P": "5/5. You fixed both small mistakes. Perfect!",
+   "E": "🌟 3/5 = the TOP for now!",
+   "X": "🌟 2/5 = the TOP for now!",
+   "L": "5/5! \"so China was stronger\" is the big thought about China. You chose the word yourself. Great!",
+   "G": "0 mistakes. 5/5!"
+  },
+  "next": "🌟🌟🌟 20/25 = FULL MARKS for this stage! 🌟🌟🌟\nYou went from 11 to 20 in one evening. You never gave up!\n\nThe civil service exam is DONE. No more rewrites.\n\nJust for reading (no need to type it): your paragraph, all in your own words.\n\n[Point] The civil service exam was significant because it helped China choose better officials.\n\n[Evidence] For example, officials were chosen by a test, not only by family. The Sui Dynasty made the exam formal.\n\n[Explain] This meant that officials were not stupid, and this was fair for everyone.\n\n[Link] Therefore, the civil service exam was important because it helped China choose good officials, so China was stronger.",
+  "fixes": [],
+  "goal": 20
+ },
+ "pmwq7pg49rr28": {
+  "at": "2026-11-21",
+  "scores": {
+   "P": 3,
+   "E": 2,
+   "X": 1,
+   "L": 2,
+   "G": 2
+  },
+  "notes": {
+   "P": "3/5. Good: you say it was important AND give a reason. But \"it helped China have more culture\" goes in a circle. The question asks WHY the Tang was a golden age of culture. Say WHAT grew a lot in the Tang. Look in \"📌 Facts you can use\".",
+   "E": "2/5. Li Bai and Du Fu is a correct fact. Great! But it is ONE simple fact = 2. To get 3 (the top for now), add detail: who were they? Your peace sentence is a good idea from the story, but it is hard to understand, and for now we use only ONE fact. So delete it.",
+   "X": "1/5. You wrote \"This meant that\" all by yourself. Good! But this sentence says your peace sentence again (more money and time). It does not explain Li Bai and Du Fu. Think: when people read their poems, what did they get? Look in \"📖 Read the story first\".",
+   "L": "2/5. Good \"Therefore\", and you used a word-list word (prosperity)! But this sentence does not talk about culture or poetry, so it does not link back to your Point. Use the same reason as your Point.",
+   "G": "I count 24 mistakes (see the numbered fixes): 3 in Point, 14 in Evidence, 3 in Explain, 4 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3, and many mistakes that make it hard to understand = 2. \"no many fight every peace\" was hard to understand. The most common one: china → China (5 times!). Many mistakes are in the peace sentence, which you will delete anyway."
+  },
+  "next": "New topic, and you wrote it ALL by yourself. That is the most important thing! 10/25 is a normal first try (Grand Canal 8, Civil service exam 11). You did NOT get worse. Our goal for this stage is 20/25 = full marks.\n\nFirst: open \"📖 Read the story first\" on the writing page and read it with Mum.\n\nJob 1 (Point): Keep \"... because ...\". Change the reason. Think: WHAT grew a lot in the Tang? (Look in \"📌 Facts you can use\".)\nStart with: \"The Tang Dynasty was a golden age of culture because ...\"\n\nJob 2 (Evidence): Keep ONLY your Li Bai and Du Fu sentence. Add who they were: how famous were they? Delete the \"And that time ...\" sentence.\n\nJob 3 (Explain): Delete your sentence. Answer out loud to Mum first: \"When people read Li Bai's poems, how did they feel? Did they learn something? So were poems a big or a small part of Chinese culture?\"\nThen write ONE chain. Start with: \"This meant that people ..., so ...\"\n\nJob 4 (Link): Start with \"Therefore, the Tang Dynasty was a golden age of culture because ...\" Use the same reason as your Point.",
+  "fixes": [
+   {
+    "p": "P",
+    "bad": "Tang dynasty golden age",
+    "fix": "Tang dynasty's golden age",
+    "why": "1 mistake: add 's (the golden age OF the Tang dynasty)"
+   },
+   {
+    "p": "P",
+    "bad": "important, because",
+    "fix": "important because",
+    "why": "1 mistake: no comma before \"because\""
+   },
+   {
+    "p": "P",
+    "bad": "helped china",
+    "fix": "helped China",
+    "why": "1 mistake: China always has a big C"
+   },
+   {
+    "p": "E",
+    "bad": "Li bai, Du fu they",
+    "fix": "Li Bai and Du Fu",
+    "why": "4 mistakes: big B (Bai); big F (Fu); put \"and\" between two names; delete \"they\""
+   },
+   {
+    "p": "E",
+    "bad": "help china",
+    "fix": "helped China",
+    "why": "2 mistakes: help → helped (past); big C"
+   },
+   {
+    "p": "E",
+    "bad": "many culture",
+    "fix": "a rich culture",
+    "why": "1 mistake: you can't count culture, so not \"many\""
+   },
+   {
+    "p": "E",
+    "bad": "amazing poem.",
+    "fix": "amazing poems.",
+    "why": "1 mistake: lots of poems → poems"
+   },
+   {
+    "p": "E",
+    "bad": "And that time",
+    "fix": "At that time,",
+    "why": "1 mistake: \"At that time\""
+   },
+   {
+    "p": "E",
+    "bad": "no many fight every peace then",
+    "fix": "there were not many wars and it was peaceful, so",
+    "why": "3 mistakes, and hard to understand: there were not many wars; it was peaceful; then → so"
+   },
+   {
+    "p": "E",
+    "bad": "they have more time to have money",
+    "fix": "they had more time and money",
+    "why": "2 mistakes: have → had (past); \"more time and money\""
+   },
+   {
+    "p": "X",
+    "bad": "that china",
+    "fix": "that China",
+    "why": "1 mistake: big C"
+   },
+   {
+    "p": "X",
+    "bad": "to better china",
+    "fix": "to make China better",
+    "why": "2 mistakes: \"make China better\"; big C"
+   },
+   {
+    "p": "L",
+    "bad": "china be more strong",
+    "fix": "China became stronger",
+    "why": "3 mistakes: big C; be → became; more strong → stronger"
+   },
+   {
+    "p": "L",
+    "bad": "and prosperity",
+    "fix": "and more prosperous",
+    "why": "1 mistake: prosperity = 繁荣 (a thing); prosperous = 繁荣的 (describes China)"
+   }
+  ],
+  "goal": 20
+ },
+ "pmwq86f90tp2j": {
+  "at": "2026-11-21",
+  "scores": {
+   "P": 3,
+   "E": 3,
+   "X": 1,
+   "L": 2,
+   "G": 4
+  },
+  "notes": {
+   "P": "3/5. Same Point as last time, so same score. \"it helped China have more culture\" still goes in a circle. Do Job 1 below: say WHAT grew a lot in the Tang.",
+   "E": "🌟 3/5 = the TOP for now! Your peace sentence is now easy to understand, so you have two simple facts = 3. But for now we use ONE fact. Do Job 2: keep Li Bai and Du Fu, say how famous they were, and delete the peace sentence. That is still 3 (one detailed fact = 3).",
+   "X": "1/5. Same sentence as last time, so same score. It says the Evidence again (more money and time). It does not explain Li Bai and Du Fu. This is the part that gives you the most points. Do Job 3!",
+   "L": "2/5. \"became stronger and more prosperous\" is better English. But it still does not talk about culture or poetry, so it does not link back to your Point. Do Job 4.",
+   "G": "4 mistakes (see the numbered fixes): 2 in Evidence, 2 in Link. Last time 24, now 4. You fixed 20 mistakes. Great work! Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3."
+  },
+  "next": "You fixed almost ALL the grammar: 10 → 13. Well done!\nBut you only did the struck-through fixes. The 4 Jobs are what give you the big points. Our goal is 20/25.\n\nFirst: open \"📖 Read the story first\" on the writing page and read it with Mum.\n\nJob 1 (Point): Change the reason. Think: WHAT grew a lot in the Tang? (Look in \"📌 Facts you can use\".)\nStart with: \"The Tang Dynasty was a golden age of culture because ...\"\n\nJob 2 (Evidence): Keep ONLY the Li Bai and Du Fu sentence. Say how famous they were. Delete the \"At that time ...\" sentence.\n\nJob 3 (Explain): Delete your sentence. Answer out loud to Mum first: \"When people read Li Bai's poems, how did they feel? Did they learn something? So were poems a big or a small part of Chinese culture?\"\nThen write ONE chain. Start with: \"This meant that people ..., so ...\"\n\nJob 4 (Link): Start with \"Therefore, the Tang Dynasty was a golden age of culture because ...\" Use the same reason as your Point.",
+  "fixes": [
+   {
+    "p": "E",
+    "bad": "Du Fu they",
+    "fix": "Du Fu",
+    "why": "1 mistake: delete \"they\" (\"Li Bai and Du Fu\" is already who did it)"
+   },
+   {
+    "p": "E",
+    "bad": "peaceful,so",
+    "fix": "peaceful, so",
+    "why": "1 mistake: put a space after a comma"
+   },
+   {
+    "p": "L",
+    "bad": "china became",
+    "fix": "China became",
+    "why": "1 mistake: big C"
+   },
+   {
+    "p": "L",
+    "bad": "properous",
+    "fix": "prosperous",
+    "why": "1 mistake: spelling: pro-SPER-ous"
+   }
+  ],
+  "goal": 20
+ },
+ "pmwqd5q29eeut": {
+  "at": "2026-11-21",
+  "scores": {
+   "P": 3,
+   "E": 3,
+   "X": 1,
+   "L": 3,
+   "G": 4
+  },
+  "notes": {
+   "P": "3/5. \"significant\" is a great History word. You changed that yourself! But the reason is the same as last time: \"more culture\" goes in a circle. Fix 1 has a blank for you.",
+   "E": "🌟 3/5 = the TOP for now! Fix 2: add how famous Li Bai and Du Fu were. Fix 3: delete the peace sentence (one fact for now). It will still be 3.",
+   "X": "1/5. \"China could China will be more significant\" is hard to understand, and it does not explain Li Bai and Du Fu. Fix 4 makes a chain for you, but YOU fill the 2 blanks. First answer out loud to Mum: \"How did people feel when they read Li Bai's poems?\"",
+   "L": "3/5, up from 2! Now your Link talks about culture again, so it links back to your Point. You did that by yourself. To get higher: say the Tang Dynasty and end with a big thought. Fix 5.",
+   "G": "5 mistakes: 1 in Evidence (\"poems.At\": put a space after a full stop), 2 in Explain, 2 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3."
+  },
+  "next": "14/25, up from 13. Your Link now links back to culture, and you did that by yourself. Great!\n\nThis time the Jobs are INSIDE the fixes. Do ALL 5 fixes, in order.\nSome fixes have a ______ blank. YOU fill it in with your own word. Ask Mum if you are stuck.\n\nFix 1 (Point): What grew a lot in the Tang? Look in \"📌 Facts you can use\".\nFix 2 (Evidence): How famous were Li Bai and Du Fu?\nFix 3 (Evidence): Delete the whole \"At that time ...\" sentence.\nFix 4 (Explain): Answer out loud to Mum first: \"How did people feel when they read the poems?\" Then fill both blanks. Blank 2 is a word from your own Point.\nFix 5 (Link): What do we still learn today?",
+  "fixes": [
+   {
+    "p": "P",
+    "bad": "it helped China have more culture",
+    "fix": "art and ______ grew a lot",
+    "why": "Not grammar: say WHAT grew. Fill the blank yourself: look in \"📌 Facts you can use\"."
+   },
+   {
+    "p": "E",
+    "bad": "Li Bai and Du Fu helped",
+    "fix": "Li Bai and Du Fu, two of the most ______ Chinese poets, helped",
+    "why": "Not grammar: how famous were they? Fill the blank yourself."
+   },
+   {
+    "p": "E",
+    "bad": "At that time, there were not many wars and it was peaceful, so they had more time and money.",
+    "fix": "✂️ delete this sentence",
+    "why": "Not grammar: for now we use ONE fact. (Also 1 grammar mistake: after a full stop, put a space: \"poems. At\".)"
+   },
+   {
+    "p": "X",
+    "bad": "China could China will be more significant",
+    "fix": "people felt ______ when they read Li Bai's poems, so poetry became a ______ part of Chinese culture",
+    "why": "2 grammar mistakes: \"China\" twice; could + will (use only one). Not grammar: fill the 2 blanks yourself. Blank 1: how did people feel when they read the poems? (📖 story). Blank 2: the big word you used in your Point."
+   },
+   {
+    "p": "L",
+    "bad": "China became stronger and more prosperous, help China have more culture",
+    "fix": "the Tang Dynasty was a golden age of culture, so we still learn Tang ______ today",
+    "why": "2 grammar mistakes: \", help\" → \", so it helped\" (needs \"so it\"; help → helped). Not grammar: say the main idea again. Blank: what do we still learn today? (📌 Facts you can use)"
+   }
+  ],
+  "goal": 20
+ },
+ "pmwqdpbl0bdj7": {
+  "at": "2026-11-21",
+  "scores": {
+   "P": 5,
+   "E": 3,
+   "X": 2,
+   "L": 5,
+   "G": 3
+  },
+  "notes": {
+   "P": "5/5! Now your Point gives a real reason: art and poetry grew a lot. Only one small word to fix (Fix 1).",
+   "E": "🌟 3/5 = the TOP for now! One fact with detail. You deleted the peace sentence. But \"the most writer\" is the wrong word in the blank. Fix 2.",
+   "X": "🌟 2/5 = the TOP for now! \"This meant that people felt better ..., so poetry became a significant part of Chinese culture.\" That is a real chain. You filled both blanks yourself!",
+   "L": "5/5! You say the main idea again AND end with a big thought: we still learn Tang poems today, more than 1,000 years later.",
+   "G": "6 mistakes (see the numbered fixes): 1 in Point, 2 in Evidence, 1 in Explain, 2 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3. Fix them all and Grammar = 5. Watch out: poem → poems (3 times)."
+  },
+  "next": "18/25! Up from 14. You did ALL 5 fixes and filled the blanks yourself. Point and Link are now 5/5!\n\nOnly grammar is left. Do the 5 fixes → 20/25 = FULL MARKS for this stage.\n\nFix 2 has a blank. \"writer\" is not right. Ask yourself: how well-known were Li Bai and Du Fu? Look in \"📖 Read the story first\".",
+  "fixes": [
+   {
+    "p": "P",
+    "bad": "write poem",
+    "fix": "poetry",
+    "why": "1 mistake: \"write poem\" → \"poetry\" (the thing that grew)"
+   },
+   {
+    "p": "E",
+    "bad": "most writer in Chinese poet",
+    "fix": "most ______ Chinese poets",
+    "why": "2 mistakes: after \"the most\" you need a describing word: HOW well-known were they? Fill the blank yourself (📖 story); poet → poets (there are two)"
+   },
+   {
+    "p": "X",
+    "bad": "Li Bai’s poem,",
+    "fix": "Li Bai’s poems,",
+    "why": "1 mistake: he wrote many poems → poems"
+   },
+   {
+    "p": "L",
+    "bad": "culture , so",
+    "fix": "culture, so",
+    "why": "1 mistake: no space BEFORE a comma"
+   },
+   {
+    "p": "L",
+    "bad": "Tang poem today",
+    "fix": "Tang poems today",
+    "why": "1 mistake: many poems → poems"
+   }
+  ],
+  "goal": 20
+ },
+ "pmwqdvpej9ffy": {
+  "at": "2026-11-21",
+  "scores": {
+   "P": 5,
+   "E": 3,
+   "X": 2,
+   "L": 5,
+   "G": 5
+  },
+  "notes": {
+   "P": "5/5. You fixed \"poetry\". Perfect!",
+   "E": "🌟 3/5 = the TOP for now! You found \"famous\" by yourself. Only one tiny thing: poet → poets.",
+   "X": "🌟 2/5 = the TOP for now!",
+   "L": "5/5. You fixed both small mistakes. Great!",
+   "G": "1 mistake (poet → poets). Ms Heather: 0 to 2 = 5. 5/5!"
+  },
+  "next": "🌟🌟🌟 20/25 = FULL MARKS for this stage! 🌟🌟🌟\nYou went from 10 to 20 today. You never gave up!\n\nTang poetry is DONE. No more rewrites.\n\nJust for reading (no need to type it): your paragraph.\n\n[Point] The Tang Dynasty's golden age was very significant because art and poetry grew a lot.\n\n[Evidence] For example, Li Bai and Du Fu, two of the most famous Chinese poets, helped China have a rich culture and amazing poems.\n\n[Explain] This meant that people felt better when they read Li Bai's poems, so poetry became a significant part of Chinese culture.\n\n[Link] Therefore, the Tang Dynasty was a golden age of culture, so we still learn Tang poems today.",
+  "fixes": [
+   {
+    "p": "E",
+    "bad": "Chinese poet,",
+    "fix": "Chinese poets,",
+    "why": "1 mistake: two of them → poets"
+   }
+  ],
+  "goal": 20
+ },
+ "pmwr5q3j60hhg": {
+  "at": "2026-11-22",
+  "scores": {
+   "P": 3,
+   "E": 2,
+   "X": 1,
+   "L": 2,
+   "G": 2
+  },
+  "notes": {
+   "P": "3/5. Good: \"significant\" and \"because\", all by yourself! But \"printing helped printing faster\" goes in a circle. Say what got faster: making BOOKS. Look in \"📌 Facts you can use\": how were books made BEFORE printing?",
+   "E": "2/5. \"more books\" is a good idea, but it is a RESULT (what printing CAUSED). Results go in Explain, not Evidence. Your fact should say WHAT was invented and WHEN. Look in \"📌 Facts you can use\". (\"more students can go to schools\" is not in the story.) One fact with detail = 3 = the top for now.",
+   "X": "1/5. You wrote \"This meant that\" by yourself. Good! But it says your Evidence again (more people study), and there is no \"so ...\". Good news: your Link idea (people have information, so they get smarter) is real Explain thinking! It is just in the wrong place.",
+   "L": "2/5. Good \"Therefore\". But it does not say woodblock printing, and \"smart\" is a new idea, so it does not link back to your Point. Use the same reason as your Point.",
+   "G": "19 mistakes (see the numbered fixes): 5 in Point, 7 in Evidence, 2 in Explain, 5 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3, and many mistakes that make it hard to understand = 2. \"helped student study have more book\" was hard to understand. Watch out: student → students, book → books (many = add s)."
+  },
+  "next": "New topic, and you wrote it ALL by yourself. 10/25 = the same as your Tang poetry first try. You did NOT get worse. Our goal for this stage is 20/25 = full marks.\nGood news: \"information\" and \"smarter\" are the RIGHT ideas. They just need to move.\n\nEvidence or Explain?\n📌 Evidence = WHAT happened. A fact from the book: what was invented, and when. No \"helped\", no \"more people\".\n💡 Explain = what that fact CAUSED: \"This meant that ..., so ...\".\nTest: if your sentence has \"helped\" or \"more people\", it is Explain, not Evidence.\n\nFirst: open \"📖 Read the story first\" on the writing page and read it with Mum.\n\nJob 1 (Point): Keep \"significant because\". Change the reason. Think: before printing, how were books made? Fast or slow?\nStart with: \"Woodblock printing was significant because ...\"\n\nJob 2 (Evidence): Delete your sentence. Write the fact: WHAT was invented, and in which dynasty? How were books made before that? (📌 Facts you can use)\nStart with: \"For example, ...\"\n\nJob 3 (Explain): Answer out loud to Mum first: \"With woodblock printing, could ONE book be printed many times? Fast or slow? So could more people read?\"\nThen write ONE chain. Start with: \"This meant that books could ..., so more people ...\"\n\nJob 4 (Link): Start with \"Therefore, woodblock printing was significant because ...\" Use the same reason as your Point.\n\nAnd do all the numbered fixes too.",
+  "fixes": [
+   {
+    "p": "P",
+    "bad": "The Woodblock printing",
+    "fix": "Woodblock printing",
+    "why": "2 mistakes: no \"The\" here; small w in the middle of a sentence (here it starts the sentence, so W)"
+   },
+   {
+    "p": "P",
+    "bad": "helped printing",
+    "fix": "helped people print",
+    "why": "1 mistake: helped + WHO + do (helped people print)"
+   },
+   {
+    "p": "P",
+    "bad": "more fast..",
+    "fix": "faster.",
+    "why": "2 mistakes: more fast → faster; only ONE full stop"
+   },
+   {
+    "p": "E",
+    "bad": "they helped",
+    "fix": "it helped",
+    "why": "1 mistake: woodblock printing is ONE thing → it"
+   },
+   {
+    "p": "E",
+    "bad": "student study have more book",
+    "fix": "students have more books to study",
+    "why": "3 mistakes, and hard to understand: student → students; word order; book → books"
+   },
+   {
+    "p": "E",
+    "bad": "more student can go to schools",
+    "fix": "more students could go to school",
+    "why": "3 mistakes: student → students; can → could (past); go to school (no s)"
+   },
+   {
+    "p": "X",
+    "bad": "will have good study",
+    "fix": "would learn more",
+    "why": "2 mistakes: will → would (past); \"have good study\" is not English → learn more"
+   },
+   {
+    "p": "L",
+    "bad": "get more smart, because",
+    "fix": "became smarter because",
+    "why": "3 mistakes: get → became (past); more smart → smarter; no comma before \"because\""
+   },
+   {
+    "p": "L",
+    "bad": "they have imformation",
+    "fix": "they had information",
+    "why": "2 mistakes: have → had (past); spelling: in-for-ma-tion"
+   }
+  ],
+  "goal": 20
+ },
+ "pmwr6s08mw9ka": {
+  "at": "2026-11-22",
+  "scores": {
+   "P": 3,
+   "E": 3,
+   "X": 2,
+   "L": 2,
+   "G": 3
+  },
+  "notes": {
+   "P": "3/5. Same Point as last time, so same score. \"printing helped printing faster\" still goes in a circle. Also the 3 fixes here are still not done. Do Job 1.",
+   "E": "🌟 3/5 = the TOP for now! A clear fact, with \"Before that ...\" to show what changed. 0 mistakes. Great!",
+   "X": "🌟 2/5 = the TOP for now! \"books could be printed quickly and cheaply\" says what the fact CHANGED. That is real Explain. But your second half (\"they can printing more book\") says the same thing again. Make it a \"so ...\": WHO could now read more? Do Job 2.",
+   "L": "2/5. \"students can get more information\" is a good idea, but it is the END of your Explain chain, not a Link. A Link says the Point again: woodblock printing + your reason. Do Job 3.",
+   "G": "11 mistakes (see the numbered fixes): 5 in Point (same as last time), 0 in Evidence, 5 in Explain, 1 in Link. Last time 19, now 11. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3. It is easy to understand now, so 3 (up from 2)."
+  },
+  "next": "13/25, up from 10. You did the Evidence and Explain Jobs. Evidence is now 3 = the top!\n\nEvidence = the fact (what happened).\nExplain = so what? What did the fact change, and for WHO?\n\nJob 1 (Point): Answer out loud to Mum first: \"Why did fast printing matter? Who could read more books now?\" (📖 Read the story first)\nStart with: \"Woodblock printing was significant because ...\" Do NOT say \"printing\" again after because.\n\nJob 2 (Explain): Keep \"This meant that books could be printed quickly and cheaply\". Delete \", they can printing more book\". Add your own \"so ...\": who could read more, and what did they get? (Your Link idea goes HERE.)\nStart with: \"..., so more people ...\"\n\nJob 3 (Link): Start with \"Therefore, woodblock printing was significant because ...\" Use the SAME reason as your new Point.\n\nAnd do fixes 1 to 3 in your Point.",
+  "fixes": [
+   {
+    "p": "P",
+    "bad": "The Woodblock printing",
+    "fix": "Woodblock printing",
+    "why": "2 mistakes: no \"The\" here; small w in the middle of a sentence (here it starts the sentence, so W)"
+   },
+   {
+    "p": "P",
+    "bad": "helped printing",
+    "fix": "helped people print",
+    "why": "1 mistake: helped + WHO + do (helped people print)"
+   },
+   {
+    "p": "P",
+    "bad": "more fast..",
+    "fix": "faster.",
+    "why": "2 mistakes: more fast → faster; only ONE full stop"
+   },
+   {
+    "p": "X",
+    "bad": ", they can printing",
+    "fix": ", so they could print",
+    "why": "3 mistakes: two sentences joined with only a comma → add \"so\"; can → could (past); can printing → could print"
+   },
+   {
+    "p": "X",
+    "bad": "more                          book.",
+    "fix": "more books.",
+    "why": "2 mistakes: too many spaces; book → books (many)"
+   },
+   {
+    "p": "L",
+    "bad": "can get",
+    "fix": "could get",
+    "why": "1 mistake: can → could (past)"
+   }
+  ],
+  "goal": 20
+ },
+ "pmwr6y2x73tai": {
+  "at": "2026-11-22",
+  "scores": {
+   "P": 3,
+   "E": 3,
+   "X": 2,
+   "L": 2,
+   "G": 4
+  },
+  "notes": {
+   "P": "3/5. You fixed \"The Woodblock\" and \"..\". Good! But the reason is the same as last time: printing faster. That is only the START of the story. WHY did faster printing matter for China? Fix 1 has a blank for you.",
+   "E": "🌟 3/5 = the TOP for now!",
+   "X": "🌟 2/5 = the TOP for now. You added \"so\". Good! But \"they can printing more books\" says \"printed quickly\" again. Fix 2: say WHO could now read, and fill the blank.",
+   "L": "2/5. Same Link as last time, so same score. It does not say woodblock printing and does not say the Point again. Fix 3 keeps your own idea (students get more information) at the end.",
+   "G": "4 mistakes: 1 in Point (\"more faster\" → \"faster\"), 3 in Explain (\"sothey\" needs a space; can → could; can printing → could print). Last time 11, now 4. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3."
+  },
+  "next": "14/25, up from 13. You fixed lots of grammar: 11 → 4 mistakes!\nBut you did not do the Jobs this time. So now the Jobs are INSIDE the fixes. Do ALL 3 fixes, in order.\nSome fixes have a ______ blank. YOU fill it in with your own word.\n\nFirst, answer out loud to Mum: \"When books were cheap, who could read them? What did people get from books?\" (📖 Read the story first)\n\nFix 1 (Point): What spread across China? Your own word from your Link is a good answer!\nFix 2 (Explain): Who could do what with the cheap books?\nFix 3 (Link): Use the SAME word as in Fix 1.",
+  "fixes": [
+   {
+    "p": "P",
+    "bad": "it helped people print more faster",
+    "fix": "it helped ______ spread across China",
+    "why": "1 grammar mistake: more faster → faster. Not grammar: fast printing is only the start. What spread across China? Fill the blank yourself."
+   },
+   {
+    "p": "X",
+    "bad": "sothey can printing more books",
+    "fix": "so more people could ______ and learn",
+    "why": "3 grammar mistakes: so they (space); can → could; can printing → could print. Not grammar: say WHO and WHAT. Fill the blank yourself."
+   },
+   {
+    "p": "L",
+    "bad": "students could get more information",
+    "fix": "woodblock printing was significant because it helped ______ spread across China, so students could get more information",
+    "why": "Not grammar: a Link says the Point again, then your big idea. Blank = the same word as Fix 1."
+   }
+  ],
+  "goal": 20
+ },
+ "pmwr7alg1j9ff": {
+  "at": "2026-11-22",
+  "scores": {
+   "P": 3,
+   "E": 3,
+   "X": 2,
+   "L": 3,
+   "G": 4
+  },
+  "notes": {
+   "P": "3/5. You did the fix. Good! But \"Woodblock printing ... helped woodblock spread\" goes in a circle again: printing helped printing. The wooden blocks did not travel. Something INSIDE the books spread across China. Fix 1.",
+   "E": "🌟 3/5 = the TOP for now!",
+   "X": "🌟 2/5 = the TOP for now! \"so more people could go to school and learn\": that is YOUR OWN idea, not copied. A real chain: cheap books → more people learn. Well done!",
+   "L": "3/5, up from 2! Now your Link says woodblock printing and the Point again, and ends with your own idea. It will go up when your Point is not a circle (Fix 3 = the same word as Fix 1).",
+   "G": "3 mistakes: big W in the middle of a sentence, 3 times (woodblock). Ms Heather: 0 to 2 = 5, 3 to 5 = 4. Fix them and Grammar = 5."
+  },
+  "next": "15/25, up from 14. Your Explain chain is now your OWN idea. That is the most important part!\n\nOnly ONE thinking job left: the word in Fix 1.\nAnswer out loud to Mum first: \"Did the wooden blocks travel across China? Or did something from the books travel? What do students get from books?\"\nLook at the LAST word of your own Link. 😉\n\nThen do all 3 fixes. Fix 3 = the same word as Fix 1.",
+  "fixes": [
+   {
+    "p": "P",
+    "bad": "helped Woodblock spread",
+    "fix": "helped ______ spread",
+    "why": "1 grammar mistake: small w (woodblock). Not grammar: printing helped printing is a circle. What is INSIDE books that spread? Fill the blank yourself."
+   },
+   {
+    "p": "L",
+    "bad": "Woodblock printing was",
+    "fix": "woodblock printing was",
+    "why": "1 mistake: small w in the middle of a sentence"
+   },
+   {
+    "p": "L",
+    "bad": "helped Woodblock spread",
+    "fix": "helped ______ spread",
+    "why": "1 grammar mistake: small w. Not grammar: the same word as Fix 1."
+   }
+  ],
+  "goal": 20
+ },
+ "pmwr7klpylk2b": {
+  "at": "2026-11-22",
+  "scores": {
+   "P": 5,
+   "E": 3,
+   "X": 2,
+   "L": 4,
+   "G": 4
+  },
+  "notes": {
+   "P": "5/5! No more circle. \"it helped books spread across China\" is a real change to China. You found the word yourself. Only one small fix: book → books.",
+   "E": "🌟 3/5 = the TOP for now!",
+   "X": "🌟 2/5 = the TOP for now! Your own chain: cheap books → more people go to school and learn.",
+   "L": "4/5, up from 3! Your Link says the Point again. To get 5: do NOT copy your Point word for word. Say the SAME idea in NEW words, then end with a BIGGER thought. Fix 3.",
+   "G": "3 mistakes: book → books (2 times), big W in the middle of a sentence (1). Ms Heather: 0 to 2 = 5, 3 to 5 = 4."
+  },
+  "next": "18/25, up from 15! Your Point is now 5/5 and there is no circle. Great thinking!\n\nLast job: the Link (Fix 3). This time there is NO blank. You write it yourself.\nA good Link = the SAME idea as your Point, but in NEW words + a BIGGER thought.\n\nAnswer out loud to Mum first:\n1. \"Before printing, were there many books or only a few?\"\n2. \"After printing, could lots of people learn? What spread across China?\" (📖 Read the story first)\n\nStart with: \"Therefore, woodblock printing changed China because ...\"\nDo NOT write \"helped books spread\" again. Use new words.\n\nThen do Fix 1 and Fix 2 → 20/25 = FULL MARKS for this stage.",
+  "fixes": [
+   {
+    "p": "P",
+    "bad": "helped book spread",
+    "fix": "helped books spread",
+    "why": "1 mistake: many books → books"
+   },
+   {
+    "p": "L",
+    "bad": "Woodblock printing was",
+    "fix": "woodblock printing was",
+    "why": "1 mistake: small w in the middle of a sentence"
+   },
+   {
+    "p": "L",
+    "bad": "was significant because it helped book spread across China, so students could get more information",
+    "fix": "✏️ YOUR new words (see the Job)",
+    "why": "1 grammar mistake: book → books. Not grammar: don't copy your Point. Same idea, NEW words, then a BIGGER thought."
+   }
+  ],
+  "goal": 20
+ },
+ "pmwr7rqrxsx8a": {
+  "at": "2026-11-22",
+  "scores": {
+   "P": 5,
+   "E": 3,
+   "X": 2,
+   "L": 4,
+   "G": 3
+  },
+  "notes": {
+   "P": "5/5. You fixed books. Perfect!",
+   "E": "🌟 3/5 = the TOP for now!",
+   "X": "🌟 2/5 = the TOP for now!",
+   "L": "4/5. 🌟 You wrote it in NEW words by yourself: \"information spread all over China\" is the same idea as your Point. That is exactly what a Link should do! To get 5: the end (\"more students could learn\") says your Explain again. End with a BIGGER thought about China.",
+   "G": "7 mistakes, all in your new Link (see the numbered fixes). Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3. New sentences often have new mistakes. That is normal!"
+  },
+  "next": "17/25. You did NOT get worse! You wrote a brand-new Link in your OWN words. That is the hard part, and you did it. The new sentence just has new grammar mistakes.\n\nStep 1: do fixes 1 to 4 (grammar).\n\nStep 2 (the bigger thought): answer out loud to Mum first: \"If lots of people in China could read and learn, what happened to China? Did it become stronger, smarter, richer?\"\nThen change the end of your Link. Start with: \"..., so China became ...\"",
+  "fixes": [
+   {
+    "p": "L",
+    "bad": "significant information",
+    "fix": "significant because information",
+    "why": "1 mistake: you need \"because\" to give the reason"
+   },
+   {
+    "p": "L",
+    "bad": "all the china",
+    "fix": "all over China",
+    "why": "2 mistakes: \"all over\"; China always has a big C"
+   },
+   {
+    "p": "L",
+    "bad": "china more student",
+    "fix": "so more students in China",
+    "why": "3 mistakes: add \"so\"; big C; student → students"
+   },
+   {
+    "p": "L",
+    "bad": "learn books",
+    "fix": "learn from books",
+    "why": "1 mistake: learn FROM books"
+   }
+  ],
+  "goal": 20
+ },
+ "pmwr837gcm9in": {
+  "at": "2026-11-22",
+  "scores": {
+   "P": 5,
+   "E": 3,
+   "X": 2,
+   "L": 4,
+   "G": 5
+  },
+  "notes": {
+   "P": "5/5.",
+   "E": "🌟 3/5 = the TOP for now!",
+   "X": "🌟 2/5 = the TOP for now!",
+   "L": "4/5. Your own new words, and now with perfect grammar! One step to 5: a BIGGER thought about China at the end. Fix 1.",
+   "G": "0 mistakes! You fixed all 7. Ms Heather: 0 to 2 = 5. 5/5!"
+  },
+  "next": "19/25! Grammar is now PERFECT: 0 mistakes. 🎉\n\nONE step left to 20/25 = FULL MARKS for this stage.\nAnswer out loud to Mum first: \"If lots of people in China could read and learn, what happened to China? Stronger? Smarter? Richer?\"\nThen fill the blank in Fix 1 with YOUR answer.",
+  "fixes": [
+   {
+    "p": "L",
+    "bad": "learn from books.",
+    "fix": "learn from books, and China became ______.",
+    "why": "Not grammar: the bigger thought. What happened to China when many people could learn? Fill the blank yourself."
+   }
+  ],
+  "goal": 20
+ },
+ "pmwr899nawtm0": {
+  "at": "2026-11-22",
+  "scores": {
+   "P": 5,
+   "E": 3,
+   "X": 2,
+   "L": 4,
+   "G": 5
+  },
+  "notes": {
+   "P": "5/5.",
+   "E": "🌟 3/5 = the TOP for now!",
+   "X": "🌟 2/5 = the TOP for now! And it is YOUR OWN chain (go to school and learn).",
+   "L": "4/5. Your Link is in your OWN new words. That is what we practised today. Delete the unfinished end (Fix 1). Your sentence is good without it.",
+   "G": "1 mistake: the sentence stops in the middle (\"and China became.\"). Ms Heather: 0 to 2 = 5. 5/5!"
+  },
+  "next": "🌟 19/25. Tang inventions is DONE. No more rewrites! 🌟\n\nToday YOU wrote:\n• your own Explain chain: cheap books → more people go to school and learn\n• your own Link, in new words\n• perfect grammar\nThat is more important than one more point.\n\nNext topic: think about the \"bigger thought\" yourself in your first draft: what happened to China?\n\nJust for reading: your paragraph.\n\n[Point] Woodblock printing was significant because it helped books spread across China.\n\n[Evidence] Woodblock printing was invented in the Tang. Before that, books were copied by hand.\n\n[Explain] This meant that books could be printed quickly and cheaply, so more people could go to school and learn.\n\n[Link] Therefore, woodblock printing was significant because information spread all over China, so more students in China could learn from books.",
+  "fixes": [
+   {
+    "p": "L",
+    "bad": ", and China became.",
+    "fix": ".",
+    "why": "1 mistake: the sentence stops in the middle. Delete it."
+   }
+  ],
+  "goal": 20
+ },
+ "pmwrr3bemfzbm": {
+  "at": "2026-11-22",
+  "scores": {
+   "P": 3,
+   "E": 3,
+   "X": 1,
+   "L": 2,
+   "G": 2
+  },
+  "notes": {
+   "P": "3/5. Good: you said Taizong was significant and gave a reason (fair). But \"helped fair\" is not clear: fair WHAT? To get 5: say exactly WHAT Taizong made fair. The answer is in your Evidence.",
+   "E": "🌟 3/5 = the TOP for now! Your facts are correct (from 📌). But you wrote 3 facts. This stage = ONE fact. Keep only the one that goes with your Point (fair).",
+   "X": "1/5. Two problems:\n(1) The first part is hard to understand (\"give school a good rule to better and justice the school\").\n(2) The end (\"make many changes to make the laws fair\") says your Evidence again.\nRule: Evidence = what Taizong DID. Explain = what it CAUSED. If your sentence says what Taizong did, it belongs in Evidence, not Explain.\nTo get 2: one clear chain: \"This meant that …, so …\"",
+   "L": "2/5. \"Golden age\" is a great idea (it's in 📖 the story)! But your Point says fair and your Link says golden age: two different ideas. To get more: first say your Point's idea (fair) again in NEW words, then end with the bigger thought: \"…, so the Tang …\" (golden age!). Say Taizong or he, not \"it\".",
+   "G": "17 mistakes (see the numbered fixes), and the Explain is hard to understand. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3, hard to understand = 2. The big ones: Taizong is ONE man → he (not it / they), and past tense (help → helped, make → made)."
+  },
+  "next": "11/25 for a first draft. Same as your first Civil service exam paragraph.\n\nStep 1: do all the fixes (grammar).\n\nStep 2 (Evidence): keep ONE fact. Ask yourself: which of my 3 facts made something FAIR? Delete the other two.\n\nStep 3 (Explain): first answer out loud to Mum: \"Because of that ONE fact, what changed? And then what happened to the Tang?\" (📖 Read the story first.)\nThen write it in YOUR words. Start: \"This meant that …, so …\" Don't say the fact again.\n\nStep 4 (Point): change \"…\" so it says WHAT he made fair: the same thing as your one fact.\n\nStep 5 (Link): your Point idea in NEW words, then the bigger thought: \"…, so the Tang …\"",
+  "fixes": [
+   {
+    "p": "P",
+    "bad": "The Taizong",
+    "fix": "Emperor Taizong",
+    "why": "1 mistake: no \"The\" before a name. Say Emperor Taizong."
+   },
+   {
+    "p": "P",
+    "bad": "significant, because",
+    "fix": "significant because",
+    "why": "1 mistake: no comma before \"because\""
+   },
+   {
+    "p": "P",
+    "bad": "it helped fair",
+    "fix": "he made … fair",
+    "why": "2 mistakes: Taizong is a man → he (not it); you can't \"help fair\". What did he make fair? (Step 4)"
+   },
+   {
+    "p": "X",
+    "bad": "will give",
+    "fix": "gave",
+    "why": "1 mistake: it happened in the past → gave"
+   },
+   {
+    "p": "X",
+    "bad": "school a",
+    "fix": "schools a",
+    "why": "1 mistake: more than one school → schools"
+   },
+   {
+    "p": "X",
+    "bad": "to better",
+    "fix": "to make them better",
+    "why": "1 mistake: \"to better\" is not finished. Better what?"
+   },
+   {
+    "p": "X",
+    "bad": "justice the school ,",
+    "fix": "made the schools fair.",
+    "why": "3 mistakes: justice is a thing, not an action; no space before a comma; new sentence → full stop"
+   },
+   {
+    "p": "X",
+    "bad": "they make",
+    "fix": "He made",
+    "why": "2 mistakes: Taizong is ONE man → He (big H, new sentence); past → made"
+   },
+   {
+    "p": "L",
+    "bad": "it help",
+    "fix": "he helped",
+    "why": "2 mistakes: Taizong → he; past → helped"
+   },
+   {
+    "p": "L",
+    "bad": "Tang dynasty changes to",
+    "fix": "the Tang dynasty become",
+    "why": "2 mistakes: add \"the\"; \"changes to\" → become"
+   },
+   {
+    "p": "L",
+    "bad": "age..",
+    "fix": "age.",
+    "why": "1 mistake: only one full stop"
+   }
+  ],
+  "goal": 20
+ }
 }
