@@ -1468,5 +1468,44 @@
       }
     ],
     "goal": 20
+  },
+  "pmwr7alg1j9ff": {
+    "at": "2026-11-22",
+    "scores": {
+      "P": 3,
+      "E": 3,
+      "X": 2,
+      "L": 3,
+      "G": 4
+    },
+    "notes": {
+      "P": "3/5. You did the fix. Good! But \"Woodblock printing ... helped woodblock spread\" goes in a circle again: printing helped printing. The wooden blocks did not travel. Something INSIDE the books spread across China. Fix 1.",
+      "E": "🌟 3/5 = the TOP for now!",
+      "X": "🌟 2/5 = the TOP for now! \"so more people could go to school and learn\": that is YOUR OWN idea, not copied. A real chain: cheap books → more people learn. Well done!",
+      "L": "3/5, up from 2! Now your Link says woodblock printing and the Point again, and ends with your own idea. It will go up when your Point is not a circle (Fix 3 = the same word as Fix 1).",
+      "G": "3 mistakes: big W in the middle of a sentence, 3 times (woodblock). Ms Heather: 0 to 2 = 5, 3 to 5 = 4. Fix them and Grammar = 5."
+    },
+    "next": "15/25, up from 14. Your Explain chain is now your OWN idea. That is the most important part!\n\nOnly ONE thinking job left: the word in Fix 1.\nAnswer out loud to Mum first: \"Did the wooden blocks travel across China? Or did something from the books travel? What do students get from books?\"\nLook at the LAST word of your own Link. 😉\n\nThen do all 3 fixes. Fix 3 = the same word as Fix 1.",
+    "fixes": [
+      {
+        "p": "P",
+        "bad": "helped Woodblock spread",
+        "fix": "helped ______ spread",
+        "why": "1 grammar mistake: small w (woodblock). Not grammar: printing helped printing is a circle. What is INSIDE books that spread? Fill the blank yourself."
+      },
+      {
+        "p": "L",
+        "bad": "Woodblock printing was",
+        "fix": "woodblock printing was",
+        "why": "1 mistake: small w in the middle of a sentence"
+      },
+      {
+        "p": "L",
+        "bad": "helped Woodblock spread",
+        "fix": "helped ______ spread",
+        "why": "1 grammar mistake: small w. Not grammar: the same word as Fix 1."
+      }
+    ],
+    "goal": 20
   }
 }
