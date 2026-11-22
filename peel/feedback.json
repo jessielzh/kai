@@ -1840,5 +1840,25 @@
       }
     ],
     "goal": 19
+  },
+  "pmwrtv97v60mh": {
+    "at": "2026-11-22",
+    "scores": {
+      "P": 5,
+      "E": 3,
+      "X": 2,
+      "L": 4,
+      "G": 5
+    },
+    "notes": {
+      "P": "5/5！照着题目答，还有原因（because he made the Tang strong）。strong 是你自己想的词，很好！",
+      "E": "🌟 3/5 = 现在的满分！只写太宗做了什么。",
+      "X": "🌟 2/5 = 现在的满分！「官员更能干」是结果，不是重复 Evidence。",
+      "L": "🌟 4/5 = 现在的满分！有 Therefore，有太宗，和 Point 是同一个意思（strong → full of prosperity），还换了新的话说。",
+      "G": "0 个错误！Ms Heather：0–2 个 = 5。5/5！"
+    },
+    "next": "🎉 19/25 = 这个阶段的满分！太宗这一课完成了，不用再改！🎉\n\n今天你学会了最难的一件事：\n• Evidence = 太宗做了什么（用考试选官员）\n• Explain = 带来了什么结果（官员更能干）\n两个分开了！\n\n下一课再练一步：Explain 用「This meant that …, so …」，把结果再往下说一步。\n\n你的段落：\n\n[Point] Taizong was an important ruler because he made the Tang strong.\n\n[Evidence] Taizong used exams to hire officials.\n\n[Explain] Taizong had more skilled officials.\n\n[Link] Therefore, Taizong made the Tang dynasty full of prosperity.",
+    "fixes": [],
+    "goal": 19
   }
 }
