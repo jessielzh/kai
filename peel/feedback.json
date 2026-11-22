@@ -1618,5 +1618,32 @@
       }
     ],
     "goal": 20
+  },
+  "pmwr899nawtm0": {
+    "at": "2026-11-22",
+    "scores": {
+      "P": 5,
+      "E": 3,
+      "X": 2,
+      "L": 4,
+      "G": 5
+    },
+    "notes": {
+      "P": "5/5.",
+      "E": "🌟 3/5 = the TOP for now!",
+      "X": "🌟 2/5 = the TOP for now! And it is YOUR OWN chain (go to school and learn).",
+      "L": "4/5. Your Link is in your OWN new words. That is what we practised today. Delete the unfinished end (Fix 1). Your sentence is good without it.",
+      "G": "1 mistake: the sentence stops in the middle (\"and China became.\"). Ms Heather: 0 to 2 = 5. 5/5!"
+    },
+    "next": "🌟 19/25. Tang inventions is DONE. No more rewrites! 🌟\n\nToday YOU wrote:\n• your own Explain chain: cheap books → more people go to school and learn\n• your own Link, in new words\n• perfect grammar\nThat is more important than one more point.\n\nNext topic: think about the \"bigger thought\" yourself in your first draft: what happened to China?\n\nJust for reading: your paragraph.\n\n[Point] Woodblock printing was significant because it helped books spread across China.\n\n[Evidence] Woodblock printing was invented in the Tang. Before that, books were copied by hand.\n\n[Explain] This meant that books could be printed quickly and cheaply, so more people could go to school and learn.\n\n[Link] Therefore, woodblock printing was significant because information spread all over China, so more students in China could learn from books.",
+    "fixes": [
+      {
+        "p": "L",
+        "bad": ", and China became.",
+        "fix": ".",
+        "why": "1 mistake: the sentence stops in the middle. Delete it."
+      }
+    ],
+    "goal": 20
   }
 }
