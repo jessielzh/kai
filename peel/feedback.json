@@ -1372,5 +1372,62 @@
       }
     ],
     "goal": 20
+  },
+  "pmwr6s08mw9ka": {
+    "at": "2026-11-22",
+    "scores": {
+      "P": 3,
+      "E": 3,
+      "X": 2,
+      "L": 2,
+      "G": 3
+    },
+    "notes": {
+      "P": "3/5. Same Point as last time, so same score. \"printing helped printing faster\" still goes in a circle. Also the 3 fixes here are still not done. Do Job 1.",
+      "E": "🌟 3/5 = the TOP for now! A clear fact, with \"Before that ...\" to show what changed. 0 mistakes. Great!",
+      "X": "🌟 2/5 = the TOP for now! \"books could be printed quickly and cheaply\" says what the fact CHANGED. That is real Explain. But your second half (\"they can printing more book\") says the same thing again. Make it a \"so ...\": WHO could now read more? Do Job 2.",
+      "L": "2/5. \"students can get more information\" is a good idea, but it is the END of your Explain chain, not a Link. A Link says the Point again: woodblock printing + your reason. Do Job 3.",
+      "G": "11 mistakes (see the numbered fixes): 5 in Point (same as last time), 0 in Evidence, 5 in Explain, 1 in Link. Last time 19, now 11. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3. It is easy to understand now, so 3 (up from 2)."
+    },
+    "next": "13/25, up from 10. You did the Evidence and Explain Jobs. Evidence is now 3 = the top!\n\nEvidence = the fact (what happened).\nExplain = so what? What did the fact change, and for WHO?\n\nJob 1 (Point): Answer out loud to Mum first: \"Why did fast printing matter? Who could read more books now?\" (📖 Read the story first)\nStart with: \"Woodblock printing was significant because ...\" Do NOT say \"printing\" again after because.\n\nJob 2 (Explain): Keep \"This meant that books could be printed quickly and cheaply\". Delete \", they can printing more book\". Add your own \"so ...\": who could read more, and what did they get? (Your Link idea goes HERE.)\nStart with: \"..., so more people ...\"\n\nJob 3 (Link): Start with \"Therefore, woodblock printing was significant because ...\" Use the SAME reason as your new Point.\n\nAnd do fixes 1 to 3 in your Point.",
+    "fixes": [
+      {
+        "p": "P",
+        "bad": "The Woodblock printing",
+        "fix": "Woodblock printing",
+        "why": "2 mistakes: no \"The\" here; small w in the middle of a sentence (here it starts the sentence, so W)"
+      },
+      {
+        "p": "P",
+        "bad": "helped printing",
+        "fix": "helped people print",
+        "why": "1 mistake: helped + WHO + do (helped people print)"
+      },
+      {
+        "p": "P",
+        "bad": "more fast..",
+        "fix": "faster.",
+        "why": "2 mistakes: more fast → faster; only ONE full stop"
+      },
+      {
+        "p": "X",
+        "bad": ", they can printing",
+        "fix": ", so they could print",
+        "why": "3 mistakes: two sentences joined with only a comma → add \"so\"; can → could (past); can printing → could print"
+      },
+      {
+        "p": "X",
+        "bad": "more                          book.",
+        "fix": "more books.",
+        "why": "2 mistakes: too many spaces; book → books (many)"
+      },
+      {
+        "p": "L",
+        "bad": "can get",
+        "fix": "could get",
+        "why": "1 mistake: can → could (past)"
+      }
+    ],
+    "goal": 20
   }
 }
