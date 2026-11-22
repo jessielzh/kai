@@ -1429,5 +1429,44 @@
       }
     ],
     "goal": 20
+  },
+  "pmwr6y2x73tai": {
+    "at": "2026-11-22",
+    "scores": {
+      "P": 3,
+      "E": 3,
+      "X": 2,
+      "L": 2,
+      "G": 4
+    },
+    "notes": {
+      "P": "3/5. You fixed \"The Woodblock\" and \"..\". Good! But the reason is the same as last time: printing faster. That is only the START of the story. WHY did faster printing matter for China? Fix 1 has a blank for you.",
+      "E": "🌟 3/5 = the TOP for now!",
+      "X": "🌟 2/5 = the TOP for now. You added \"so\". Good! But \"they can printing more books\" says \"printed quickly\" again. Fix 2: say WHO could now read, and fill the blank.",
+      "L": "2/5. Same Link as last time, so same score. It does not say woodblock printing and does not say the Point again. Fix 3 keeps your own idea (students get more information) at the end.",
+      "G": "4 mistakes: 1 in Point (\"more faster\" → \"faster\"), 3 in Explain (\"sothey\" needs a space; can → could; can printing → could print). Last time 11, now 4. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3."
+    },
+    "next": "14/25, up from 13. You fixed lots of grammar: 11 → 4 mistakes!\nBut you did not do the Jobs this time. So now the Jobs are INSIDE the fixes. Do ALL 3 fixes, in order.\nSome fixes have a ______ blank. YOU fill it in with your own word.\n\nFirst, answer out loud to Mum: \"When books were cheap, who could read them? What did people get from books?\" (📖 Read the story first)\n\nFix 1 (Point): What spread across China? Your own word from your Link is a good answer!\nFix 2 (Explain): Who could do what with the cheap books?\nFix 3 (Link): Use the SAME word as in Fix 1.",
+    "fixes": [
+      {
+        "p": "P",
+        "bad": "it helped people print more faster",
+        "fix": "it helped ______ spread across China",
+        "why": "1 grammar mistake: more faster → faster. Not grammar: fast printing is only the start. What spread across China? Fill the blank yourself."
+      },
+      {
+        "p": "X",
+        "bad": "sothey can printing more books",
+        "fix": "so more people could ______ and learn",
+        "why": "3 grammar mistakes: so they (space); can → could; can printing → could print. Not grammar: say WHO and WHAT. Fill the blank yourself."
+      },
+      {
+        "p": "L",
+        "bad": "students could get more information",
+        "fix": "woodblock printing was significant because it helped ______ spread across China, so students could get more information",
+        "why": "Not grammar: a Link says the Point again, then your big idea. Blank = the same word as Fix 1."
+      }
+    ],
+    "goal": 20
   }
 }
