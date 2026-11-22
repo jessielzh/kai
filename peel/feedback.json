@@ -1507,5 +1507,44 @@
       }
     ],
     "goal": 20
+  },
+  "pmwr7klpylk2b": {
+    "at": "2026-11-22",
+    "scores": {
+      "P": 5,
+      "E": 3,
+      "X": 2,
+      "L": 4,
+      "G": 4
+    },
+    "notes": {
+      "P": "5/5! No more circle. \"it helped books spread across China\" is a real change to China. You found the word yourself. Only one small fix: book → books.",
+      "E": "🌟 3/5 = the TOP for now!",
+      "X": "🌟 2/5 = the TOP for now! Your own chain: cheap books → more people go to school and learn.",
+      "L": "4/5, up from 3! Your Link says the Point again. To get 5: do NOT copy your Point word for word. Say the SAME idea in NEW words, then end with a BIGGER thought. Fix 3.",
+      "G": "3 mistakes: book → books (2 times), big W in the middle of a sentence (1). Ms Heather: 0 to 2 = 5, 3 to 5 = 4."
+    },
+    "next": "18/25, up from 15! Your Point is now 5/5 and there is no circle. Great thinking!\n\nLast job: the Link (Fix 3). This time there is NO blank. You write it yourself.\nA good Link = the SAME idea as your Point, but in NEW words + a BIGGER thought.\n\nAnswer out loud to Mum first:\n1. \"Before printing, were there many books or only a few?\"\n2. \"After printing, could lots of people learn? What spread across China?\" (📖 Read the story first)\n\nStart with: \"Therefore, woodblock printing changed China because ...\"\nDo NOT write \"helped books spread\" again. Use new words.\n\nThen do Fix 1 and Fix 2 → 20/25 = FULL MARKS for this stage.",
+    "fixes": [
+      {
+        "p": "P",
+        "bad": "helped book spread",
+        "fix": "helped books spread",
+        "why": "1 mistake: many books → books"
+      },
+      {
+        "p": "L",
+        "bad": "Woodblock printing was",
+        "fix": "woodblock printing was",
+        "why": "1 mistake: small w in the middle of a sentence"
+      },
+      {
+        "p": "L",
+        "bad": "was significant because it helped book spread across China, so students could get more information",
+        "fix": "✏️ YOUR new words (see the Job)",
+        "why": "1 grammar mistake: book → books. Not grammar: don't copy your Point. Same idea, NEW words, then a BIGGER thought."
+      }
+    ],
+    "goal": 20
   }
 }
