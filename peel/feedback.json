@@ -1297,5 +1297,80 @@
       }
     ],
     "goal": 20
+  },
+  "pmwr5q3j60hhg": {
+    "at": "2026-11-22",
+    "scores": {
+      "P": 3,
+      "E": 2,
+      "X": 1,
+      "L": 2,
+      "G": 2
+    },
+    "notes": {
+      "P": "3/5. Good: \"significant\" and \"because\", all by yourself! But \"printing helped printing faster\" goes in a circle. Say what got faster: making BOOKS. Look in \"📌 Facts you can use\": how were books made BEFORE printing?",
+      "E": "2/5. \"more books\" is a good idea, but it is a RESULT, not the fact. Your fact should say WHAT was invented and WHEN. Look in \"📌 Facts you can use\". (\"more students can go to schools\" is not in the story.) One fact with detail = 3 = the top for now.",
+      "X": "1/5. You wrote \"This meant that\" by yourself. Good! But it says your Evidence again (more people study), and there is no \"so ...\". Good news: your Link idea (people have information, so they get smarter) is real Explain thinking! It is just in the wrong place.",
+      "L": "2/5. Good \"Therefore\". But it does not say woodblock printing, and \"smart\" is a new idea, so it does not link back to your Point. Use the same reason as your Point.",
+      "G": "19 mistakes (see the numbered fixes): 5 in Point, 7 in Evidence, 2 in Explain, 5 in Link. Ms Heather: 0 to 2 = 5, 3 to 5 = 4, more than 5 = 3, and many mistakes that make it hard to understand = 2. \"helped student study have more book\" was hard to understand. Watch out: student → students, book → books (many = add s)."
+    },
+    "next": "New topic, and you wrote it ALL by yourself. 10/25 = the same as your Tang poetry first try. You did NOT get worse. Our goal for this stage is 20/25 = full marks.\nGood news: \"information\" and \"smarter\" are the RIGHT ideas. They just need to move.\n\nFirst: open \"📖 Read the story first\" on the writing page and read it with Mum.\n\nJob 1 (Point): Keep \"significant because\". Change the reason. Think: before printing, how were books made? Fast or slow?\nStart with: \"Woodblock printing was significant because ...\"\n\nJob 2 (Evidence): Delete your sentence. Write the fact: WHAT was invented, and in which dynasty? How were books made before that? (📌 Facts you can use)\nStart with: \"For example, ...\"\n\nJob 3 (Explain): Answer out loud to Mum first: \"With woodblock printing, could ONE book be printed many times? Fast or slow? So could more people read?\"\nThen write ONE chain. Start with: \"This meant that books could ..., so more people ...\"\n\nJob 4 (Link): Start with \"Therefore, woodblock printing was significant because ...\" Use the same reason as your Point.\n\nAnd do all the numbered fixes too.",
+    "fixes": [
+      {
+        "p": "P",
+        "bad": "The Woodblock printing",
+        "fix": "Woodblock printing",
+        "why": "2 mistakes: no \"The\" here; small w in the middle of a sentence (here it starts the sentence, so W)"
+      },
+      {
+        "p": "P",
+        "bad": "helped printing",
+        "fix": "helped people print",
+        "why": "1 mistake: helped + WHO + do (helped people print)"
+      },
+      {
+        "p": "P",
+        "bad": "more fast..",
+        "fix": "faster.",
+        "why": "2 mistakes: more fast → faster; only ONE full stop"
+      },
+      {
+        "p": "E",
+        "bad": "they helped",
+        "fix": "it helped",
+        "why": "1 mistake: woodblock printing is ONE thing → it"
+      },
+      {
+        "p": "E",
+        "bad": "student study have more book",
+        "fix": "students have more books to study",
+        "why": "3 mistakes, and hard to understand: student → students; word order; book → books"
+      },
+      {
+        "p": "E",
+        "bad": "more student can go to schools",
+        "fix": "more students could go to school",
+        "why": "3 mistakes: student → students; can → could (past); go to school (no s)"
+      },
+      {
+        "p": "X",
+        "bad": "will have good study",
+        "fix": "would learn more",
+        "why": "2 mistakes: will → would (past); \"have good study\" is not English → learn more"
+      },
+      {
+        "p": "L",
+        "bad": "get more smart, because",
+        "fix": "became smarter because",
+        "why": "3 mistakes: get → became (past); more smart → smarter; no comma before \"because\""
+      },
+      {
+        "p": "L",
+        "bad": "they have imformation",
+        "fix": "they had information",
+        "why": "2 mistakes: have → had (past); spelling: in-for-ma-tion"
+      }
+    ],
+    "goal": 20
   }
 }
