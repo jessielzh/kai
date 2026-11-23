@@ -757,6 +757,58 @@ const WEEKS = [
       { t:"追捕与攻击 Chase & attack", ws:["pursue","flee","distance","steer","strategy","constrict","suffocate","paralyzed","ingest"] },
     ],
   },
+
+  /* Week 13 sheet — animal groups, escaping, and science words. The last
+     fifteen (physical … defense mechanism) carry over, with tactic back from
+     Week 11. Meanings follow Kai's own wording where he wrote one (evade =
+     escape, dodge = avoid, invertebrate = no spine, ancient = old).
+     Test date assumed Fri Nov 27. */
+  {
+    week: "Nov 27",
+    date: "2026-11-27",
+    words: [
+      { w:"research",     m:"to study something carefully to find out facts", c:"re·search" },
+      { w:"reliable",     m:"you can trust it or count on it",               c:"re·li·a·ble" },
+      { w:"evade",        m:"to escape or get away from",                    c:"e·vade" },
+      { w:"dodge",        m:"to move quickly to avoid something" },
+      { w:"invertebrate", m:"an animal with no spine (backbone)",            c:"in·ver·te·brate" },
+      { w:"carnivore",    m:"an animal that eats only meat",                 c:"car·ni·vore" },
+      { w:"herbivore",    m:"an animal that eats only plants",               c:"her·bi·vore" },
+      { w:"omnivore",     m:"an animal that eats both meat and plants",      c:"om·ni·vore" },
+      { w:"segment",      m:"one piece or part of something",                c:"seg·ment" },
+      { w:"decay",        m:"to rot and slowly break down",                  c:"de·cay" },
+      { w:"ancient",      m:"very, very old",                                c:"an·cient" },
+      { w:"inflate",      m:"to fill with air and get bigger",               c:"in·flate" },
+      { w:"physical",     m:"about the body, or something you can touch",    c:"phys·i·cal" },
+      { w:"behavior",     m:"things you do, or how you act",                 c:"be·hav·ior" },
+      { w:"external",     m:"outside",                                       c:"ex·ter·nal" },
+      { w:"internal",     m:"inside",                                        c:"in·ter·nal" },
+      { w:"structure",    m:"something built from parts, or how it is put together", c:"struc·ture" },
+      { w:"discourage",   m:"to try to stop someone from doing something",   c:"dis·cour·age" },
+      { w:"exoskeleton",  m:"hard \"bones\" on the outside of an animal's body", c:"ex·o·skel·e·ton" },
+      { w:"threaten",     m:"to say or show you might hurt someone",         c:"threat·en" },
+      { w:"flee",         m:"to run away from danger" },
+      { w:"armor",        m:"a hard cover that protects the body",           c:"ar·mor" },
+      { w:"tactic",       m:"a way of doing something to win",               c:"tac·tic" },
+      { w:"camouflage",   m:"colors or shapes that help an animal hide",     c:"cam·ou·flage" },
+      { w:"survive",      m:"to stay alive",                                 c:"sur·vive" },
+      { w:"defend",       m:"to protect from an attack",                     c:"de·fend" },
+      { w:"defense mechanism", m:"a way an animal protects itself — spines, ink, playing dead", c:"de·fense mech·a·nism" },
+    ],
+    levels: [
+      { n:1, name:"Short & Sweet",  emoji:"🌱", ws:["flee","dodge","evade","decay","armor"] },
+      { n:2, name:"Six Letters",    emoji:"🌿", ws:["defend","tactic","ancient","inflate","segment"] },
+      { n:3, name:"Getting Longer", emoji:"🌳", ws:["survive","research","reliable","physical","behavior"] },
+      { n:4, name:"Climbing Up",    emoji:"🌲", ws:["external","internal","threaten","omnivore","carnivore"] },
+      { n:5, name:"Big Words",      emoji:"⛰️", ws:["herbivore","structure","discourage","camouflage"] },
+      { n:6, name:"Champion Words", emoji:"🏔️", ws:["exoskeleton","invertebrate","defense mechanism"] },
+    ],
+    sets: [
+      { t:"动物分类与身体 Animal groups & bodies", ws:["invertebrate","carnivore","herbivore","omnivore","segment","exoskeleton","structure","external","internal","physical"] },
+      { t:"逃跑与防御 Escape & defend", ws:["evade","dodge","flee","threaten","discourage","armor","camouflage","defend","survive","defense mechanism"] },
+      { t:"科学与时间 Science & time",  ws:["research","reliable","ancient","decay","inflate","behavior","tactic"] },
+    ],
+  },
 ];
 
 /* Chinese meaning for the word list, shared by every week since most words
@@ -796,6 +848,9 @@ const ZH = {
   "external":"外部的", "internal":"内部的", "structure":"结构；构造", "exoskeleton":"外骨骼",
   "evolve":"进化；逐渐发展", "steer":"驾驶；操纵方向", "threaten":"威胁", "ingest":"摄入；吞下",
   "discourage":"阻止；使泄气", "distance":"距离",
+  "research":"研究；调查", "reliable":"可靠的；可信赖的", "evade":"逃避；躲开", "dodge":"闪躲；躲避",
+  "invertebrate":"无脊椎动物", "carnivore":"食肉动物", "herbivore":"食草动物", "omnivore":"杂食动物",
+  "segment":"部分；（身体的）节", "decay":"腐烂；腐朽", "ancient":"古代的；非常古老的", "inflate":"充气；鼓起",
 };
 /* US IPA, same style as the History list. A new word needs a line here too. */
 const IPA = {
@@ -836,6 +891,10 @@ const IPA = {
   "external":"/ɪkˈstɜːrnəl/", "internal":"/ɪnˈtɜːrnəl/", "structure":"/ˈstrʌktʃər/",
   "exoskeleton":"/ˌeksoʊˈskelətən/", "evolve":"/ɪˈvɑːlv/", "steer":"/stɪr/",
   "threaten":"/ˈθretən/", "ingest":"/ɪnˈdʒest/", "discourage":"/dɪsˈkɜːrɪdʒ/", "distance":"/ˈdɪstəns/",
+  "research":"/ˈriːsɜːrtʃ/", "reliable":"/rɪˈlaɪəbəl/", "evade":"/ɪˈveɪd/", "dodge":"/dɑːdʒ/",
+  "invertebrate":"/ɪnˈvɜːrtəbrət/", "carnivore":"/ˈkɑːrnəvɔːr/", "herbivore":"/ˈhɜːrbəvɔːr/",
+  "omnivore":"/ˈɑːmnəvɔːr/", "segment":"/ˈseɡmənt/", "decay":"/dɪˈkeɪ/", "ancient":"/ˈeɪnʃənt/",
+  "inflate":"/ɪnˈfleɪt/",
 };
 WEEKS.forEach(wk => wk.words.forEach(o => {
   o.zh  = o.zh  || ZH[o.w]  || "";
